@@ -1,5 +1,5 @@
 <?php
-class Dashboard {
+class Ladder {
 
     public function render() {
         // Classe username si la session est active
@@ -11,7 +11,7 @@ class Dashboard {
         echo '<main>
             <div class="dashboard-container">
                 <h1>Bienvenue, <span style="color: var(--primary-purple)">' . $safeName . '</span>.</h1>
-                <p class="subtitle">Le tableau de bord est en cours de construction...</p>
+                <p class="subtitle">Le classement est en cours de construction...</p>
             </div>
         </main>';
     }

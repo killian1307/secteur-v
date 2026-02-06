@@ -23,13 +23,13 @@ $header->render();
         </div>
 
         <div class="error-text-col">
-            <h1>404 HORS-JEU</h1>
-            <p>
+            <h1 style="text-align:center;">404 HORS-JEU</h1>
+            <p  style="text-align:right;">
                 Halte là ! Le <strong>Secteur V</strong> ne reconnait pas cette page. 
             </p>
             
             <div class="error-actions">
-                <button class="cta-button" onclick="window.history.back()">
+                <button class="other-button" onclick="window.history.back()">
                     <i class="fas fa-arrow-left"></i> Retour au vestiaire
                 </button>
             </div>
