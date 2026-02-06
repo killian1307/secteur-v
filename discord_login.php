@@ -105,14 +105,9 @@ if (isset($_GET['code'])) {
     $user = $stmt->fetch();
 
     if ($user) {
-        // Mise à jour
-        $stmt = $pdo->prepare("UPDATE users SET username = ?, avatar = ?, email = ? WHERE discord_id = ?");
-        $stmt->execute([$username, $avatar_url, $email, $discord_id]);
-        
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $username;
+        $_SESSION['username'] = $user['username'];
         $_SESSION['avatar'] = $avatar_url;
-        $_SESSION['is_admin'] = $user['is_admin'] ?? 0;
     } else {
         // Inscription
         $stmt = $pdo->prepare("INSERT INTO users (discord_id, username, email, avatar, elo) VALUES (?, ?, ?, ?, 1200)");

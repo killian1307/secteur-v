@@ -27,6 +27,8 @@
     --footer-text: #ccd6f6;
     --footer-text-muted: #8892b0;
 
+    --footer-profile: #000000;
+
     /* Menu Déroulant */
     --dropdown-bg: #112240;
     --dropdown-hover: #1d345e;
@@ -35,6 +37,9 @@
     --card-shadow: 0 4px 12px rgba(0,0,0,0.5);
     --scroll-arrow-color: #FFD700;
     --error: #e74c3c;
+
+    --display-v-dark: inline-block;
+    --display-v-light: none;
 }
 
 .light-mode {
@@ -67,6 +72,9 @@
     /* Divers */
     --card-shadow: 0 4px 12px rgba(10, 25, 49, 0.1);
     --scroll-arrow-color: #ff8c00;
+
+    --display-v-dark: none;
+    --display-v-light: inline-block;
 }
 
 * {
@@ -93,6 +101,8 @@ header {
     align-items: center;
     padding: 1rem 2rem;
     background-color: var(--header-bg);
+
+    align-items: center;
     
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     
@@ -205,7 +215,7 @@ b {
 /* Styles du Menu (anciennement mobile c'est pour ça le nom des classes) */
 .mobile-menu-overlay {
     position: fixed;
-    top: 75px; 
+    top: 80px; 
     left: 0;
     width: 100%;
     height: calc(100vh - 75px);
@@ -335,7 +345,7 @@ h1 {
     line-height: 1.1;
 }
 
-.v-icon {
+.v-icon-dark, .v-icon-light {
     height: 1.2em;
     width: auto;
     vertical-align: middle;
@@ -345,6 +355,14 @@ h1 {
     
     filter: drop-shadow(0 0 5px var(--glow-color));
     transition: transform 0.3s ease;
+}
+
+.v-icon-dark {
+    display: var(--display-v-dark);
+}
+
+.v-icon-light {
+    display: var(--display-v-light);
 }
 
 .subtitle {
@@ -394,6 +412,30 @@ h1 {
         scale: 1;
         box-shadow: 0 4px 15px var(--glow-color);
     }
+}
+
+/* Autres boutons */
+.other-button {
+    background: linear-gradient(135deg, var(--button-gradient-start), var(--button-gradient-end));
+    color: white; 
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    margin: 20px auto 0 auto;
+    transition: translate 0.3s ease, box-shadow 0.3s ease;
+}
+
+.other-button:hover {
+    translate: 0 -5px; 
 }
 
 /* Section cartes */
@@ -549,15 +591,18 @@ h1 {
     text-align: justify;
 }
 
-.info-list li {
+.info-list li, .info-list-ladder li {
     margin-bottom: 1rem;
     color: var(--text-primary);
-    font-weight: 600;
     font-size: 1.1rem;
     list-style-type: none;
 }
 
-.info-list i {
+.info-list li {
+    font-weight: 600;
+}
+
+.info-list i, .info-list-ladder i {
     color: var(--button-gradient-start);
     margin-right: 12px;
 }
@@ -585,28 +630,103 @@ del {
 }
 
 /* Images dans les sections d'info */
+/* Conteneurs */
 .info-visual {
     flex: 1;
-    height: 350px;
-    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* CLASSEMENT EXPLICATION */
+
+.ladder-main h1 {
+    color: var(--text-primary);
+}
+
+.process-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 4rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.process-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--background-card);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid var(--text-secondary);
+    transition: transform 0.3s ease;
+}
+
+.process-step:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-purple);
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: #FFD700;
+    margin-bottom: 1rem;
+    background: rgba(255, 215, 0, 0.1);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+.process-step h3 {
+    margin: 10px 0;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.process-step p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* La flèche entre les étapes */
+.process-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 6rem;
-    color: var(--text-primary);
-    box-shadow: var(--card-shadow);
+    height: 80px;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Images */
+.feature-img {
+    width: 100%; 
+    max-width: 600px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
     transition: transform 0.3s ease;
-    
-    border: 4px solid rgba(255,255,255,0.1);
 }
 
-/* Dégradés différents pour les différentes images des sections d'info */
-.visual-bg-1 {
-    background: linear-gradient(135deg, #0A1931 0%, #1e3c72 100%);
-}
-
-.visual-bg-2 {
-    background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+/* Survol de l'image */
+.feature-img:hover {
+    transform: scale(1.02);
 }
 
 /* Footer */
@@ -617,6 +737,11 @@ del {
     margin-top: 5%;
     width: 100%;
     border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.profile-footer {
+    margin-top: 0 !important;
+    background-color: var(--footer-profile) !important;
 }
 
 .footer-container {
@@ -896,7 +1021,7 @@ input:valid {
     max-width: 500px;
 }
 
-/* Animations */
+/* Animations 404 */
 @keyframes floatRobot {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
@@ -907,20 +1032,630 @@ input:valid {
     50% { transform: rotate(25deg); }
 }
 
+/* ------------------- DASHBOARD ------------------- */
+
+.dashboard-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard-container h1 {
+    font-size: 3rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 900; 
+}
+
+/* ------------------ PAGE SETTINGS PROFIL ------------------ */
+
+.profile-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+    min-height: 80vh;
+}
+
+.profile-main h1 {
+    font-size: 3rem;
+    color: var(--text-primary);
+    margin-top: 1rem;
+    font-weight: 900; 
+}
+
+.profile-settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+/* Style des Cartes Profil */
+.profile-card {
+    background: rgba(10, 25, 49, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Style du Formulaire */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 15px;
+    color: var(--primary-purple);
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(106, 13, 173, 0.3);
+}
+
+.danger-zone {
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    background: rgba(231, 76, 60, 0.05);
+    text-align: left;;
+}
+
+.delete-btn {
+    background: transparent;
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    gap: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0 0 auto;
+
+    width: fit-content;
+    min-width: 200px;
+}
+
+.delete-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+}
+
+/* Messages d'alerte */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.alert.success {
+    background: rgba(46, 204, 113, 0.2);
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+}
+
+.alert.error {
+    background: rgba(231, 76, 60, 0.2);
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+/* --------- POPUP VIE PRIVEE --------- */
+
+/* Fond */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 25, 49, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* La boîte de dialogue */
+.modal-box {
+    background: #0f2038;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    padding: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.modal-overlay.active .modal-box {
+    transform: translateY(0);
+}
+
+/* En-tête */
+.modal-header {
+    background: linear-gradient(90deg, var(--button-gradient-end), var(--button-gradient-start));
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Corps */
+.modal-body {
+    padding: 25px;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.data-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: justify;
+}
+
+.data-list li {
+    margin-bottom: 12px;
+
+    display: grid;
+    grid-template-columns: 25px 110px 1fr; 
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.data-list li strong {
+    text-align: left;
+    white-space: nowrap;
+}
+
+.data-list li i {
+    text-align: center;
+    color: var(--primary-purple);
+}
+
+.small-text {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    text-align: center;
+        color: var(--text-secondary);
+}
+
+.links-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.text-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.text-link:hover {
+    text-decoration: underline;
+}
+
+/* Boutons */
+.modal-footer {
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Bouton Annuler */
+.ghost-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.ghost-btn:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* --- PAGE PROFIL PUBLIC (Viewer) --- */
+
+.profile-viewer-main {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centre la carte au milieu de l'écran */
+    padding: 2rem;
+    background: radial-gradient(circle at top, #1a253a 0%, #050a14 100%);
+}
+
+.player-card-container {
+    width: 100%;
+    max-width: 500px;
+    perspective: 1000px; /* Pour de futurs effets 3D */
+}
+
+.player-card {
+    background: rgba(15, 32, 56, 0.9);
+    border: 1px solid rgba(255, 215, 0, 0.2); /* Bordure dorée subtile */
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Style Créateur */
+.is-creator {
+    color: #e74c3c !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
+}
+
+/* Style VIP (Vert) */
+.is-vip {
+    color: #2ecc71 !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
+}
+
+/* Style Modérateur */
+.is-moderator {
+    color: #cc2ebf !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(199, 46, 204, 0.4);
+}
+
+/* Petit effet de fond (cercle lumineux derrière) */
+.player-card::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: var(--primary-purple);
+    filter: blur(80px);
+    opacity: 0.3;
+    z-index: 0;
+}
+
+/* --- AVATAR --- */
+.player-avatar-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 20px auto;
+    z-index: 1;
+}
+
+.player-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #1a253a;
+    box-shadow: 0 0 0 3px var(--primary-purple); /* Double bordure */
+}
+
+/* 1. Le parent s'occupe de centrer la boîte bio */
+.player-bio-container {
+    margin: 20px 0;
+    padding: 0 10px;
+    text-align: center; /* C'est lui qui centre tout le bloc */
+}
+
+/* 2. La bio devient un bloc compact */
+.player-bio {
+    display: inline-block; /* La boîte rétrécit pour mouler le texte */
+    position: relative;    /* Le point de repère pour le guillemet */
+
+    /* --- NOUVEAU : GESTION DES SAUTS DE LIGNE --- */
+    overflow-wrap: break-word; /* Coupe proprement les mots normaux */
+    word-wrap: break-word;     /* (Sécurité pour vieux navigateurs) */
+    word-break: break-word;    /* Coupe les mots très longs si nécessaire */
+    white-space: normal;       /* Assure que le texte peut revenir à la ligne */
+    
+    color: #e0e6ed;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-style: italic;
+    max-width: 80%;       /* On garde la limite pour pas que ça touche les bords */
+    text-align: left;     /* (Optionnel) Souvent plus joli aligné à gauche si c'est une citation */
+}
+
+.player-bio.empty-bio {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+}
+
+.player-bio::before {
+    /* 1. L'astuce pour le guillemet arrondi : */
+    /* Au lieu de '"' (touche 3), on met le code du vrai guillemet ouvrant anglais */
+    content: '\201C'; 
+    
+    position: absolute;
+    left: -40px; /* À ajuster légèrement selon la taille */
+    top: -15px;
+    
+    /* 2. La police littéraire */
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700; /* Gras */
+    font-style: italic; /* Italique pour le style */
+    
+    font-size: 5rem; /* On peut grossir encore, cette police est fine */
+    color: var(--text-primary);
+    opacity: 0.5;
+    line-height: 1;
+}
+
+/* Style spécifique quand la bio est vide (le texte par défaut) */
+.player-bio.empty-bio {
+    color: rgba(255, 255, 255, 0.4); /* Gris transparent */
+    font-size: 0.9rem;
+}
+
+/* Badge (pour le rang ou statut) */
+.rank-badge {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    background: #FFD700;
+    color: #000;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #1a253a;
+    font-size: 0.9rem;
+}
+
+/* --- SYSTÈME DE TOOLTIP (INFOBULLE) --- */
+
+/* 1. La base : l'élément parent doit être relatif */
+.tooltip {
+    cursor: help; /* Change le curseur pour indiquer qu'il y a une info */
+}
+
+/* 2. La bulle (créée virtuellement) */
+.tooltip::after {
+    content: attr(data-tooltip); /* Magie : ça prend le texte du HTML */
+    
+    position: absolute;
+    bottom: 125%; /* Se place juste au-dessus */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px); /* Centré + petit décalage bas */
+    
+    /* Le style de la boîte */
+    background: rgba(5, 10, 20, 0.95);
+    border: 1px solid var(--primary-purple);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+    z-index: 100;
+    pointer-events: none; /* Pour ne pas gêner le clic */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    font-family: 'Segoe UI', sans-serif; /* Police lisible */
+    
+    /* L'animation d'apparition */
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* 3. La petite flèche en bas de la bulle (Optionnel) */
+.tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    border: 6px solid transparent;
+    border-top-color: var(--primary-purple); /* La pointe vers le bas */
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* --- L'ACTION AU SURVOL --- */
+.tooltip:hover::after,
+.tooltip:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Le texte remonte à sa place */
+}
+
+/* --- TEXTE & INFOS --- */
+.player-info {
+    position: relative;
+    z-index: 1;
+}
+
+.player-name {
+    margin: 0;
+    font-size: 2rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.player-title {
+    color: var(--text-secondary);
+    margin-top: 5px;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+.player-stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.stat-pill {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-pill.highlight {
+    background: rgba(255, 215, 0, 0.1); /* Fond doré très léger */
+    color: #FFD700;
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.card-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* --- FORMULAIRE ÉDITION --- */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    color: var(--primary-purple);
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.edit-textarea {
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    padding: 12px;
+    font-family: inherit;
+    resize: none; /* Empêche de déformer la fenêtre */
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.edit-textarea:focus {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.2);
+}
+
+.char-count-wrapper {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 5px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     main { padding: 3rem 1rem; }
     h1 { font-size: 2.5rem; }
+
+    .subtitle { font-size: 1rem; }
+
+    .cta-button {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
     
     .info-block, .info-block.reverse {
         flex-direction: column;
         gap: 3rem;
     }
-    
+
     .info-visual {
-        width: 100%;
-        min-height: 250px;
-        font-size: 4rem;
+        padding: 10px 0;
+        width: 80%;
     }
     
     .cards-container {
@@ -954,5 +1689,32 @@ input:valid {
     
     .robot-wrapper {
         font-size: 8rem;
+    }
+
+    /* --- Responsive page classement logged out --- */
+    .process-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .process-arrow {
+        transform: rotate(90deg); 
+        height: auto;
+        margin: -10px 0;
+    }
+    
+    .process-step {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    /* --- Responsive page profil --- */
+    .profile-main h1 {
+        font-size: 2rem;
+    }
+
+    .profile-main .subtitle {
+        font-size: 1rem;
     }
 }

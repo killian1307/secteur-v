@@ -29,6 +29,7 @@ public function render() {
     <title>' . htmlspecialchars($this->pageTitle) . '</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">';
     
         if ($this->customCss) {
@@ -45,7 +46,7 @@ public function render() {
             </button>
         </div>
 
-        <a href="index.php#" class="' . $logoClass . '" id="navLogo">SECTEUR <img src="assets/img/v.webp" alt="V" class="v-icon"></a>
+        <a href="index.php#" class="' . $logoClass . '" id="navLogo">SECTEUR <img src="assets/img/v.webp" alt="V" class="v-icon-dark"><img src="assets/img/v_light.webp" alt="V" class="v-icon-light"></a>
         
         <div class="profile-container">
             <div class="profile-icon" onclick="toggleMenu()">';
@@ -68,10 +69,11 @@ public function render() {
             <div class="dropdown-menu" id="userDropdown">';
             
         if ($isLoggedIn) {
-             echo '<a href="profile.php" class="dropdown-item"><i class="fas fa-user-cog"></i> Gérer le compte</a>
+             echo '<a href="profile.php" class="dropdown-item"><i class="fas fa-user"></i> Afficher le profil</a>
+                   <a href="profile_settings.php" class="dropdown-item"><i class="fas fa-cog"></i> Gérer le compte</a>
                    <a href="logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>';
         } else {
-             echo '<a href="discord_login.php" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Connexion</a>';
+             echo '<a onclick="openPrivacyModal()" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Connexion</a>';
         }
 
         echo '<div class="dropdown-divider"></div>
@@ -89,12 +91,13 @@ public function render() {
 if ($isLoggedIn) {
             // Si connecté, menu match et classement
             echo '<a href="matchmaking.php" class="mobile-link"><i class="fas fa-gamepad"></i> Match</a>';
-            echo '<a href="ladder.php" class="mobile-link"><i class="fas fa-list-ol"></i> Classement</a>';
         } else {
             // Sinon, présentation
             echo '<a href="index.php#presentation" class="mobile-link"><i class="fas fa-info-circle"></i> Présentation</a>';
         }
-        echo '</div>
+        echo '<a href="classement.php" class="mobile-link"><i class="fas fa-list-ol"></i> Classement</a>';
+        echo '<a href="https://discord.gg/A98PfnH8SC" class="mobile-link" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        </div>
     </div>';
     }
 }

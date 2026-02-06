@@ -48,11 +48,15 @@ window.onclick = function(event) {
 // Gestion du scroll pour la flèche
 window.addEventListener('scroll', function() {
     const indicator = document.querySelector('.scroll-indicator-container');
+
     const presentationSection = document.getElementById('presentation');
+    const rulesSection = document.getElementById('rules');
+
+    const targetSection = presentationSection || rulesSection;
     
-    if (presentationSection && indicator) {
+    if (targetSection && indicator) {
         // Récupère la position du haut de la section présentation par rapport à la fenêtre
-        const sectionTop = presentationSection.getBoundingClientRect().top;
+        const sectionTop = targetSection.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
 
         // Si le haut de la section présentation est visible dans le bas de l'écranv (marge de 100px)
@@ -123,7 +127,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Gestion du Menu Mobile
+// Gestion du Menu (anciennement mobile)
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('active');
@@ -154,3 +158,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// --- POPUP CONFIDENTIALITÉ ---
+
+function openPrivacyModal() {
+    // Est-ce que l'utilisateur a déjà accepté ?
+    if (localStorage.getItem('secteur_v_privacy') === 'true') {
+        // Si oui, redirige directement sans afficher la modale
+        window.location.href = 'discord_login.php';
+        return; 
+    }
+
+    // Sinon, ouvre le popup
+    document.getElementById('privacyModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePrivacyModal(event) {
+    if (!event || event.target.id === 'privacyModal') {
+        document.getElementById('privacyModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function acceptAndRedirect() {
+    // Enregistre la preuve d'acceptation dans le navigateur
+    localStorage.setItem('secteur_v_privacy', 'true');
+    
+    // Redirige vers Discord
+    window.location.href = 'discord_login.php';
+}
+
+// --- MODALE ÉDITION PROFIL ---
+
+function openEditModal() {
+    const modal = document.getElementById('editModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // On met à jour le compteur dès l'ouverture (si y'a déjà du texte)
+    const textarea = document.getElementById('bio-input');
+    updateCharCount(textarea);
+}
+
+function closeEditModal(event) {
+    if (!event || event.target.id === 'editModal') {
+        document.getElementById('editModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Fonction pour mettre à jour le compteur "45/150"
+function updateCharCount(textarea) {
+    const countSpan = document.getElementById('char-count');
+    const currentLength = textarea.value.length;
+    
+    countSpan.textContent = currentLength;
+    
+    // Petit bonus : devine rouge si on approche de la limite
+    if (currentLength >= 140) {
+        countSpan.style.color = '#e74c3c'; // Rouge
+    } else {
+        countSpan.style.color = '#888'; // Gris normal
+    }
+}
