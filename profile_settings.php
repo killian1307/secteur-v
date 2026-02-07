@@ -8,9 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-require 'assets/header.php';
-require 'assets/footer.php';
-
 $message = "";
 $msgType = "";
 
@@ -67,6 +64,9 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch();
 
+require 'assets/header.php';
+require 'assets/footer.php';
+
 # Titre
 $header = new Header("SECTEUR V - Dossier Personnel");
 
@@ -92,7 +92,7 @@ $header->render();
                 <i class="fas fa-id-card-alt"></i> Informations
             </div>
             
-            <form method="POST" action="profile_settings.php" class="profile-form">
+            <form method="POST" action="" class="profile-form">
                 <div class="form-group">
                     <label for="username">Nom d'Utilisateur</label>
                     <div class="input-wrapper">

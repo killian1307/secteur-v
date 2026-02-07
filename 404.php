@@ -3,8 +3,8 @@
 
 session_start();
 require 'db.php';
-require 'assets/Header.php';
-require 'assets/Footer.php';
+require 'assets/header.php';
+require 'assets/footer.php';
 
 # Titre
 $header = new Header("Secteur V - Erreur 404");

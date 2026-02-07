@@ -8,9 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-require 'assets/header.php';
-require 'assets/footer.php';
-
 // Récupération du profil à afficher
 $profileUser = null;
 $errorMsg = null;
@@ -34,6 +31,36 @@ if (!$profileUser) {
     header("Location: 404.php");
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // On nettoie l'entrée (supprime les espaces inutiles au début/fin)
+    $newBio = trim($_POST['bio']);
+
+    // Vérification de la longueur (Sécurité côté serveur)
+    if (strlen($newBio) > 150) {
+        // Si c'est trop long, on coupe brutalement ou on renvoie une erreur
+        // Ici on coupe pour simplifier
+        $newBio = substr($newBio, 0, 150);
+    }
+
+    // 3. Mise à jour en BDD
+    try {
+        $stmt = $pdo->prepare("UPDATE users SET bio = ? WHERE id = ?");
+        $stmt->execute([$newBio, $_SESSION['user_id']]);
+        
+        // Succès : on retourne au profil
+        header("Location: profile.php");
+        exit;
+
+    } catch (PDOException $e) {
+        // En cas d'erreur technique
+        die("Erreur lors de la mise à jour : " . $e->getMessage());
+    }
+}
+
+require 'assets/header.php';
+require 'assets/footer.php';
 
 # Titre de la page
 $pageTitle = $profileUser ? "Profil de " . htmlspecialchars($profileUser['username']) : "Joueur Introuvable";
@@ -138,7 +165,7 @@ $header->render();
             <i class="fas fa-edit"></i> Mise à jour du Dossier
         </div>
         
-        <form action="update_profile.php" method="POST" class="modal-body">
+        <form action="" method="POST" class="modal-body">
             
             <div class="form-group">
                 <label for="bio-input" class="form-label">Votre Bio (Max 150 carac.)</label>
