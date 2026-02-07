@@ -189,14 +189,14 @@ function acceptAndRedirect() {
     window.location.href = 'discord_login.php';
 }
 
-// --- MODALE ÉDITION PROFIL ---
+// --- POPUP ÉDITION PROFIL ---
 
 function openEditModal() {
     const modal = document.getElementById('editModal');
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // On met à jour le compteur dès l'ouverture (si y'a déjà du texte)
+    // Met à jour le compteur dès l'ouverture
     const textarea = document.getElementById('bio-input');
     updateCharCount(textarea);
 }
@@ -208,17 +208,17 @@ function closeEditModal(event) {
     }
 }
 
-// Fonction pour mettre à jour le compteur "45/150"
+// Fonction pour mettre à jour le compteur
 function updateCharCount(textarea) {
     const countSpan = document.getElementById('char-count');
     const currentLength = textarea.value.length;
     
     countSpan.textContent = currentLength;
     
-    // Petit bonus : devine rouge si on approche de la limite
+    // Change la couleur du compteur si on dépasse les 140 caractères
     if (currentLength >= 140) {
-        countSpan.style.color = '#e74c3c'; // Rouge
+        countSpan.style.color = '#e74c3c';
     } else {
-        countSpan.style.color = '#888'; // Gris normal
+        countSpan.style.color = '#888';
     }
 }

@@ -138,11 +138,11 @@ $header->render();
                     </div>
                 </div>
 
-                                    <div class="player-bio-container">
-    <p class="player-bio <?php echo $bioClass; ?>">
-        <?php echo $displayBio; ?>
-    </p>
-</div> 
+                <div class="player-bio-container">
+                    <p class="player-bio <?php echo $bioClass; ?>">
+                        <?php echo $displayBio; ?>
+                    </p>
+                </div> 
 
                 <?php if ($profileUser['username'] === $_SESSION['username']): ?>
                     <div class="card-actions">
