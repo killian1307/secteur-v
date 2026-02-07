@@ -29,7 +29,7 @@ $ladder->render();
         <h1>L'Échelle du <span style="color: var(--primary-purple)">Pouvoir</span></h1>
         
         <p class="subtitle">
-            Le système de classement <b>absolu</b> du Secteur V.
+            Le système de classement <b>absolu</b> du Secteur&nbsp;V.
         </p>
 
         <button class="cta-button" onclick="openPrivacyModal()">
@@ -83,11 +83,11 @@ $ladder->render();
                     <ul class="info-list-ladder">
                         <li>
                             <i class="fas fa-balance-scale"></i> 
-                            <strong>Équité :</strong> Battre un joueur mieux classé rapporte beaucoup de points. Battre un débutant en rapporte peu.
+                            <span class="ladder-li"><strong>Équité&nbsp;:</strong> Battre un joueur mieux classé rapporte beaucoup de points. Battre un débutant en rapporte peu.</span>
                         </li>
                         <li>
                             <i class="fas fa-shield-alt"></i> 
-                            <strong>Protection :</strong> Les défaites contre des adversaires trop forts sont moins pénalisantes.
+                            <span class="ladder-li"><strong>Protection&nbsp;:</strong> Les défaites contre des adversaires trop forts sont moins pénalisantes.</span>
                         </li>
                     </ul>
                 </div>

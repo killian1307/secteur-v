@@ -1,0 +1,28 @@
+Options -Indexes 
+Options +FollowSymLinks -MultiViews
+
+RewriteEngine On
+RewriteBase /
+
+# Protection contre l'accès direct aux fichiers PHP dans le dossier assets et contre les fichiers sensibles
+RewriteRule ^assets/.*\.php$ - [F,L]
+RewriteRule \.(env|ini|log|git)$ - [F,L]
+
+# FORCE LE HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# SUPPRIME L'EXTENSION .PHP
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Redirection si php rentré manuellement
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# GESTION DES ERREURS 404
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+ErrorDocument 404 /404.php

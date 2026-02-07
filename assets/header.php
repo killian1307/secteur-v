@@ -46,7 +46,7 @@ public function render() {
             </button>
         </div>
 
-        <a href="index.php#" class="' . $logoClass . '" id="navLogo">SECTEUR <img src="assets/img/v.webp" alt="V" class="v-icon-dark"><img src="assets/img/v_light.webp" alt="V" class="v-icon-light"></a>
+        <a href="index.php#" class="' . $logoClass . '" id="navLogo"><span class="header-text">SECTEUR</span> <img src="assets/img/v.webp" alt="V" class="v-icon"></a>
         
         <div class="profile-container">
             <div class="profile-icon" onclick="toggleMenu()">';
@@ -71,16 +71,13 @@ public function render() {
         if ($isLoggedIn) {
              echo '<a href="profile.php" class="dropdown-item"><i class="fas fa-user"></i> Afficher le profil</a>
                    <a href="profile_settings.php" class="dropdown-item"><i class="fas fa-cog"></i> Gérer le compte</a>
+                   <div class="dropdown-divider"></div>
                    <a href="logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>';
         } else {
              echo '<a onclick="openPrivacyModal()" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Connexion</a>';
         }
 
-        echo '<div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="toggleTheme()">
-                    <i class="fas fa-sun" id="theme-icon"></i> 
-                    <span id="theme-text">Mode Clair</span>
-                </div>
+        echo '
             </div>
         </div>
     </header>

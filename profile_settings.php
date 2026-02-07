@@ -111,7 +111,7 @@ $header->render();
                 </div>
 
                 <button type="submit" name="update_profile" class="other-button">
-                    <i class="fas fa-save"></i> Enregistrer les modifications
+                    <i class="fas fa-save"></i> Enregistrer
                 </button>
             </form>
         </div>

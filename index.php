@@ -26,7 +26,7 @@ $dashboard->render();
 <?php else: ?>
     <!-- Page d'accueil classique pour les visiteurs non connectés -->
     <main>
-        <h1>SECTEUR <img src="assets/img/v.webp" alt="V" class="v-icon-dark"> <img src="assets/img/v_light.webp" alt="V" class="v-icon-light"></h1>
+        <h1>SECTEUR <img src="assets/img/v.webp" alt="V" class="v-icon"></h1>
         <p class="subtitle">Le challenge <b>ultime</b> pour les fans de <b>Inazuma Eleven</b>.</p>
         
             <button class="cta-button" onclick="openPrivacyModal()">
