@@ -23,8 +23,8 @@ $header->render();
         </div>
 
         <div class="error-text-col">
-            <h1 style="text-align:center;">404 HORS-JEU</h1>
-            <p  style="text-align:right;">
+            <h1>404 HORS-JEU</h1>
+            <p>
                 Halte là ! Le <strong>Secteur V</strong> ne reconnait pas cette page. 
             </p>
             
