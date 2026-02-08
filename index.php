@@ -59,10 +59,11 @@ $dashboard->render();
     </div>
 
 <section id="presentation" class="info-section">
+    <h2>Présen<span style="color: var(--primary-purple)">tation</span></h2>
         <div class="info-section-content">
             <div class="info-block">
                 <div class="info-text">
-                    <h2>Dominez la Victory Road</h2>
+                    <h3>Dominez la Victory Road</h3>
                     <p>
                         La route vers le sommet est longue et semée d'embûches, mais pour espérer y parvenir, il vous faut un objectif clair.
                     </p>
@@ -82,7 +83,7 @@ $dashboard->render();
 
             <div class="info-block reverse">
                 <div class="info-text">
-                    <h2>Un Football <del>régulé</del> encadré</h2>
+                    <h3>Un Football <del>régulé</del> encadré</h3>
                     <p>
                         Loin des scores décidés à l'avance, notre vision du <strong>Secteur Victory</strong> est celle de l'équité absolue. Nous fournissons la structure, les règles et l'arène, mais seule la victoire sur le terrain compte. 
                     </p>

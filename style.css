@@ -505,11 +505,34 @@ h1 {
     text-align: left;
 }
 
-.info-text h2 {
+.info-section h2 {
+    font-size: 3rem;
+    color: var(--text-primary);
+    margin: 2rem 0 5rem 0;
+    font-weight: 900; 
+    text-transform: uppercase;
+    letter-spacing: +10px;
+    line-height: 1.1;
+    text-align:center;
+}
+
+.info-text h3 {
     font-size: 2.2rem;
-    color: var(--primary-purple);
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
     font-weight: 800;
+    padding-bottom: 10px; /* Espace pour la barre */
+}
+
+/* On crée une petite barre jaune moderne en dessous */
+.info-section h3::after {
+    content: '';
+    display: block;
+    width: 60px; /* Une petite barre courte, pas tout le texte */
+    height: 4px;
+    background: var(--primary-purple); /* Doré */
+    margin-top: 10px;
+    border-radius: 2px;
 }
 
 .info-text p {
@@ -520,6 +543,7 @@ h1 {
     text-align: justify;
 }
 
+/* Style des listes avec icônes */
 .info-list li, .info-list-ladder li {
     margin-bottom: 1rem;
     color: var(--text-primary);
@@ -534,6 +558,22 @@ h1 {
 .info-list i, .info-list-ladder i {
     color: var(--button-gradient-start);
     margin-right: 12px;
+}
+
+.info-text li {
+    display: flex;
+    align-items: flex-start; 
+}
+
+.info-text li i {
+    flex-shrink: 0;
+    margin-top: 3px; 
+}
+
+/* Liste pour page classement */
+.ladder-li {
+    display: block;
+    text-align: justify;
 }
 
 .link-arrow {
@@ -555,7 +595,7 @@ h1 {
 
 del {
     color: var(--text-secondary);
-    text-decoration-color: var(--primary-purple);
+    text-decoration-color: var(--text-primary);
 }
 
 /* Images dans les sections d'info */
@@ -1578,24 +1618,12 @@ input:valid {
         gap: 3rem;
     }
 
-    /* Style des listes avec icônes */
-    .info-text li {
-
-        display: flex;
-        align-items: flex-start; 
-        gap: 10px; 
-        margin-bottom: 10px;
+    .info-section h2 {
+        font-size: 1.8rem;
     }
 
-    .info-text li i {
-        flex-shrink: 0;
-        margin-top: 3px; 
-    }
-
-    /* Liste pour page classement */
-    .ladder-li {
-        display: block;
-        text-align: justify;
+    .info-text h3 {
+        font-size: 1.4rem;
     }
 
     .info-visual {

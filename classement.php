@@ -72,13 +72,13 @@ $ladder->render();
     </div>
 
     <section id="rules" class="info-section">
+        <h2><span style="color: var(--primary-purple)">Règle</span>ment</h2>
         <div class="info-section-content">
-            
             <div class="info-block">
                 <div class="info-text">
-                    <h2>Les Mathématiques de la Victoire (EDP)</h2>
+                    <h3>Les Mathématiques de la Victoire</h3>
                     <p>
-                        Nous utilisons une variante du système ELO : le <strong>système EDP</strong>. Chaque joueur commence à 1000 points.
+                        Nous utilisons une variante du système ELO&nbsp;: le <strong>système EDP</strong>. Chaque joueur commence à 1000 points.
                     </p>
                     <ul class="info-list-ladder">
                         <li>
@@ -98,7 +98,7 @@ $ladder->render();
 
             <div class="info-block reverse">
                 <div class="info-text">
-                    <h2>Protocole de Match</h2>
+                    <h3>Protocole de Match</h3>
                     <p>
                         Pour garantir l'intégrité du classement, chaque match doit suivre le <strong>Protocole Omega</strong>.
                     </p>
