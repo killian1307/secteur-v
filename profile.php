@@ -165,8 +165,8 @@ $header->render();
             <i class="fas fa-edit"></i> Mise à jour du Dossier
         </div>
         
-        <form action="" method="POST" class="modal-body">
-            
+        <form action="" method="POST">
+        <div class="modal-body">
             <div class="form-group">
                 <label for="bio-input" class="form-label">Votre Bio (Max 150 carac.)</label>
                 <textarea 
@@ -181,7 +181,7 @@ $header->render();
                     <span id="char-count">0</span>/150
                 </div>
             </div>
-
+        </div>
             <div class="modal-footer">
                 <button type="submit" class="other-button">Enregistrer</button>
                 <button type="button" class="ghost-btn" onclick="closeEditModal(null)">Annuler</button>

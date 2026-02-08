@@ -26,13 +26,12 @@ public function render() {
                 <span>|</span>
                 <a href="privacy.php" class="text-link">Politique de confidentialité</a>
             </div>
-
+        </div>
             <div class="modal-footer">
                 <button class="other-button" onclick="acceptAndRedirect()">
                     Accepter & Continuer <i class="fas fa-arrow-right"></i>
                 </button>
-            <button class="ghost-btn" onclick="closePrivacyModal(null)">Annuler</button>
-        </div>
+            <button class="ghost-btn" onclick="closePrivacyModal(null)">Annuler</button>      
         </div>
     </div>
 </div>';
