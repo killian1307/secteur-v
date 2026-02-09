@@ -173,7 +173,7 @@ $header->render();
 
 <div class="builder-container">
     <?php
-        // On associe le Nom en BDD => La Classe CSS
+        // Associe le Nom en BDD => La Classe CSS
         $formationsMap = [
             '4-4-2 Diamant'       => '4-4-2-diamant',
             '4-4-2 Boîte'         => '4-4-2-boite',
@@ -185,44 +185,41 @@ $header->render();
             '5-4-1 Double Volante'=> '5-4-1-double-volante'
         ];
 
-        // On trouve la classe correspondante (ou défaut si inconnu)
+        // Tn trouve la classe correspondante
         $currentClass = $formationsMap[$savedFormation] ?? '4-4-2-diamant';
     ?>
 
     <div class="soccer-field <?php echo $fieldClass; ?> formation-<?php echo $currentClass; ?>" id="field-container">
         
         <?php
-        // Fonction simplifiée (plus besoin de field-line)
         function renderSlot($id, $label, $isOwner) {
             $onclick = $isOwner ? "onclick=\"openSelector('$id')\"" : "";
             $icon = $isOwner ? '<i class="fas fa-plus"></i>' : '';
             
-            // Note: On ajoute data-slot pour le CSS
-            echo "<div class=\"player-slot\" $onclick id=\"slot-display-$id\" data-slot=\"$id\">
+            echo "<div class=\"player-slot tooltip\" data-tooltip=\"Emplacement vide\" $onclick id=\"slot-display-$id\" data-slot=\"$id\">
                     <div class=\"empty-state\">$icon</div>
                     <span class=\"position-label\">$label</span>
                   </div>";
         }
 
-        // On affiche les 11 joueurs en vrac, le CSS fera le reste
-        // L'ordre n'importe plus, mais on garde une logique 1=GK
-        renderSlot('1', 'GK', $isOwner);   // Gardien
-        renderSlot('2', 'DF', $isOwner);   // Défenseurs
+        // Affiche les 11 emplacements de joueurs avec les bons labels et IDs
+        renderSlot('1', 'GK', $isOwner);
+        renderSlot('2', 'DF', $isOwner);
         renderSlot('3', 'DF', $isOwner);
         renderSlot('4', 'DF', $isOwner);
         renderSlot('5', 'DF', $isOwner);
-        renderSlot('6', 'MF', $isOwner);   // Milieux
+        renderSlot('6', 'MF', $isOwner);
         renderSlot('7', 'MF', $isOwner);
         renderSlot('8', 'MF', $isOwner);
         renderSlot('9', 'MF', $isOwner);
-        renderSlot('10', 'FW', $isOwner);  // Attaquants
+        renderSlot('10', 'FW', $isOwner);
         renderSlot('11', 'FW', $isOwner);
         ?>
     </div>
 
     <div class="coach-section">
         <div class="coach-container">
-            <div class="player-slot coach-slot" <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> id="slot-display-coach">
+            <div class="player-slot coach-slot tooltip" data-tooltip="Sans coach" <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> id="slot-display-coach">
                 <div class=\"empty-state\"><i class="fas fa-user-tie"></i></div>
             </div>
             
@@ -231,9 +228,7 @@ $header->render();
                 <?php if ($isOwner): ?>
                     <select id="formationSelect" onchange="changeFormation(this)" class="formation-select">
                         <?php 
-                        // On reprend le même tableau pour générer les options
                         foreach($formationsMap as $name => $cssClass) {
-                            // C'est ICI que la magie opère : on compare avec la BDD
                             $isSelected = ($name === $savedFormation) ? 'selected' : '';
                             
                             echo "<option value='$name' data-class='$cssClass' $isSelected>$name</option>";
@@ -302,7 +297,8 @@ $footer->render();
 <script>
     const CONFIG_TEAM = {
         targetUserId: <?php echo $targetUserId; ?>,
-        isOwner: <?php echo $isOwner ? 'true' : 'false'; ?>
+        isOwner: <?php echo $isOwner ? 'true' : 'false'; ?>,
+        currentFormation: "<?php echo htmlspecialchars($savedFormation); ?>"
     };
 </script>
 <script src="script.js"></script>

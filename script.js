@@ -159,6 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    if (typeof CONFIG_TEAM !== 'undefined' && CONFIG_TEAM.currentFormation) {
+        updateLabels(CONFIG_TEAM.currentFormation);
+    } else {
+        // Fallback si pas de config (ex: 4-4-2 Diamant)
+        updateLabels('4-4-2 Diamant');
+    }
+
     // On charge l'équipe de l'ID indiqué dans la config
     loadTeam();
 
@@ -198,26 +205,37 @@ async function loadTeam() {
 
 // Rendu de l'équipe
 function renderTeam(team) {
-    console.log("🎨 Affichage de l'équipe sur le terrain...");
+    console.log("🎨 Affichage de l'équipe et des noms...");
+
     ['coach', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'].forEach(id => {
-        const dbKey = (id === 'coach') ? 'coach' : 'slot_' + id;
-        const img = team[dbKey + '_img'];
-        
-        // On cherche la div dans le HTML
+        // Définition des clés pour récupérer les infos dans le JSON de l'API
+        const isCoach = (id === 'coach');
+        const imgKey = isCoach ? 'coach_img' : 'slot_' + id + '_img';
+        const nameKey = isCoach ? 'coach_name' : 'slot_' + id + '_name'; // <--- NOUVEAU
+
+        const img = team[imgKey];
+        const name = team[nameKey]; // On récupère le nom du joueur
+
+        // On cherche la div HTML
         const slotDiv = document.getElementById(`slot-display-${id}`);
         
-        if(slotDiv && img) {
-            // Cérifie si le label existe
-            const labelEl = slotDiv.querySelector('.position-label');
-            let labelHtml = '';
-            
-            if (labelEl) {
-                labelHtml = labelEl.outerHTML;
-            }
+        if(slotDiv) {
+            // A. GESTION DE L'IMAGE (Code existant)
+            if (img) {
+                const labelEl = slotDiv.querySelector('.position-label');
+                const labelHtml = labelEl ? labelEl.outerHTML : ''; 
 
-            // Met l'image + le label
-            slotDiv.innerHTML = `<img src="${img}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">${labelHtml}`;
-            slotDiv.classList.add('filled');
+                slotDiv.innerHTML = `<img src="${img}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">${labelHtml}`;
+                slotDiv.classList.add('filled');
+                
+                // B. GESTION DU TOOLTIP (NOUVEAU)
+                // On remplace "Emplacement vide" par le nom du joueur
+                slotDiv.setAttribute('data-tooltip', name); 
+                
+            } else {
+                // Si pas de joueur, on remet le tooltip par défaut
+                slotDiv.setAttribute('data-tooltip', isCoach ? "Sans coach" : "Emplacement vide");
+            }
         }
     });
 }
@@ -307,6 +325,45 @@ async function savePlayer(player) {
 }
 
 // --- GESTION DES FORMATIONS (VICTORY ROAD) ---
+/* --- CONFIGURATION DES ROLES --- */
+const FORMATION_ROLES = {
+    '4-4-2 Diamant':        { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'MF', 8:'MF', 9:'MF', 10:'FW', 11:'FW' },
+    '4-4-2 Boîte':          { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'MF', 8:'MF', 9:'MF', 10:'FW', 11:'FW' },
+    
+    '3-5-2 Liberté':        { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'MF', 6:'MF', 7:'MF', 8:'MF', 9:'MF', 10:'FW', 11:'FW' },
+    
+    '4-3-3 Triangle':       { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'MF', 8:'FW', 9:'MF', 10:'FW', 11:'FW' },
+    '4-3-3 Delta':          { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'MF', 8:'FW', 9:'MF', 10:'FW', 11:'FW' },
+    
+    '4-5-1 Équilibré':      { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'MF', 8:'MF', 9:'MF', 10:'MF', 11:'FW' },
+    
+    '3-6-1 Hexa':           { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'MF', 6:'MF', 7:'MF', 8:'MF', 9:'MF', 10:'MF', 11:'FW' },
+    
+    '5-4-1 Double Volante': { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'DF', 8:'MF', 9:'MF', 10:'FW', 11:'MF' }
+};
+
+function updateLabels(formationName) {
+    console.log("Mise à jour des labels pour :", formationName);
+    
+    // On récupère les rôles pour cette formation (ou par défaut 4-4-2 Diamant si introuvable)
+    const roles = FORMATION_ROLES[formationName] || FORMATION_ROLES['4-4-2 Diamant'];
+
+    // On boucle sur les 11 joueurs
+    for (let id = 1; id <= 11; id++) {
+        // On cherche la div du slot
+        const slotDiv = document.getElementById(`slot-display-${id}`);
+        
+        if (slotDiv) {
+            // On cherche le span qui contient le texte (GK, DF...)
+            const labelSpan = slotDiv.querySelector('.position-label');
+            
+            // S'il existe, on change le texte
+            if (labelSpan) {
+                labelSpan.innerText = roles[id];
+            }
+        }
+    }
+}
 
 async function changeFormation(selectElement) {
     // 1. On récupère la vraie valeur (pour la BDD) et la classe CSS (pour l'affichage)
@@ -322,6 +379,8 @@ async function changeFormation(selectElement) {
     field.className = field.className.replace(/formation-[a-z0-9-]+/g, '').trim();
     // On ajoute la nouvelle
     field.classList.add('formation-' + cssClass);
+
+    updateLabels(newFormationName);
 
     // 3. Sauvegarde API : On envoie le vrai nom avec espaces
     if (typeof CONFIG_TEAM !== 'undefined' && CONFIG_TEAM.isOwner) {
