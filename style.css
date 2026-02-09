@@ -1749,6 +1749,161 @@ input:valid {
     border-color: #f1c40f;
     box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
 }
+
+/* --- BASE --- */
+.soccer-field { position: relative; display: block; }
+.soccer-field .player-slot { 
+    position: absolute; 
+    transform: translate(-50%, -50%); 
+    transition: all 0.5s ease; 
+}
+/* Le Gardien (Toujours fixe) */
+.soccer-field [data-slot="1"] { top: 90%; left: 50%; }
+
+
+/* =========================================
+   1. 4-4-2 DIAMANT (Milieu en losange)
+   ========================================= */
+/* Défense à plat */
+.formation-4-4-2-diamant [data-slot="2"] { top: 60%; left: 20%; }
+.formation-4-4-2-diamant [data-slot="3"] { top: 75%; left: 40%; }
+.formation-4-4-2-diamant [data-slot="4"] { top: 75%; left: 60%; }
+.formation-4-4-2-diamant [data-slot="5"] { top: 60%; left: 80%; }
+/* Losange */
+.formation-4-4-2-diamant [data-slot="7"] { top: 55%; left: 50%; } /* MDC (Pointe basse) */
+.formation-4-4-2-diamant [data-slot="6"] { top: 40%; left: 25%; } /* MG */
+.formation-4-4-2-diamant [data-slot="9"] { top: 40%; left: 75%; } /* MD */
+.formation-4-4-2-diamant [data-slot="8"] { top: 25%; left: 50%; } /* MOC (Pointe haute) */
+/* Attaque */
+.formation-4-4-2-diamant [data-slot="10"] { top: 15%; left: 20%; }
+.formation-4-4-2-diamant [data-slot="11"] { top: 15%; left: 80%; }
+
+
+/* =========================================
+   2. 4-4-2 BOÎTE (Carré magique)
+   ========================================= */
+/* Défense */
+.formation-4-4-2-boite [data-slot="2"] { top: 70%; left: 15%; }
+.formation-4-4-2-boite [data-slot="3"] { top: 85%; left: 25%; }
+.formation-4-4-2-boite [data-slot="4"] { top: 85%; left: 75%; }
+.formation-4-4-2-boite [data-slot="5"] { top: 70%; left: 85%; }
+/* Carré Milieu */
+.formation-4-4-2-boite [data-slot="7"] { top: 55%; left: 35%; } /* MDC G */
+.formation-4-4-2-boite [data-slot="6"] { top: 55%; left: 65%; } /* MDC D */
+.formation-4-4-2-boite [data-slot="9"] { top: 35%; left: 20%; } /* MOC G */
+.formation-4-4-2-boite [data-slot="8"] { top: 35%; left: 80%; } /* MOC D */
+/* Attaque */
+.formation-4-4-2-boite [data-slot="10"] { top: 15%; left: 35%; }
+.formation-4-4-2-boite [data-slot="11"] { top: 15%; left: 65%; }
+
+
+/* =========================================
+   3. 3-5-2 LIBERTÉ (Milieu dense)
+   ========================================= */
+/* 3 Défenseurs centraux */
+.formation-3-5-2-liberte [data-slot="3"] { top: 70%; left: 25%; }
+.formation-3-5-2-liberte [data-slot="4"] { top: 75%; left: 50%; } /* Libero */
+.formation-3-5-2-liberte [data-slot="2"] { top: 70%; left: 75%; }
+/* 5 Milieux (Arc de cercle ou V) */
+.formation-3-5-2-liberte [data-slot="5"] { top: 55%; left: 30%; } /* Piston G */
+.formation-3-5-2-liberte [data-slot="6"] { top: 40%; left: 20%; }
+.formation-3-5-2-liberte [data-slot="7"] { top: 55%; left: 70%; } /* Sentinelle */
+.formation-3-5-2-liberte [data-slot="8"] { top: 40%; left: 80%; }
+.formation-3-5-2-liberte [data-slot="9"] { top: 35%; left: 50%; } /* Piston D */
+/* Attaque */
+.formation-3-5-2-liberte [data-slot="10"] { top: 15%; left: 30%; }
+.formation-3-5-2-liberte [data-slot="11"] { top: 15%; left: 70%; }
+
+
+/* =========================================
+   4. 4-3-3 TRIANGLE (Pointe basse)
+   ========================================= */
+/* Défense */
+.formation-4-3-3-triangle [data-slot="2"] { top: 60%; left: 20%; }
+.formation-4-3-3-triangle [data-slot="3"] { top: 75%; left: 40%; }
+.formation-4-3-3-triangle [data-slot="4"] { top: 75%; left: 60%; }
+.formation-4-3-3-triangle [data-slot="5"] { top: 60%; left: 80%; }
+/* Milieu Triangle pointe basse (V) */
+.formation-4-3-3-triangle [data-slot="7"] { top: 35%; left: 50%; } /* MDC */
+.formation-4-3-3-triangle [data-slot="6"] { top: 45%; left: 30%; } /* MC */
+.formation-4-3-3-triangle [data-slot="9"] { top: 45%; left: 70%; } /* MC */
+/* Attaque */
+.formation-4-3-3-triangle [data-slot="10"]  { top: 20%; left: 20%; } /* AG */
+.formation-4-3-3-triangle [data-slot="8"] { top: 15%; left: 50%; } /* BU */
+.formation-4-3-3-triangle [data-slot="11"] { top: 20%; left: 80%; } /* AD */
+
+
+/* =========================================
+   5. 4-3-3 DELTA (Pointe haute)
+   ========================================= */
+/* Défense */
+.formation-4-3-3-delta [data-slot="3"] { top: 60%; left: 20%; }
+.formation-4-3-3-delta [data-slot="4"] { top: 75%; left: 40%; }
+.formation-4-3-3-delta [data-slot="2"] { top: 75%; left: 60%; }
+.formation-4-3-3-delta [data-slot="5"] { top: 60%; left: 80%; }
+/* Milieu Delta pointe haute (A) */
+.formation-4-3-3-delta [data-slot="7"] { top: 40%; left: 35%; } /* MDC */
+.formation-4-3-3-delta [data-slot="9"] { top: 40%; left: 65%; } /* MDC */
+.formation-4-3-3-delta [data-slot="6"] { top: 60%; left: 50%; } /* MOC */
+/* Attaque */
+.formation-4-3-3-delta [data-slot="8"]  { top: 20%; left: 20%; }
+.formation-4-3-3-delta [data-slot="10"] { top: 15%; left: 50%; }
+.formation-4-3-3-delta [data-slot="11"] { top: 20%; left: 80%; }
+
+
+/* =========================================
+   6. 4-5-1 ÉQUILIBRÉ
+   ========================================= */
+/* Défense */
+.formation-4-5-1-equilibre [data-slot="2"] { top: 60%; left: 20%; }
+.formation-4-5-1-equilibre [data-slot="3"] { top: 75%; left: 40%; }
+.formation-4-5-1-equilibre [data-slot="4"] { top: 75%; left: 60%; }
+.formation-4-5-1-equilibre [data-slot="5"] { top: 60%; left: 80%; }
+/* Milieu dense sur 2 lignes */
+.formation-4-5-1-equilibre [data-slot="6"] { top: 45%; left: 30%; }
+.formation-4-5-1-equilibre [data-slot="9"] { top: 45%; left: 70%; } 
+.formation-4-5-1-equilibre [data-slot="7"] { top: 35%; left: 50%; } /* MOC */
+.formation-4-5-1-equilibre [data-slot="8"]  { top: 25%; left: 20%; }
+.formation-4-5-1-equilibre [data-slot="11"] { top: 15%; left: 50%; } /* MO (Note: on utilise le 11 comme milieu ici) */
+/* Attaque */
+.formation-4-5-1-equilibre [data-slot="10"] { top: 25%; left: 80%; } /* Pointe seule */
+
+
+/* =========================================
+   7. 3-6-1 HEXA (Le défi tactique)
+   ========================================= */
+/* 3 Défenseurs */
+.formation-3-6-1-hexa [data-slot="2"] { top: 75%; left: 30%; }
+.formation-3-6-1-hexa [data-slot="3"] { top: 75%; left: 50%; }
+.formation-3-6-1-hexa [data-slot="4"] { top: 75%; left: 70%; }
+/* Hexagone au milieu (6 joueurs) */
+.formation-3-6-1-hexa [data-slot="5"] { top: 55%; left: 20%; } /* MG */
+.formation-3-6-1-hexa [data-slot="6"] { top: 55%; left: 80%; } /* MD */
+.formation-3-6-1-hexa [data-slot="7"] { top: 60%; left: 50%; } /* MDC */
+.formation-3-6-1-hexa [data-slot="8"] { top: 40%; left: 35%; } /* MOC G */
+.formation-3-6-1-hexa [data-slot="9"] { top: 40%; left: 65%; } /* MOC D */
+.formation-3-6-1-hexa [data-slot="10"] { top: 30%; left: 50%; } /* MOC Haut */
+/* Attaque */
+.formation-3-6-1-hexa [data-slot="11"] { top: 15%; left: 50%; }
+
+
+/* =========================================
+   8. 5-4-1 DOUBLE VOLANTE (Défensif)
+   ========================================= */
+/* 5 Défenseurs */
+.formation-5-4-1-double-volante [data-slot="2"] { top: 65%; left: 15%; } /* Piston haut G */
+.formation-5-4-1-double-volante [data-slot="3"] { top: 75%; left: 35%; }
+.formation-5-4-1-double-volante [data-slot="4"] { top: 75%; left: 50%; } /* Libero */
+.formation-5-4-1-double-volante [data-slot="5"] { top: 75%; left: 65%; }
+.formation-5-4-1-double-volante [data-slot="6"] { top: 65%; left: 85%; } /* Piston haut D */
+/* 2 Volantes (MDC) + 2 MO */
+.formation-5-4-1-double-volante [data-slot="7"] { top: 55%; left: 40%; } /* Volante 1 */
+.formation-5-4-1-double-volante [data-slot="8"] { top: 55%; left: 60%; } /* Volante 2 */
+.formation-5-4-1-double-volante [data-slot="9"]  { top: 40%; left: 30%; }
+.formation-5-4-1-double-volante [data-slot="11"] { top: 40%; left: 70%; } /* (Utilisation du 11 en milieu) */
+/* Attaque */
+.formation-5-4-1-double-volante [data-slot="10"] { top: 15%; left: 50%; }
+
 /* Responsive */
 @media (max-width: 768px) {
     

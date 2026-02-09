@@ -123,5 +123,11 @@ class TeamManager {
         $stmt->execute([$term, $term]);
         return $stmt->fetchAll();
     }
+
+    // Mise à jour de la formation
+    public function updateFormation($userId, $formation) {
+        $stmt = $this->pdo->prepare("UPDATE teams SET formation = ? WHERE user_id = ?");
+        return $stmt->execute([$formation, $userId]);
+    }
 }
 ?>

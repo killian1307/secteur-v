@@ -148,7 +148,7 @@ function updateCharCount(textarea) {
     }
 }
 
-// --- VARIABLES GLOBALES ---
+// TEAM BUILDING
 window.currentSlot = null;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -304,4 +304,41 @@ async function savePlayer(player) {
             console.error("Erreur sauvegarde :", data);
         }
     } catch (e) { console.error("Erreur Fetch Save :", e); }
+}
+
+// --- GESTION DES FORMATIONS (VICTORY ROAD) ---
+
+async function changeFormation(selectElement) {
+    // 1. On récupère la vraie valeur (pour la BDD) et la classe CSS (pour l'affichage)
+    const newFormationName = selectElement.value; // ex: "4-4-2 Diamant"
+    const cssClass = selectElement.options[selectElement.selectedIndex].getAttribute('data-class'); // ex: "4-4-2-diamant"
+
+    console.log("Changement vers :", newFormationName, "| Classe CSS :", cssClass);
+
+    const field = document.getElementById('field-container');
+    
+    // 2. Changement Visuel : On utilise la classe CSS propre
+    // On retire toutes les anciennes classes formation-...
+    field.className = field.className.replace(/formation-[a-z0-9-]+/g, '').trim();
+    // On ajoute la nouvelle
+    field.classList.add('formation-' + cssClass);
+
+    // 3. Sauvegarde API : On envoie le vrai nom avec espaces
+    if (typeof CONFIG_TEAM !== 'undefined' && CONFIG_TEAM.isOwner) {
+        try {
+            const res = await fetch('api.php?action=save_formation', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ formation: newFormationName })
+            });
+            const data = await res.json();
+            if (data.success) {
+                console.log("Formation sauvegardée !");
+            } else {
+                console.error("Erreur save formation:", data.message);
+            }
+        } catch (e) {
+            console.error("Erreur réseau formation:", e);
+        }
+    }
 }

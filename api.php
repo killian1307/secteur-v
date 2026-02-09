@@ -56,4 +56,35 @@ if ($action === 'search_players') {
     echo json_encode($results);
     exit;
 }
+
+// Changer la formation
+if ($action === 'save_formation' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode(['success' => false, 'message' => 'Non connecté']);
+        exit;
+    }
+
+    $input = json_decode(file_get_contents('php://input'), true);
+    $formation = $input['formation'] ?? '4-4-2';
+    
+    // Liste blanche des formations autorisées (Sécurité)
+    $allowed = [
+    '4-4-2 Diamant',
+    '4-4-2 Boîte',
+    '3-5-2 Liberté',
+    '4-3-3 Triangle',
+    '4-3-3 Delta',
+    '4-5-1 Équilibré',
+    '3-6-1 Hexa',
+    '5-4-1 Double Volante'
+    ];
+    
+    if (in_array($formation, $allowed)) {
+        $manager->updateFormation($_SESSION['user_id'], $formation);
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Formation invalide']);
+    }
+    exit;
+}
 ?>
