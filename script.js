@@ -147,3 +147,161 @@ function updateCharCount(textarea) {
         countSpan.style.color = '#888';
     }
 }
+
+// --- VARIABLES GLOBALES ---
+window.currentSlot = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Vérification cruciale : Est-ce que PHP a bien écrit la config ?
+    if (typeof CONFIG_TEAM === 'undefined') {
+        console.error("CONFIG_TEAM n'existe pas. Vérifie profil.php !");
+        return;
+    }
+
+    // On charge l'équipe de l'ID indiqué dans la config
+    loadTeam();
+
+    // On active la recherche seulement si on est le propriétaire
+    if (CONFIG_TEAM.isOwner) {
+        setupSearch();
+    }
+});
+
+// Fonction de chargement
+async function loadTeam() {
+    const targetId = CONFIG_TEAM.targetUserId;
+
+    try {
+        // Appel API
+        const url = `api.php?action=get_team&user_id=${targetId}`;
+
+        const response = await fetch(url);
+        
+        // Vérification si la réponse est du JSON valide
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        
+        const data = await response.json();
+
+        if(data.success && data.team) {
+            renderTeam(data.team);
+        } else {
+            console.warn("Pas d'équipe trouvée ou erreur API :", data);
+        }
+
+    } catch(e) { 
+        console.error("Erreur API (loadTeam) :", e); 
+    }
+}
+
+// Rendu de l'équipe
+function renderTeam(team) {
+    console.log("🎨 Affichage de l'équipe sur le terrain...");
+    ['coach', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'].forEach(id => {
+        const dbKey = (id === 'coach') ? 'coach' : 'slot_' + id;
+        const img = team[dbKey + '_img'];
+        
+        // On cherche la div dans le HTML
+        const slotDiv = document.getElementById(`slot-display-${id}`);
+        
+        if(slotDiv && img) {
+            // Cérifie si le label existe
+            const labelEl = slotDiv.querySelector('.position-label');
+            let labelHtml = '';
+            
+            if (labelEl) {
+                labelHtml = labelEl.outerHTML;
+            }
+
+            // Met l'image + le label
+            slotDiv.innerHTML = `<img src="${img}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">${labelHtml}`;
+            slotDiv.classList.add('filled');
+        }
+    });
+}
+
+// Ouvrir la modale
+window.openSelector = function(slot) {
+    if (!CONFIG_TEAM.isOwner) {
+        return;
+    }
+
+    window.currentSlot = (slot === 'coach') ? 'coach_id' : 'slot_' + slot;
+    
+    const modal = document.getElementById('playerSelectorModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        const input = document.getElementById('playerSearchInput');
+        if(input) {
+            input.value = ''; 
+            input.focus();
+        } 
+        const title = document.getElementById('modalTitle');
+        if(title) title.innerText = "Modifier Slot : " + slot;
+    }
+};
+
+window.closeSelector = function() {
+    const modal = document.getElementById('playerSelectorModal');
+    if (modal) modal.style.display = 'none';
+};
+
+// Recherche
+function setupSearch() {
+    const input = document.getElementById('playerSearchInput');
+    if(!input) return;
+
+    let timer;
+    input.addEventListener('input', (e) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => doSearch(e.target.value), 300);
+    });
+}
+
+async function doSearch(term) {
+    if(term.length < 2) return;
+    try {
+        const res = await fetch(`api.php?action=search_players&term=${encodeURIComponent(term)}`);
+        const players = await res.json();
+        
+        const grid = document.getElementById('searchResults');
+        grid.innerHTML = '';
+        
+        if(!players || players.length === 0) {
+            grid.innerHTML = '<p>Aucun résultat</p>'; 
+            return;
+        }
+
+        players.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'search-card';
+            div.innerHTML = `<img src="${p.image_webp}" style="width:50px;height:50px;border-radius:50%"><span>${p.name_en}</span>`;
+            div.onclick = () => savePlayer(p);
+            grid.appendChild(div);
+        });
+    } catch (e) { console.error("Erreur recherche :", e); }
+}
+
+// 6. Sauvegarde
+async function savePlayer(player) {
+    if (!CONFIG_TEAM.isOwner || !window.currentSlot) return;
+
+    try {
+        const res = await fetch('api.php?action=save_slot', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ slot: window.currentSlot, player_id: player.id })
+        });
+        
+        const data = await res.json();
+        if(data.success) {
+            console.log("Sauvegarde réussie !");
+            closeSelector();
+            loadTeam(); // Rechargement simple (utilise la variable globale)
+        } else {
+            console.error("Erreur sauvegarde :", data);
+        }
+    } catch (e) { console.error("Erreur Fetch Save :", e); }
+}

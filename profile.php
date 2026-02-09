@@ -23,7 +23,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
 }
 
 // Cherche l'utilisateur dans la base de données
-$stmt = $pdo->prepare("SELECT username, avatar, created_at, elo, grade, bio FROM users WHERE username = ?");
+$stmt = $pdo->prepare("SELECT id, username, avatar, created_at, elo, grade, bio FROM users WHERE username = ?");
 $stmt->execute([$targetUsername]);
 $profileUser = $stmt->fetch();
 
@@ -58,6 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Erreur lors de la mise à jour : " . $e->getMessage());
     }
 }
+
+// Vérifie si propriétaire
+$isOwner = isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $profileUser['id']);
+$targetUserId = $profileUser['id'];
+
+// Classe CSS pour désactiver le curseur si on n'est pas proprio
+$fieldClass = $isOwner ? 'editable-mode' : 'readonly-mode';
 
 require 'assets/header.php';
 require 'assets/footer.php';
@@ -157,6 +164,66 @@ $header->render();
 
     <?php endif; ?>
 
+<div class="builder-container">
+    <div class="soccer-field <?php echo $fieldClass; ?>">
+        
+        <?php
+        function renderSlot($id, $label, $isOwner) {
+            $onclick = $isOwner ? "onclick=\"openSelector('$id')\"" : "";
+            $icon = $isOwner ? '<i class="fas fa-plus"></i>' : '';
+            
+            echo "<div class=\"player-slot\" $onclick id=\"slot-display-$id\">
+                    <div class=\"empty-state\">$icon</div>
+                    <span class=\"position-label\">$label</span>
+                  </div>";
+        }
+        ?>
+
+        <div class="field-line">
+            <?php renderSlot('10', 'FW', $isOwner); ?>
+            <?php renderSlot('11', 'FW', $isOwner); ?>
+        </div>
+        <div class="field-line">
+            <?php renderSlot('6', 'LM', $isOwner); ?>
+            <?php renderSlot('7', 'CM', $isOwner); ?>
+            <?php renderSlot('8', 'CM', $isOwner); ?>
+            <?php renderSlot('9', 'RM', $isOwner); ?>
+        </div>
+        <div class="field-line">
+            <?php renderSlot('2', 'LB', $isOwner); ?>
+            <?php renderSlot('3', 'CB', $isOwner); ?>
+            <?php renderSlot('4', 'CB', $isOwner); ?>
+            <?php renderSlot('5', 'RB', $isOwner); ?>
+        </div>
+        <div class="field-line">
+            <div class="player-slot gk-slot" <?php echo $isOwner ? "onclick=\"openSelector('1')\"" : ""; ?> id="slot-display-1">
+                <div class="empty-state"><?php echo $isOwner ? '<i class="fas fa-plus"></i>' : ''; ?></div>
+                <span class="position-label">GK</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="coach-section">
+        <div class="player-slot coach-slot" <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> id="slot-display-coach">
+            <div class="empty-state"><i class="fas fa-user-tie"></i></div>
+        </div>
+        <div>Coach</div>
+    </div>
+</div>
+
+<div id="playerSelectorModal">
+    <div class="modal-box-team">
+        <button class="close-btn" onclick="closeSelector()">×</button>
+        <h3 id="modalTitle">Choisir un joueur</h3>
+        
+        <input type="text" id="playerSearchInput" placeholder="Chercher (ex: Mark)...">
+        
+        <div id="searchResults" class="results-grid">
+            <p style="text-align:center; width:100%; color:#888;">Tapez un nom pour commencer...</p>
+        </div>
+    </div>
+</div>
+
 </main>
 
 <div id="editModal" class="modal-overlay" onclick="closeEditModal(event)">
@@ -195,6 +262,12 @@ $header->render();
 $footer = new Footer('profile-footer');
 $footer->render();
 ?>
+<script>
+    const CONFIG_TEAM = {
+        targetUserId: <?php echo $targetUserId; ?>,
+        isOwner: <?php echo $isOwner ? 'true' : 'false'; ?>
+    };
+</script>
 <script src="script.js"></script>
 </body>
 </html>
