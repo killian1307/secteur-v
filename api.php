@@ -4,25 +4,22 @@ header('Content-Type: application/json');
 session_start();
 require_once 'TeamManager.php';
 
-// --- Simulation de connexion pour le test ---
-// À remplacer par ton vrai système de login (ex: $_SESSION['user_id'])
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);
-    exit; // On coupe le script ici
+    exit;
 }
 $userId = $_SESSION['user_id'];
-// --------------------------------------------
 
 $manager = new TeamManager($pdo);
 $action = $_GET['action'] ?? '';
 
-// ACTION 1 : Charger l'équipe
+// Charger 'l'équipe
 if ($action === 'get_team') {
-    // Si le JS envoie un user_id (ce qu'on vient de corriger), on l'utilise.
-    // Sinon, fallback sur la session.
+    // Si user id, on regarde l'équipe de cet utilisateur, sinon on prend celle du connecté
     $targetId = isset($_GET['user_id']) ? intval($_GET['user_id']) : $_SESSION['user_id'];
     
-    // Petite sécurité : si l'ID est 0 ou invalide, on renvoie une erreur ou un tableau vide
+    // si l'id est invalide, renvoie une erreur
     if ($targetId <= 0) {
         echo json_encode(['success' => false, 'team' => null]);
         exit;
@@ -33,13 +30,13 @@ if ($action === 'get_team') {
     exit;
 }
 
-// ACTION 2 : Sauvegarder un joueur
+// Sauvegarder un joueur
 if ($action === 'save_slot' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    // On lit les données JSON envoyées par le JS
+    // Lit les données JSON envoyées par le JS
     $input = json_decode(file_get_contents('php://input'), true);
     
-    $slot = $input['slot'];      // ex: "slot_10"
-    $playerId = $input['player_id']; // ex: 452
+    $slot = $input['slot'];
+    $playerId = $input['player_id'];
     
     $result = $manager->updateSlot($userId, $slot, $playerId);
     
@@ -47,10 +44,10 @@ if ($action === 'save_slot' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// ACTION 3 : Rechercher des joueurs
+// Rechercher des joueurs
 if ($action === 'search_players') {
     $term = $_GET['term'] ?? '';
-    // On évite les recherches trop courtes
+    // Évite les recherches trop courtes
     if (strlen($term) < 2) {
         echo json_encode([]); 
         exit;
