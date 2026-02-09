@@ -219,26 +219,24 @@ $header->render();
 
     <div class="coach-section">
         <div class="coach-container">
-            <div class="player-slot coach-slot tooltip" data-tooltip="Sans coach" <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> id="slot-display-coach">
+            <div class="formation-controls">
+                <div class="player-slot coach-slot tooltip" data-tooltip="Sans coach" <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> id="slot-display-coach">
                 <div class=\"empty-state\"><i class="fas fa-user-tie"></i></div>
             </div>
-            
-            <div class="formation-controls">
-                <label>Formation :</label>
-                <?php if ($isOwner): ?>
-                    <select id="formationSelect" onchange="changeFormation(this)" class="formation-select">
-                        <?php 
-                        foreach($formationsMap as $name => $cssClass) {
-                            $isSelected = ($name === $savedFormation) ? 'selected' : '';
-                            
-                            echo "<option value='$name' data-class='$cssClass' $isSelected>$name</option>";
-                        }
-                        ?>
-                    </select>
-                <?php else: ?>
-                    <span class="formation-display"><?php echo htmlspecialchars($savedFormation); ?></span>
-                <?php endif; ?>
             </div>
+        <?php if ($isOwner): ?>
+        <select id="formationSelect" onchange="changeFormation(this)" class="formation-select">
+        <?php 
+            foreach($formationsMap as $name => $cssClass) {
+                $isSelected = ($name === $savedFormation) ? 'selected' : '';
+                
+                echo "<option value='$name' data-class='$cssClass' $isSelected>$name</option>";
+            }
+            ?>
+        </select>
+        <?php else: ?>
+            <span class="formation-display"><?php echo htmlspecialchars($savedFormation); ?></span>
+        <?php endif; ?>
         </div>
     </div>
 </div>

@@ -1626,7 +1626,7 @@ input:valid {
     border-radius: 12px;
     height: 700px; 
     position: relative;
-    margin: 20px 0;
+    margin: 5px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -1901,6 +1901,106 @@ input:valid {
 .formation-5-4-1-double-volante [data-slot="10"] { top: 15%; left: 50%; }
 /* Attaque */
 .formation-5-4-1-double-volante [data-slot="11"] { top: 25%; left: 70%; }
+
+/* --- SÉLECTEUR DE FORMATION --- */
+
+/* --- LE CONTENEUR DU BAS --- */
+.coach-container {
+    display: flex;             /* Active le mode Flexible */
+    flex-direction: row;       /* Force l'affichage en ligne (côte à côte) */
+    align-items: center;       /* Centre verticalement (le rond face au milieu du select) */
+    justify-content: center;   /* Centre le tout au milieu de la page */
+    gap: 15px;                 /* Espace entre le Coach et le Menu */
+    margin-top: 20px;          /* Espace avec le terrain */
+}
+
+/* --- AJUSTEMENT DU COACH --- */
+/* On s'assure qu'il n'a pas de marges bizarres qui le décalent */
+.coach-slot {
+    margin: 0 !important; /* On enlève le "margin: 0 auto" s'il existait */
+    flex-shrink: 0;       /* Empêche le coach de s'écraser si l'écran est petit */
+}
+
+/* --- AJUSTEMENT DU SELECT --- */
+.formation-select {
+    width: 100%;          /* On laisse le texte décider de la largeur */
+    min-width: 180px;     /* Mais pas trop petit non plus */
+    margin: 0;            /* Pas de marge externe */
+}
+
+/* Conteneur pour aligner le Label et le Select */
+.formation-controls {
+    display: flex;
+    flex-direction: column; /* Ou row si tu préfères côte à côte */
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Le Select lui-même */
+.formation-select {
+    /* 1. On retire le style par défaut du navigateur (moche) */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* 2. Dimensions et Espacement */
+    padding: 10px 15px;
+    padding-right: 40px; /* Place pour la flèche */
+    
+    /* 3. Couleurs et Fond */
+    background-color: rgba(30, 30, 30, 0.95);
+    color: #fff;
+    font-family: 'Arial', sans-serif; /* Ou ta police perso */
+    font-size: 14px;
+    font-weight: 600;
+
+    /* 4. Bordures */
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    
+    /* 5. Curseur */
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    /* 6. La Petite Flèche Personnalisée (SVG encodé) */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+/* Effet au survol */
+.formation-select:hover {
+    background-color: rgba(50, 50, 50, 1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Effet quand on clique dessus (Focus) */
+.formation-select:focus {
+    outline: none;
+    border-color: #f1c40f; /* Jaune Victory Road */
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2); /* Lueur jaune */
+}
+
+/* Style des options (la liste déroulante) */
+.formation-select option {
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Style pour l'affichage simple (Visiteur) */
+.formation-display {
+    background: rgba(0, 0, 0, 0.6);
+    color: #f1c40f;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #f1c40f;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
