@@ -17,7 +17,6 @@ public function render() {
         $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
         $initial = $isLoggedIn ? strtoupper(substr($username, 0, 1)) : '';
         $avatarUrl = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null;
-        
         // Logique logo (si accueil ET pas connecté, on cache le logo)
         $logoClass = ($this->isHome && !$isLoggedIn) ? 'header-logo logo-hidden' : 'header-logo';
 

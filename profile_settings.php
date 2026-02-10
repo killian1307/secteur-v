@@ -27,24 +27,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($newUsername)) {
             $message = "Le pseudo ne peut pas être vide.";
             $msgType = "error";
+        // Longueur max (12)
+        } elseif (mb_strlen($newUsername) > 12) {
+            $message = "Le pseudo ne doit pas dépasser 12 caractères.";
+            $msgType = "error alert-danger";
+
+        // Vérification Longueur Min
         } elseif (strlen($newUsername) < 3) {
             $message = "Le pseudo doit contenir au moins 3 caractères.";
             $msgType = "error";
         } else {
-            // Mise à jour BDD
-            $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
-            if ($stmt->execute([$newUsername, $newEmail, $_SESSION['user_id']])) {
-                // Met à jour la session
-                $_SESSION['username'] = $newUsername;
-                
-                $message = "Données mises à jour avec succès.";
-                $msgType = "success";
-            } else {
-                $message = "Erreur lors de la mise à jour.";
-                $msgType = "error";
+                // TOUT EST BON : On met à jour
+                try {
+                    $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
+                    if ($stmt->execute([$newUsername, $newEmail, $_SESSION['user_id']])) {
+                        // Met à jour la session immédiatement pour que le header change
+                        $_SESSION['username'] = $newUsername;
+                        
+                        $message = "Accréditations mises à jour avec succès.";
+                        $msgType = "success alert-success";
+                    } else {
+                        $message = "Erreur technique lors de la mise à jour.";
+                        $msgType = "error alert-danger";
+                    }
+                } catch (PDOException $e) {
+                    $message = "Erreur : Ce nom d'utilisateur est déjà utilisé.";
+                    $msgType = "error alert-danger";
+                }
             }
         }
-    }
 
     // Suppression du compte
     if (isset($_POST['delete_account'])) {
@@ -97,7 +108,7 @@ $header->render();
                     <label for="username">Nom d'Utilisateur</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required minlength="3">
+                        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required minlength="3" maxlength="12">
                     </div>
                 </div>
 

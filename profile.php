@@ -4,7 +4,7 @@ require 'db.php';
 
 // Si l'utilisateur n'est pas connecté, redirige vers l'accueil
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: discord_login.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
 }
 
 // Cherche l'utilisateur dans la base de données
-$stmt = $pdo->prepare("SELECT username, avatar, created_at, elo, grade, bio FROM users WHERE username = ?");
+$stmt = $pdo->prepare("SELECT id, username, avatar, created_at, elo, grade, bio FROM users WHERE username = ?");
 $stmt->execute([$targetUsername]);
 $profileUser = $stmt->fetch();
 
@@ -31,6 +31,14 @@ if (!$profileUser) {
     header("Location: 404.php");
     exit;
 }
+
+$stmtTeam = $pdo->prepare("SELECT formation, team_name FROM teams WHERE user_id = ?");
+$stmtTeam->execute([$profileUser['id']]);
+$teamData = $stmtTeam->fetch();
+
+// Si l'utilisateur a une formation sauvegardée, on la prend. Sinon par défaut '4-4-2 Diamant'.
+$savedFormation = $teamData['formation'] ?? '4-4-2 Diamant';
+$teamName = $teamData['team_name'] ?? 'Victory Team';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
@@ -44,10 +52,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newBio = substr($newBio, 0, 150);
     }
 
-    // 3. Mise à jour en BDD
+    $newTeamName = trim($_POST['team_name']);
+    if (strlen($newTeamName) > 12) $newTeamName = substr($newTeamName, 0, 12); // Limite à 12 carac
+    if (empty($newTeamName)) $newTeamName = "Victory Team"; // Fallback
+
+    // Mise à jour en BDD
     try {
         $stmt = $pdo->prepare("UPDATE users SET bio = ? WHERE id = ?");
         $stmt->execute([$newBio, $_SESSION['user_id']]);
+
+        // Mise à jour du nom d'équipe
+        // Vérifie si l'équipe existe
+        $checkTeam = $pdo->prepare("SELECT id FROM teams WHERE user_id = ?");
+        $checkTeam->execute([$_SESSION['user_id']]);
+        
+        if ($checkTeam->fetch()) {
+            $stmtTeam = $pdo->prepare("UPDATE teams SET team_name = ? WHERE user_id = ?");
+            $stmtTeam->execute([$newTeamName, $_SESSION['user_id']]);
+        } else {
+            // Création si inexistante (cas rare)
+            $stmtTeam = $pdo->prepare("INSERT INTO teams (user_id, team_name, formation) VALUES (?, ?, '4-4-2 Diamant')");
+            $stmtTeam->execute([$_SESSION['user_id'], $newTeamName]);
+        }
         
         // Succès : on retourne au profil
         header("Location: profile.php");
@@ -58,6 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Erreur lors de la mise à jour : " . $e->getMessage());
     }
 }
+
+// Vérifie si propriétaire
+$isOwner = isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $profileUser['id']);
+$targetUserId = $profileUser['id'];
+
+// Classe CSS pour désactiver le curseur si on n'est pas proprio
+$fieldClass = $isOwner ? 'editable-mode' : 'readonly-mode';
 
 require 'assets/header.php';
 require 'assets/footer.php';
@@ -79,84 +112,177 @@ $header->render();
 
     <?php else: ?>
         <?php 
-            // Sécurisation des données
+            // Data Prep
             $displayUsername = htmlspecialchars($profileUser['username']);
-            // Avatar par défaut si null
+
             $displayAvatar = $profileUser['avatar'] ? htmlspecialchars($profileUser['avatar']) : 'assets/img/default_user.webp';
-            // Date (optionnel, pour le style)
             $joinDate = date('d/m/Y', strtotime($profileUser['created_at'] ?? 'now'));
-
             $elo = $profileUser['elo'];
-
             $grade = $profileUser['grade'];
-
             $bio = $profileUser['bio'];
-
-            // Bio
-            if (empty($bio)) {
-                $displayBio = "*Bruits de criquets*";
-                $bioClass = "empty-bio";
-            } else {
-                $displayBio = htmlspecialchars($bio);
-                $bioClass = "";
-            }
             
-            // Grades spéciaux
-            $gradeClass = '';
+            // Bio check
+            $displayBio = empty($bio) ? "Aucune bio définie." : htmlspecialchars($bio);
+            $bioClass = empty($bio) ? "empty-bio" : "";
 
-            if ($grade === 'Créateur') {
-                $gradeClass = 'is-creator';
-            } elseif ($grade === 'VIP') {
-                $gradeClass = 'is-vip';
-            } elseif ($grade === 'Modérateur') {
-                $gradeClass = 'is-moderator';
-            }
+            // Grade coloring
+            $gradeClass = '';
+            if ($grade === 'Créateur') $gradeClass = 'is-creator';
+            elseif ($grade === 'VIP') $gradeClass = 'is-vip';
+            elseif ($grade === 'Modérateur') $gradeClass = 'is-moderator';
         ?>
 
-        <div class="player-card-container">
-            <div class="player-card">
+        <div class="osu-layout">
+
+            <div class="osu-profile-header">
                 
-                <div class="player-avatar-wrapper">
-                    <img src="<?php echo $displayAvatar; ?>" alt="<?php echo $displayUsername; ?>" class="player-avatar">
-                    <div class="rank-badge tooltip" data-tooltip="Utilisateur Vérifié">
-                        <i class="fas fa-star" ></i> </div>
+                <div class="header-avatar-section">
+                    <img src="<?php echo $displayAvatar; ?>" alt="<?php echo $displayUsername; ?>" class="osu-avatar">
                 </div>
 
-                <div class="player-info">
-                    <h1 class="player-name"><?php echo $displayUsername; ?></h1>
-                    <p class="player-title <?php echo $gradeClass; ?>">
-                        <?php echo htmlspecialchars($grade); ?> du Secteur V
-                    </p>
-                    
-                    <div class="player-stats-row">
-                        <div class="stat-pill">
-                            <i class="fas fa-calendar-alt"></i> Depuis le <?php echo $joinDate; ?>
+                <div class="header-info-section">
+                    <div class="name-row">
+                        <h1 class="osu-username" title="<?php echo htmlspecialchars($profileUser['username']); ?>">
+                            <?php echo $displayUsername; ?>
+                        </h1>
+                        <span class="osu-grade <?php echo $gradeClass; ?>"><?php echo htmlspecialchars($grade); ?></span>
+                    </div>
+
+                    <div class="badges-row">
+                        <div class="badge-pill tooltip" data-tooltip="Utilisateur Vérifié">
+                            <i class="fas fa-check-circle"></i> Vérifié
                         </div>
-                        <div class="stat-pill highlight">
-                            <i class="fas fa-trophy"></i> <?php echo $elo; ?>
+                        <div class="badge-pill">
+                            <i class="fas fa-calendar-alt"></i> <?php echo $joinDate; ?>
                         </div>
+                        </div>
+
+                    <div class="bio-row">
+                        <p class="osu-bio <?php echo $bioClass; ?>"><?php echo $displayBio; ?></p>
+                        <?php if ($isOwner): ?>
+                            <button class="mini-edit-btn" onclick="openEditModal()" title="Modifier la bio">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="player-bio-container">
-                    <p class="player-bio <?php echo $bioClass; ?>">
-                        <?php echo $displayBio; ?>
-                    </p>
-                </div> 
-
-                <?php if ($profileUser['username'] === $_SESSION['username']): ?>
-                    <div class="card-actions">
-                        <button class="other-button" onclick="openEditModal()">
-                            <i class="fas fa-cog"></i> Modifier mon dossier
-                        </button>
+                <div class="header-stats-section">
+                    <div class="stat-box">
+                        <span class="stat-value"><?php echo $elo; ?></span>
+                        <span class="stat-label">Points ELO</span>
                     </div>
-                <?php endif; ?>
+                    <div class="stat-box">
+                        <span class="stat-value">0</span> <span class="stat-label">Matchs</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value">0%</span> <span class="stat-label">Win Rate</span>
+                    </div>
+                </div>
 
             </div>
+
+            <div class="osu-body-section">
+                    <?php
+                        $formationsMap = [
+                            '4-4-2 Diamant'       => '4-4-2-diamant',
+                            '4-4-2 Boîte'         => '4-4-2-boite',
+                            '3-5-2 Liberté'       => '3-5-2-liberte',
+                            '4-3-3 Triangle'      => '4-3-3-triangle',
+                            '4-3-3 Delta'         => '4-3-3-delta',
+                            '4-5-1 Équilibré'     => '4-5-1-equilibre',
+                            '3-6-1 Hexa'          => '3-6-1-hexa',
+                            '5-4-1 Double Volante'=> '5-4-1-double-volante'
+                        ];
+                        $currentClass = $formationsMap[$savedFormation] ?? '4-4-2-diamant';
+                    ?>
+            <p class="section-title">Équipe</p>
+                <div class="team-header">
+                <div class="team-info-left">
+                    <h2 class="team-name-title">
+                    <?php echo htmlspecialchars($teamName); ?>
+                        <?php if ($isOwner): ?>
+                            <button class="mini-edit-btn" onclick="openEditModal()" title="Changer le nom d'équipe">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        <?php endif; ?>
+                    </h2>
+                    <div class="team-meta">
+                        <div class="formation-selector-wrapper">
+                        <span class="formation-tag" id="formationDisplay">
+                            <i class="fas fa-chess-board"></i> 
+                            <span id="formationLabelText"><?php echo htmlspecialchars($savedFormation); ?></span>
+
+                            <?php if ($isOwner): ?>
+                                <i class="fas fa-pencil-alt" style="margin-left: 8px; font-size: 0.8em; opacity: 0.7;"></i>
+                            <?php endif; ?>
+                        </span>
+
+                        <?php if ($isOwner): ?>
+                            <select id="formationSelect" onchange="changeFormation(this)" class="ghost-select" title="Changer la formation">
+                                <?php 
+                                foreach($formationsMap as $name => $cssClass) {
+                                    $isSelected = ($name === $savedFormation) ? 'selected' : '';
+                                    echo "<option value='$name' data-class='$cssClass' $isSelected>$name</option>";
+                                }
+                                ?>
+                            </select>
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-coach-right">
+                            <div class="player-slot coach-slot tooltip <?php echo $isOwner ? '' : 'is-readonly'; ?>" 
+                                data-tooltip="Sans coach" 
+                                <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> 
+                                id="slot-display-coach">
+                                <div class="empty-state"><i class="fas fa-user-tie"></i></div>
+                            </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="builder-container">
+
+                    <div class="soccer-field <?php echo $fieldClass; ?> formation-<?php echo $currentClass; ?>" id="field-container">
+                        <?php
+                        function renderSlot($id, $label, $isOwner) {
+                            $onclick = $isOwner ? "onclick=\"openSelector('$id')\"" : "";
+                            $icon = $isOwner ? '<i class="fas fa-plus"></i>' : '';
+                            echo "<div class=\"player-slot tooltip\" data-tooltip=\"Emplacement vide\" $onclick id=\"slot-display-$id\" data-slot=\"$id\">
+                                    <div class=\"empty-state\">$icon</div>
+                                    <span class=\"position-label\">$label</span>
+                                  </div>";
+                        }
+                        renderSlot('1', 'GK', $isOwner);
+                        renderSlot('2', 'DF', $isOwner);
+                        renderSlot('3', 'DF', $isOwner);
+                        renderSlot('4', 'DF', $isOwner);
+                        renderSlot('5', 'DF', $isOwner);
+                        renderSlot('6', 'MF', $isOwner);
+                        renderSlot('7', 'MF', $isOwner);
+                        renderSlot('8', 'MF', $isOwner);
+                        renderSlot('9', 'MF', $isOwner);
+                        renderSlot('10', 'FW', $isOwner);
+                        renderSlot('11', 'FW', $isOwner);
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+        </div> <?php endif; ?>
+
+    <div id="playerSelectorModal" onclick="if(event.target === this) closeSelector()">
+    <div class="modal-box-team">
+        <button class="close-btn" onclick="closeSelector()">×</button>
+        <h3 id="modalTitle">Choisir un joueur</h3>
+        
+        <input type="text" id="playerSearchInput" placeholder="Chercher...">
+        
+        <div id="searchResults" class="results-grid">
         </div>
-
-    <?php endif; ?>
-
+    </div>
+</div>
 </main>
 
 <div id="editModal" class="modal-overlay" onclick="closeEditModal(event)">
@@ -181,6 +307,18 @@ $header->render();
                     <span id="char-count">0</span>/150
                 </div>
             </div>
+            <div class="form-group">
+                <label for="team-name-input" class="form-label">Nom de l'équipe (Max 12)</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-shield-alt"></i>
+                    <input type="text" 
+                           name="team_name" 
+                           id="team-name-input" 
+                           value="<?php echo htmlspecialchars($teamName); ?>" 
+                           maxlength="12"
+                           required>
+                </div>
+            </div>
         </div>
             <div class="modal-footer">
                 <button type="submit" class="other-button">Enregistrer</button>
@@ -195,6 +333,13 @@ $header->render();
 $footer = new Footer('profile-footer');
 $footer->render();
 ?>
+<script>
+    const CONFIG_TEAM = {
+        targetUserId: <?php echo $targetUserId; ?>,
+        isOwner: <?php echo $isOwner ? 'true' : 'false'; ?>,
+        currentFormation: "<?php echo htmlspecialchars($savedFormation); ?>"
+    };
+</script>
 <script src="script.js"></script>
 </body>
 </html>
