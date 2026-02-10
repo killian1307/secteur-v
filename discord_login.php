@@ -115,6 +115,11 @@ if (isset($_GET['code'])) {
     $user = $stmt->fetch();
 
     if ($user) {
+        if ($user['avatar'] !== $avatar_url) {
+            $updateStmt = $pdo->prepare("UPDATE users SET avatar = ? WHERE id = ?");
+            $updateStmt->execute([$avatar_url, $user['id']]);
+        }
+        
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['avatar'] = $avatar_url;
