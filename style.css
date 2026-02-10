@@ -1543,6 +1543,7 @@ input:valid {
     margin: 0;
     text-transform: uppercase;
     font-style: italic;
+    text-align: left;
 }
 
 .formation-tag {

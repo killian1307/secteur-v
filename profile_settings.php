@@ -36,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (strlen($newUsername) < 3) {
             $message = "Le pseudo doit contenir au moins 3 caractères.";
             $msgType = "error";
+        // Vérification du pseudo (lettres, chiffres, _ et .)
+        } elseif (!preg_match('/^[a-zA-Z0-9_.]+$/', $newUsername)) {
+            $message = "Le pseudo ne peut contenir que des lettres, points (.) et underscores (_).";
+            $msgType = "error alert-danger";
+        // ------------------------------------------
+
         } else {
                 // TOUT EST BON : On met à jour
                 try {
@@ -105,10 +111,10 @@ $header->render();
             
             <form method="POST" action="" class="profile-form">
                 <div class="form-group">
-                    <label for="username">Nom d'Utilisateur</label>
+                    <label for="username">Nom d'Utilisateur (Maj, min, chiffres, "_" et ".")</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required minlength="3" maxlength="12">
+                        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required minlength="3" maxlength="12" pattern="[a-zA-Z0-9_.]+">
                     </div>
                 </div>
 
