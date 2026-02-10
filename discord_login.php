@@ -88,8 +88,18 @@ if (isset($_GET['code'])) {
 
     // Préparation des données
     $discord_id = $user_data['id'];
-    $username = $user_data['username'];
     $email = isset($user_data['email']) ? $user_data['email'] : null;
+
+    $raw_username = $user_data['username'];
+
+    // Si le nom est trop long (> 12)
+    if (mb_strlen($raw_username) > 12) {
+        // On garde les 8 premiers caractères et on ajoute 4 chiffres aléatoires
+        // Ex: "SuperLongPseudo" devient "SuperLon4829"
+        $username = mb_substr($raw_username, 0, 8) . rand(1000, 9999);
+    } else {
+        $username = $raw_username;
+}
     
     if (isset($user_data['avatar'])) {
         $avatar_url = "https://cdn.discordapp.com/avatars/$discord_id/" . $user_data['avatar'] . ".png";

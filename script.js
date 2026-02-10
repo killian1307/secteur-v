@@ -372,6 +372,11 @@ async function changeFormation(selectElement) {
 
     console.log("Changement vers :", newFormationName, "| Classe CSS :", cssClass);
 
+    const labelText = document.getElementById('formationLabelText');
+    if (labelText) {
+        labelText.innerText = newFormationName;
+    }
+
     const field = document.getElementById('field-container');
     
     // 2. Changement Visuel : On utilise la classe CSS propre
