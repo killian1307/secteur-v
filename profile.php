@@ -170,7 +170,7 @@ $header->render();
                 <div class="header-stats-section">
                     <div class="stat-box">
                         <span class="stat-value"><?php echo $elo; ?></span>
-                        <span class="stat-label">Points ELO</span>
+                        <span class="stat-label">Points EDP</span>
                     </div>
                     <div class="stat-box">
                         <span class="stat-value">0</span> <span class="stat-label">Matchs</span>
