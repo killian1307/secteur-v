@@ -36,19 +36,19 @@ $stmtTeam = $pdo->prepare("SELECT formation, team_name FROM teams WHERE user_id 
 $stmtTeam->execute([$profileUser['id']]);
 $teamData = $stmtTeam->fetch();
 
-// Si l'utilisateur a une formation sauvegardée, on la prend. Sinon par défaut '4-4-2 Diamant'.
+// Si l'utilisateur a une formation sauvegardée, la prend. Sinon par défaut '4-4-2 Diamant'.
 $savedFormation = $teamData['formation'] ?? '4-4-2 Diamant';
 $teamName = $teamData['team_name'] ?? 'Victory Team';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    // On nettoie l'entrée (supprime les espaces inutiles au début/fin)
+    // Nettoie l'entrée (supprime les espaces inutiles au début/fin)
     $newBio = trim($_POST['bio']);
 
     // Vérification de la longueur (Sécurité côté serveur)
     if (strlen($newBio) > 150) {
-        // Si c'est trop long, on coupe brutalement ou on renvoie une erreur
-        // Ici on coupe pour simplifier
+        // Si c'est trop long, coupe ou renvoie une erreur
+        // Coupe pour simplifier
         $newBio = substr($newBio, 0, 150);
     }
 

@@ -16,7 +16,7 @@ $action = $_GET['action'] ?? '';
 
 // Charger 'l'équipe
 if ($action === 'get_team') {
-    // Si user id, on regarde l'équipe de cet utilisateur, sinon on prend celle du connecté
+    // Si user id, regarde l'équipe de cet utilisateur, sinon prend celle du connecté
     $targetId = isset($_GET['user_id']) ? intval($_GET['user_id']) : $_SESSION['user_id'];
     
     // si l'id est invalide, renvoie une erreur

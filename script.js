@@ -140,7 +140,7 @@ function updateCharCount(textarea) {
     
     countSpan.textContent = currentLength;
     
-    // Change la couleur du compteur si on dépasse les 140 caractères
+    // Change la couleur du compteur si dépasse les 140 caractères
     if (currentLength >= 140) {
         countSpan.style.color = '#e74c3c';
     } else {
@@ -153,7 +153,7 @@ window.currentSlot = null;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Vérification cruciale : Est-ce que PHP a bien écrit la config ?
+    // Vérification PHP a bien écrit la config ?
     if (typeof CONFIG_TEAM === 'undefined') {
         console.error("CONFIG_TEAM n'existe pas. Vérifie profil.php !");
         return;
@@ -166,10 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLabels('4-4-2 Diamant');
     }
 
-    // On charge l'équipe de l'ID indiqué dans la config
+    // Charge l'équipe de l'ID indiqué dans la config
     loadTeam();
 
-    // On active la recherche seulement si on est le propriétaire
+    // Active la recherche seulement si on est le propriétaire
     if (CONFIG_TEAM.isOwner) {
         setupSearch();
     }
@@ -211,16 +211,16 @@ function renderTeam(team) {
         // Définition des clés pour récupérer les infos dans le JSON de l'API
         const isCoach = (id === 'coach');
         const imgKey = isCoach ? 'coach_img' : 'slot_' + id + '_img';
-        const nameKey = isCoach ? 'coach_name' : 'slot_' + id + '_name'; // <--- NOUVEAU
+        const nameKey = isCoach ? 'coach_name' : 'slot_' + id + '_name';
 
         const img = team[imgKey];
-        const name = team[nameKey]; // On récupère le nom du joueur
+        const name = team[nameKey]; // Récupère le nom du joueur
 
-        // On cherche la div HTML
+        // Cherche la div HTML
         const slotDiv = document.getElementById(`slot-display-${id}`);
         
         if(slotDiv) {
-            // A. GESTION DE L'IMAGE (Code existant)
+            // GESTION DE L'IMAGE
             if (img) {
                 const labelEl = slotDiv.querySelector('.position-label');
                 const labelHtml = labelEl ? labelEl.outerHTML : ''; 
@@ -228,12 +228,12 @@ function renderTeam(team) {
                 slotDiv.innerHTML = `<img src="${img}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">${labelHtml}`;
                 slotDiv.classList.add('filled');
                 
-                // B. GESTION DU TOOLTIP (NOUVEAU)
-                // On remplace "Emplacement vide" par le nom du joueur
+                // GESTION DU TOOLTIP
+                // Remplace "Emplacement vide" par le nom du joueur
                 slotDiv.setAttribute('data-tooltip', name); 
                 
             } else {
-                // Si pas de joueur, on remet le tooltip par défaut
+                // Si pas de joueur, remet le tooltip par défaut
                 slotDiv.setAttribute('data-tooltip', isCoach ? "Sans coach" : "Emplacement vide");
             }
         }
@@ -302,7 +302,7 @@ async function doSearch(term) {
     } catch (e) { console.error("Erreur recherche :", e); }
 }
 
-// 6. Sauvegarde
+// Sauvegarde
 async function savePlayer(player) {
     if (!CONFIG_TEAM.isOwner || !window.currentSlot) return;
 
@@ -317,14 +317,14 @@ async function savePlayer(player) {
         if(data.success) {
             console.log("Sauvegarde réussie !");
             closeSelector();
-            loadTeam(); // Rechargement simple (utilise la variable globale)
+            loadTeam(); // Rechargement
         } else {
             console.error("Erreur sauvegarde :", data);
         }
     } catch (e) { console.error("Erreur Fetch Save :", e); }
 }
 
-// --- GESTION DES FORMATIONS (VICTORY ROAD) ---
+/* --- GESTION DES FORMATIONS --- */
 /* --- CONFIGURATION DES ROLES --- */
 const FORMATION_ROLES = {
     '4-4-2 Diamant':        { 1:'GK', 2:'DF', 3:'DF', 4:'DF', 5:'DF', 6:'MF', 7:'MF', 8:'MF', 9:'MF', 10:'FW', 11:'FW' },
@@ -345,19 +345,19 @@ const FORMATION_ROLES = {
 function updateLabels(formationName) {
     console.log("Mise à jour des labels pour :", formationName);
     
-    // On récupère les rôles pour cette formation (ou par défaut 4-4-2 Diamant si introuvable)
+    // Récupère les rôles pour cette formation (ou 4-4-2 Diamant si introuvable)
     const roles = FORMATION_ROLES[formationName] || FORMATION_ROLES['4-4-2 Diamant'];
 
-    // On boucle sur les 11 joueurs
+    // Boucle sur les 11 joueurs
     for (let id = 1; id <= 11; id++) {
-        // On cherche la div du slot
+        // Cherche la div du slot
         const slotDiv = document.getElementById(`slot-display-${id}`);
         
         if (slotDiv) {
-            // On cherche le span qui contient le texte (GK, DF...)
+            // Cherche le span qui contient le texte (GK)
             const labelSpan = slotDiv.querySelector('.position-label');
             
-            // S'il existe, on change le texte
+            // S'il existe, change le texte
             if (labelSpan) {
                 labelSpan.innerText = roles[id];
             }
@@ -366,9 +366,9 @@ function updateLabels(formationName) {
 }
 
 async function changeFormation(selectElement) {
-    // 1. On récupère la vraie valeur (pour la BDD) et la classe CSS (pour l'affichage)
-    const newFormationName = selectElement.value; // ex: "4-4-2 Diamant"
-    const cssClass = selectElement.options[selectElement.selectedIndex].getAttribute('data-class'); // ex: "4-4-2-diamant"
+    // Récupère la vraie valeur (BDD) et la classe CSS (affichage)
+    const newFormationName = selectElement.value; // "4-4-2 Diamant"
+    const cssClass = selectElement.options[selectElement.selectedIndex].getAttribute('data-class'); // "4-4-2-diamant"
 
     console.log("Changement vers :", newFormationName, "| Classe CSS :", cssClass);
 
@@ -379,15 +379,15 @@ async function changeFormation(selectElement) {
 
     const field = document.getElementById('field-container');
     
-    // 2. Changement Visuel : On utilise la classe CSS propre
-    // On retire toutes les anciennes classes formation-...
+    // Changement Visuel : utilise la classe CSS propre
+    // Retire toutes les anciennes classes formation-...
     field.className = field.className.replace(/formation-[a-z0-9-]+/g, '').trim();
-    // On ajoute la nouvelle
+    // Ajoute la nouvelle
     field.classList.add('formation-' + cssClass);
 
     updateLabels(newFormationName);
 
-    // 3. Sauvegarde API : On envoie le vrai nom avec espaces
+    // Sauvegarde API : envoie le vrai nom avec espaces
     if (typeof CONFIG_TEAM !== 'undefined' && CONFIG_TEAM.isOwner) {
         try {
             const res = await fetch('api.php?action=save_formation', {

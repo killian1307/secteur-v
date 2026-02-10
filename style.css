@@ -1529,9 +1529,9 @@ input:valid {
 .section-title::after {
     content: '';
     display: block;
-    width: 50px; /* Une petite barre courte, pas tout le texte */
+    width: 50px;
     height: 4px;
-    background: var(--primary-purple); /* Doré */
+    background: var(--primary-purple);
     margin-top: 5px;
     border-radius: 2px;
 }
@@ -1561,23 +1561,23 @@ input:valid {
 }
 
 .formation-selector-wrapper {
-    position: relative; /* INDISPENSABLE : Définit la zone limite pour le select */
+    position: relative;
 }
 
-/* Le Select Invisible */
+/* Select Invisible */
 .ghost-select {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0; /* Totalement transparent */
-    cursor: pointer; /* Affiche la main au survol */
-    z-index: 10; /* Passe DEVANT le texte */
-    appearance: none; /* Supprime le style natif */
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+    appearance: none;
 }
 
-/* Effet au survol pour montrer qu'on peut cliquer */
+/* Effet au survol */
 .formation-selector-wrapper:hover .formation-tag {
     background: rgba(255, 215, 0, 0.6);
     border-color: #fff;
@@ -1591,7 +1591,7 @@ input:valid {
     transition: all 0.2s ease;
 }
 
-/* --- MOBILE RESPONSIVE --- */
+/* --- MOBILE RESPONSIVE POUR PROFIL.PHP --- */
 @media (max-width: 900px) {
     .profile-viewer-main {
         padding: 2rem 0 2rem 0 !important;
@@ -1629,7 +1629,6 @@ input:valid {
         font-size: clamp(1.5rem, 2.5vw, 2.5rem);
         text-align: center !important;
         margin: auto;
-        /* Compense l'espacement des lettres pour center */
         text-indent: 10px !important;
     }
 
@@ -1705,7 +1704,7 @@ input:valid {
     text-shadow: 0 0 10px rgba(199, 46, 204, 0.4);
 }
 
-/* Petit effet de fond (cercle lumineux derrière) */
+/* Effet de fond */
 .player-card::before {
     content: '';
     position: absolute;
@@ -1748,7 +1747,7 @@ input:valid {
     display: inline-block;
     position: relative;
 
-    /* Gestion des sauts de lignes */
+    /* Sauts de lignes */
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
@@ -1768,7 +1767,6 @@ input:valid {
 }
 
 .player-bio::before {
-    /* Code du guillemet ouvrant anglais */
     content: '\201C'; 
     
     position: absolute;
@@ -1894,7 +1892,7 @@ input:valid {
 }
 
 .stat-pill.highlight {
-    background: rgb(from var(--primary-purple) r g b / 0.1); /* Fond doré très léger */
+    background: rgb(from var(--primary-purple) r g b / 0.1);
     color: var(--primary-purple);
     border-color: rgb(from var(--primary-purple) r g b / 0.3);
 }
@@ -2252,13 +2250,13 @@ input:valid {
 /* =========================================
     5-4-1 DOUBLE VOLANTE
    ========================================= */
-/* Défenseurs */
+/* Défense */
 .formation-5-4-1-double-volante [data-slot="2"] { top: 60%; left: 25%; } 
 .formation-5-4-1-double-volante [data-slot="3"] { top: 75%; left: 30%; }
 .formation-5-4-1-double-volante [data-slot="4"] { top: 75%; left: 50%; }
 .formation-5-4-1-double-volante [data-slot="5"] { top: 75%; left: 70%; }
 .formation-5-4-1-double-volante [data-slot="6"]  { top: 25%; left: 30%; }
-/* 2 Volantes (MDC) + 2 MO */
+/* Milieu */
 .formation-5-4-1-double-volante [data-slot="7"] { top: 60%; left: 75%; }
 .formation-5-4-1-double-volante [data-slot="8"] { top: 45%; left: 60%; }
 .formation-5-4-1-double-volante [data-slot="9"] { top: 45%; left: 40%; }
@@ -2268,90 +2266,10 @@ input:valid {
 
 /* --- SÉLECTEUR DE FORMATION --- */
 
-/* --- LE CONTENEUR DU BAS --- */
-.coach-container {
-    display: flex;             /* Active le mode Flexible */
-    flex-direction: row;       /* Force l'affichage en ligne (côte à côte) */
-    align-items: center;       /* Centre verticalement (le rond face au milieu du select) */
-    justify-content: center;   /* Centre le tout au milieu de la page */
-    gap: 15px;                 /* Espace entre le Coach et le Menu */
-    margin-top: 20px;          /* Espace avec le terrain */
-}
-
 /* --- AJUSTEMENT DU COACH --- */
-/* On s'assure qu'il n'a pas de marges bizarres qui le décalent */
 .coach-slot {
-    margin: 0 !important; /* On enlève le "margin: 0 auto" s'il existait */
-    flex-shrink: 0;       /* Empêche le coach de s'écraser si l'écran est petit */
-}
-
-/* --- AJUSTEMENT DU SELECT --- */
-.formation-select {
-    width: 100%;          /* On laisse le texte décider de la largeur */
-    min-width: 180px;     /* Mais pas trop petit non plus */
-    margin: 0;            /* Pas de marge externe */
-}
-
-/* Conteneur pour aligner le Label et le Select */
-.formation-controls {
-    display: flex;
-    flex-direction: column; /* Ou row si tu préfères côte à côte */
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-/* Le Select lui-même */
-.formation-select {
-    /* 1. On retire le style par défaut du navigateur (moche) */
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    /* 2. Dimensions et Espacement */
-    padding: 10px 15px;
-    padding-right: 40px; /* Place pour la flèche */
-    
-    /* 3. Couleurs et Fond */
-    background-color: rgba(30, 30, 30, 0.95);
-    color: #fff;
-    font-family: 'Arial', sans-serif; /* Ou ta police perso */
-    font-size: 14px;
-    font-weight: 600;
-
-    /* 4. Bordures */
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    
-    /* 5. Curseur */
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    /* 6. La Petite Flèche Personnalisée (SVG encodé) */
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 16px;
-}
-
-/* Effet au survol */
-.formation-select:hover {
-    background-color: rgba(50, 50, 50, 1);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Effet quand on clique dessus (Focus) */
-.formation-select:focus {
-    outline: none;
-    border-color: #f1c40f; /* Jaune Victory Road */
-    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2); /* Lueur jaune */
-}
-
-/* Style des options (la liste déroulante) */
-.formation-select option {
-    background-color: #222;
-    color: #fff;
-    padding: 10px;
+    margin: 0 !important;
+    flex-shrink: 0;
 }
 
 /* Responsive */

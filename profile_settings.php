@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ------------------------------------------
 
         } else {
-                // TOUT EST BON : On met à jour
+                // Met à jour
                 try {
                     $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
                     if ($stmt->execute([$newUsername, $newEmail, $_SESSION['user_id']])) {
