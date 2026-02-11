@@ -305,14 +305,14 @@ h1 {
     font-size: 1.3rem;
     color: var(--text-secondary);
     max-width: 650px;
-    margin-bottom: 3rem;
     line-height: 1.6;
+    margin: 0 auto 3rem auto;
 }
 
 /* Call To Action */
 .cta-button {
     background: linear-gradient(135deg, var(--button-gradient-start), var(--button-gradient-end));
-    color: white; 
+    color: var(--background-card); 
     padding: 1.2rem 3rem;
     border: none;
     border-radius: 50px;
