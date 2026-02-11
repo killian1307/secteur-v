@@ -18,6 +18,7 @@ class Dashboard {
     public function render() {
         if (!$this->user) return; // Sécurité
 
+        $userId = $this->user['id'];
         $username = htmlspecialchars($this->user['username']);
         $wins = $this->user['wins'];
         $losses = $this->user['losses'];
@@ -32,6 +33,20 @@ class Dashboard {
         $stmtRank = $this->pdo->query("SELECT id, username, elo, avatar FROM users ORDER BY elo DESC");
         $allPlayers = $stmtRank->fetchAll(PDO::FETCH_ASSOC);
 
+        $sqlHistory = "
+            SELECT m.*, 
+                   w.username AS winner_name, 
+                   l.username AS loser_name
+            FROM matches m
+            JOIN users w ON m.winner_id = w.id
+            JOIN users l ON m.loser_id = l.id
+            WHERE m.winner_id = ? OR m.loser_id = ?
+            ORDER BY m.match_date DESC
+            LIMIT 10
+        ";
+        $stmtHist = $this->pdo->prepare($sqlHistory);
+        $stmtHist->execute([$userId, $userId]);
+        $history = $stmtHist->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <main class="dashboard-main">
             <div class="dashboard-header">
@@ -39,11 +54,11 @@ class Dashboard {
                 <p class="subtitle dashboard-sub">Prêt à prouver qui est le meilleur ?</p>
                 
                 <div class="mode-actions">
-                    <a href="classement.php?mode=normal" class="btn-mode normal">
+                    <a href="matchmaking.php?mode=normal" class="btn-mode normal">
                         <i class="fas fa-running"></i> Match Amical
                     </a>
                     
-                    <a href="classement.php?mode=ranked" class="btn-mode ranked">
+                    <a href="matchmaking.php?mode=ranked" class="btn-mode ranked">
                         <i class="fas fa-trophy"></i> Jouer en Classé
                     </a>
                 </div>
@@ -52,40 +67,58 @@ class Dashboard {
             <div class="dashboard-grid">
                 
                 <div class="dash-card history-card">
-                    <h3><i class="fas fa-history"></i> Historique</h3>
+                <h3><i class="fas fa-history"></i> Historique</h3>
                     <div class="card-header-tabs">
                         <button class="tab-btn active" onclick="switchTab('ranked')">Classé</button>
                         <button class="tab-btn" onclick="switchTab('normal')">Normal</button>
                     </div>
-                    <!-- PLACEHOLDER GAMES -->
-                    <div class="history-content" id="history-list">
-                        <div class="match-item win" data-type="ranked">
-                            <span class="match-result">V</span>
-                            <div class="match-info">
-                                <span class="vs">vs DarkEmperor</span>
-                                <span class="score">3 - 2</span>
+                    
+                    <div class="history-content">
+                        <?php if (empty($history)): ?>
+                            <p style="text-align:center; color:var(--text-secondary); padding:20px;">Aucun match joué pour le moment.</p>
+                        <?php else: ?>
+                            <?php foreach($history as $match): 
+                                // Détermine si victoire ou défaite
+                                $isWin = ($match['winner_id'] == $userId);
+                                
+                                // Variables d'affichage
+                                $resultLetter = $isWin ? 'V' : 'D';
+                                $resultClass = $isWin ? 'win' : 'loss';
+                                $eloChange = $isWin ? '+' . $match['winner_elo_change'] : $match['loser_elo_change'];
+                                
+                                // Nom de l'adversaire
+                                $opponentName = $isWin ? $match['loser_name'] : $match['winner_name'];
+                                
+                                // Score
+                                $myScore = $isWin ? $match['score_winner'] : $match['score_loser'];
+                                $opScore = $isWin ? $match['score_loser'] : $match['score_winner'];
+                                
+                                // Mode Normal (Pas d'ELO)
+                                $matchMode = $match['mode'];
+                                if ($matchMode === 'normal') {
+                                    $eloDisplay = '---';
+                                    $eloClass = ''; 
+                                } else {
+                                    $eloDisplay = $eloChange;
+                                    $eloClass = $isWin ? '' : 'text-red';
+                                }
+
+                                $displayStyle = ($matchMode === 'ranked') ? 'flex' : 'none';
+                            ?>
+                            
+                            <div class="match-item <?php echo $resultClass; ?>" data-type="<?php echo htmlspecialchars($matchMode); ?>" style="display: <?php echo $displayStyle; ?>;">
+                                <span class="match-result"><?php echo $resultLetter; ?></span>
+                                <div class="match-info">
+                                    <span class="vs">vs <?php echo htmlspecialchars($opponentName); ?></span>
+                                    <span class="score"><?php echo $myScore . ' - ' . $opScore; ?></span>
+                                </div>
+                                <span class="elo-change <?php echo $eloClass; ?>"><?php echo $eloDisplay; ?></span>
                             </div>
-                            <span class="elo-change">+15</span>
-                        </div>
-                        <div class="match-item loss" data-type="ranked">
-                            <span class="match-result">D</span>
-                            <div class="match-info">
-                                <span class="vs">vs AxelBlaze99</span>
-                                <span class="score">1 - 4</span>
-                            </div>
-                            <span class="elo-change text-red">-12</span>
-                        </div>
-                        <div class="match-item win" data-type="normal" style="display:none;">
-                            <span class="match-result">V</span>
-                            <div class="match-info">
-                                <span class="vs">vs Bot_Training</span>
-                                <span class="score">5 - 0</span>
-                            </div>
-                            <span class="elo-change">---</span>
-                        </div>
+
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
-                    <a href="#" class="history-more">Voir tout l'historique</a>
-                </div>
+                    </div>
 
                 <div class="dash-card stats-card">
                     <h3><i class="fas fa-chart-pie"></i> Performance</h3>
@@ -156,20 +189,26 @@ class Dashboard {
         </main>
 
         <script>
+
         function switchTab(type) {
-            // Gestion des boutons
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
-
-            // Gestion de l'affichage (Fake logic pour l'exemple statique)
+            
+            // On masque tout d'abord
             const items = document.querySelectorAll('.match-item');
+            let hasVisibleItem = false;
+
             items.forEach(item => {
                 if(item.dataset.type === type) {
                     item.style.display = 'flex';
+                    hasVisibleItem = true;
                 } else {
                     item.style.display = 'none';
                 }
             });
+
+            // Petit détail UX : Si aucun match dans cette catégorie, tu pourrais afficher un msg, 
+            // mais pour l'instant on laisse vide.
         }
 
         // AUTO SCROLL (Version Fixe : Ne bouge QUE la boîte, pas la page)
