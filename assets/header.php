@@ -86,13 +86,15 @@ public function render() {
         <div class="mobile-menu-content" onclick="event.stopPropagation()">
             <a href="index.php#" class="mobile-link"><i class="fas fa-home"></i> Accueil</a>';
 if ($isLoggedIn) {
-            // Si connecté, menu match et classement
+            // Si connecté, menu match
             echo '<a href="matchmaking.php" class="mobile-link"><i class="fas fa-gamepad"></i> Match</a>';
         } else {
             // Sinon, présentation
             echo '<a href="index.php#presentation" class="mobile-link"><i class="fas fa-info-circle"></i> Présentation</a>';
+            echo '<a href="edp.php" class="mobile-link"><i class="fas fa-dumbbell"></i> Échelle du Pouvoir</a>';
         }
-        echo '<a href="classement.php" class="mobile-link"><i class="fas fa-list-ol"></i> Classement</a>';
+        echo '<a href="ranking.php" class="mobile-link"><i class="fas fa-list-ol"></i> Classement</a>';
+        echo '<a href="playerbook.php" class="mobile-link"><i class="fas fa-address-card"></i> Liste des joueurs</a>';
         echo '<a href="https://discord.gg/A98PfnH8SC" class="mobile-link" target="_blank"><i class="fab fa-discord"></i> Discord</a>
         </div>
     </div>';

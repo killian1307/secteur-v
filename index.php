@@ -87,7 +87,7 @@ $dashboard->render();
                     <p>
                         Loin des scores décidés à l'avance, notre vision du <strong>Secteur Victory</strong> est celle de l'équité absolue. Nous fournissons la structure, les règles et l'arène, mais seule la victoire sur le terrain compte. 
                     </p>
-                    <a href="classement.php" class="link-arrow">En savoir plus sur le classement <i class="fas fa-arrow-right"></i></a>
+                    <a href="edp.php" class="link-arrow">En savoir plus sur le classement <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="info-visual">
                     <img src="assets/img/img_2.webp" alt="Illustration de Quentin Cinquedea" class="feature-img">

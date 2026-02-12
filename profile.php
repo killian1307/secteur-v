@@ -4,7 +4,7 @@ require 'db.php';
 
 // Si l'utilisateur n'est pas connecté, redirige vers l'accueil
 if (!isset($_SESSION['user_id'])) {
-    header("Location: discord_login.php");
+    header("Location: index.php");
     exit;
 }
 
