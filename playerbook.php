@@ -11,14 +11,13 @@ if (!isset($_SESSION['user_id'])) {
 require 'assets/header.php';
 require 'assets/footer.php';
 
-// --- LOGIQUE DE TRI ET RECHERCHE ---
+// Logique tri + recherche
 
 // 1. Paramètres par défaut
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 50; // Joueurs par page
+$limit = 50;
 $offset = ($page - 1) * $limit;
 
-// Colonnes autorisées pour le tri (Sécurité anti-injection SQL)
 $allowed_sorts = ['id', 'name_en', 'name_jp', 'position', 'element', 'gender', 'total_stats'];
 $sort = isset($_GET['sort']) && in_array($_GET['sort'], $allowed_sorts) ? $_GET['sort'] : 'id';
 $order = isset($_GET['order']) && $_GET['order'] === 'DESC' ? 'DESC' : 'ASC';
@@ -26,7 +25,7 @@ $order = isset($_GET['order']) && $_GET['order'] === 'DESC' ? 'DESC' : 'ASC';
 // Recherche
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-// 2. Construction de la requête
+// Construction de la requête
 $sql = "SELECT * FROM players";
 $params = [];
 
@@ -38,12 +37,12 @@ if ($search) {
 
 $sql .= " ORDER BY $sort $order LIMIT $limit OFFSET $offset";
 
-// 3. Exécution requête principale
+// Exécution requête principale
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $players = $stmt->fetchAll();
 
-// 4. Compter le total (pour la pagination)
+// Compter le total (pour la pagination)
 $sqlCount = "SELECT COUNT(*) FROM players";
 if ($search) {
     $sqlCount .= " WHERE name_en LIKE ? OR name_jp LIKE ?";
@@ -53,16 +52,15 @@ $stmtCount->execute($search ? [$params[0], $params[1]] : []);
 $totalPlayers = $stmtCount->fetchColumn();
 $totalPages = ceil($totalPlayers / $limit);
 
-// --- FONCTION HELPER POUR LES LIENS ---
-// Permet de garder le tri et la recherche quand on change de page
-function getLink($newPage, $newSort = null, $currentSearch) {
+// Fonction pour les liens
+function getLink($newPage, $newSort = null, $currentSearch = '') {
     global $page, $sort, $order;
     
     $p = $newPage ?? $page;
     $s = $newSort ?? $sort;
     $o = $order;
     
-    // Si on clique sur la colonne déjà active, on inverse l'ordre
+    // Si clic sur colonne déjà active, inverse l'ordre
     if ($newSort && $newSort === $sort) {
         $o = ($order === 'ASC') ? 'DESC' : 'ASC';
     } elseif ($newSort) {
@@ -73,7 +71,7 @@ function getLink($newPage, $newSort = null, $currentSearch) {
     return "?page=$p&sort=$s&order=$o&search=" . urlencode($currentSearch);
 }
 
-// Fonction pour afficher une flèche de tri
+// Fonction pour afficher la flèche de tri
 function sortArrow($colName) {
     global $sort, $order;
     if ($sort === $colName) {
@@ -91,31 +89,33 @@ $header->render();
 <main class="playerbook-container">
     
     <div class="pb-header">
-        <h1>Player <span style="color:var(--primary-purple)">Book</span></h1>
+        <h1 class="player-h1">Player <span style="color:var(--primary-purple)">Book</span></h1>
         <p class="subtitle">Base de données officielle du Secteur V.</p>
     </div>
 
-    <form method="GET" class="search-bar-container">
-        <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
-        <input type="hidden" name="order" value="<?php echo htmlspecialchars($order); ?>">
-        
-        <input type="text" name="search" placeholder="Rechercher un joueur (Nom anglais ou japonais)..." value="<?php echo htmlspecialchars($search); ?>">
-        <button type="submit"><i class="fas fa-search"></i></button>
-        <?php if($search): ?>
-            <a href="playerbook.php" class="reset-btn" title="Réinitialiser">✖</a>
-        <?php endif; ?>
-    </form>
+    <div class="controls-wrapper">
+        <form method="GET" class="search-bar-container">
+            <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sort); ?>">
+            <input type="hidden" name="order" value="<?php echo htmlspecialchars($order); ?>">
+            
+            <input type="text" name="search" placeholder="Rechercher un joueur (Nom anglais ou japonais)..." value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit"><i class="fas fa-search"></i></button>
+            <?php if($search): ?>
+                <a href="playerbook.php" class="reset-btn" title="Réinitialiser">✖</a>
+            <?php endif; ?>
+        </form>
 
-    <div class="pagination">
-        <?php if ($page > 1): ?>
-            <a href="<?php echo getLink($page - 1, null, $search); ?>" class="page-btn">← Précédent</a>
-        <?php endif; ?>
-        
-        <span class="page-info">Page <?php echo $page; ?> / <?php echo $totalPages; ?> (Total: <?php echo $totalPlayers; ?>)</span>
-        
-        <?php if ($page < $totalPages): ?>
-            <a href="<?php echo getLink($page + 1, null, $search); ?>" class="page-btn">Suivant →</a>
-        <?php endif; ?>
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="<?php echo getLink($page - 1, null, $search); ?>" class="page-btn">← Précédent</a>
+            <?php endif; ?>
+            
+            <span class="page-info">Page <?php echo $page; ?> / <?php echo $totalPages; ?> (Total: <?php echo $totalPlayers; ?>)</span>
+            
+            <?php if ($page < $totalPages): ?>
+                <a href="<?php echo getLink($page + 1, null, $search); ?>" class="page-btn">Suivant →</a>
+            <?php endif; ?>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -157,16 +157,6 @@ $header->render();
                 <?php endif; ?>
             </tbody>
         </table>
-    </div>
-
-    <div class="pagination bottom">
-        <?php if ($page > 1): ?>
-            <a href="<?php echo getLink($page - 1, null, $search); ?>" class="page-btn">← Précédent</a>
-        <?php endif; ?>
-        
-        <?php if ($page < $totalPages): ?>
-            <a href="<?php echo getLink($page + 1, null, $search); ?>" class="page-btn">Suivant →</a>
-        <?php endif; ?>
     </div>
 
 </main>

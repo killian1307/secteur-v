@@ -1,7 +1,9 @@
-/* style-playerbook.css */
-
+.player-h1 {
+    color: var(--text-primary);
+}
 .playerbook-container {
-    max-width: 1200px;
+
+    width: 100%;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
@@ -9,15 +11,6 @@
 .pb-header {
     text-align: center;
     margin-bottom: 2rem;
-}
-
-/* --- BARRE DE RECHERCHE --- */
-.search-bar-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 2rem;
-    width: 100%;
 }
 
 .search-bar-container input {
@@ -50,22 +43,6 @@
     border-radius: 5px;
 }
 
-/* --- PAGINATION --- */
-.pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-radius: 8px;
-}
-.pagination.bottom {
-    margin-top: 1rem;
-    justify-content: center;
-    gap: 20px;
-}
-
 .page-btn {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
@@ -81,20 +58,21 @@
 .page-info {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    margin: 0 10px;
 }
 
-/* --- TABLEAU --- */
+/* tableau */
 .table-responsive {
     overflow-x: auto;
     background: var(--background-card);
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 100%;
 }
 
 .player-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 800px; /* Force le scroll sur mobile */
 }
 
 .player-table th, .player-table td {
@@ -105,7 +83,7 @@
 
 .player-table th {
     background: rgba(0, 0, 0, 0.3);
-    position: sticky; /* En-têtes fixes lors du scroll */
+    position: sticky;
     top: 0;
     z-index: 10;
 }
@@ -136,7 +114,7 @@
 .font-bold { font-weight: bold; }
 .stat-cell { font-family: monospace; font-size: 1.1rem; color: #f1c40f; }
 
-/* --- BADGES --- */
+/* Badges */
 .badge {
     padding: 4px 8px;
     border-radius: 4px;
@@ -148,9 +126,9 @@
 
 /* Éléments */
 .elem-fire { background: #e74c3c; color: #fff; }
-.elem-wind { background: #2ecc71; }
-.elem-wood { background: #27ae60; color: #fff;} /* Forest en anglais souvent */
-.elem-earth { background: #e67e22; }
+.elem-wind { background: #34c8db; }
+.elem-forest { background: #27ae60; color: #fff;}
+.elem-mountain { background: #e67e22; }
 .elem-void { background: #95a5a6; }
 
 /* Positions */
@@ -158,3 +136,65 @@
 .pos-df { background: #3498db; color: #fff; }
 .pos-mf { background: #2ecc71; }
 .pos-fw { background: #e74c3c; color: #fff; }
+
+/* Conteneur des contrôles */
+.controls-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+
+/* Barre de recherche */
+
+.search-bar-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0;
+    width: auto;
+    flex-grow: 1;
+    justify-content: flex-start;
+    max-width: 500px;
+}
+
+/* Navigation entre les pages de la liste */
+.pagination {
+    margin-bottom: 0;
+    padding: 1rem;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .controls-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-bar-container {
+        max-width: 100%;
+    }
+    
+    .pagination {
+        padding: 0.5rem;
+        font-size: 0.7rem;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        background: none;
+    }
+
+    .page-btn {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+    }
+    
+    .page-info {
+        font-size: 0.6rem;
+    }
+}
