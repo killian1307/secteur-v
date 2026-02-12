@@ -172,8 +172,9 @@ class Dashboard {
                             
                             // Avatar par défaut si null
                             $avatar = $player['avatar'] ? htmlspecialchars($player['avatar']) : 'assets/img/default_avatar.png';
+                            $profileUrl = "profile.php?username=" . urlencode($player['username']);
                         ?>
-                            <div class="<?php echo $rowClass; ?>" <?php if($isMe) echo 'id="my-rank-row"'; ?>>
+                            <div class="<?php echo $rowClass; ?>" <?php if($isMe) echo 'id="my-rank-row"'; ?> onclick="window.location.href='<?php echo $profileUrl; ?>'">
                                 <div class="rank-pos">
                                     <?php if($isFirst): ?>
                                         <i class="fas fa-crown"></i>
