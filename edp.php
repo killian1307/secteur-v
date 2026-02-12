@@ -13,17 +13,6 @@ $header = new Header("SECTEUR V - Classement");
 // Affiche le header
 $header->render();
 ?>
-<!-- Si l'utilisateur est connecté, affiche le classement, sinon la page d'explications classique -->
-<?php if (isset($_SESSION['user_id'])): ?>
-
-<?php
-$ladder = new Ladder();
-
-// Affiche le classement
-$ladder->render();
-?>
-
-<?php else: ?>
 
     <main class="ladder-main">
         <h1>L'Échelle du <span style="color: var(--primary-purple)">Pouvoir</span></h1>
@@ -114,8 +103,6 @@ $ladder->render();
 
         </div>
     </section>
-
-<?php endif;?>
 
 <?php
 $popup = new PrivacyPopup();

@@ -2,12 +2,6 @@
 session_start();
 require 'db.php';
 
-// Sécurité connexion
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit;
-}
-
 require 'assets/header.php';
 require 'assets/footer.php';
 
@@ -80,7 +74,7 @@ function sortArrow($colName) {
     return '<span style="opacity:0.3">⇅</span>';
 }
 
-$header = new Header("SECTEUR V - Player Book");
+$header = new Header("SECTEUR V - Liste des joueurs");
 $header->render();
 ?>
 
@@ -89,7 +83,7 @@ $header->render();
 <main class="playerbook-container">
     
     <div class="pb-header">
-        <h1 class="player-h1">Player <span style="color:var(--primary-purple)">Book</span></h1>
+        <h1 class="player-h1">Liste des <span style="color:var(--primary-purple)">Joueurs</span></h1>
         <p class="subtitle">Base de données officielle du Secteur V.</p>
     </div>
 
