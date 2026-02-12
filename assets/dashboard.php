@@ -66,13 +66,14 @@ class Dashboard {
                 <p class="subtitle dashboard-sub">Prêt à prouver qui est le meilleur ?</p>
                 
                 <div class="mode-actions">
+                    <a href="matchmaking.php?mode=ranked" class="btn-mode ranked">
+                        <i class="fas fa-trophy"></i> Jouer en Classé
+                    </a>
+
                     <a href="matchmaking.php?mode=normal" class="btn-mode normal">
                         <i class="fas fa-running"></i> Match Amical
                     </a>
                     
-                    <a href="matchmaking.php?mode=ranked" class="btn-mode ranked">
-                        <i class="fas fa-trophy"></i> Jouer en Classé
-                    </a>
                 </div>
             </div>
 
