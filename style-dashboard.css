@@ -337,6 +337,13 @@
     background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
 }
 
+.history-content {
+    max-height: 250px;
+    overflow-y: auto;
+        scrollbar-width: thin;
+    scrollbar-color: var(--primary-purple) rgba(0,0,0,0.3);
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .dashboard-h1 {

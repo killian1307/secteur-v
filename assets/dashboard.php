@@ -33,19 +33,31 @@ class Dashboard {
         $stmtRank = $this->pdo->query("SELECT id, username, elo, avatar FROM users ORDER BY elo DESC");
         $allPlayers = $stmtRank->fetchAll(PDO::FETCH_ASSOC);
 
+        // Récupération de l'historique
         $sqlHistory = "
-            SELECT m.*, 
-                   w.username AS winner_name, 
-                   l.username AS loser_name
-            FROM matches m
-            JOIN users w ON m.winner_id = w.id
-            JOIN users l ON m.loser_id = l.id
-            WHERE m.winner_id = ? OR m.loser_id = ?
-            ORDER BY m.match_date DESC
-            LIMIT 10
+            (SELECT m.*, w.username AS winner_name, l.username AS loser_name 
+             FROM matches m 
+             JOIN users w ON m.winner_id = w.id 
+             JOIN users l ON m.loser_id = l.id 
+             WHERE (m.winner_id = ? OR m.loser_id = ?) AND m.mode = 'ranked' 
+             ORDER BY m.match_date DESC 
+             LIMIT 10)
+            
+            UNION ALL
+            
+            (SELECT m.*, w.username AS winner_name, l.username AS loser_name 
+             FROM matches m 
+             JOIN users w ON m.winner_id = w.id 
+             JOIN users l ON m.loser_id = l.id 
+             WHERE (m.winner_id = ? OR m.loser_id = ?) AND m.mode = 'normal' 
+             ORDER BY m.match_date DESC 
+             LIMIT 10)
+             
+            ORDER BY match_date DESC
         ";
+        
         $stmtHist = $this->pdo->prepare($sqlHistory);
-        $stmtHist->execute([$userId, $userId]);
+        $stmtHist->execute([$userId, $userId, $userId, $userId]);
         $history = $stmtHist->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <main class="dashboard-main">
