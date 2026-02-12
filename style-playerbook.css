@@ -1,0 +1,160 @@
+/* style-playerbook.css */
+
+.playerbook-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.pb-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* --- BARRE DE RECHERCHE --- */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.search-bar-container input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    width: 100%;
+}
+
+.search-bar-container button {
+    background: var(--primary-purple);
+    border: none;
+    color: #000;
+    padding: 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.reset-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e74c3c;
+    color: #fff;
+    text-decoration: none;
+    width: 40px;
+    border-radius: 5px;
+}
+
+/* --- PAGINATION --- */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+}
+.pagination.bottom {
+    margin-top: 1rem;
+    justify-content: center;
+    gap: 20px;
+}
+
+.page-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+.page-btn:hover {
+    background: var(--primary-purple);
+    color: #000;
+}
+.page-info {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- TABLEAU --- */
+.table-responsive {
+    overflow-x: auto;
+    background: var(--background-card);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.player-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Force le scroll sur mobile */
+}
+
+.player-table th, .player-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.player-table th {
+    background: rgba(0, 0, 0, 0.3);
+    position: sticky; /* En-têtes fixes lors du scroll */
+    top: 0;
+    z-index: 10;
+}
+
+.player-table th a {
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.player-table th a:hover {
+    color: var(--primary-purple);
+}
+
+.player-table tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.col-img img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.font-bold { font-weight: bold; }
+.stat-cell { font-family: monospace; font-size: 1.1rem; color: #f1c40f; }
+
+/* --- BADGES --- */
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/* Éléments */
+.elem-fire { background: #e74c3c; color: #fff; }
+.elem-wind { background: #2ecc71; }
+.elem-wood { background: #27ae60; color: #fff;} /* Forest en anglais souvent */
+.elem-earth { background: #e67e22; }
+.elem-void { background: #95a5a6; }
+
+/* Positions */
+.pos-gk { background: #f1c40f; }
+.pos-df { background: #3498db; color: #fff; }
+.pos-mf { background: #2ecc71; }
+.pos-fw { background: #e74c3c; color: #fff; }
