@@ -198,3 +198,106 @@
         font-size: 0.6rem;
     }
 }
+
+/* --- DROPDOWN FILTERS (TH) --- */
+
+/* La cellule d'en-tête */
+.th-dropdown {
+    position: relative; /* Pour que le menu s'affiche par rapport à ça */
+    cursor: pointer;
+}
+
+.th-dropdown:hover {
+    color: var(--primary-purple);
+}
+
+/* Le menu caché par défaut */
+.dropdown-content {
+    display: none; /* Caché */
+    position: absolute;
+    top: 100%; /* Juste en dessous du titre */
+    left: 0;
+    background-color: var(--background-card);
+    min-width: 120px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    z-index: 100; /* Très important pour passer au-dessus des lignes */
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+/* Affichage au survol */
+.th-dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+/* Les liens dans le menu */
+.dropdown-content a {
+    color: var(--text-primary);
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--primary-purple);
+}
+
+/* Lien actif (celui sélectionné) */
+.dropdown-content a.active {
+    background-color: var(--primary-purple);
+    color: #000;
+    font-weight: bold;
+}
+
+/* Animation douce */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Saut de page */
+
+/* Formulaire qui contient l'input */
+.page-jump-form {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Input numéro de page */
+.page-input {
+    width: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--text-primary);
+    border-radius: 4px;
+    color: #fff;
+    padding: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.page-input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Cache les flèches  */
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.page-input {
+  -moz-appearance: textfield;
+}
