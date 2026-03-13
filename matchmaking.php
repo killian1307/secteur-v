@@ -305,7 +305,7 @@ $header->render();
 
             // Recherche en cours
             if (data.state === 'searching') {
-                secondsInQueue += 2;
+                secondsInQueue += 1;
                 const m = Math.floor(secondsInQueue / 60).toString().padStart(2, '0');
                 const s = (secondsInQueue % 60).toString().padStart(2, '0');
                 document.getElementById('queue-time').innerText = `${m}:${s}`;
