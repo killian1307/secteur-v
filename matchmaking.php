@@ -245,11 +245,23 @@ $header->render();
         document.getElementById('score-section').innerHTML = '<h3 style="color:#f1c40f;">En attente de l\'adversaire...</h3><p>Ne quittez pas la page.</p>';
         currentState = 'resolving';
 
-        await fetch('api.php?action=submit_score', {
+        const res = await fetch('api.php?action=submit_score', {
             method: 'POST',
             body: JSON.stringify({ match_id: currentMatchId, my_score: myScore, opp_score: oppScore })
         });
-        pollServer();
+        const data = await res.json();
+        
+        // CORRECTION : On analyse la réponse de NOTRE soumission
+        if (data.state === 'finished_agreement') {
+            clearInterval(pollInterval);
+            currentState = 'lobby';
+            alert("Match validé ! Scores correspondants. Vous allez être redirigé vers l'accueil.");
+            window.location.href = 'index.php';
+        } else if (data.state === 'disputed') {
+            currentState = 'disputed';
+            setView('view-dispute');
+        }
+        // Si data.state === 'waiting', on ne fait rien, pollServer() s'occupera d'intercepter la réponse de l'adversaire.
     }
 
     async function submitEvidence(e) {
@@ -297,16 +309,15 @@ $header->render();
             // 2. Adversaire Déconnecté (Victoire auto)
             else if (data.state === 'opponent_left') {
                 clearInterval(pollInterval);
-                currentState = 'lobby'; // Débloque le leave
-                alert("L'adversaire a quitté la partie (Forfait). Vous gagnez !");
+                currentState = 'lobby';
+                alert("L'adversaire a déclaré forfait ou s'est déconnecté. Vous remportez la victoire !");
                 window.location.href = 'index.php';
             }
 
-            // 3. Match en cours (Initialisation et MAJ Tchat)
-            else if (data.state === 'in_match' || data.state === 'match_found') {
+            // 3. Match en cours
+            else if (data.state === 'in_match') {
                 currentMatchId = data.match_id;
                 
-                // Si on vient d'entrer dans le match
                 if (currentState !== 'in_match' && currentState !== 'resolving') {
                     currentState = 'in_match';
                     setView('view-match');
@@ -315,13 +326,11 @@ $header->render();
                     document.getElementById('opp-avatar').src = data.opponent.avatar || 'assets/img/default_avatar.png';
                 }
 
-                // Maj du statut interne si passage en resolving/disputed via l'adversaire
                 if (data.status === 'disputed' && currentState !== 'disputed') {
                     currentState = 'disputed';
                     setView('view-dispute');
                 }
 
-                // Maj du tchat
                 if (data.chat && currentState !== 'disputed') {
                     const chatBox = document.getElementById('chat-messages');
                     chatBox.innerHTML = '';
@@ -335,11 +344,11 @@ $header->render();
                 }
             }
             
-            // 4. Match Terminé avec Accord
+            // 4. Match Terminé avec Accord Mutuel
             else if (data.state === 'finished_agreement') {
                 clearInterval(pollInterval);
                 currentState = 'lobby';
-                alert("Match validé ! Scores correspondants. Retour à l'accueil.");
+                alert("Match validé ! L'adversaire a confirmé le score. Retour à l'accueil.");
                 window.location.href = 'index.php';
             }
             
@@ -347,6 +356,15 @@ $header->render();
             else if (data.state === 'disputed') {
                 currentState = 'disputed';
                 setView('view-dispute');
+            }
+
+            // 6. Sécurité : Si le match a été clôturé de force
+            else if (data.state === 'lobby') {
+                if (['in_match', 'resolving'].includes(currentState)) {
+                    clearInterval(pollInterval);
+                    alert("Le match a été clôturé de manière inattendue.");
+                    window.location.href = 'index.php';
+                }
             }
 
         } catch(e) {
