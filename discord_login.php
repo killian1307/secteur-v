@@ -86,11 +86,11 @@ if (isset($_GET['code'])) {
     $user_data = json_decode(curl_exec($ch), true);
     curl_close($ch);
 
-        // --- AJOUT AUTOMATIQUE AU SERVEUR DISCORD ---
+    // --- AJOUT AUTOMATIQUE AU SERVEUR DISCORD ---
     $botToken = $_ENV['DISCORD_BOT_TOKEN'];
     $guildId = $_ENV['DISCORD_GUILD_ID'];
     $discordId = $user_data['id'];
-    $accessToken = $access_token; // Le token oauth2 qu'on vient de récupérer
+    $accessToken = $access_token;
 
     $joinUrl = "https://discord.com/api/v10/guilds/$guildId/members/$discordId";
     $joinData = json_encode(['access_token' => $accessToken]);
@@ -103,7 +103,7 @@ if (isset($_GET['code'])) {
         "Authorization: Bot $botToken",
         "Content-Type: application/json"
     ]);
-    curl_setopt($chJoin, CURLOPT_SSL_VERIFYPEER, false); // Localhost uniquement
+    curl_setopt($chJoin, CURLOPT_SSL_VERIFYPEER, false); // CHANGER EN PROD
     curl_exec($chJoin);
     curl_close($chJoin);
 

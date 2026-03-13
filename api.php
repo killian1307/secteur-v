@@ -324,6 +324,17 @@ if ($action === 'poll_match') {
         }
     }
 
+    // Sécurité litige
+    // Si on ne trouve plus le match, on regarde si un litige n'a pas été créé
+    $stmtLitige = $pdo->prepare("SELECT id FROM litiges WHERE (p1_id = ? OR p2_id = ?) AND created_at > (NOW() - INTERVAL 15 SECOND) ORDER BY id DESC LIMIT 1");
+    $stmtLitige->execute([$userId, $userId]);
+    
+    if ($stmtLitige->fetch()) {
+        echo json_encode(['state' => 'disputed']);
+        exit;
+    }
+
+    // Sinon, on renvoie bien au lobby
     echo json_encode(['state' => 'lobby']);
     exit;
 }
@@ -377,10 +388,20 @@ if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['state' => 'finished_agreement']);
             exit;
         } else {
-            // Desaccord, passage en litige
-            $pdo->prepare("UPDATE active_matches SET status = 'disputed' WHERE id = ?")->execute([$matchId]);
+            // DESACCORD ! On passe par Discord
+            
+            $claimP1 = $match['p1_score_claim'] . "-" . $match['p1_opp_score_claim'];
+            $claimP2 = $match['p2_score_claim'] . "-" . $match['p2_opp_score_claim'];
+
+            // 1. Créer le ticket Discord (ça envoie le message et taggue tout le monde)
+            createDiscordTicket($pdo, $matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2);
+
+            // 2. Insérer dans la table litiges (juste pour l'historique, plus de colonnes preuves)
             $pdo->prepare("INSERT INTO litiges (match_id, p1_id, p2_id, p1_score_claim, p2_score_claim) VALUES (?, ?, ?, ?, ?)")
-                ->execute([$matchId, $match['player1_id'], $match['player2_id'], $match['p1_score_claim']."-".$match['p1_opp_score_claim'], $match['p2_score_claim']."-".$match['p2_opp_score_claim']]);
+                ->execute([$matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2]);
+
+            // 3. ON SUPPRIME le match actif
+            $pdo->prepare("DELETE FROM active_matches WHERE id = ?")->execute([$matchId]);
             
             echo json_encode(['state' => 'disputed']);
             exit;
@@ -454,6 +475,71 @@ function processMatchResult($pdo, $winnerId, $loserId, $scoreWin, $scoreLose, $m
         $pdo->prepare("UPDATE users SET elo = elo + ?, wins = wins + 1 WHERE id = ?")->execute([$eloChange, $winnerId]);
         $pdo->prepare("UPDATE users SET elo = elo - ?, losses = losses + 1 WHERE id = ?")->execute([$eloChange, $loserId]);
     }
+}
+
+// --- FONCTION POUR CRÉER LE TICKET DISCORD ---
+function createDiscordTicket($pdo, $matchId, $p1Id, $p2Id, $scoreP1, $scoreP2) {
+    // Récupérer les ID Discord des joueurs
+    $stmt = $pdo->prepare("SELECT id, username, discord_id FROM users WHERE id IN (?, ?)");
+    $stmt->execute([$p1Id, $p2Id]);
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $p1 = ($users[0]['id'] == $p1Id) ? $users[0] : $users[1];
+    $p2 = ($users[0]['id'] == $p2Id) ? $users[0] : $users[1];
+
+    $botToken = $_ENV['DISCORD_BOT_TOKEN'];
+    $guildId = $_ENV['DISCORD_GUILD_ID'];
+    $categoryId = $_ENV['DISCORD_CATEGORY_ID'] ?? null;
+    $modRoleId = $_ENV['DISCORD_MOD_ROLE_ID'];
+
+    // Créer le salon (Canal texte privé)
+    $channelData = [
+        "name" => "litige-match-" . $matchId,
+        "type" => 0, // Text channel
+        "permission_overwrites" => [
+            // @everyone n'a pas le droit de voir
+            [ "id" => $guildId, "type" => 0, "allow" => "0", "deny" => "1024" ],
+            // Les modos peuvent voir et écrire
+            [ "id" => $modRoleId, "type" => 0, "allow" => "3072", "deny" => "0" ],
+            // Joueur 1
+            [ "id" => $p1['discord_id'], "type" => 1, "allow" => "3072", "deny" => "0" ],
+            // Joueur 2
+            [ "id" => $p2['discord_id'], "type" => 1, "allow" => "3072", "deny" => "0" ]
+        ]
+    ];
+    if ($categoryId) $channelData['parent_id'] = $categoryId;
+
+    $ch = curl_init("https://discord.com/api/v10/guilds/$guildId/channels");
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($channelData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bot $botToken", "Content-Type: application/json"]);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $channelInfo = json_decode($response, true);
+    if (!isset($channelInfo['id'])) return;
+
+    $newChannelId = $channelInfo['id'];
+
+    // Envoyer le premier message dans le salon
+    $messageData = [
+        "content" => "<@&{$modRoleId}> | <@{$p1['discord_id']}> & <@{$p2['discord_id']}>\n\n"
+                   . "🚨 **LITIGE DÉTECTÉ - MATCH #{$matchId}** 🚨\n\n"
+                   . "**" . $p1['username'] . "** déclare avoir fait : `" . $scoreP1 . "`\n"
+                   . "**" . $p2['username'] . "** déclare avoir fait : `" . $scoreP2 . "`\n\n"
+                   . "Veuillez fournir ci-dessous vos captures d'écran prouvant votre victoire. Un modérateur tranchera rapidement."
+    ];
+
+    $chMsg = curl_init("https://discord.com/api/v10/channels/$newChannelId/messages");
+    curl_setopt($chMsg, CURLOPT_POST, true);
+    curl_setopt($chMsg, CURLOPT_POSTFIELDS, json_encode($messageData));
+    curl_setopt($chMsg, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($chMsg, CURLOPT_HTTPHEADER, ["Authorization: Bot $botToken", "Content-Type: application/json"]);
+    curl_setopt($chMsg, CURLOPT_SSL_VERIFYPEER, false);
+    curl_exec($chMsg);
+    curl_close($chMsg);
 }
 
 ?>
