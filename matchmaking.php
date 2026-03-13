@@ -20,7 +20,6 @@ $header->render();
 ?>
 
 <style>
-    /* CSS Spécifique au Matchmaking */
     .mm-container {
         max-width: 900px;
         margin: 2rem auto;
@@ -36,7 +35,7 @@ $header->render();
         border-radius: 15px;
         box-shadow: 0 5px 20px rgba(0,0,0,0.4);
         border: 1px solid rgba(255,255,255,0.05);
-        display: none; /* Caché par défaut */
+        display: none;
         text-align: center;
     }
     .mm-view.active { display: block; animation: fadeIn 0.3s; }
@@ -53,13 +52,13 @@ $header->render();
     .btn-danger { background: #e74c3c; color: #fff; margin-top: 20px; }
     .btn-switch { background: transparent; color: var(--text-secondary); border: 1px solid var(--text-secondary); margin-top:1rem;}
 
-    /* Versus Screen */
+    /* Ecran versus */
     .vs-screen { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 10px; }
     .player-box { width: 40%; }
     .player-box img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #fff; }
     .vs-text { font-size: 2.5rem; font-weight: 900; color: #e74c3c; font-style: italic; }
 
-    /* Match Layout (Chat + Score) */
+    /* Layout en match */
     .match-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
     
     .chat-box { background: rgba(0,0,0,0.2); height: 350px; border-radius: 10px; display: flex; flex-direction: column; }
@@ -73,7 +72,7 @@ $header->render();
     .score-input { width: 100%; padding: 10px; font-size: 1.5rem; text-align: center; margin-bottom: 15px; border-radius: 5px; border: none; }
     .score-label { text-align: left; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 5px; text-transform:uppercase;}
 
-    /* Spinner */
+    /* Recherche */
     .spinner { width: 60px; height: 60px; border: 5px solid rgba(255,255,255,0.1); border-top: 5px solid var(--primary-purple); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -181,28 +180,28 @@ $header->render();
     let secondsInQueue = 0;
     let hasSubmittedEvidence = false;
 
-    // --- SÉCURITÉ : Anti-Ragequit / Changement de page ---
+    // Anti-Ragequit
     window.addEventListener('beforeunload', (e) => {
         if (['searching', 'in_match', 'resolving', 'disputed'].includes(currentState) && !hasSubmittedEvidence) {
-            // Signalement asynchrone instantané lors de la fermeture
+
             navigator.sendBeacon('api.php?action=leave_match'); 
             e.preventDefault();
-            e.returnValue = ''; // Déclenche la popup native du navigateur
+            e.returnValue = '';
         }
     });
 
-    // --- DÉMARRAGE : Vérifie si un match était déjà en cours (refresh) ---
+    // Vérifie si un match était déjà en cours
     document.addEventListener('DOMContentLoaded', () => {
-        pollServer(); // Un premier poll pour voir où on en est
+        pollServer();
     });
 
-    // --- NAVIGATION DES VUES ---
+    // Navigation entre vues
     function setView(viewId) {
         document.querySelectorAll('.mm-view').forEach(v => v.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
     }
 
-    // --- ACTIONS UTILISATEUR ---
+    // Actions utilisateur
     async function joinQueue() {
         setView('view-queue');
         currentState = 'searching';
@@ -211,7 +210,7 @@ $header->render();
         await fetch(`api.php?action=join_queue&mode=${MODE}`);
         
         if (pollInterval) clearInterval(pollInterval);
-        pollInterval = setInterval(pollServer, 2000); // Poll toutes les 2s
+        pollInterval = setInterval(pollServer, 1000); // Poll toutes les secondes
     }
 
     async function leaveMatch(isForfeit = false) {
@@ -219,7 +218,7 @@ $header->render();
         
         clearInterval(pollInterval);
         await fetch(`api.php?action=leave_match`);
-        window.location.href = 'index.php'; // Retour à l'accueil
+        window.location.href = 'index.php';
     }
 
     async function sendChat(e) {
@@ -233,7 +232,7 @@ $header->render();
             method: 'POST',
             body: JSON.stringify({ match_id: currentMatchId, message: msg })
         });
-        pollServer(); // Force un rafraichissement immédiat du chat
+        pollServer();
     }
 
     async function submitScore() {
@@ -251,7 +250,7 @@ $header->render();
         });
         const data = await res.json();
         
-        // CORRECTION : On analyse la réponse de NOTRE soumission
+        // On analyse la réponse de notre soumission
         if (data.state === 'finished_agreement') {
             clearInterval(pollInterval);
             currentState = 'lobby';
@@ -261,7 +260,6 @@ $header->render();
             currentState = 'disputed';
             setView('view-dispute');
         }
-        // Si data.state === 'waiting', on ne fait rien, pollServer() s'occupera d'intercepter la réponse de l'adversaire.
     }
 
     async function submitEvidence(e) {
@@ -278,19 +276,19 @@ $header->render();
 
         const res = await fetch('api.php?action=submit_evidence', {
             method: 'POST',
-            body: formData // Pas de Content-Type manuel pour FormData (le navigateur le gère)
+            body: formData
         });
         
         const data = await res.json();
         if (data.success) {
-            hasSubmittedEvidence = true; // Débloque le beforeunload
+            hasSubmittedEvidence = true;
             clearInterval(pollInterval);
             alert("Preuve envoyée. Le litige sera examiné par l'équipe. Vous pouvez quitter cette page.");
             window.location.href = 'index.php';
         }
     }
 
-    // --- LE COEUR : BOUCLE DE POLLING ---
+    // Boucle de polling
     async function pollServer() {
         if (currentState === 'lobby' && document.getElementById('view-lobby').classList.contains('active')) return;
 
@@ -298,7 +296,7 @@ $header->render();
             const res = await fetch(`api.php?action=poll_match&mode=${MODE}`);
             const data = await res.json();
 
-            // 1. Recherche en cours
+            // Recherche en cours
             if (data.state === 'searching') {
                 secondsInQueue += 2;
                 const m = Math.floor(secondsInQueue / 60).toString().padStart(2, '0');
@@ -306,7 +304,7 @@ $header->render();
                 document.getElementById('queue-time').innerText = `${m}:${s}`;
             }
             
-            // 2. Adversaire Déconnecté (Victoire auto)
+            // Adversaire Déconnecté
             else if (data.state === 'opponent_left') {
                 clearInterval(pollInterval);
                 currentState = 'lobby';
@@ -314,7 +312,7 @@ $header->render();
                 window.location.href = 'index.php';
             }
 
-            // 3. Match en cours
+            // Match en cours
             else if (data.state === 'in_match') {
                 currentMatchId = data.match_id;
                 
@@ -344,7 +342,7 @@ $header->render();
                 }
             }
             
-            // 4. Match Terminé avec Accord Mutuel
+            // Match Terminé avec Accord Mutuel
             else if (data.state === 'finished_agreement') {
                 clearInterval(pollInterval);
                 currentState = 'lobby';
@@ -352,13 +350,13 @@ $header->render();
                 window.location.href = 'index.php';
             }
             
-            // 5. Litige
+            // Litige
             else if (data.state === 'disputed') {
                 currentState = 'disputed';
                 setView('view-dispute');
             }
 
-            // 6. Sécurité : Si le match a été clôturé de force
+            // Si le match a été clôturé de force
             else if (data.state === 'lobby') {
                 if (['in_match', 'resolving'].includes(currentState)) {
                     clearInterval(pollInterval);

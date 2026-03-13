@@ -89,10 +89,10 @@ if ($action === 'save_formation' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // ============================================================
-// PARTIE 2 : MATCHMAKING & TEMPS RÉEL (CORRIGÉ)
+// PARTIE 2 : MATCHMAKING & TEMPS RÉEL
 // ============================================================
 
-// --- 1. REJOINDRE LA FILE ---
+// --- REJOINDRE LA FILE ---
 if ($action === 'join_queue') {
     $mode = $_GET['mode'] ?? 'ranked';
     $pdo->prepare("DELETE FROM matchmaking_queue WHERE user_id = ?")->execute([$userId]);
@@ -101,26 +101,48 @@ if ($action === 'join_queue') {
     exit;
 }
 
-// --- 2. QUITTER LA FILE OU FORFAIT ---
+// --- QUITTER LA FILE OU FORFAIT ---
 if ($action === 'leave_match') {
     $pdo->prepare("DELETE FROM matchmaking_queue WHERE user_id = ?")->execute([$userId]);
     
-    $stmt = $pdo->prepare("SELECT * FROM active_matches WHERE (player1_id = ? OR player2_id = ?) AND status NOT IN ('finished', 'disputed')");
+    // On récupère le match actif
+    $stmt = $pdo->prepare("SELECT * FROM active_matches WHERE (player1_id = ? OR player2_id = ?) AND status != 'finished'");
     $stmt->execute([$userId, $userId]);
     $match = $stmt->fetch();
     
     if ($match) {
-        $oppId = ($match['player1_id'] == $userId) ? $match['player2_id'] : $match['player1_id'];
-        processMatchResult($pdo, $oppId, $userId, 3, 0, $match['mode']);
-        
-        // AU LIEU DE SUPPRIMER, on change le statut pour que l'autre joueur puisse voir le message de victoire
-        $pdo->prepare("UPDATE active_matches SET status = 'forfeit' WHERE id = ?")->execute([$match['id']]);
+        $isP1 = ($match['player1_id'] == $userId);
+        $oppId = $isP1 ? $match['player2_id'] : $match['player1_id'];
+        $isForfeit = true;
+
+        // Si on est en litige, on vérifie s'il a le droit de quitter
+        if ($match['status'] === 'disputed') {
+            $stmtLitige = $pdo->prepare("SELECT * FROM litiges WHERE match_id = ?");
+            $stmtLitige->execute([$match['id']]);
+            $litige = $stmtLitige->fetch();
+            
+            if ($litige) {
+                $myEvidence = $isP1 ? $litige['p1_evidence_path'] : $litige['p2_evidence_path'];
+                if ($myEvidence !== null) {
+                    $isForfeit = false;
+                } else {
+                    // Forfeit pendant le litige
+                    $pdo->prepare("DELETE FROM litiges WHERE match_id = ?")->execute([$match['id']]);
+                }
+            }
+        }
+
+        // Si c'est bien un forfait
+        if ($isForfeit) {
+            processMatchResult($pdo, $oppId, $userId, 3, 0, $match['mode']);
+            $pdo->prepare("UPDATE active_matches SET status = 'forfeit' WHERE id = ?")->execute([$match['id']]);
+        }
     }
     echo json_encode(['success' => true]);
     exit;
 }
 
-// --- 3. LE COEUR : POLLING ---
+// --- LE COEUR : POLLING ---
 if ($action === 'poll_match') {
     $mode = $_GET['mode'] ?? 'ranked';
     
@@ -132,14 +154,16 @@ if ($action === 'poll_match') {
         $isP1 = ($match['player1_id'] == $userId);
         $oppId = $isP1 ? $match['player2_id'] : $match['player1_id'];
         
-        // A. Vérifier si le match a été terminé par l'adversaire (Forfait)
+        // Vérifier si le match a été forfeit par l'adversaire
         if ($match['status'] === 'forfeit') {
+            // Nettoyage complet
+            $pdo->prepare("DELETE FROM litiges WHERE match_id = ?")->execute([$match['id']]);
             $pdo->prepare("DELETE FROM active_matches WHERE id = ?")->execute([$match['id']]);
             echo json_encode(['state' => 'opponent_left']);
             exit;
         }
 
-        // B. Vérifier si le match a été terminé avec accord mutuel
+        // Vérifier si le match a été terminé avec accord mutuel
         if ($match['status'] === 'finished') {
             $pdo->prepare("DELETE FROM active_matches WHERE id = ?")->execute([$match['id']]);
             echo json_encode(['state' => 'finished_agreement']);
@@ -149,10 +173,10 @@ if ($action === 'poll_match') {
         $myPingCol = $isP1 ? 'p1_last_ping' : 'p2_last_ping';
         $oppPingCol = $isP1 ? 'p2_last_ping' : 'p1_last_ping';
 
-        // C. Mettre à jour mon Ping
+        // Mettre à jour le Ping
         $pdo->prepare("UPDATE active_matches SET $myPingCol = NOW() WHERE id = ?")->execute([$match['id']]);
 
-        // D. Vérifier le Timeout (Ragequit) SEULEMENT si pas en litige
+        // Vérifier le Timeout
         if ($match['status'] !== 'disputed') {
             $stmtPing = $pdo->prepare("SELECT TIMESTAMPDIFF(SECOND, $oppPingCol, NOW()) as diff FROM active_matches WHERE id = ?");
             $stmtPing->execute([$match['id']]);
@@ -165,21 +189,37 @@ if ($action === 'poll_match') {
                 exit;
             }
         } else {
-            // E. Si en litige, on vérifie si J'AI déjà envoyé ma preuve pour me libérer
+            // Si en litige, vérification preuve et timeout
             $stmtLitige = $pdo->prepare("SELECT * FROM litiges WHERE match_id = ?");
             $stmtLitige->execute([$match['id']]);
             $litige = $stmtLitige->fetch();
             
             if ($litige) {
-                $hasSubmitted = $isP1 ? ($litige['p1_evidence_path'] !== null) : ($litige['p2_evidence_path'] !== null);
-                if ($hasSubmitted) {
-                    echo json_encode(['state' => 'lobby']); // Me libère de l'écran de chargement
+                $myEvidence = $isP1 ? $litige['p1_evidence_path'] : $litige['p2_evidence_path'];
+                $oppEvidence = $isP1 ? $litige['p2_evidence_path'] : $litige['p1_evidence_path'];
+
+                // Si preuve envoyée, peut partir
+                if ($myEvidence !== null) {
+                    echo json_encode(['state' => 'lobby']); 
+                    exit;
+                }
+
+                // Si l'adversaire timeout, on gagne et le litige est supprimé
+                $stmtPing = $pdo->prepare("SELECT TIMESTAMPDIFF(SECOND, $oppPingCol, NOW()) as diff FROM active_matches WHERE id = ?");
+                $stmtPing->execute([$match['id']]);
+                $pingDiff = $stmtPing->fetchColumn();
+
+                if ($pingDiff > 15 && $oppEvidence === null) {
+                    processMatchResult($pdo, $userId, $oppId, 3, 0, $match['mode']); // Je gagne par forfait
+                    $pdo->prepare("DELETE FROM litiges WHERE match_id = ?")->execute([$match['id']]);
+                    $pdo->prepare("DELETE FROM active_matches WHERE id = ?")->execute([$match['id']]);
+                    echo json_encode(['state' => 'opponent_left']);
                     exit;
                 }
             }
         }
 
-        // F. Récupérer infos et envoyer l'état
+        // Récupérer infos et envoyer l'état
         $stmtOpp = $pdo->prepare("SELECT username, elo, avatar FROM users WHERE id = ?");
         $stmtOpp->execute([$oppId]);
         $oppInfo = $stmtOpp->fetch();
@@ -200,7 +240,7 @@ if ($action === 'poll_match') {
         exit;
     }
 
-    // SI AUCUN MATCH ACTIF, on cherche dans la file
+    // Si aucun match actif, on cherche dans la file
     $stmtQueue = $pdo->prepare("SELECT * FROM matchmaking_queue WHERE user_id = ?");
     $stmtQueue->execute([$userId]);
     
@@ -217,7 +257,6 @@ if ($action === 'poll_match') {
             $pdo->prepare("DELETE FROM matchmaking_queue WHERE user_id IN (?, ?)")->execute([$userId, $oppId]);
             $pdo->commit();
 
-            // CORRECTION: On renvoie directement 'in_match' avec les données pour le joueur qui trouve !
             $stmtOpp = $pdo->prepare("SELECT username, elo, avatar FROM users WHERE id = ?");
             $stmtOpp->execute([$oppId]);
             $oppInfo = $stmtOpp->fetch();
@@ -242,7 +281,7 @@ if ($action === 'poll_match') {
     exit;
 }
 
-// --- 4. TCHAT ---
+// --- TCHAT ---
 if ($action === 'send_chat' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $pdo->prepare("INSERT INTO match_chat (match_id, sender_id, message) VALUES (?, ?, ?)")
@@ -251,7 +290,7 @@ if ($action === 'send_chat' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// --- 5. SOUMETTRE LE SCORE ---
+// --- SOUMETTRE LE SCORE ---
 if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $myScore = (int)$input['my_score'];
@@ -279,7 +318,7 @@ if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($match['p1_score_claim'] !== null && $match['p2_score_claim'] !== null) {
         if ($match['p1_score_claim'] === $match['p2_opp_score_claim'] && $match['p1_opp_score_claim'] === $match['p2_score_claim']) {
-            // ACCORD ! On traite les points et on marque 'finished' (pas de delete direct)
+            // Accord, on traite le résultat
             $winId = ($match['p1_score_claim'] > $match['p1_opp_score_claim']) ? $match['player1_id'] : (($match['p1_score_claim'] < $match['p1_opp_score_claim']) ? $match['player2_id'] : null);
             $losId = ($winId == $match['player1_id']) ? $match['player2_id'] : $match['player1_id'];
             $winScore = max($match['p1_score_claim'], $match['p1_opp_score_claim']);
@@ -291,7 +330,7 @@ if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['state' => 'finished_agreement']);
             exit;
         } else {
-            // DESACCORD !
+            // Desaccord, passage en litige
             $pdo->prepare("UPDATE active_matches SET status = 'disputed' WHERE id = ?")->execute([$matchId]);
             $pdo->prepare("INSERT INTO litiges (match_id, p1_id, p2_id, p1_score_claim, p2_score_claim) VALUES (?, ?, ?, ?, ?)")
                 ->execute([$matchId, $match['player1_id'], $match['player2_id'], $match['p1_score_claim']."-".$match['p1_opp_score_claim'], $match['p2_score_claim']."-".$match['p2_opp_score_claim']]);
@@ -304,7 +343,7 @@ if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// --- 6. SOUMETTRE PREUVE (LITIGE) ---
+// --- SOUMETTRE PREUVE ---
 if ($action === 'submit_evidence' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $matchId = $_POST['match_id'];
     $message = $_POST['message'] ?? '';
@@ -332,7 +371,7 @@ if ($action === 'submit_evidence' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo->prepare("UPDATE litiges SET p2_evidence_path = ?, p2_message = ? WHERE match_id = ?")->execute([$filePath, $message, $matchId]);
         }
         
-        // CORRECTION : Si les DEUX ont envoyé leurs preuves, on détruit le match actif !
+        // Si les deux preuves sont soumises
         $stmtLitige = $pdo->prepare("SELECT p1_evidence_path, p2_evidence_path FROM litiges WHERE match_id = ?");
         $stmtLitige->execute([$matchId]);
         $litige = $stmtLitige->fetch();
