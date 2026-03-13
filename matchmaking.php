@@ -183,10 +183,15 @@ $header->render();
     // Anti-Ragequit
     window.addEventListener('beforeunload', (e) => {
         if (['searching', 'in_match', 'resolving', 'disputed'].includes(currentState) && !hasSubmittedEvidence) {
-
-            navigator.sendBeacon('api.php?action=leave_match'); 
             e.preventDefault();
             e.returnValue = '';
+        }
+    });
+
+    // Si l'utilisateur qui la page
+    window.addEventListener('pagehide', (e) => {
+        if (['searching', 'in_match', 'resolving', 'disputed'].includes(currentState) && !hasSubmittedEvidence) {
+            navigator.sendBeacon('api.php?action=leave_match'); 
         }
     });
 
