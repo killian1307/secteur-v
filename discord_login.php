@@ -29,7 +29,7 @@ if (!isset($_GET['code'])) {
         'client_id' => $client_id,
         'redirect_uri' => $redirect_uri,
         'response_type' => 'code',
-        'scope' => 'identify email'
+        'scope' => 'identify email guilds.join'
     ];
     header('Location: https://discord.com/api/oauth2/authorize?' . http_build_query($params));
     exit;
@@ -85,6 +85,27 @@ if (isset($_GET['code'])) {
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Désactive SSL ici aussi (A COMMENTER EN PRODUCTION)
     $user_data = json_decode(curl_exec($ch), true);
     curl_close($ch);
+
+        // --- AJOUT AUTOMATIQUE AU SERVEUR DISCORD ---
+    $botToken = $_ENV['DISCORD_BOT_TOKEN'];
+    $guildId = $_ENV['DISCORD_GUILD_ID'];
+    $discordId = $user_data['id'];
+    $accessToken = $access_token; // Le token oauth2 qu'on vient de récupérer
+
+    $joinUrl = "https://discord.com/api/v10/guilds/$guildId/members/$discordId";
+    $joinData = json_encode(['access_token' => $accessToken]);
+
+    $chJoin = curl_init($joinUrl);
+    curl_setopt($chJoin, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_setopt($chJoin, CURLOPT_POSTFIELDS, $joinData);
+    curl_setopt($chJoin, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($chJoin, CURLOPT_HTTPHEADER, [
+        "Authorization: Bot $botToken",
+        "Content-Type: application/json"
+    ]);
+    curl_setopt($chJoin, CURLOPT_SSL_VERIFYPEER, false); // Localhost uniquement
+    curl_exec($chJoin);
+    curl_close($chJoin);
 
     // Préparation des données
     $discord_id = $user_data['id'];
