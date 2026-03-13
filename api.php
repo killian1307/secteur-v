@@ -240,14 +240,56 @@ if ($action === 'poll_match') {
         exit;
     }
 
-    // Si aucun match actif, on cherche dans la file
-    $stmtQueue = $pdo->prepare("SELECT * FROM matchmaking_queue WHERE user_id = ?");
+    // Si aucun match actif, cherche dans la file
+
+    // Calcule les secondes d'attente et l'élargissement de recherche pour le ranked
+    $stmtQueue = $pdo->prepare("
+        SELECT u.elo, TIMESTAMPDIFF(SECOND, q.joined_at, NOW()) as seconds_waiting 
+        FROM matchmaking_queue q 
+        JOIN users u ON q.user_id = u.id 
+        WHERE q.user_id = ?
+    ");
     $stmtQueue->execute([$userId]);
+    $myQueueData = $stmtQueue->fetch();
     
-    if ($stmtQueue->fetch()) {
+    if ($myQueueData) {
+        $myElo = (int)$myQueueData['elo'];
+        $secondsWaiting = (int)$myQueueData['seconds_waiting'];
+        
+        // Sécurité
+        if ($secondsWaiting < 0) {
+            $secondsWaiting = 0;
+        }
+        
+        // Logique d'élargissement de la recherche
+        if ($mode === 'normal') {
+            // Mode normal, on cherche n'importe qui
+            $searchRadius = 2000; 
+        } else {
+            // Mode ranked, on élargit progressivement
+            $iterations = floor($secondsWaiting / 2);
+            $searchRadius = 10 * pow(2, $iterations);
+            
+            // Plafond de 300 ELO d'écart max en classé
+            if ($searchRadius > 1000) {
+                $searchRadius = 1000;
+            }
+        }
+
         $pdo->beginTransaction();
-        $stmtFind = $pdo->prepare("SELECT user_id FROM matchmaking_queue WHERE mode = ? AND user_id != ? ORDER BY joined_at ASC LIMIT 1 FOR UPDATE");
-        $stmtFind->execute([$mode, $userId]);
+        
+        // Recherche d'un adversaire compatible dans la file d'attente
+        $stmtFind = $pdo->prepare("
+            SELECT q.user_id 
+            FROM matchmaking_queue q
+            JOIN users u ON q.user_id = u.id
+            WHERE q.mode = ? 
+              AND q.user_id != ? 
+              AND ABS(u.elo - ?) <= ?
+            ORDER BY q.joined_at ASC 
+            LIMIT 1 FOR UPDATE
+        ");
+        $stmtFind->execute([$mode, $userId, $myElo, $searchRadius]);
         $opponent = $stmtFind->fetch();
 
         if ($opponent) {
@@ -272,7 +314,12 @@ if ($action === 'poll_match') {
             exit;
         } else {
             $pdo->commit();
-            echo json_encode(['state' => 'searching']);
+            // On renvoie les données de debug pour la console du navigateur
+            echo json_encode([
+                'state' => 'searching',
+                'debug_radius' => $searchRadius,
+                'debug_elo' => $myElo
+            ]);
             exit;
         }
     }

@@ -307,6 +307,11 @@ $header->render();
                 const m = Math.floor(secondsInQueue / 60).toString().padStart(2, '0');
                 const s = (secondsInQueue % 60).toString().padStart(2, '0');
                 document.getElementById('queue-time').innerText = `${m}:${s}`;
+                
+                // --- LOG DE L'ALGORITHME DE RECHERCHE ---
+                if (data.debug_radius !== undefined) {
+                    console.log(`[Recherche] Mon ELO: ${data.debug_elo} | Écart toléré: +/- ${data.debug_radius} (Cibles potentielles: ${data.debug_elo - data.debug_radius} à ${data.debug_elo + data.debug_radius})`);
+                }
             }
             
             // Adversaire Déconnecté
