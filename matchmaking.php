@@ -153,18 +153,20 @@ $header->render();
 
         <div id="view-dispute" class="mm-view">
             <h2 style="color:#e74c3c;"><i class="fas fa-exclamation-triangle"></i> Litige détecté</h2>
-            <p style="margin-bottom:20px;">Les scores rentrés ne correspondent pas. Veuillez fournir une preuve (Capture d'écran du résultat).</p>
+            <p style="margin-bottom:20px;">Les scores rentrés ne correspondent pas. Ce match a été clôturé et placé en vérification.</p>
             
-            <form id="evidence-form" onsubmit="submitEvidence(event)" style="text-align:left; background:rgba(0,0,0,0.2); padding:20px; border-radius:10px;">
-                <div class="score-label">Preuve (Image) *</div>
-                <input type="file" id="evidence-file" accept="image/png, image/jpeg, image/webp" required style="margin-bottom:15px; width:100%;">
-                
-                <div class="score-label">Message d'explication (Optionnel)</div>
-                <textarea id="evidence-message" rows="3" style="width:100%; background:transparent; border:1px solid rgba(255,255,255,0.2); color:#fff; padding:10px; border-radius:5px; margin-bottom:15px;"></textarea>
-                
-                <button type="submit" class="btn-large btn-ranked" style="width:100%; border-radius:5px;">Envoyer la preuve</button>
-            </form>
-            <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:10px;">Ne quittez pas la page avant d'avoir envoyé votre preuve, sinon vous serez déclaré perdant par forfait.</p>
+            <div style="background:rgba(0,0,0,0.2); padding:20px; border-radius:10px; margin-bottom: 20px;">
+                <p>Un **ticket privé** vient d'être automatiquement créé sur notre serveur Discord.</p>
+                <p>Les modérateurs et votre adversaire vous y attendent. Veuillez y poster votre capture d'écran prouvant votre victoire.</p>
+            </div>
+            
+            <a href="https://discord.gg/A98PfnH8SC" target="_blank">
+                <button class="btn-large" style="background:#5865F2; color:#fff; width:100%;">
+                    <i class="fab fa-discord"></i> Ouvrir le Ticket sur Discord
+                </button>
+            </a>
+            
+            <button onclick="window.location.href='index.php'" class="btn-large btn-switch" style="width:100%;">Retour à l'accueil</button>
         </div>
 
     </div>
@@ -303,7 +305,7 @@ $header->render();
 
             // Recherche en cours
             if (data.state === 'searching') {
-                secondsInQueue += 2;
+                secondsInQueue += 1;
                 const m = Math.floor(secondsInQueue / 60).toString().padStart(2, '0');
                 const s = (secondsInQueue % 60).toString().padStart(2, '0');
                 document.getElementById('queue-time').innerText = `${m}:${s}`;
