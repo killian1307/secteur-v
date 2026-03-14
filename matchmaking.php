@@ -80,6 +80,36 @@ $header->render();
         .match-layout { grid-template-columns: 1fr; }
         .vs-screen { flex-direction: column; gap: 15px; }
     }
+
+    .queue-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 8px 18px;
+        border-radius: 20px;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: var(--text-secondary);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .live-dot {
+        width: 10px;
+        height: 10px;
+        background-color: #2ecc71;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 10px #2ecc71;
+        animation: pulseLive 1.5s infinite;
+    }
+    
+    @keyframes pulseLive {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+    }
 </style>
 
 <main class="dashboard-container">
@@ -92,6 +122,11 @@ $header->render();
             <h2>Prêt pour le match ?</h2>
             <p style="color:var(--text-secondary); margin-bottom: 2rem;">Trouvez un adversaire et prouvez votre valeur.</p>
             
+            <div class="queue-status">
+                <span class="live-dot"></span>
+                <span id="queue-count-text">Recherche des joueurs...</span>
+            </div>
+
             <button onclick="joinQueue()" class="btn-large <?php echo $mode === 'ranked' ? 'btn-ranked' : 'btn-normal'; ?>">
                 <i class="fas fa-play"></i> Lancer la recherche
             </button>
@@ -381,6 +416,30 @@ $header->render();
             console.error("Erreur Polling", e);
         }
     }
+
+    // Compteur de file d'attente
+    async function fetchQueueCount() {
+        if (currentState !== 'lobby') return; 
+        
+        try {
+            const res = await fetch(`api.php?action=get_queue_count&mode=${MODE}`);
+            const data = await res.json();
+            
+            if (data.success) {
+                const pluriel = data.count > 1 ? "s" : "";
+                document.getElementById('queue-count-text').innerText = `${data.count} joueur${pluriel} en file d'attente`;
+            }
+        } catch(e) {
+            console.error("Erreur maj compteur", e);
+        }
+    }
+
+    // Lance dès le chargement de la page
+    document.addEventListener('DOMContentLoaded', () => {
+        pollServer(); 
+        fetchQueueCount();
+        setInterval(fetchQueueCount, 5000); // Boucle toutes les 5s
+    });
 </script>
 
 <?php

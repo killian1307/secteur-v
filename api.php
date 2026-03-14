@@ -559,4 +559,15 @@ function createDiscordTicket($pdo, $matchId, $p1Id, $p2Id, $scoreP1, $scoreP2) {
     curl_close($chMsg);
 }
 
+// Récupérer le nombre de joueurs en file d'attente pour un mode donné (utile pour l'affichage)
+if ($action === 'get_queue_count') {
+    $mode = $_GET['mode'] ?? 'ranked';
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM matchmaking_queue WHERE mode = ?");
+    $stmt->execute([$mode]);
+    $count = $stmt->fetchColumn();
+    
+    echo json_encode(['success' => true, 'count' => $count]);
+    exit;
+}
+
 ?>
