@@ -393,12 +393,29 @@ if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $claimP1 = $match['p1_score_claim'] . "-" . $match['p1_opp_score_claim'];
             $claimP2 = $match['p2_score_claim'] . "-" . $match['p2_opp_score_claim'];
 
+            // CALCUL DES GAINS POTENTIELS 
+            $stmtElo = $pdo->prepare("SELECT id, elo FROM users WHERE id IN (?, ?)");
+            $stmtElo->execute([$match['player1_id'], $match['player2_id']]);
+            $usersElo = $stmtElo->fetchAll(PDO::FETCH_KEY_PAIR); // Tableau [id => elo]
+            
+            $eloP1 = $usersElo[$match['player1_id']];
+            $eloP2 = $usersElo[$match['player2_id']];
+
+            $K = 40;
+            // Si P1 gagne
+            $expWinP1 = 1 / (1 + pow(10, ($eloP2 - $eloP1) / 400));
+            $gainP1 = max(1, round($K * (1 - $expWinP1)));
+            
+            // Si P2 gagne
+            $expWinP2 = 1 / (1 + pow(10, ($eloP1 - $eloP2) / 400));
+            $gainP2 = max(1, round($K * (1 - $expWinP2)));
+
             // 1. Créer le ticket Discord (ça envoie le message et taggue tout le monde)
             createDiscordTicket($pdo, $matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2);
 
             // 2. Insérer dans la table litiges (juste pour l'historique, plus de colonnes preuves)
-            $pdo->prepare("INSERT INTO litiges (match_id, p1_id, p2_id, p1_score_claim, p2_score_claim) VALUES (?, ?, ?, ?, ?)")
-                ->execute([$matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2]);
+            $pdo->prepare("INSERT INTO litiges (match_id, p1_id, p2_id, p1_score_claim, p2_score_claim, p1_win_gain, p2_win_gain) VALUES (?, ?, ?, ?, ?, ?, ?)")
+                ->execute([$matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2, $gainP1, $gainP2]);
 
             // 3. ON SUPPRIME le match actif
             $pdo->prepare("DELETE FROM active_matches WHERE id = ?")->execute([$matchId]);
