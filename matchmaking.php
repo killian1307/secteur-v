@@ -174,7 +174,7 @@ $header->render();
 
 <script>
     const MODE = "<?php echo $mode; ?>";
-    const MY_ID = <?php echo $_SESSION['user_id']; ?>;
+    const MY_ID = "<?php echo $_SESSION['user_id']; ?>";
     
     let currentState = 'lobby'; // lobby, searching, in_match, resolving, disputed
     let currentMatchId = null;
@@ -387,3 +387,8 @@ $header->render();
 $footer = new Footer();
 $footer->render();
 ?>
+
+<script src="script.js"></script>
+
+</body>
+</html>
