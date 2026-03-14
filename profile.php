@@ -23,7 +23,7 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
 }
 
 // Cherche l'utilisateur dans la base de données
-$stmt = $pdo->prepare("SELECT id, username, avatar, created_at, elo, grade, bio FROM users WHERE username = ?");
+$stmt = $pdo->prepare("SELECT id, username, avatar, created_at, elo, grade, bio, wins, losses FROM users WHERE username = ?");
 $stmt->execute([$targetUsername]);
 $profileUser = $stmt->fetch();
 
@@ -120,6 +120,8 @@ $header->render();
             $elo = $profileUser['elo'];
             $grade = $profileUser['grade'];
             $bio = $profileUser['bio'];
+            $matchCount = $profileUser['wins'] + $profileUser['losses'];
+            $winRate = $matchCount > 0 ? round(($profileUser['wins'] / $matchCount) * 100, 0) : 0;
             
             // Bio check
             $displayBio = empty($bio) ? "Aucune bio définie." : htmlspecialchars($bio);
@@ -173,10 +175,10 @@ $header->render();
                         <span class="stat-label">Points EDP</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-value">0</span> <span class="stat-label">Matchs</span>
+                        <span class="stat-value"><?php echo $matchCount; ?></span> <span class="stat-label">Matchs</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-value">0%</span> <span class="stat-label">Win Rate</span>
+                        <span class="stat-value"><?php echo $winRate; ?>%</span> <span class="stat-label">Win Rate</span>
                     </div>
                 </div>
 
