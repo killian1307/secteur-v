@@ -1,6 +1,8 @@
 # ⚡⚽ Secteur V ⚽⚡
 
-![Bannière Secteur V](assets/img/secteurv-server.png)
+<div align="center">
+  <img src="assets/img/v.webp" alt="Bannière Secteur V" width="20%">
+</div>
 
 [![Static Badge](https://img.shields.io/badge/lang-fr-0000FF)](README.md) [![Static Badge](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://www.php.net/) [![Static Badge](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/) [![Static Badge](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
