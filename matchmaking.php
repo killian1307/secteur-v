@@ -110,6 +110,10 @@ $header->render();
         70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
     }
+
+    .discord_link {
+        text-decoration: none !important;
+    }
 </style>
 
 <main class="dashboard-container">
@@ -135,7 +139,7 @@ $header->render();
                 <button class="btn-large btn-switch"><i class="fas fa-exchange-alt"></i> Jouer en mode <?php echo $otherMode; ?></button>
             </a>
             
-            <a href="index.php" style="display:block; margin-top:2rem; color:var(--text-secondary);"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
+            <a href="/" style="display:block; margin-top:2rem; color:var(--text-secondary);"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
         </div>
 
         <div id="view-queue" class="mm-view">
@@ -191,17 +195,17 @@ $header->render();
             <p style="margin-bottom:20px;">Les scores rentrés ne correspondent pas. Ce match a été clôturé et placé en vérification.</p>
             
             <div style="background:rgba(0,0,0,0.2); padding:20px; border-radius:10px; margin-bottom: 20px;">
-                <p>Un **ticket privé** vient d'être automatiquement créé sur notre serveur Discord.</p>
+                <p>Un <strong>ticket privé</strong> vient d'être automatiquement créé sur notre serveur Discord.</p>
                 <p>Les modérateurs et votre adversaire vous y attendent. Veuillez y poster votre capture d'écran prouvant votre victoire.</p>
             </div>
             
-            <a href="https://discord.gg/A98PfnH8SC" target="_blank">
+            <a class="discord_link" href="https://discord.gg/A98PfnH8SC" target="_blank">
                 <button class="btn-large" style="background:#5865F2; color:#fff; width:100%;">
                     <i class="fab fa-discord"></i> Ouvrir le Ticket sur Discord
                 </button>
             </a>
             
-            <button onclick="window.location.href='index.php'" class="btn-large btn-switch" style="width:100%;">Retour à l'accueil</button>
+            <button onclick="window.location.href='/'" class="btn-large btn-switch" style="width:100%;">Retour à l'accueil</button>
         </div>
 
     </div>
@@ -260,7 +264,7 @@ $header->render();
         
         clearInterval(pollInterval);
         await fetch(`api.php?action=leave_match`);
-        window.location.href = 'index.php';
+        window.location.href = '/';
     }
 
     async function sendChat(e) {
@@ -297,7 +301,7 @@ $header->render();
             clearInterval(pollInterval);
             currentState = 'lobby';
             alert("Match validé ! Scores correspondants. Vous allez être redirigé vers l'accueil.");
-            window.location.href = 'index.php';
+            window.location.href = '/';
         } else if (data.state === 'disputed') {
             currentState = 'disputed';
             setView('view-dispute');
@@ -326,7 +330,7 @@ $header->render();
             hasSubmittedEvidence = true;
             clearInterval(pollInterval);
             alert("Preuve envoyée. Le litige sera examiné par l'équipe. Vous pouvez quitter cette page.");
-            window.location.href = 'index.php';
+            window.location.href = '/';
         }
     }
 
@@ -356,7 +360,7 @@ $header->render();
                 clearInterval(pollInterval);
                 currentState = 'lobby';
                 alert("L'adversaire a déclaré forfait ou s'est déconnecté. Vous remportez la victoire !");
-                window.location.href = 'index.php';
+                window.location.href = '/';
             }
 
             // Match en cours
@@ -394,7 +398,7 @@ $header->render();
                 clearInterval(pollInterval);
                 currentState = 'lobby';
                 alert("Match validé ! L'adversaire a confirmé le score. Retour à l'accueil.");
-                window.location.href = 'index.php';
+                window.location.href = '/';
             }
             
             // Litige
@@ -408,7 +412,7 @@ $header->render();
                 if (['in_match', 'resolving'].includes(currentState)) {
                     clearInterval(pollInterval);
                     alert("Le match a été clôturé de manière inattendue.");
-                    window.location.href = 'index.php';
+                    window.location.href = '/';
                 }
             }
 

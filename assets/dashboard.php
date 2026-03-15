@@ -65,6 +65,53 @@ class Dashboard {
         $history = $stmtHist->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <main class="dashboard-main">
+            
+            <style>
+                .beta-banner {
+                    width: 100%;
+                    background: linear-gradient(90deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+                    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+                    padding: 10px 0;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.05);
+                    margin-bottom: 2rem;
+                }
+
+                .beta-banner-content {
+                    display: inline-block;
+                    padding-left: 100%;
+                    animation: scrollText 25s linear infinite;
+                    color: var(--text-primary);
+                    font-size: 0.95rem;
+                }
+
+                .beta-banner-content strong {
+                    color: #FFD700;
+                    margin-right: 5px;
+                }
+
+                .beta-banner-content i {
+                    color: #e74c3c;
+                    margin: 0 5px;
+                }
+
+                @keyframes scrollText {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-100%); }
+                }
+
+                /* Met l'animation en pause quand on passe la souris dessus pour pouvoir lire tranquillement */
+                .beta-banner:hover .beta-banner-content {
+                    animation-play-state: paused;
+                }
+            </style>
+
+            <div class="beta-banner">
+                <div class="beta-banner-content">
+                    <strong>🚧 SAISON BÊTA EN COURS :</strong> Bienvenue dans la saison bêta du Secteur V ! N'hésitez pas à tout tester, tout casser, et à signaler les bugs sur notre Discord. <i>⚠️ ATTENTION :</i> Les points EDP sont susceptibles d'être réinitialisés si des failles majeures sont découvertes. Bon jeu à tous !
+                </div>
+            </div>
             <div class="dashboard-header">
                 <h1 class="dashboard-h1">Bon retour, <span class="highlight-name"><?php echo $username; ?></span>.</h1>
                 <p class="subtitle dashboard-sub">Prêt à prouver qui est le meilleur ?</p>

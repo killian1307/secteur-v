@@ -46,7 +46,7 @@ public function render() {
             </button>
         </div>
 
-        <a href="index.php#" class="' . $logoClass . '" id="navLogo"><span class="header-text">SECTEUR</span> <img src="assets/img/v.webp" alt="V" class="v-icon"></a>
+        <a href="/" class="' . $logoClass . '" id="navLogo"><span class="header-text">SECTEUR</span> <img src="assets/img/v.webp" alt="V" class="v-icon"></a>
         
         <div class="profile-container">
             <div class="profile-icon" onclick="toggleMenu()">';
@@ -84,7 +84,7 @@ public function render() {
 
     <div class="mobile-menu-overlay" id="mobileMenu" onclick="toggleMobileMenu()">
         <div class="mobile-menu-content" onclick="event.stopPropagation()">
-            <a href="index.php#" class="mobile-link"><i class="fas fa-home"></i> Accueil</a>';
+            <a href="/" class="mobile-link"><i class="fas fa-home"></i> Accueil</a>';
 if ($isLoggedIn) {
             // Si connecté, menu match
             echo '<a href="matchmaking.php" class="mobile-link"><i class="fas fa-gamepad"></i> Match</a>';
