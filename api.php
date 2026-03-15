@@ -342,8 +342,19 @@ if ($action === 'poll_match') {
 // --- TCHAT ---
 if ($action === 'send_chat' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
-    $pdo->prepare("INSERT INTO match_chat (match_id, sender_id, message) VALUES (?, ?, ?)")
-        ->execute([$input['match_id'], $userId, htmlspecialchars($input['message'])]);
+    
+    $message = trim($input['message']);
+    
+
+    if (mb_strlen($message) > 64) {
+        $message = mb_substr($message, 0, 64);
+    }
+
+    if (!empty($message)) {
+        $pdo->prepare("INSERT INTO match_chat (match_id, sender_id, message) VALUES (?, ?, ?)")
+            ->execute([$input['match_id'], $userId, htmlspecialchars($message)]);
+    }
+    
     echo json_encode(['success' => true]);
     exit;
 }

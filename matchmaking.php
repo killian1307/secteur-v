@@ -165,7 +165,7 @@ $header->render();
                         <div style="color:var(--text-secondary); font-style:italic; text-align:center;">Le match commence !</div>
                     </div>
                     <form class="chat-input" onsubmit="sendChat(event)">
-                        <input type="text" id="chat-input" placeholder="Message..." autocomplete="off">
+                        <input type="text" id="chat-input" placeholder="Message... (64 caractères max.)" autocomplete="off" maxlength="64">
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
