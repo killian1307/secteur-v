@@ -1,6 +1,6 @@
 # ⚡⚽ Secteur V ⚽⚡
 
-![Bannière Secteur V](assets/img/v.webp)
+![Bannière Secteur V](assets/img/secteurv-server.png)
 
 [![Static Badge](https://img.shields.io/badge/lang-fr-0000FF)](README.md) [![Static Badge](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://www.php.net/) [![Static Badge](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/) [![Static Badge](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
@@ -9,7 +9,7 @@
 **Vous pouvez accéder à la plateforme compétitive directement depuis votre navigateur :**
 
 <h3 align="center">
-🚀 Rejoindre le Secteur V : <a href="https://secteur-v.letterk.me" target="_blank">https://secteur-v.letterk.me</a>
+🚀 BÊTA OUVERTE ! Rejoindre le Secteur V : <a href="https://secteur-v.letterk.me" target="_blank">https://secteur-v.letterk.me</a>
 </h3>
 
 ---
