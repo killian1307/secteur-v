@@ -33,7 +33,7 @@ class Footer {
                 <h4>Suivez-nous</h4>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-x-twitter"></i></a>
-                    <a href="https://discord.gg/A98PfnH8SC" target="_blank"><i class="fab fa-discord"></i></a>
+                    <a href="https://discord.gg/85AT6gGNGD" target="_blank"><i class="fab fa-discord"></i></a>
                     <a href="https://github.com/killian1307/secteur-v" target="_blank"><i class="fab fa-github"></i></a>
                 </div>
             </div>

@@ -199,7 +199,7 @@ $header->render();
                 <p>Les modérateurs et votre adversaire vous y attendent. Veuillez y poster votre capture d'écran prouvant votre victoire.</p>
             </div>
             
-            <a class="discord_link" href="https://discord.gg/A98PfnH8SC" target="_blank">
+            <a class="discord_link" href="https://discord.gg/85AT6gGNGD" target="_blank">
                 <button class="btn-large" style="background:#5865F2; color:#fff; width:100%;">
                     <i class="fab fa-discord"></i> Ouvrir le Ticket sur Discord
                 </button>

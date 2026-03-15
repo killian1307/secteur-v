@@ -95,7 +95,7 @@ if ($isLoggedIn) {
         }
         echo '<a href="ranking.php" class="mobile-link"><i class="fas fa-list-ol"></i> Classement</a>';
         echo '<a href="playerbook.php" class="mobile-link"><i class="fas fa-address-card"></i> Liste des joueurs</a>';
-        echo '<a href="https://discord.gg/A98PfnH8SC" class="mobile-link" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+        echo '<a href="https://discord.gg/85AT6gGNGD" class="mobile-link" target="_blank"><i class="fab fa-discord"></i> Discord</a>
         </div>
     </div>';
     }
