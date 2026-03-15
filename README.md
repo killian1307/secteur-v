@@ -69,6 +69,12 @@ Ce projet repose sur les technologies standards du web :
 * **FontAwesome :** Icônes de l'interface.
 * **Google Fonts :** Typographies (*Cormorant Garamond* pour le style littéraire).
 
+## Utilisation de l'IA
+
+Le développement de ce projet a été fait en utilisant l'IA Gemini comme outil de réflexion et comme banque de données. Même si le plus gros du site a été développé à l'aide de mes connaissances et de l'IA comme outil seulement, certaines parties plus complexes ont nécessité de la génération de code. Quoi qu'il en soit, le code final a été relu, réécrit, testé et débuggé par mes soins sur plusieurs semaines, afin que même les bouts de codes générés par Gemini soient assimilés et intégrés au projet de manière robuste et stable.
+
+Le projet Secteur V n'est donc **pas** un projet de vibe-coding, mais le résultat du travail sur plusieurs semaines d'un étudiant en informatique amoureux d'Inazuma Eleven (et de php), assisté par IA.
+
 ## Licences
 
 **Artwork & Jeu :** Inazuma Eleven est une propriété de © LEVEL-5 Inc. Ce projet est un site communautaire non-officiel.
