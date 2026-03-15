@@ -148,7 +148,7 @@ $header->render();
         <div id="view-match" class="mm-view">
             <div class="vs-screen">
                 <div class="player-box">
-                    <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_avatar.png'; ?>" alt="Moi">
+                    <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_user.webp'; ?>" alt="Moi">
                     <h3 style="margin-top:10px;"><?php echo htmlspecialchars($username); ?></h3>
                 </div>
                 <div class="vs-text">VS</div>
@@ -368,7 +368,7 @@ $header->render();
                     setView('view-match');
                     document.getElementById('opp-name').innerText = data.opponent.username;
                     document.getElementById('opp-elo').innerText = "Elo: " + data.opponent.elo;
-                    document.getElementById('opp-avatar').src = data.opponent.avatar || 'assets/img/default_avatar.png';
+                    document.getElementById('opp-avatar').src = data.opponent.avatar || 'assets/img/default_user.webp';
                 }
 
                 if (data.status === 'disputed' && currentState !== 'disputed') {
