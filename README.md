@@ -23,7 +23,7 @@ Le projet répond au besoin de structurer la scène compétitive du jeu. Plutôt
 ## Fonctionnalités
 
 * **Authentification Discord :** Connexion sécurisée via OAuth2, récupérant automatiquement l'avatar et le pseudo.
-* **Classement ELO (Ladder) :** Système de rangs dynamique (Inazuma Challenger, Élite, etc.) calculé selon les performances.
+* **Classement ELO (Ladder) :** Système de rang dynamique calculé selon les performances.
 * **Profils Joueurs (Dossiers) :** Page publique affichant les statistiques, la bio, le rang actuel et l'historique des matchs.
 * **Gestion de Compte :** Interface pour modifier sa bio, ses informations de contact ou supprimer ses données (RGPD).
 
