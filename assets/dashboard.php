@@ -35,20 +35,24 @@ class Dashboard {
 
         // Récupération de l'historique
         $sqlHistory = "
-            (SELECT m.*, w.username AS winner_name, l.username AS loser_name 
+            (SELECT m.*, 
+                    COALESCE(w.username, 'Joueur supprimé') AS winner_name, 
+                    COALESCE(l.username, 'Joueur supprimé') AS loser_name 
              FROM matches m 
-             JOIN users w ON m.winner_id = w.id 
-             JOIN users l ON m.loser_id = l.id 
+             LEFT JOIN users w ON m.winner_id = w.id 
+             LEFT JOIN users l ON m.loser_id = l.id 
              WHERE (m.winner_id = ? OR m.loser_id = ?) AND m.mode = 'ranked' 
              ORDER BY m.match_date DESC 
              LIMIT 10)
             
             UNION ALL
             
-            (SELECT m.*, w.username AS winner_name, l.username AS loser_name 
+            (SELECT m.*, 
+                    COALESCE(w.username, 'Joueur supprimé') AS winner_name, 
+                    COALESCE(l.username, 'Joueur supprimé') AS loser_name 
              FROM matches m 
-             JOIN users w ON m.winner_id = w.id 
-             JOIN users l ON m.loser_id = l.id 
+             LEFT JOIN users w ON m.winner_id = w.id 
+             LEFT JOIN users l ON m.loser_id = l.id 
              WHERE (m.winner_id = ? OR m.loser_id = ?) AND m.mode = 'normal' 
              ORDER BY m.match_date DESC 
              LIMIT 10)
