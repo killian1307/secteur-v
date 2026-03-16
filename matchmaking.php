@@ -114,11 +114,15 @@ $header->render();
     .discord_link {
         text-decoration: none !important;
     }
+
+    .subtitle-match {
+        margin-bottom: 0.5rem !important;
+    }
 </style>
 
 <main class="dashboard-container">
     <h1>Arène <span style="color:var(--primary-purple)">Secteur V</span></h1>
-    <p class="subtitle">Mode sélectionné : <strong style="text-transform:uppercase;"><?php echo $mode; ?></strong></p>
+    <p class="subtitle subtitle-match">Mode sélectionné : <strong style="text-transform:uppercase;"><?php echo $mode; ?></strong></p>
 
     <div class="mm-container">
         
@@ -437,6 +441,33 @@ $header->render();
             console.error("Erreur maj compteur", e);
         }
     }
+
+    // Empêche les téléphones de se mettre en veille
+    let wakeLock = null;
+
+    async function requestWakeLock() {
+        try {
+            // Vérifie si le navigateur supporte cette fonctionnalité
+            if ('wakeLock' in navigator) {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Wake Lock activé : l\'écran restera allumé.');
+
+                // Si le système annule le lock
+                wakeLock.addEventListener('release', () => {
+                    console.log('Wake Lock relâché par le système.');
+                });
+            }
+        } catch (err) {
+            console.error(`Impossible d'activer le Wake Lock : ${err.name}, ${err.message}`);
+        }
+    }
+
+    // Si changement d'onglet ou de visibilité, tente de réactiver le Wake Lock
+    document.addEventListener('visibilitychange', async () => {
+        if (wakeLock !== null && document.visibilityState === 'visible') {
+            await requestWakeLock();
+        }
+    });
 
     // Lance dès le chargement de la page
     document.addEventListener('DOMContentLoaded', () => {

@@ -21,9 +21,11 @@ $header->render();
             Le système de classement <b>absolu</b> du Secteur&nbsp;V.
         </p>
 
+        <?php if (!isset($_SESSION['user_id'])) { ?>
         <button class="cta-button" onclick="openPrivacyModal()">
             <i class="fab fa-discord"></i> Rejoindre la compétition
         </button>
+        <?php } ?>
 
         <div class="process-container">
             <div class="process-step">

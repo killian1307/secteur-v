@@ -113,7 +113,7 @@ function sortArrow($colName) {
     return '<span style="opacity:0.3">⇅</span>';
 }
 
-$header = new Header("SECTEUR V - Player Book");
+$header = new Header("SECTEUR V - Liste de Joueurs");
 $header->render();
 ?>
 
@@ -122,7 +122,7 @@ $header->render();
 <main class="playerbook-container">
     
     <div class="pb-header">
-        <h1>Player <span style="color:var(--primary-purple)">Book</span></h1>
+        <h1 class="dashboard-h1">Liste de <span style="color:var(--primary-purple)">Joueurs</span></h1>
         <p class="subtitle">Base de données officielle du Secteur V.</p>
     </div>
 
