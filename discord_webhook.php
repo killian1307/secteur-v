@@ -75,6 +75,8 @@ try {
             if ($opt['name'] === 'match_id') $matchId = $opt['value'];
             if ($opt['name'] === 'vainqueur') $winnerDiscordId = $opt['value'];
             if ($opt['name'] === 'perdant') $loserDiscordId = $opt['value'];
+            if ($opt['name'] === 'score_gagnant') $scoreGagnant = $opt['value'];
+            if ($opt['name'] === 'score_perdant') $scorePerdant = $opt['value'];
         }
 
         $stmt = $pdo->prepare("SELECT * FROM litiges WHERE match_id = ?");
@@ -103,11 +105,10 @@ try {
 
         $isWinnerP1 = ($litige['p1_id'] == $winnerInternalId);
         $eloGain = $isWinnerP1 ? $litige['p1_win_gain'] : $litige['p2_win_gain'];
-        $claimedScore = $isWinnerP1 ? $litige['p1_score_claim'] : $litige['p2_score_claim'];
-        
-        $scores = explode('-', $claimedScore);
-        $winScore = $scores[0] ?? 3;
-        $loseScore = $scores[1] ?? 0;
+
+        $winScore = $scoreGagnant;
+        $loseScore = $scorePerdant;
+
         $matchMode = $litige['mode'] ?? 'ranked';
 
         $pdo->prepare("INSERT INTO matches (winner_id, loser_id, winner_elo_change, loser_elo_change, mode, score_winner, score_loser) VALUES (?, ?, ?, ?, ?, ?, ?)")

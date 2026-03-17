@@ -15,6 +15,12 @@ $otherMode = ($mode === 'ranked') ? 'normal' : 'ranked';
 require 'assets/header.php';
 require 'assets/footer.php';
 $username = $_SESSION['username'];
+
+// Récupération de l'Elo pour l'affichage
+$stmtElo = $pdo->prepare("SELECT elo FROM users WHERE id = ?");
+$stmtElo->execute([$_SESSION['user_id']]);
+$myElo = $stmtElo->fetchColumn();
+
 $header = new Header("SECTEUR V - Matchmaking");
 $header->render();
 ?>
@@ -158,6 +164,7 @@ $header->render();
                 <div class="player-box">
                     <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_user.webp'; ?>" alt="Moi">
                     <h3 style="margin-top:10px;"><?php echo htmlspecialchars($username); ?></h3>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">Elo: <?php echo $myElo; ?></p>
                 </div>
                 <div class="vs-text">VS</div>
                 <div class="player-box">
@@ -214,6 +221,9 @@ $header->render();
 
     </div>
 </main>
+
+<!-- Son de notification pour les nouveaux messages -->
+<audio id="chat-sound" src="assets/sounds/notification.wav" preload="auto"></audio>
 
 <script>
     const MODE = "<?php echo $mode; ?>";
@@ -338,6 +348,8 @@ $header->render();
         }
     }
 
+    let previousMessageCount = 0;
+
     // Boucle de polling
     async function pollServer() {
         if (currentState === 'lobby' && document.getElementById('view-lobby').classList.contains('active')) return;
@@ -387,13 +399,26 @@ $header->render();
                 if (data.chat && currentState !== 'disputed') {
                     const chatBox = document.getElementById('chat-messages');
                     chatBox.innerHTML = '';
-                    data.chat.forEach(c => {
-                        const isMe = (c.sender_id == data.my_id);
-                        const color = isMe ? 'var(--primary-purple)' : '#2ecc71';
-                        const name = isMe ? 'Moi' : data.opponent.username;
-                        chatBox.innerHTML += `<div class="chat-msg"><strong style="color:${color}">${name}</strong> <span style="font-size:0.7rem; color:#888;">${c.time}</span><br>${c.message}</div>`;
-                    });
-                    chatBox.scrollTop = chatBox.scrollHeight;
+                        data.chat.forEach(c => {
+                            const isMe = (c.sender_id == data.my_id);
+                            const color = isMe ? 'var(--primary-purple)' : '#2ecc71';
+                            const name = isMe ? 'Moi' : data.opponent.username;
+                            chatBox.innerHTML += `<div class="chat-msg"><strong style="color:${color}">${name}</strong> <span style="font-size:0.7rem; color:#888;">${c.time}</span><br>${c.message}</div>`;
+                        });
+
+                        const newMessageCount = chatBox.childElementCount;
+
+                        // Joue un son à l'arrivée d'un nouveau message et scroll vers le bas
+                        if (newMessageCount > previousMessageCount) {
+                            chatBox.scrollTop = chatBox.scrollHeight;
+                            const lastMessage = chatBox.lastElementChild;
+                            const isMyOwnMessage = lastMessage ? lastMessage.textContent.includes('Moi') : false;
+                            if (!isMyOwnMessage) {
+                                let sound = document.getElementById('chat-sound');
+                                sound.play().catch(e => console.log("Son bloqué par le navigateur", e)); 
+                            }
+                            previousMessageCount = newMessageCount;
+                        }
                 }
             }
             
