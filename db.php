@@ -54,6 +54,12 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
+
+    // --- TRACKING DES JOUEURS EN LIGNE ---
+    if (isset($_SESSION['user_id'])) {
+        $pdo->prepare("UPDATE users SET last_activity = NOW() WHERE id = ?")->execute([$_SESSION['user_id']]);
+    }
+
 } catch (\PDOException $e) {
     die("Erreur.");
 }

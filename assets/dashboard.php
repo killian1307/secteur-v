@@ -24,6 +24,11 @@ class Dashboard {
         $losses = $this->user['losses'];
         $elo = $this->user['elo'];
         $grade = htmlspecialchars($this->user['grade']);
+
+        // Membres en ligne
+        $stmtOnline = $this->pdo->query("SELECT COUNT(*) FROM users WHERE last_activity >= NOW() - INTERVAL 5 MINUTE");
+        $onlineCount = $stmtOnline->fetchColumn();
+        $pluriel = $onlineCount > 1 ? "s" : "";
         
         // Calcul du Winrate
         $totalMatches = $wins + $losses;
@@ -114,7 +119,10 @@ class Dashboard {
             </div>
             <div class="dashboard-header">
                 <h1 class="dashboard-h1">Bon retour, <span class="highlight-name"><?php echo $username; ?></span>.</h1>
-                <p class="subtitle dashboard-sub">Prêt à prouver qui est le meilleur ?</p>
+                <p class="subtitle dashboard-sub" style="gap:10px;">Prêt à prouver qui est le meilleur ?
+                </p>
+                <span class="live-dot"></span>
+                <span class="online-count"><?php echo $onlineCount; ?> joueur<?php echo $pluriel; ?> en ligne</span>
                 
                 <div class="mode-actions">
                     <a href="matchmaking.php?mode=ranked" class="btn-mode ranked">
@@ -124,7 +132,6 @@ class Dashboard {
                     <a href="matchmaking.php?mode=normal" class="btn-mode normal">
                         <i class="fas fa-running"></i> Match Amical
                     </a>
-                    
                 </div>
             </div>
 
