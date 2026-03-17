@@ -185,7 +185,7 @@ class Dashboard {
                     </div>
 
                 <div class="dash-card stats-card">
-                    <h3><i class="fas fa-chart-pie"></i> Performance</h3>
+                    <h3><i class="fas fa-chart-pie"></i> Performances (Classé)</h3>
                     
                     <div class="winrate-container">
                         <div class="progress-circle" style="--p:<?php echo $winrate; ?>; --b:10px; --c:var(--primary-purple);">
