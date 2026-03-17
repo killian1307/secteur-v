@@ -421,14 +421,14 @@ if ($action === 'submit_score' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $expWinP2 = 1 / (1 + pow(10, ($eloP1 - $eloP2) / 400));
             $gainP2 = max(1, round($K * (1 - $expWinP2)));
 
-            // 1. Créer le ticket Discord (ça envoie le message et taggue tout le monde)
+            // Créer le ticket Discord
             createDiscordTicket($pdo, $matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2);
 
-            // 2. Insérer dans la table litiges (juste pour l'historique, plus de colonnes preuves)
-            $pdo->prepare("INSERT INTO litiges (match_id, p1_id, p2_id, p1_score_claim, p2_score_claim, p1_win_gain, p2_win_gain) VALUES (?, ?, ?, ?, ?, ?, ?)")
-                ->execute([$matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2, $gainP1, $gainP2]);
+            // Insérer dans la table litiges
+            $pdo->prepare("INSERT INTO litiges (match_id, p1_id, p2_id, p1_score_claim, p2_score_claim, p1_win_gain, p2_win_gain, mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+                ->execute([$matchId, $match['player1_id'], $match['player2_id'], $claimP1, $claimP2, $gainP1, $gainP2, $match['mode']]);
 
-            // 3. ON SUPPRIME le match actif
+            // Supprime le match actif
             $pdo->prepare("DELETE FROM active_matches WHERE id = ?")->execute([$matchId]);
             
             echo json_encode(['state' => 'disputed']);

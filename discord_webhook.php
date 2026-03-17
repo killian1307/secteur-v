@@ -108,13 +108,20 @@ try {
         $scores = explode('-', $claimedScore);
         $winScore = $scores[0] ?? 3;
         $loseScore = $scores[1] ?? 0;
+        $matchMode = $litige['mode'] ?? 'ranked';
 
-        $pdo->prepare("INSERT INTO matches (winner_id, loser_id, winner_elo_change, loser_elo_change, mode, score_winner, score_loser) VALUES (?, ?, ?, ?, 'ranked', ?, ?)")->execute([$winnerInternalId, $loserInternalId, $eloGain, -$eloGain, $winScore, $loseScore]);
-        $pdo->prepare("UPDATE users SET elo = elo + ?, wins = wins + 1 WHERE id = ?")->execute([$eloGain, $winnerInternalId]);
-        $pdo->prepare("UPDATE users SET elo = elo - ?, losses = losses + 1 WHERE id = ?")->execute([$eloGain, $loserInternalId]);
+        $pdo->prepare("INSERT INTO matches (winner_id, loser_id, winner_elo_change, loser_elo_change, mode, score_winner, score_loser) VALUES (?, ?, ?, ?, ?, ?, ?)")
+            ->execute([$winnerInternalId, $loserInternalId, $eloGain, -$eloGain, $matchMode, $winScore, $loseScore]);
+        if ($matchMode === 'ranked') {
+            $pdo->prepare("UPDATE users SET elo = elo + ?, wins = wins + 1 WHERE id = ?")->execute([$eloGain, $winnerInternalId]);
+            $pdo->prepare("UPDATE users SET elo = elo - ?, losses = losses + 1 WHERE id = ?")->execute([$eloGain, $loserInternalId]);
+            $messageDiscord = "✅ **Litige #$matchId résolu (Classé) !**\n<@$winnerDiscordId> remporte la victoire (`$winScore - $loseScore`) et gagne **+$eloGain ELO**.\nCe salon peut maintenant être supprimé.";
+        } else {
+            $messageDiscord = "✅ **Litige #$matchId résolu (Normal) !**\n<@$winnerDiscordId> remporte la victoire (`$winScore - $loseScore`).\nCe salon peut maintenant être supprimé.";
+        }
+
+        sendDiscordResponse($messageDiscord);
         $pdo->prepare("DELETE FROM litiges WHERE match_id = ?")->execute([$matchId]);
-
-        sendDiscordResponse("✅ **Litige #$matchId résolu !**\n<@$winnerDiscordId> remporte la victoire (`$winScore - $loseScore`) et gagne **+$eloGain ELO**.\nCe salon peut maintenant être supprimé.");
         exit;
     }
 
