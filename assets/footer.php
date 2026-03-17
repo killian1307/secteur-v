@@ -16,17 +16,17 @@ class Footer {
             <div class="footer-col">
                 <h4>Liens Utiles</h4>
                 <ul>
-                    <li><a href="classement.php">Comment ça marche</a></li>
-                    <li><a href="copyright.php">Sources</a></li>
+                    <li><a href="edp.php">Comment ça marche</a></li>
+                    <li><a href="rules.php">Règlement</a></li>
                     <li><a href="mailto:secteur-v@letterk.me">Nous Contacter</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Légal</h4>
                 <ul>
-                    <li><a href="#">Mentions Légales</a></li>
-                    <li><a href="#">Confidentialité</a></li>
-                    <li><a href="#">CGU</a></li>
+                    <li><a href="legal.php">Mentions Légales</a></li>
+                    <li><a href="privacy.php">Confidentialité</a></li>
+                    <li><a href="terms.php">CGU</a></li>
                 </ul>
             </div>
             <div class="footer-col">
