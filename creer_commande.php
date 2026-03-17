@@ -33,6 +33,20 @@ $commandData = [
             "description" => "Le joueur qui a perdu",
             "type" => 6, // Type 6 = User
             "required" => true
+        ],
+
+        [
+            "name" => "score_gagnant",
+            "description" => "Le score final du joueur qui a gagné",
+            "type" => 4, // Type 4 = Integer
+            "required" => true
+        ],
+
+        [
+            "name" => "score_perdant",
+            "description" => "Le score final du joueur qui a perdu",
+            "type" => 4, // Type 4 = Integer
+            "required" => true
         ]
     ]
 ];
