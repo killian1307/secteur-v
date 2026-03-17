@@ -222,6 +222,9 @@ $header->render();
     </div>
 </main>
 
+<!-- Son de notification pour les nouveaux messages -->
+<audio id="chat-sound" src="assets/sounds/notification.wav" preload="auto"></audio>
+
 <script>
     const MODE = "<?php echo $mode; ?>";
     const MY_ID = "<?php echo $_SESSION['user_id']; ?>";
@@ -345,6 +348,8 @@ $header->render();
         }
     }
 
+    let previousMessageCount = 0;
+
     // Boucle de polling
     async function pollServer() {
         if (currentState === 'lobby' && document.getElementById('view-lobby').classList.contains('active')) return;
@@ -394,13 +399,26 @@ $header->render();
                 if (data.chat && currentState !== 'disputed') {
                     const chatBox = document.getElementById('chat-messages');
                     chatBox.innerHTML = '';
-                    data.chat.forEach(c => {
-                        const isMe = (c.sender_id == data.my_id);
-                        const color = isMe ? 'var(--primary-purple)' : '#2ecc71';
-                        const name = isMe ? 'Moi' : data.opponent.username;
-                        chatBox.innerHTML += `<div class="chat-msg"><strong style="color:${color}">${name}</strong> <span style="font-size:0.7rem; color:#888;">${c.time}</span><br>${c.message}</div>`;
-                    });
-                    chatBox.scrollTop = chatBox.scrollHeight;
+                        data.chat.forEach(c => {
+                            const isMe = (c.sender_id == data.my_id);
+                            const color = isMe ? 'var(--primary-purple)' : '#2ecc71';
+                            const name = isMe ? 'Moi' : data.opponent.username;
+                            chatBox.innerHTML += `<div class="chat-msg"><strong style="color:${color}">${name}</strong> <span style="font-size:0.7rem; color:#888;">${c.time}</span><br>${c.message}</div>`;
+                        });
+
+                        const newMessageCount = chatBox.childElementCount;
+
+                        // Joue un son à l'arrivée d'un nouveau message et scroll vers le bas
+                        if (newMessageCount > previousMessageCount) {
+                            chatBox.scrollTop = chatBox.scrollHeight;
+                            const lastMessage = chatBox.lastElementChild;
+                            const isMyOwnMessage = lastMessage ? lastMessage.textContent.includes('Moi') : false;
+                            if (!isMyOwnMessage) {
+                                let sound = document.getElementById('chat-sound');
+                                sound.play().catch(e => console.log("Son bloqué par le navigateur", e)); 
+                            }
+                            previousMessageCount = newMessageCount;
+                        }
                 }
             }
             
