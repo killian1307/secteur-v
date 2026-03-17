@@ -15,6 +15,12 @@ $otherMode = ($mode === 'ranked') ? 'normal' : 'ranked';
 require 'assets/header.php';
 require 'assets/footer.php';
 $username = $_SESSION['username'];
+
+// Récupération de l'Elo pour l'affichage
+$stmtElo = $pdo->prepare("SELECT elo FROM users WHERE id = ?");
+$stmtElo->execute([$_SESSION['user_id']]);
+$myElo = $stmtElo->fetchColumn();
+
 $header = new Header("SECTEUR V - Matchmaking");
 $header->render();
 ?>
@@ -158,6 +164,7 @@ $header->render();
                 <div class="player-box">
                     <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_user.webp'; ?>" alt="Moi">
                     <h3 style="margin-top:10px;"><?php echo htmlspecialchars($username); ?></h3>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">Elo: <?php echo $myElo; ?></p>
                 </div>
                 <div class="vs-text">VS</div>
                 <div class="player-box">
