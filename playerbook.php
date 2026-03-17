@@ -227,15 +227,6 @@ $header->render();
             </tbody>
         </table>
     </div>
-    
-    <div class="pagination bottom">
-        <?php if ($page > 1): ?>
-            <a href="<?php echo getLink($page - 1); ?>" class="page-btn">←</a>
-        <?php endif; ?>
-        <?php if ($page < $totalPages): ?>
-            <a href="<?php echo getLink($page + 1); ?>" class="page-btn">→</a>
-        <?php endif; ?>
-    </div>
 
 </main>
 

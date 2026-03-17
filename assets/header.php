@@ -92,9 +92,10 @@ if ($isLoggedIn) {
             // Sinon, présentation
             echo '<a href="index.php#presentation" class="mobile-link"><i class="fas fa-info-circle"></i> Présentation</a>';
         }
-        echo '<a href="edp.php" class="mobile-link"><i class="fas fa-dumbbell"></i> Échelle du Pouvoir</a>';
         echo '<a href="ranking.php" class="mobile-link"><i class="fas fa-list-ol"></i> Classement</a>';
         echo '<a href="playerbook.php" class="mobile-link"><i class="fas fa-address-card"></i> Liste de joueurs</a>';
+        echo '<a href="edp.php" class="mobile-link"><i class="fas fa-dumbbell"></i> Échelle du Pouvoir</a>';
+        echo '<a href="rules.php" class="mobile-link"><i class="fas fa-book"></i> Règlement</a>';
         echo '<a href="https://discord.gg/85AT6gGNGD" class="mobile-link" target="_blank"><i class="fab fa-discord"></i> Discord</a>
         </div>
     </div>';
