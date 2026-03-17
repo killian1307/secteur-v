@@ -1,7 +1,7 @@
 <?php
 // api.php
 header('Content-Type: application/json');
-session_start();
+require_once 'assets/init_session.php';
 require_once 'TeamManager.php';
 
 

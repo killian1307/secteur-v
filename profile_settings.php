@@ -1,10 +1,10 @@
 <?php
-session_start();
+require_once 'assets/init_session.php';
 require 'db.php';
 
 // Si l'utilisateur n'est pas connecté, redirige vers la page d'accueil
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: /");
     exit;
 }
 

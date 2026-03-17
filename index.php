@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'assets/init_session.php';
 require 'db.php';
 require 'assets/header.php';
 require 'assets/footer.php';

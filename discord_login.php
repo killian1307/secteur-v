@@ -1,11 +1,11 @@
 <?php
 // discord_login.php
 
-session_start();
+require_once 'assets/init_session.php';
 
 // Si l'utilisateur est déjà connecté, renvoie vers l'accueil
 if (isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: /");
     exit;
 }
 
@@ -154,7 +154,7 @@ if (isset($_GET['code'])) {
         $_SESSION['avatar'] = $avatar_url;
     }
 
-    header('Location: index.php');
+    header('Location: /');
     exit;
 }
 ?>
