@@ -15,10 +15,12 @@ jobs:
       - name: 🚚 Récupération du code
         uses: actions/checkout@v4
 
-      - name: 🚀 Envoi sur Ionos via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 🚀 Envoi sur Ionos via SFTP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          port: 22
+          source: "."
+          target: ${{ secrets.FTP_SERVER_DIR }}
