@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } catch (PDOException $e) {
         // En cas d'erreur technique
-        die("Erreur lors de la mise à jour : " . $e->getMessage());
+        die(__('prof_err_update') . " : " . $e->getMessage());
     }
 }
 
@@ -96,7 +96,7 @@ require 'assets/header.php';
 require 'assets/footer.php';
 
 # Titre de la page
-$pageTitle = $profileUser ? "Profil de " . htmlspecialchars($profileUser['username']) : "Joueur Introuvable";
+$pageTitle = $profileUser ? __('prof_title_of') . " " . htmlspecialchars($profileUser['username']) : __('prof_not_found');
 $header = new Header("SECTEUR V - " . $pageTitle);
 $header->render();
 ?>
@@ -105,9 +105,9 @@ $header->render();
     
     <?php if ($errorMsg): ?>
         <div class="dashboard-container">
-            <h1 style="color: #e74c3c;">Erreur 404</h1>
+            <h1 style="color: #e74c3c;"><?php echo __('prof_err_404'); ?></h1>
             <p class="subtitle"><?php echo $errorMsg; ?></p>
-            <button class="cta-button" onclick="window.history.back()">Retour</button>
+            <button class="cta-button" onclick="window.history.back()"><?php echo __('prof_back'); ?></button>
         </div>
 
     <?php else: ?>
@@ -124,7 +124,7 @@ $header->render();
             $winRate = $matchCount > 0 ? round(($profileUser['wins'] / $matchCount) * 100, 0) : 0;
             
             // Bio check
-            $displayBio = empty($bio) ? "Aucune bio définie." : htmlspecialchars($bio);
+            $displayBio = empty($bio) ? __('prof_no_bio') : htmlspecialchars($bio);
             $bioClass = empty($bio) ? "empty-bio" : "";
 
             // Grade coloring
@@ -147,12 +147,12 @@ $header->render();
                         <h1 class="osu-username" title="<?php echo htmlspecialchars($profileUser['username']); ?>">
                             <?php echo $displayUsername; ?>
                         </h1>
-                        <span class="osu-grade <?php echo $gradeClass; ?>"><?php echo htmlspecialchars($grade); ?></span>
+                        <span class="osu-grade <?php echo $gradeClass; ?>"><?php echo htmlspecialchars(__($grade)); ?></span>
                     </div>
 
                     <div class="badges-row">
-                        <div class="badge-pill tooltip" data-tooltip="Utilisateur Vérifié">
-                            <i class="fas fa-check-circle"></i> Vérifié
+                        <div class="badge-pill tooltip" data-tooltip="<?php echo __('prof_verified'); ?>">
+                            <i class="fas fa-check-circle"></i> <?php echo __('prof_verified_badge'); ?>
                         </div>
                         <div class="badge-pill">
                             <i class="fas fa-calendar-alt"></i> <?php echo $joinDate; ?>
@@ -162,7 +162,7 @@ $header->render();
                     <div class="bio-row">
                         <p class="osu-bio <?php echo $bioClass; ?>"><?php echo $displayBio; ?></p>
                         <?php if ($isOwner): ?>
-                            <button class="mini-edit-btn" onclick="openEditModal()" title="Modifier la bio">
+                            <button class="mini-edit-btn" onclick="openEditModal()" title="<?php echo __('prof_edit_bio'); ?>">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                         <?php endif; ?>
@@ -172,13 +172,13 @@ $header->render();
                 <div class="header-stats-section">
                     <div class="stat-box">
                         <span class="stat-value"><?php echo $elo; ?></span>
-                        <span class="stat-label">Points EDP</span>
+                        <span class="stat-label"><?php echo __('prof_stat_edp'); ?></span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-value"><?php echo $matchCount; ?></span> <span class="stat-label">Matchs</span>
+                        <span class="stat-value"><?php echo $matchCount; ?></span> <span class="stat-label"><?php echo __('prof_stat_matches'); ?></span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-value"><?php echo $winRate; ?>%</span> <span class="stat-label">Win Rate</span>
+                        <span class="stat-value"><?php echo $winRate; ?>%</span> <span class="stat-label"><?php echo __('prof_stat_winrate'); ?></span>
                     </div>
                 </div>
 
@@ -198,13 +198,13 @@ $header->render();
                         ];
                         $currentClass = $formationsMap[$savedFormation] ?? '4-4-2-diamant';
                     ?>
-            <p class="section-title">Équipe</p>
+            <p class="section-title"><?php echo __('prof_team_title'); ?></p>
                 <div class="team-header">
                 <div class="team-info-left">
                     <h2 class="team-name-title">
                     <?php echo htmlspecialchars($teamName); ?>
                         <?php if ($isOwner): ?>
-                            <button class="mini-edit-btn" onclick="openEditModal()" title="Changer le nom d'équipe">
+                            <button class="mini-edit-btn" onclick="openEditModal()" title="<?php echo __('prof_change_team_name'); ?>">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                         <?php endif; ?>
@@ -213,7 +213,7 @@ $header->render();
                         <div class="formation-selector-wrapper">
                         <span class="formation-tag" id="formationDisplay">
                             <i class="fas fa-chess-board"></i> 
-                            <span id="formationLabelText"><?php echo htmlspecialchars($savedFormation); ?></span>
+                            <span id="formationLabelText"><?php echo htmlspecialchars(__($savedFormation)); ?></span>
 
                             <?php if ($isOwner): ?>
                                 <i class="fas fa-pencil-alt" style="margin-left: 8px; font-size: 0.8em; opacity: 0.7;"></i>
@@ -221,11 +221,11 @@ $header->render();
                         </span>
 
                         <?php if ($isOwner): ?>
-                            <select id="formationSelect" onchange="changeFormation(this)" class="ghost-select" title="Changer la formation">
+                            <select id="formationSelect" onchange="changeFormation(this)" class="ghost-select" title="<?php echo __('prof_change_formation'); ?>">
                                 <?php 
                                 foreach($formationsMap as $name => $cssClass) {
                                     $isSelected = ($name === $savedFormation) ? 'selected' : '';
-                                    echo "<option value='$name' data-class='$cssClass' $isSelected>$name</option>";
+                                    echo "<option value='$name' data-class='$cssClass' $isSelected>" . htmlspecialchars(__($name)) . "</option>";
                                 }
                                 ?>
                             </select>
@@ -235,7 +235,7 @@ $header->render();
                 </div>
                 <div class="team-coach-right">
                             <div class="player-slot coach-slot tooltip <?php echo $isOwner ? '' : 'is-readonly'; ?>" 
-                                data-tooltip="Sans coach" 
+                                data-tooltip="<?php echo __('prof_no_coach'); ?>" 
                                 <?php echo $isOwner ? "onclick=\"openSelector('coach')\"" : ""; ?> 
                                 id="slot-display-coach">
                                 <div class="empty-state"><i class="fas fa-user-tie"></i></div>
@@ -251,7 +251,8 @@ $header->render();
                         function renderSlot($id, $label, $isOwner) {
                             $onclick = $isOwner ? "onclick=\"openSelector('$id')\"" : "";
                             $icon = $isOwner ? '<i class="fas fa-plus"></i>' : '';
-                            echo "<div class=\"player-slot tooltip\" data-tooltip=\"Emplacement vide\" $onclick id=\"slot-display-$id\" data-slot=\"$id\">
+                            $tooltipText = __('prof_empty_slot');
+                            echo "<div class=\"player-slot tooltip\" data-tooltip=\"$tooltipText\" $onclick id=\"slot-display-$id\" data-slot=\"$id\">
                                     <div class=\"empty-state\">$icon</div>
                                     <span class=\"position-label\">$label</span>
                                   </div>";
@@ -277,9 +278,9 @@ $header->render();
     <div id="playerSelectorModal" onclick="if(event.target === this) closeSelector()">
     <div class="modal-box-team">
         <button class="close-btn" onclick="closeSelector()">×</button>
-        <h3 id="modalTitle">Choisir un joueur</h3>
+        <h3 id="modalTitle"><?php echo __('prof_choose_player'); ?></h3>
         
-        <input type="text" id="playerSearchInput" placeholder="Chercher...">
+        <input type="text" id="playerSearchInput" placeholder="<?php echo __('prof_search_player'); ?>">
         
         <div id="searchResults" class="results-grid">
         </div>
@@ -290,27 +291,27 @@ $header->render();
 <div id="editModal" class="modal-overlay" onclick="closeEditModal(event)">
     <div class="modal-box">
         <div class="modal-header">
-            <i class="fas fa-edit"></i> Mise à jour du Dossier
+            <i class="fas fa-edit"></i> <?php echo __('prof_update_folder'); ?>
         </div>
         
         <form action="" method="POST">
         <div class="modal-body">
             <div class="form-group">
-                <label for="bio-input" class="form-label">Votre Bio (Max 150 carac.)</label>
+                <label for="bio-input" class="form-label"><?php echo __('prof_bio_label'); ?></label>
                 <textarea 
                     name="bio" 
                     id="bio-input" 
                     class="edit-textarea" 
                     maxlength="150" 
                     oninput="updateCharCount(this)"
-                    placeholder="Écrivez quelque chose..."><?php echo htmlspecialchars($profileUser['bio'] ?? ''); ?></textarea>
+                    placeholder="<?php echo __('prof_bio_placeholder'); ?>"><?php echo htmlspecialchars($profileUser['bio'] ?? ''); ?></textarea>
                 
                 <div class="char-count-wrapper">
                     <span id="char-count">0</span>/150
                 </div>
             </div>
             <div class="form-group">
-                <label for="team-name-input" class="form-label">Nom de l'équipe (Max 12)</label>
+                <label for="team-name-input" class="form-label"><?php echo __('prof_team_name_label'); ?></label>
                 <div class="input-wrapper">
                     <i class="fas fa-shield-alt"></i>
                     <input type="text" 
@@ -323,8 +324,8 @@ $header->render();
             </div>
         </div>
             <div class="modal-footer">
-                <button type="submit" class="other-button">Enregistrer</button>
-                <button type="button" class="ghost-btn" onclick="closeEditModal(null)">Annuler</button>
+                <button type="submit" class="other-button"><?php echo __('prof_save'); ?></button>
+                <button type="button" class="ghost-btn" onclick="closeEditModal(null)"><?php echo __('prof_cancel'); ?></button>
             </div>
             
         </form>

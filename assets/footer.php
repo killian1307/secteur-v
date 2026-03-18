@@ -1,4 +1,4 @@
-    <?php
+<?php
 class Footer {
     private $customClass;
 
@@ -11,35 +11,35 @@ class Footer {
         <div class="footer-container">
             <div class="footer-col">
                 <h3>SECTEUR V</h3>
-                <p>Le challenge ultime pour les fans de Inazuma Eleven.</p>
+                <p>' . __('footer_desc') . '</p>
             </div>
             <div class="footer-col">
-                <h4>Liens Utiles</h4>
+                <h4>' . __('footer_links_title') . '</h4>
                 <ul>
-                    <li><a href="edp.php">Comment ça marche</a></li>
-                    <li><a href="rules.php">Règlement</a></li>
-                    <li><a href="mailto:secteur-v@letterk.me">Nous Contacter</a></li>
+                    <li><a href="edp.php">' . __('footer_how_it_works') . '</a></li>
+                    <li><a href="rules.php">' . __('footer_rules') . '</a></li>
+                    <li><a href="mailto:secteur-v@letterk.me">' . __('footer_contact') . '</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Légal</h4>
+                <h4>' . __('footer_legal_title') . '</h4>
                 <ul>
-                    <li><a href="legal.php">Mentions Légales</a></li>
-                    <li><a href="privacy.php">Confidentialité</a></li>
-                    <li><a href="terms.php">CGU</a></li>
+                    <li><a href="legal.php">' . __('footer_legal') . '</a></li>
+                    <li><a href="privacy.php">' . __('footer_privacy') . '</a></li>
+                    <li><a href="terms.php">' . __('footer_cgu') . '</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Suivez-nous</h4>
+                <h4>' . __('footer_follow_us') . '</h4>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://x.com/secteurvictory" target="_blank"><i class="fab fa-x-twitter"></i></a>
                     <a href="https://discord.gg/85AT6gGNGD" target="_blank"><i class="fab fa-discord"></i></a>
                     <a href="https://github.com/killian1307/secteur-v" target="_blank"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 SECTEUR V - Fan Project Inazuma Eleven.</p>
+            <p>' . __('footer_copyright') . '</p>
         </div>
     </footer>
     <script src="script.js?v=' . filemtime(__DIR__ . '/../script.js') . '"></script>';

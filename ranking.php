@@ -23,7 +23,7 @@ $players = $stmtRank->fetchAll(PDO::FETCH_ASSOC);
 // Header
 require 'assets/header.php';
 require 'assets/footer.php';
-$header = new Header("SECTEUR V - Classement Global");
+$header = new Header(__('rnk_page_title'));
 $header->render();
 ?>
 
@@ -64,8 +64,8 @@ $header->render();
 <main class="playerbook-container">
     
     <div class="pb-header">
-        <h1 class="dashboard-h1">Classement <span style="color:var(--primary-purple)">Global</span></h1>
-        <p class="subtitle subtitle-ranking">Les meilleurs joueurs du Secteur V.</p>
+        <h1 class="dashboard-h1"><?php echo __('rnk_h1_1'); ?> <span style="color:var(--primary-purple)"><?php echo __('rnk_h1_2'); ?></span></h1>
+        <p class="subtitle subtitle-ranking"><?php echo __('rnk_subtitle'); ?></p>
     </div>
 
     <div class="controls-wrapper" style="justify-content: flex-end;">
@@ -75,7 +75,7 @@ $header->render();
             <?php endif; ?>
             
             <form method="GET" class="page-jump-form">
-                <span class="page-info">Page</span>
+                <span class="page-info"><?php echo __('rnk_page'); ?></span>
                 <input type="number" name="page" value="<?php echo $page; ?>" min="1" max="<?php echo $totalPages; ?>" class="page-input">
                 <span class="page-info">/ <?php echo $totalPages; ?></span>
             </form>
@@ -90,9 +90,9 @@ $header->render();
         <table class="player-table">
             <thead>
                 <tr>
-                    <th class="col-rank">Rang</th>
-                    <th>Joueur</th>
-                    <th class="col-elo">Points EDP</th>
+                    <th class="col-rank"><?php echo __('rnk_th_rank'); ?></th>
+                    <th><?php echo __('rnk_th_player'); ?></th>
+                    <th class="col-elo"><?php echo __('rnk_th_points'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -110,24 +110,24 @@ $header->render();
                         $profileUrl = "profile.php?username=" . urlencode($p['username']);
                     ?>
                         <tr class="<?php echo $isMe ? 'is-me' : ''; ?>">
-                            <td data-label="Rang" class="col-rank">
+                            <td data-label="<?php echo __('rnk_th_rank'); ?>" class="col-rank">
                                 <?php if ($rankCounter === 1): ?>
-                                    <i class="fas fa-crown crown-gold" title="1er"></i>
+                                    <i class="fas fa-crown crown-gold" title="<?php echo __('rnk_crown_1'); ?>"></i>
                                 <?php elseif ($rankCounter === 2): ?>
-                                    <i class="fas fa-crown crown-silver" title="2ème"></i>
+                                    <i class="fas fa-crown crown-silver" title="<?php echo __('rnk_crown_2'); ?>"></i>
                                 <?php elseif ($rankCounter === 3): ?>
-                                    <i class="fas fa-crown crown-bronze" title="3ème"></i>
+                                    <i class="fas fa-crown crown-bronze" title="<?php echo __('rnk_crown_3'); ?>"></i>
                                 <?php else: ?>
                                     #<?php echo $rankCounter; ?>
                                 <?php endif; ?>
                             </td>
                             
-                            <td data-label="Joueur">
-                                <img src="<?php echo $avatar; ?>" alt="Avatar de <?php echo htmlspecialchars($p['username']); ?>" class="rank-avatar" loading="lazy">
+                            <td data-label="<?php echo __('rnk_th_player'); ?>">
+                                <img src="<?php echo $avatar; ?>" alt="<?php echo __('rnk_avatar_of'); ?> <?php echo htmlspecialchars($p['username']); ?>" class="rank-avatar" loading="lazy">
                                 <a href="<?php echo $profileUrl; ?>" class="rank-name"><?php echo htmlspecialchars($p['username']); ?></a>
                             </td>
                             
-                            <td data-label="Points EDP" class="col-elo">
+                            <td data-label="<?php echo __('rnk_th_points'); ?>" class="col-elo">
                                 <?php echo $p['elo']; ?> <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: normal;">edp</span>
                             </td>
                         </tr>
@@ -137,7 +137,7 @@ $header->render();
                     ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="3" style="text-align:center; padding: 2rem;">Aucun joueur trouvé.</td>
+                        <td colspan="3" style="text-align:center; padding: 2rem;"><?php echo __('rnk_no_players'); ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>

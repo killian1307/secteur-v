@@ -21,7 +21,7 @@ $stmtElo = $pdo->prepare("SELECT elo FROM users WHERE id = ?");
 $stmtElo->execute([$_SESSION['user_id']]);
 $myElo = $stmtElo->fetchColumn();
 
-$header = new Header("SECTEUR V - Matchmaking");
+$header = new Header(__('mm_title'));
 $header->render();
 ?>
 
@@ -149,52 +149,52 @@ $header->render();
 </style>
 
 <main class="dashboard-container">
-    <h1>Arène <span style="color:var(--primary-purple)">Secteur V</span></h1>
-    <p class="subtitle subtitle-match">Mode sélectionné : <strong style="text-transform:uppercase;"><?php echo $mode; ?></strong></p>
+    <h1><?php echo __('mm_h1_1'); ?> <span style="color:var(--primary-purple)"><?php echo __('mm_h1_2'); ?></span></h1>
+    <p class="subtitle subtitle-match"><?php echo __('mm_mode_selected'); ?> <strong style="text-transform:uppercase;"><?php echo __('dash_tab_' . $mode); ?></strong></p>
 
     <div class="mm-container">
         
         <div id="view-lobby" class="mm-view active">
-            <h2>Prêt pour le match ?</h2>
-            <p style="color:var(--text-secondary); margin-bottom: 2rem;">Trouvez un adversaire et prouvez votre valeur.</p>
+            <h2><?php echo __('mm_ready'); ?></h2>
+            <p style="color:var(--text-secondary); margin-bottom: 2rem;"><?php echo __('mm_ready_desc'); ?></p>
             
             <div class="queue-status">
                 <span class="live-dot"></span>
-                <span id="queue-count-text">Recherche des joueurs...</span>
+                <span id="queue-count-text"><?php echo __('mm_searching'); ?></span>
             </div>
 
             <button onclick="joinQueue()" class="btn-large <?php echo $mode === 'ranked' ? 'btn-ranked' : 'btn-normal'; ?>">
-                <i class="fas fa-play"></i> Lancer la recherche
+                <i class="fas fa-play"></i> <?php echo __('mm_start_btn'); ?>
             </button>
             
             <a href="matchmaking.php?mode=<?php echo $otherMode; ?>" style="text-decoration:none;">
-                <button class="btn-large btn-switch"><i class="fas fa-exchange-alt"></i> Jouer en mode <?php echo $otherMode; ?></button>
+                <button class="btn-large btn-switch"><i class="fas fa-exchange-alt"></i> <?php echo __('mm_play_mode'); ?> <?php echo __('dash_tab_' . $otherMode); ?></button>
             </a>
 
         <div style="margin-top: 2rem;">
-            <a href="#" class="retour-accueil" onclick="document.getElementById('match-rules-modal').classList.add('active');"><i class="fas fa-book"></i> Revoir le tutoriel</a>
+            <a href="#" class="retour-accueil" onclick="document.getElementById('match-rules-modal').classList.add('active');"><i class="fas fa-book"></i> <?php echo __('mm_review_tutorial'); ?></a>
             |
-            <a href="/" class="retour-accueil"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
+            <a href="/" class="retour-accueil"><i class="fas fa-arrow-left"></i> <?php echo __('mm_back_home'); ?></a>
         </div>
         </div>
 
         <div id="view-queue" class="mm-view">
             <div class="spinner"></div>
-            <h2>Recherche d'adversaire...</h2>
-            <p>Temps écoulé : <span id="queue-time">00:00</span></p>
-            <button onclick="leaveMatch()" class="btn-large btn-danger" style="max-width:200px;">Annuler</button>
+            <h2><?php echo __('mm_searching_opp'); ?></h2>
+            <p><?php echo __('mm_elapsed'); ?> <span id="queue-time">00:00</span></p>
+            <button onclick="leaveMatch()" class="btn-large btn-danger" style="max-width:200px;"><?php echo __('mm_cancel'); ?></button>
         </div>
 
         <div id="view-match" class="mm-view">
             <div class="vs-screen">
                 <div class="player-box">
-                    <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_user.webp'; ?>" alt="Moi">
+                    <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_user.webp'; ?>" alt="<?php echo __('mm_me'); ?>">
                     <h3 style="margin-top:10px;"><?php echo htmlspecialchars($username); ?></h3>
-                    <p style="color:var(--text-secondary); font-size:0.9rem;">Elo: <?php echo $myElo; ?></p>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;"><?php echo __('mm_elo'); ?> <?php echo $myElo; ?></p>
                 </div>
                 <div class="vs-text">VS</div>
                 <div class="player-box">
-                    <img id="opp-avatar" src="" alt="Adversaire">
+                    <img id="opp-avatar" src="" alt="<?php echo __('mm_opp'); ?>">
                     <h3 id="opp-name" style="margin-top:10px;">???</h3>
                     <p id="opp-elo" style="color:var(--text-secondary); font-size:0.9rem;"></p>
                 </div>
@@ -203,46 +203,46 @@ $header->render();
             <div class="match-layout">
                 <div class="chat-box">
                     <div id="chat-messages" class="chat-messages">
-                        <div style="color:var(--text-secondary); font-style:italic; text-align:center;">Le match commence !</div>
+                        <div style="color:var(--text-secondary); font-style:italic; text-align:center;"><?php echo __('mm_match_starts'); ?></div>
                     </div>
                     <form class="chat-input" onsubmit="sendChat(event)">
-                        <input type="text" id="chat-input" placeholder="Message... (64 caractères max.)" autocomplete="off" maxlength="64">
+                        <input type="text" id="chat-input" placeholder="<?php echo __('mm_chat_placeholder'); ?>" autocomplete="off" maxlength="64">
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
 
                 <div class="score-box" id="score-section">
-                    <h3 style="margin-bottom:15px;">Fin du match</h3>
+                    <h3 style="margin-bottom:15px;"><?php echo __('mm_end_match'); ?></h3>
                     
-                    <div class="score-label">Mon Score</div>
+                    <div class="score-label"><?php echo __('mm_my_score'); ?></div>
                     <input type="number" id="my-score" class="score-input" min="0" required>
                     
-                    <div class="score-label">Score Adversaire</div>
+                    <div class="score-label"><?php echo __('mm_opp_score'); ?></div>
                     <input type="number" id="opp-score" class="score-input" min="0" required>
                     
-                    <button onclick="submitScore()" class="btn-large btn-ranked" style="margin-top:0; border-radius:5px; font-size:1rem;">Valider</button>
+                    <button onclick="submitScore()" class="btn-large btn-ranked" style="margin-top:0; border-radius:5px; font-size:1rem;"><?php echo __('mm_validate'); ?></button>
                     
-                    <button onclick="leaveMatch(true)" class="btn-large btn-danger" style="margin-top:10px; border-radius:5px; font-size:0.8rem; background:transparent; border:1px solid #e74c3c; color:#e74c3c;">Déclarer Forfait</button>
+                    <button onclick="leaveMatch(true)" class="btn-large btn-danger" style="margin-top:10px; border-radius:5px; font-size:0.8rem; background:transparent; border:1px solid #e74c3c; color:#e74c3c;"><?php echo __('mm_forfeit'); ?></button>
                 </div>
             </div>
         </div>
 
         <div id="view-dispute" class="mm-view">
-            <h2 style="color:#e74c3c;"><i class="fas fa-exclamation-triangle"></i> Litige détecté</h2>
-            <p style="margin-bottom:20px;">Les scores rentrés ne correspondent pas. Ce match a été clôturé et placé en vérification.</p>
+            <h2 style="color:#e74c3c;"><i class="fas fa-exclamation-triangle"></i> <?php echo __('mm_dispute_h2'); ?></h2>
+            <p style="margin-bottom:20px;"><?php echo __('mm_dispute_p1'); ?></p>
             
             <div style="background:rgba(0,0,0,0.2); padding:20px; border-radius:10px; margin-bottom: 20px;">
-                <p>Un <strong>ticket privé</strong> vient d'être automatiquement créé sur notre serveur Discord.</p>
-                <p>Les modérateurs et votre adversaire vous y attendent. Veuillez y poster votre capture d'écran prouvant votre victoire.</p>
+                <p><?php echo __('mm_dispute_p2'); ?></p>
+                <p><?php echo __('mm_dispute_p3'); ?></p>
             </div>
             
             <a class="discord_link" href="https://discord.gg/85AT6gGNGD" target="_blank">
                 <button class="btn-large" style="background:#5865F2; color:#fff; width:100%;">
-                    <i class="fab fa-discord"></i> Ouvrir le Ticket sur Discord
+                    <i class="fab fa-discord"></i> <?php echo __('mm_open_ticket'); ?>
                 </button>
             </a>
             
-            <button onclick="window.location.href='/'" class="btn-large btn-switch" style="width:100%;">Retour à l'accueil</button>
+            <button onclick="window.location.href='/'" class="btn-large btn-switch" style="width:100%;"><?php echo __('mm_back_home'); ?></button>
         </div>
 
     </div>
@@ -252,28 +252,28 @@ $header->render();
  <div id="match-rules-modal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header" style="color: var(--background-main);">
-            <i class="fas fa-info-circle" style="color: var(--background-main);"></i> Déroulement des matchs
+            <i class="fas fa-info-circle" style="color: var(--background-main);"></i> <?php echo __('mm_rules_title'); ?>
         </div>
         <div class="modal-body" style="text-align:justify;">
-            <p>Lisez attentivement ces instructions avant de lancer votre première recherche&nbsp:</p>
+            <p><?php echo __('mm_rules_intro'); ?></p>
                 
                     
-                    <h4><i class="fas fa-gamepad rulespopup"></i>Création du salon</h4>
-                    <p>Utilisez le tchat Secteur V qui apparaîtra une fois votre adversaire connecté pour échanger le mot de passe d'un "Match de salon" sur Victory Road.</p>
-                    <p style="padding-top: 10px;"><strong><i class="fas fa-arrow-right rulespopup"></i>Vous ne savez pas comment le créer ?</strong> Veuillez vous référer au règlement complet ci-dessous.</p>
+                    <h4><i class="fas fa-gamepad rulespopup"></i><?php echo __('mm_rules_h4_1'); ?></h4>
+                    <p><?php echo __('mm_rules_p_1'); ?></p>
+                    <p style="padding-top: 10px;"><strong><i class="fas fa-arrow-right rulespopup"></i><?php echo __('mm_rules_p_2_strong'); ?></strong> <?php echo __('mm_rules_p_2'); ?></p>
 
-                    <h4><i class="fas fa-trophy rulespopup"></i>Résultat final</h4>
-                    <p>Les matchs se jouent en 1 manche (BO1). Ne quittez pas cette page et renseignez le score exact à la fin de la partie.</p>
+                    <h4><i class="fas fa-trophy rulespopup"></i><?php echo __('mm_rules_h4_2'); ?></h4>
+                    <p><?php echo __('mm_rules_p_3'); ?></p>
 
-                    <h4><i class="fas fa-exclamation-triangle rulespopup"></i>En cas de litige</h4>
-                    <p>Si votre adversaire ment sur le score, prenez une capture d'écran du résultat ou un enregistrement vidéo de la partie. Un ticket sera ouvert sur notre Discord.</p>
+                    <h4><i class="fas fa-exclamation-triangle rulespopup"></i><?php echo __('mm_rules_h4_3'); ?></h4>
+                    <p><?php echo __('mm_rules_p_4'); ?></p>
             
             <div class="links-row">
-                <a href="rules.php" target="_blank" class="text-link">Lire le règlement complet</a>
+                <a href="rules.php" target="_blank" class="text-link"><?php echo __('mm_rules_link'); ?></a>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="other-button" onclick="closeRulesModal()" style="margin: 0 auto; width: 100%; justify-content: center; color: var(--background-main);">J'ai compris, c'est parti !</button>
+            <button class="other-button" onclick="closeRulesModal()" style="margin: 0 auto; width: 100%; justify-content: center; color: var(--background-main);"><?php echo __('mm_rules_btn'); ?></button>
         </div>
     </div>
 </div>
@@ -330,7 +330,7 @@ $header->render();
     }
 
     async function leaveMatch(isForfeit = false) {
-        if (isForfeit && !confirm("Voulez-vous vraiment déclarer forfait ? Vous perdrez ce match (0-3).")) return;
+        if (isForfeit && !confirm("<?php echo addslashes(__('mm_forfeit_confirm')); ?>")) return;
         
         clearInterval(pollInterval);
         await fetch(`api.php?action=leave_match`);
@@ -355,9 +355,9 @@ $header->render();
         const myScore = document.getElementById('my-score').value;
         const oppScore = document.getElementById('opp-score').value;
         
-        if (myScore === '' || oppScore === '') { alert("Veuillez remplir les deux scores."); return; }
+        if (myScore === '' || oppScore === '') { alert("<?php echo addslashes(__('mm_fill_scores')); ?>"); return; }
         
-        document.getElementById('score-section').innerHTML = '<h3 style="color:#f1c40f;">En attente de l\'adversaire...</h3><p>Ne quittez pas la page.</p>';
+        document.getElementById('score-section').innerHTML = '<h3 style="color:#f1c40f;">' + "<?php echo addslashes(__('mm_waiting_opp_title')); ?>" + '</h3><p>' + "<?php echo addslashes(__('mm_waiting_opp_desc')); ?>" + '</p>';
         currentState = 'resolving';
 
         const res = await fetch('api.php?action=submit_score', {
@@ -370,7 +370,7 @@ $header->render();
         if (data.state === 'finished_agreement') {
             clearInterval(pollInterval);
             currentState = 'lobby';
-            alert("Match validé ! Scores correspondants. Vous allez être redirigé vers l'accueil.");
+            alert("<?php echo addslashes(__('mm_match_validated')); ?>");
             window.location.href = '/';
         } else if (data.state === 'disputed') {
             currentState = 'disputed';
@@ -399,7 +399,7 @@ $header->render();
         if (data.success) {
             hasSubmittedEvidence = true;
             clearInterval(pollInterval);
-            alert("Preuve envoyée. Le litige sera examiné par l'équipe. Vous pouvez quitter cette page.");
+            alert("<?php echo addslashes(__('mm_evidence_sent')); ?>");
             window.location.href = '/';
         }
     }
@@ -431,7 +431,7 @@ $header->render();
             else if (data.state === 'opponent_left') {
                 clearInterval(pollInterval);
                 currentState = 'lobby';
-                alert("L'adversaire a déclaré forfait ou s'est déconnecté. Vous remportez la victoire !");
+                alert("<?php echo addslashes(__('mm_opp_left')); ?>");
                 window.location.href = '/';
             }
 
@@ -443,7 +443,7 @@ $header->render();
                     currentState = 'in_match';
                     setView('view-match');
                     document.getElementById('opp-name').innerText = data.opponent.username;
-                    document.getElementById('opp-elo').innerText = "Elo: " + data.opponent.elo;
+                    document.getElementById('opp-elo').innerText = "<?php echo addslashes(__('mm_elo')); ?> " + data.opponent.elo;
                     document.getElementById('opp-avatar').src = data.opponent.avatar || 'assets/img/default_user.webp';
                 }
 
@@ -458,7 +458,7 @@ $header->render();
                         data.chat.forEach(c => {
                             const isMe = (c.sender_id == data.my_id);
                             const color = isMe ? 'var(--primary-purple)' : '#2ecc71';
-                            const name = isMe ? 'Moi' : data.opponent.username;
+                            const name = isMe ? "<?php echo addslashes(__('mm_me')); ?>" : data.opponent.username;
                             chatBox.innerHTML += `<div class="chat-msg"><strong style="color:${color}">${name}</strong> <span style="font-size:0.7rem; color:#888;">${c.time}</span><br>${c.message}</div>`;
                         });
 
@@ -468,7 +468,7 @@ $header->render();
                         if (newMessageCount > previousMessageCount) {
                             chatBox.scrollTop = chatBox.scrollHeight;
                             const lastMessage = chatBox.lastElementChild;
-                            const isMyOwnMessage = lastMessage ? lastMessage.textContent.includes('Moi') : false;
+                            const isMyOwnMessage = lastMessage ? lastMessage.textContent.includes("<?php echo addslashes(__('mm_me')); ?>") : false;
                             if (!isMyOwnMessage) {
                                 let sound = document.getElementById('chat-sound');
                                 sound.play().catch(e => console.log("Son bloqué par le navigateur", e)); 
@@ -482,7 +482,7 @@ $header->render();
             else if (data.state === 'finished_agreement') {
                 clearInterval(pollInterval);
                 currentState = 'lobby';
-                alert("Match validé ! L'adversaire a confirmé le score. Retour à l'accueil.");
+                alert("<?php echo addslashes(__('mm_match_validated_opp')); ?>");
                 window.location.href = '/';
             }
             
@@ -496,7 +496,7 @@ $header->render();
             else if (data.state === 'lobby') {
                 if (['in_match', 'resolving'].includes(currentState)) {
                     clearInterval(pollInterval);
-                    alert("Le match a été clôturé de manière inattendue.");
+                    alert("<?php echo addslashes(__('mm_match_closed')); ?>");
                     window.location.href = '/';
                 }
             }
@@ -516,7 +516,8 @@ $header->render();
             
             if (data.success) {
                 const pluriel = data.count > 1 ? "s" : "";
-                document.getElementById('queue-count-text').innerText = `${data.count} joueur${pluriel} en file d'attente`;
+                const textTpl = "<?php echo addslashes(__('mm_queue_count_js')); ?>";
+                document.getElementById('queue-count-text').innerText = textTpl.replace('%d', data.count).replace('%s', pluriel);
             }
         } catch(e) {
             console.error("Erreur maj compteur", e);

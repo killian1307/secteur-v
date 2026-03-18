@@ -7,7 +7,7 @@ require 'assets/header.php';
 require 'assets/footer.php';
 
 # Titre
-$header = new Header("Secteur V - Erreur 404");
+$header = new Header(__('err_404_title'));
 
 # Affiche le header
 $header->render();
@@ -23,14 +23,14 @@ $header->render();
         </div>
 
         <div class="error-text-col">
-            <h1>404 HORS-JEU</h1>
+            <h1><?php echo __('err_404_h1'); ?></h1>
             <p>
-                Halte là ! Le <strong>Secteur V</strong> ne reconnait pas cette page. 
+                <?php echo __('err_404_p'); ?>
             </p>
             
             <div class="error-actions">
                 <button class="other-button" onclick="window.history.back()">
-                    <i class="fas fa-arrow-left"></i> Retour au vestiaire
+                    <i class="fas fa-arrow-left"></i> <?php echo __('err_404_btn'); ?>
                 </button>
             </div>
         </div>

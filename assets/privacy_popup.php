@@ -1,37 +1,37 @@
-    <?php
+<?php
 class PrivacyPopup {
 
 public function render() {
         echo '<div id="privacyModal" class="modal-overlay" onclick="closePrivacyModal(event)">
     <div class="modal-box">
         <div class="modal-header">
-            <i class="fas fa-user-shield"></i> Protocole de Données
+            <i class="fas fa-user-shield"></i> ' . __('priv_title') . '
         </div>
         
         <div class="modal-body">
-            <p>Avant d&#39entrer sur le terrain, nous tenons à jouer franc-jeu concernant vos données collectées :</p>
+            <p>' . __('priv_intro') . '</p>
             
             <ul class="data-list">
-                <li><i class="fab fa-discord"></i> <strong>ID Discord :</strong> Uniquement pour vous identifier et vous connecter.</li>
-                <li><i class="fas fa-image"></i> <strong>Avatar :</strong> Pour afficher votre photo de profil sur le site.</li>
-                <li><i class="fas fa-envelope"></i> <strong>Email :</strong> (Facultatif) Pour vous contacter. Vous pourrez le supprimer ou le modifier via votre profil à tout moment.</li>
+                <li><i class="fab fa-discord"></i> <strong>' . __('priv_discord_id') . '</strong> ' . __('priv_discord_desc') . '</li>
+                <li><i class="fas fa-image"></i> <strong>' . __('priv_avatar') . '</strong> ' . __('priv_avatar_desc') . '</li>
+                <li><i class="fas fa-envelope"></i> <strong>' . __('priv_email') . '</strong> ' . __('priv_email_desc') . '</li>
             </ul>
 
             <p class="small-text">
-                Ce projet est <strong>Open Source</strong>. Vous pouvez vérifier notre code pour voir comment nous traitons vos données.
+                ' . __('priv_open_source') . ' <strong>Open Source</strong>. ' . __('priv_open_source_desc') . '
             </p>
 
             <div class="links-row">
-                <a href="https://github.com/killian1307/secteur-v" target="_blank" class="text-link"><i class="fab fa-github"></i> Voir le code source</a>
+                <a href="https://github.com/killian1307/secteur-v" target="_blank" class="text-link"><i class="fab fa-github"></i> ' . __('priv_github') . '</a>
                 <span>|</span>
-                <a href="privacy.php" class="text-link">Politique de confidentialité</a>
+                <a href="privacy.php" class="text-link">' . __('priv_policy') . '</a>
             </div>
         </div>
             <div class="modal-footer">
-                <button class="other-button" onclick="acceptAndRedirect()">
-                    Accepter & Continuer <i class="fas fa-arrow-right"></i>
+                <button id="btn-accept-privacy" class="other-button" onclick="acceptAndRedirect()">
+                    ' . __('priv_accept') . ' <i class="fas fa-arrow-right"></i>
                 </button>
-            <button class="ghost-btn" onclick="closePrivacyModal(null)">Annuler</button>      
+            <button class="ghost-btn" onclick="closePrivacyModal(null)">' . __('priv_cancel') . '</button>      
         </div>
     </div>
 </div>';

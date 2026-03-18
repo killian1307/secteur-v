@@ -1,88 +1,87 @@
 # ⚡⚽ Secteur V ⚽⚡
 
 <div align="center">
-  <img src="assets/img/banner.png" alt="Bannière Secteur V" width="100%">
+  <img src="assets/img/banner.png" alt="Secteur V Banner" width="100%">
 </div>
 
-[![Static Badge](https://img.shields.io/badge/lang-fr-0000FF)](README.md) [![Static Badge](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://www.php.net/) [![Static Badge](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/) [![Static Badge](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![Static Badge](https://img.shields.io/badge/lang-en-0000FF)](README.md) [![Static Badge](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://www.php.net/) [![Static Badge](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/) [![Static Badge](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-## 🌐 Accès en Ligne
+## 🌐 Online Access
 
-**Vous pouvez accéder à la plateforme compétitive directement depuis votre navigateur :**
+**You can access the competitive platform directly from your browser:**
 
 <h3 align="center">
-🚀 BÊTA OUVERTE ! Rejoindre le Secteur V : <a href="https://secteur-v.letterk.me" target="_blank">https://secteur-v.letterk.me</a>
+🚀 OPEN BETA! Join Secteur V: <a href="https://secteur-v.letterk.me" target="_blank">https://secteur-v.letterk.me</a>
 </h3>
 
 ---
 
-**Secteur V** est la plateforme communautaire et compétitive dédiée aux joueurs d'**Inazuma Eleven: Victory Road**. Elle permet aux joueurs de gérer leur profil, de suivre leur progression via un classement ELO dynamique et d'archiver leur historique de matchs. Conçu pour centraliser la compétition, ce projet offre une expérience fluide connectée directement à Discord.
+**Secteur V** is the community and competitive platform dedicated to **Inazuma Eleven: Victory Road** players. It allows players to manage their profile, track their progress via a dynamic ELO ranking, and archive their match history. Designed to centralize competition, this project offers a seamless experience connected directly to Discord.
 
-## Résumé
+## Summary
 
-Le projet répond au besoin de structurer la scène compétitive du jeu. Plutôt que de gérer des classements manuellement et communauté par communauté, **Secteur V** automatise le suivi des scores, offre des profils publics partageables et sécurise l'identité des joueurs via une authentification OAuth2 (Discord).
+The project addresses the need to structure the game's competitive scene. Rather than managing rankings manually and community by community, **Secteur V** automates score tracking, offers shareable public profiles, and secures player identity via OAuth2 authentication (Discord).
 
-## Fonctionnalités
+## Features
 
-* **Authentification Discord :** Connexion sécurisée via OAuth2, récupérant automatiquement l'avatar et le pseudo.
-* **Classement ELO (Ladder) :** Système de rang dynamique calculé selon les performances.
-* **Profils Joueurs (Dossiers) :** Page publique affichant les statistiques, la bio, le rang actuel et l'historique des matchs.
-* **Gestion de Compte :** Interface pour modifier sa bio, ses informations de contact ou supprimer ses données (RGPD).
+* **Discord Authentication:** Secure login via OAuth2, automatically retrieving the avatar and username.
+* **ELO Ranking (Ladder):** Dynamic rank system calculated based on performance.
+* **Player Profiles (Files):** Public page displaying stats, bio, current rank, and match history.
+* **Account Management:** Interface to edit bio, contact information, or delete data (GDPR).
 
-## Prérequis & Installation
+## Prerequisites & Installation
 
 > 📝
-> Le projet est hébergé en ligne sur [https://secteur-v.letterk.me](https://secteur-v.letterk.me), aucune installation n'est requise pour les joueurs. Si vous souhaitez déployer votre propre instance, suivez ces étapes.
+> The project is hosted online at [https://secteur-v.letterk.me](https://secteur-v.letterk.me), no installation is required for players. If you wish to deploy your own instance, follow these steps.
 
-### Étapes d'installation
+### Installation Steps
 
-1.  **Cloner le dépôt :**
-    Téléchargez le code source sur votre serveur ou en local.
+1.  **Clone the repository:**
+    Download the source code to your server or locally.
 
-2.  **Configuration Serveur :**
-    Assurez-vous d'avoir un serveur web compatible (Apache/Nginx) avec **PHP 8.0+** et **MySQL**.
+2.  **Server Configuration:**
+    Ensure you have a compatible web server (Apache/Nginx) with **PHP 8.0+** and **MySQL**.
 
-3.  **Base de Données :**
-    * Créez une base de données MySQL.
-    * Importez la structure SQL (table `users` requise).
-    * Configurez le fichier `db.php` avec vos identifiants.
+3.  **Database:**
+    * Create a MySQL database.
+    * Import the SQL structure (`users` table required).
+    * Configure the `db.php` file with your credentials.
 
-4.  **Configuration Discord :**
-    * Créez une application sur le [Discord Developer Portal](https://discord.com/developers/applications).
-    * Ajoutez votre URL de redirection (ex: `https://votre-site.com/discord_login.php`).
-    * Renseignez le `CLIENT_ID` et `CLIENT_SECRET` dans `discord_login.php`.
+4.  **Discord Configuration:**
+    * Create an application on the [Discord Developer Portal](https://discord.com/developers/applications).
+    * Add your redirect URL (e.g., `https://your-website.com/discord_login.php`).
+    * Fill in the `CLIENT_ID` and `CLIENT_SECRET` in `discord_login.php`.
 
-## Protocole d'Utilisation
+## Usage Protocol
 
-1.  **Inscription :** Connectez-vous via le bouton Discord. Un compte est automatiquement créé.
-2.  **Personnalisation :** Accédez à "Modifier mon dossier" pour ajouter une bio et personnaliser votre profil.
-3.  **Compétition :** Vous saisissee les résultats des matchs, votre ELO se met à jour automatiquement.
-4.  **Partage :** Partagez l'URL de votre profil (ex: `secteur-v.letterk.me/profile?username=VotrePseudo`) à vos amis.
+1.  **Registration:** Log in via the Discord button. An account is automatically created.
+2.  **Customization:** Go to "Edit my file" to add a bio and customize your profile.
+3.  **Competition:** You enter the match results, and your ELO updates automatically.
+4.  **Sharing:** Share your profile URL (e.g., `secteur-v.letterk.me/profile?username=YourUsername`) with your friends.
 
 > 💡
-> **Astuce :** Le site est entièrement *Responsive*, vous pouvez consulter votre classement depuis votre mobile entre deux matchs.
+> **Tip:** The site is fully *Responsive*, so you can check your ranking from your mobile between two matches.
 
-## Dépendances
+## Dependencies
 
-Ce projet repose sur les technologies standards du web :
+This project relies on standard web technologies:
 
-* **PHP 8 :** Langage côté serveur.
-* **MySQL :** Stockage des données utilisateurs et matchs.
-* **FontAwesome :** Icônes de l'interface.
-* **Google Fonts :** Typographies (*Cormorant Garamond* pour le style littéraire).
+* **PHP 8:** Server-side language.
+* **MySQL:** User and match data storage.
+* **FontAwesome:** Interface icons.
 
-## Utilisation de l'IA
+## Use of AI
 
-Le développement de ce projet a été fait en utilisant l'IA Gemini comme outil de réflexion et comme banque de données. Même si le plus gros du site a été développé à l'aide de mes connaissances et de l'IA comme outil seulement, certaines parties plus complexes ont nécessité de la génération de code. Quoi qu'il en soit, le code final a été relu, réécrit, testé et débuggé par mes soins sur plusieurs semaines, afin que même les bouts de codes générés par Gemini soient assimilés et intégrés au projet de manière robuste et stable.
+The development of this project was done using Gemini AI as a brainstorming tool and knowledge base. Although the bulk of the site was developed using my own knowledge and AI merely as a tool, some more complex parts required code generation. Regardless, the final code was reviewed, rewritten, tested, and debugged by me over several weeks, ensuring that even the code snippets generated by Gemini were assimilated and integrated into the project in a robust and stable manner.
 
-Le projet Secteur V n'est donc **pas** un projet de vibe-coding, mais le résultat du travail sur plusieurs semaines d'un étudiant en informatique amoureux d'Inazuma Eleven (et de php), assisté par IA.
+The Secteur V project is therefore **not** a vibe-coding project, but the result of several weeks of work by a computer science student in love with Inazuma Eleven (and PHP), assisted by AI.
 
-## Licences
+## Licenses
 
-**Artwork & Jeu :** Inazuma Eleven est une propriété de © LEVEL-5 Inc. Ce projet est un site communautaire non-officiel.
+**Artwork & Game:** Inazuma Eleven is the property of © LEVEL-5 Inc. This project is an unofficial community site.
 
 **MIT License**
 
-Vous êtes libre d'utiliser, de modifier, de distribuer et de vendre ce logiciel, à condition d'inclure l'avis de droit d'auteur original et la licence dans toute copie ou partie substantielle du logiciel.
+You are free to use, modify, distribute, and sell this software, provided that you include the original copyright notice and license in any copy or substantial portion of the software.
 
-Pour plus de détails, veuillez consulter le fichier [LICENSE](LICENSE).
+For more details, please see the [LICENSE](LICENSE) file.

@@ -15,4 +15,27 @@ session_set_cookie_params([
 ]);
 
 session_start();
+
+// Gestion de la langue
+$allowed_langs = ['fr', 'en', 'es', 'it', 'de', 'ja', 'ar'];
+
+if (isset($_GET['lang']) && in_array($_GET['lang'], $allowed_langs)) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+$current_lang = $_SESSION['lang'] ?? 'fr'; // Français par défaut
+
+// Chargement du dictionnaire
+$translations = require __DIR__ . "/../lang/{$current_lang}.php";
+
+// La fonction magique qu'on va utiliser partout
+function __($key, ...$vars) {
+    global $translations;
+    $text = $translations[$key] ?? $key; // Si la trad n'existe pas, affiche au moins la clé
+    
+    // S'il y a des variables (comme le nombre de joueurs), on les injecte
+    if (!empty($vars)) {
+        return sprintf($text, ...$vars);
+    }
+    return $text;
+}
 ?>
