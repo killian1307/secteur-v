@@ -33,6 +33,26 @@ class Header {
         ];
         $flag = $flags[$currentLang] ?? '🇬🇧';
 
+        // --- Construction dynamique des liens de langue ---
+        $currentParams = $_GET; // On copie tous les paramètres actuels
+        
+        $availableLangs = [
+            'en' => '🇬🇧 English',
+            'fr' => '🇫🇷 Français',
+            'es' => '🇪🇸 Español',
+            'it' => '🇮🇹 Italiano',
+            'de' => '🇩🇪 Deutsch',
+            'ja' => '🇯🇵 日本語',
+            'ar' => '🇸🇦 العربية'
+        ];
+
+        $langLinksHtml = '';
+        foreach ($availableLangs as $code => $label) {
+            $currentParams['lang'] = $code;
+            $newUrl = '?' . http_build_query($currentParams); 
+            $langLinksHtml .= '<a href="' . htmlspecialchars($newUrl) . '" class="dropdown-item">' . $label . '</a>';
+        }
+
         echo '<!DOCTYPE html>
 <html lang="' . htmlspecialchars($currentLang) . '">
 <head>
@@ -68,14 +88,7 @@ class Header {
                     ' . $flag . '
                 </div>
                 <div class="dropdown-menu" id="langDropdown" style="width: max-content; right: -10px; top: 150%;">
-                    <a href="?lang=en" class="dropdown-item">🇬🇧 English</a>    
-                    <a href="?lang=fr" class="dropdown-item">🇫🇷 Français</a>
-                    <a href="?lang=es" class="dropdown-item">🇪🇸 Español</a>
-                    <a href="?lang=it" class="dropdown-item">🇮🇹 Italiano</a>
-                    <a href="?lang=de" class="dropdown-item">🇩🇪 Deutsch</a>
-                    <a href="?lang=ja" class="dropdown-item">🇯🇵 日本語</a>
-                    <a href="?lang=ar" class="dropdown-item">🇸🇦 العربية</a>
-
+                    ' . $langLinksHtml . '
                 </div>
             </div>
 
