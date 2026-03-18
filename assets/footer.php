@@ -41,7 +41,8 @@ class Footer {
         <div class="footer-bottom">
             <p>&copy; 2026 SECTEUR V - Fan Project Inazuma Eleven.</p>
         </div>
-    </footer>';
+    </footer>
+    <script src="script.js?v=' . filemtime(__DIR__ . '/../script.js') . '"></script>';
     }
 }
 ?>

@@ -81,6 +81,5 @@ $header->render();
 $footer = new Footer();
 $footer->render();
 ?>
-<script src="script.js"></script>
 </body>
 </html>

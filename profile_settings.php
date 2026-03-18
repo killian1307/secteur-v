@@ -157,6 +157,5 @@ $footer = new Footer();
 // Affiche le footer
 $footer->render();
 ?>
-    <script src="script.js"></script>
 </body>
 </html>

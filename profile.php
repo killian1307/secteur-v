@@ -342,6 +342,5 @@ $footer->render();
         currentFormation: "<?php echo htmlspecialchars($savedFormation); ?>"
     };
 </script>
-<script src="script.js"></script>
 </body>
 </html>
