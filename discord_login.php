@@ -18,6 +18,8 @@ try {
     die("Erreur de configuration : " . $e->getMessage());
 }
 
+require_once 'anti_smurf.php';
+
 // Récupère les infos depuis le .env
 $client_id = $_ENV['DISCORD_CLIENT_ID'];
 $client_secret   = $_ENV['DISCORD_CLIENT_SECRET'];
@@ -115,6 +117,18 @@ if (isset($_GET['code'])) {
 
     $raw_username = $user_data['username'];
 
+    // Vérification anti-smurf
+    $smurfCheck = check_and_prevent_smurf($pdo, $discord_id);
+
+    if ($smurfCheck === false) {
+    // Si c'est un smurf, détruit la session dégage avec un message d'erreur
+    session_destroy();
+    die("<h1>Accès Refusé : Tentative de Double Compte</h1>
+         <p>Un compte Secteur V a déjà été créé depuis cet appareil ou ce réseau WiFi.<br>
+         Le multi-compte (Smurf) est strictement interdit sur notre plateforme pour garantir l'équité du classement.</p>
+         <a href='/'>Retour à l'accueil</a>");
+    }
+
     // Si le nom est trop long (> 12)
     if (mb_strlen($raw_username) > 12) {
         // On garde les 8 premiers caractères et on ajoute 4 chiffres aléatoires
@@ -146,9 +160,14 @@ if (isset($_GET['code'])) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['avatar'] = $avatar_url;
     } else {
+
+        // Récupération de l'adresse IP et de l'empreinte de l'appareil pour checker les smurfs
+        $ip_address = hash('sha256', $_SERVER['REMOTE_ADDR'] . IP_SALT);
+        $device_id = $smurfCheck;
+
         // Inscription
-        $stmt = $pdo->prepare("INSERT INTO users (discord_id, username, email, avatar, elo) VALUES (?, ?, ?, ?, 1200)");
-        $stmt->execute([$discord_id, $username, $email, $avatar_url]);
+        $stmt = $pdo->prepare("INSERT INTO users (discord_id, username, email, avatar, elo, ip_address, device_id) VALUES (?, ?, ?, ?, 1200, ?, ?)");
+        $stmt->execute([$discord_id, $username, $email, $avatar_url, $ip_address, $device_id]);
         
         $_SESSION['user_id'] = $pdo->lastInsertId();
         $_SESSION['username'] = $username;
