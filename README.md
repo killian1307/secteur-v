@@ -11,7 +11,7 @@
 **You can access the competitive platform directly from your browser:**
 
 <h3 align="center">
-🚀 OPEN BETA! Join Secteur V: <a href="https://secteur-v.letterk.me" target="_blank">https://secteur-v.letterk.me</a>
+🚀 OPEN BETA! Join Secteur V: <a href="https://secteur-v.letterk.me/?lang=en" target="_blank">https://secteur-v.letterk.me/?lang=en</a>
 </h3>
 
 ---
