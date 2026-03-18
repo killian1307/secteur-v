@@ -113,7 +113,7 @@ function sortArrow($colName) {
     return '<span style="opacity:0.3">⇅</span>';
 }
 
-$header = new Header("SECTEUR V - Liste de Joueurs");
+$header = new Header(__('pb_title'));
 $header->render();
 ?>
 
@@ -122,8 +122,8 @@ $header->render();
 <main class="playerbook-container">
     
     <div class="pb-header">
-        <h1 class="dashboard-h1">Liste de <span style="color:var(--primary-purple)">Joueurs</span></h1>
-        <p class="subtitle subtitle-playerbook">Base de données officielle du Secteur V.</p>
+        <h1 class="dashboard-h1"><?php echo __('pb_h1_1'); ?> <span style="color:var(--primary-purple)"><?php echo __('pb_h1_2'); ?></span></h1>
+        <p class="subtitle subtitle-playerbook"><?php echo __('pb_subtitle'); ?></p>
     </div>
 
     <div class="controls-wrapper">
@@ -133,10 +133,10 @@ $header->render();
             <?php if($filter_pos): ?><input type="hidden" name="pos" value="<?php echo htmlspecialchars($filter_pos); ?>"><?php endif; ?>
             <?php if($filter_elem): ?><input type="hidden" name="elem" value="<?php echo htmlspecialchars($filter_elem); ?>"><?php endif; ?>
             
-            <input type="text" name="search" placeholder="Rechercher..." value="<?php echo htmlspecialchars($search); ?>">
+            <input type="text" name="search" placeholder="<?php echo __('pb_search_placeholder'); ?>" value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit"><i class="fas fa-search"></i></button>
             <?php if($search || $filter_pos || $filter_elem): ?>
-                <a href="playerbook.php" class="reset-btn" title="Tout réinitialiser">✖</a>
+                <a href="playerbook.php" class="reset-btn" title="<?php echo __('pb_reset_title'); ?>">✖</a>
             <?php endif; ?>
         </form>
 
@@ -152,7 +152,7 @@ $header->render();
                 <input type="hidden" name="pos" value="<?php echo htmlspecialchars($filter_pos); ?>">
                 <input type="hidden" name="elem" value="<?php echo htmlspecialchars($filter_elem); ?>">
 
-                <span class="page-info">Page</span>
+                <span class="page-info"><?php echo __('pb_page'); ?></span>
                 <input type="number" name="page" value="<?php echo $page; ?>" min="1" max="<?php echo $totalPages; ?>" class="page-input">
                 <span class="page-info">/ <?php echo $totalPages; ?></span>
             </form>
@@ -166,15 +166,15 @@ $header->render();
         <table class="player-table">
             <thead>
                 <tr>
-                    <th class="col-img">Aperçu</th>
-                    <th><a href="<?php echo getLink(1, 'id'); ?>">ID <?php echo sortArrow('id'); ?></a></th>
-                    <th><a href="<?php echo getLink(1, 'name_en'); ?>">Nom (EN) <?php echo sortArrow('name_en'); ?></a></th>
-                    <th><a href="<?php echo getLink(1, 'name_jp'); ?>">Nom (JP) <?php echo sortArrow('name_jp'); ?></a></th>
+                    <th class="col-img"><?php echo __('pb_th_preview'); ?></th>
+                    <th><a href="<?php echo getLink(1, 'id'); ?>"><?php echo __('pb_th_id'); ?> <?php echo sortArrow('id'); ?></a></th>
+                    <th><a href="<?php echo getLink(1, 'name_en'); ?>"><?php echo __('pb_th_name_en'); ?> <?php echo sortArrow('name_en'); ?></a></th>
+                    <th><a href="<?php echo getLink(1, 'name_jp'); ?>"><?php echo __('pb_th_name_jp'); ?> <?php echo sortArrow('name_jp'); ?></a></th>
                     
                     <th class="th-dropdown">
-                        <span>Poste <i class="fas fa-filter" style="font-size:0.7rem; opacity:0.7;"></i></span>
+                        <span><?php echo __('pb_th_position'); ?> <i class="fas fa-filter" style="font-size:0.7rem; opacity:0.7;"></i></span>
                         <div class="dropdown-content">
-                            <a href="<?php echo getLink(1, null, $search, ''); ?>" class="<?php echo !$filter_pos ? 'active' : ''; ?>">Tout</a>
+                            <a href="<?php echo getLink(1, null, $search, ''); ?>" class="<?php echo !$filter_pos ? 'active' : ''; ?>"><?php echo __('pb_filter_all'); ?></a>
                             <a href="<?php echo getLink(1, null, $search, 'GK'); ?>" class="<?php echo $filter_pos === 'GK' ? 'active' : ''; ?>">GK</a>
                             <a href="<?php echo getLink(1, null, $search, 'DF'); ?>" class="<?php echo $filter_pos === 'DF' ? 'active' : ''; ?>">DF</a>
                             <a href="<?php echo getLink(1, null, $search, 'MF'); ?>" class="<?php echo $filter_pos === 'MF' ? 'active' : ''; ?>">MF</a>
@@ -183,18 +183,18 @@ $header->render();
                     </th>
 
                     <th class="th-dropdown">
-                        <span>Élément <i class="fas fa-filter" style="font-size:0.7rem; opacity:0.7;"></i></span>
+                        <span><?php echo __('pb_th_element'); ?> <i class="fas fa-filter" style="font-size:0.7rem; opacity:0.7;"></i></span>
                         <div class="dropdown-content">
-                            <a href="<?php echo getLink(1, null, $search, null, ''); ?>" class="<?php echo !$filter_elem ? 'active' : ''; ?>">Tout</a>
-                            <a href="<?php echo getLink(1, null, $search, null, 'Wind'); ?>" class="<?php echo $filter_elem === 'Wind' ? 'active' : ''; ?>">Air</a>
-                            <a href="<?php echo getLink(1, null, $search, null, 'Mountain'); ?>" class="<?php echo $filter_elem === 'Mountain' ? 'active' : ''; ?>">Terre</a>
-                            <a href="<?php echo getLink(1, null, $search, null, 'Fire'); ?>" class="<?php echo $filter_elem === 'Fire' ? 'active' : ''; ?>">Feu</a>
-                            <a href="<?php echo getLink(1, null, $search, null, 'Forest'); ?>" class="<?php echo $filter_elem === 'Wood' ? 'active' : ''; ?>">Bois</a>
+                            <a href="<?php echo getLink(1, null, $search, null, ''); ?>" class="<?php echo !$filter_elem ? 'active' : ''; ?>"><?php echo __('pb_filter_all'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, null, 'Wind'); ?>" class="<?php echo $filter_elem === 'Wind' ? 'active' : ''; ?>"><?php echo __('pb_elem_wind'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, null, 'Mountain'); ?>" class="<?php echo $filter_elem === 'Mountain' ? 'active' : ''; ?>"><?php echo __('pb_elem_mountain'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, null, 'Fire'); ?>" class="<?php echo $filter_elem === 'Fire' ? 'active' : ''; ?>"><?php echo __('pb_elem_fire'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, null, 'Forest'); ?>" class="<?php echo $filter_elem === 'Forest' ? 'active' : ''; ?>"><?php echo __('pb_elem_wood'); ?></a>
                         </div>
                     </th>
                     
-                    <th><a href="<?php echo getLink(1, 'gender'); ?>">Genre <?php echo sortArrow('gender'); ?></a></th>
-                    <th><a href="<?php echo getLink(1, 'total_stats'); ?>">Stats <?php echo sortArrow('total_stats'); ?></a></th>
+                    <th><a href="<?php echo getLink(1, 'gender'); ?>"><?php echo __('pb_th_gender'); ?> <?php echo sortArrow('gender'); ?></a></th>
+                    <th><a href="<?php echo getLink(1, 'total_stats'); ?>"><?php echo __('pb_th_stats'); ?> <?php echo sortArrow('total_stats'); ?></a></th>
                 </tr>
             </thead>
             <tbody>
@@ -204,24 +204,24 @@ $header->render();
                             <td class="col-img">
                                 <img src="<?php echo htmlspecialchars($p['image_webp']); ?>" alt="img" loading="lazy">
                             </td>
-                            <td data-label="ID">#<?php echo $p['id']; ?></td>
-                            <td data-label="Nom (EN)" class="font-bold"><?php echo htmlspecialchars($p['name_en']); ?></td>
-                            <td data-label="Nom (JP)" style="color:var(--text-secondary)"><?php echo htmlspecialchars($p['name_jp']); ?></td>
+                            <td data-label="<?php echo __('pb_th_id'); ?>">#<?php echo $p['id']; ?></td>
+                            <td data-label="<?php echo __('pb_th_name_en'); ?>" class="font-bold"><?php echo htmlspecialchars($p['name_en']); ?></td>
+                            <td data-label="<?php echo __('pb_th_name_jp'); ?>" style="color:var(--text-secondary)"><?php echo htmlspecialchars($p['name_jp']); ?></td>
                             
-                            <td data-label="Poste">
+                            <td data-label="<?php echo __('pb_th_position'); ?>">
                                 <span class="badge pos-<?php echo strtolower($p['position']); ?>"><?php echo $p['position']; ?></span>
                             </td>
-                            <td data-label="Élément">
+                            <td data-label="<?php echo __('pb_th_element'); ?>">
                                 <span class="badge elem-<?php echo strtolower($p['element']); ?>"><?php echo $p['element']; ?></span>
                             </td>
                             
-                            <td data-label="Genre"><?php echo $p['gender']; ?></td>
-                            <td data-label="Total Stats" class="stat-cell"><?php echo $p['total_stats']; ?></td>
+                            <td data-label="<?php echo __('pb_th_gender'); ?>"><?php echo $p['gender']; ?></td>
+                            <td data-label="<?php echo __('pb_th_stats'); ?>" class="stat-cell"><?php echo $p['total_stats']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="8" style="text-align:center; padding: 2rem;">Aucun joueur trouvé avec ces filtres.</td>
+                        <td colspan="8" style="text-align:center; padding: 2rem;"><?php echo __('pb_no_results'); ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>

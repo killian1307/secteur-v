@@ -41,8 +41,8 @@ class Dashboard {
         // Récupération de l'historique
         $sqlHistory = "
             (SELECT m.*, 
-                    COALESCE(w.username, 'Joueur supprimé') AS winner_name, 
-                    COALESCE(l.username, 'Joueur supprimé') AS loser_name 
+                    COALESCE(w.username, '" . __('dash_deleted_user') . "') AS winner_name, 
+                    COALESCE(l.username, '" . __('dash_deleted_user') . "') AS loser_name 
              FROM matches m 
              LEFT JOIN users w ON m.winner_id = w.id 
              LEFT JOIN users l ON m.loser_id = l.id 
@@ -53,8 +53,8 @@ class Dashboard {
             UNION ALL
             
             (SELECT m.*, 
-                    COALESCE(w.username, 'Joueur supprimé') AS winner_name, 
-                    COALESCE(l.username, 'Joueur supprimé') AS loser_name 
+                    COALESCE(w.username, '" . __('dash_deleted_user') . "') AS winner_name, 
+                    COALESCE(l.username, '" . __('dash_deleted_user') . "') AS loser_name 
              FROM matches m 
              LEFT JOIN users w ON m.winner_id = w.id 
              LEFT JOIN users l ON m.loser_id = l.id 
@@ -114,23 +114,24 @@ class Dashboard {
 
             <div class="beta-banner">
                 <div class="beta-banner-content">
-                    <strong>🚧 SAISON BÊTA EN COURS :</strong> Bienvenue dans la saison bêta du Secteur V ! N'hésitez pas à tout tester, tout casser, et à signaler les bugs sur notre Discord. <i>⚠️ ATTENTION :</i> Les points EDP sont susceptibles d'être réinitialisés si des failles majeures sont découvertes. Bon jeu à tous !
+                    <strong>🚧 <?php echo __('dash_beta_title'); ?></strong> <?php echo __('dash_beta_text_1'); ?> <i>⚠️ <?php echo __('dash_beta_warning'); ?></i> <?php echo __('dash_beta_text_2'); ?>
                 </div>
             </div>
             <div class="dashboard-header">
-                <h1 class="dashboard-h1">Bon retour, <span class="highlight-name"><?php echo $username; ?></span></h1>
-                <p class="subtitle dashboard-sub" style="gap:10px;">Prêt à prouver qui est le meilleur ?
-                </p>
-                <span class="live-dot"></span>
-                <span class="online-count"><?php echo $onlineCount; ?> joueur<?php echo $pluriel; ?> en ligne</span>
+                <h1 class="dashboard-h1"><?php echo __('dash_welcome'); ?> <span class="highlight-name"><?php echo $username; ?></span></h1>
+                <p class="subtitle dashboard-sub" style="gap:10px;"><?php echo __('dash_subtitle'); ?></p>
+                <div class="queue-status" style="margin-top: 10px; margin-bottom: 2rem;">
+                    <span class="live-dot"></span>
+                    <span class="online-count"><?php echo __('dash_online_count', $onlineCount, $pluriel); ?></span>
+                </div>
                 
                 <div class="mode-actions">
                     <a href="matchmaking.php?mode=ranked" class="btn-mode ranked">
-                        <i class="fas fa-trophy"></i> Jouer en Classé
+                        <i class="fas fa-trophy"></i> <?php echo __('dash_btn_ranked'); ?>
                     </a>
 
                     <a href="matchmaking.php?mode=normal" class="btn-mode normal">
-                        <i class="fas fa-running"></i> Match Amical
+                        <i class="fas fa-running"></i> <?php echo __('dash_btn_normal'); ?>
                     </a>
                 </div>
             </div>
@@ -138,15 +139,15 @@ class Dashboard {
             <div class="dashboard-grid">
                 
                 <div class="dash-card history-card">
-                <h3><i class="fas fa-history"></i> Historique</h3>
+                <h3><i class="fas fa-history"></i> <?php echo __('dash_history_title'); ?></h3>
                     <div class="card-header-tabs">
-                        <button class="tab-btn active" onclick="switchTab('ranked')">Classé</button>
-                        <button class="tab-btn" onclick="switchTab('normal')">Normal</button>
+                        <button class="tab-btn active" onclick="switchTab('ranked')"><?php echo __('dash_tab_ranked'); ?></button>
+                        <button class="tab-btn" onclick="switchTab('normal')"><?php echo __('dash_tab_normal'); ?></button>
                     </div>
                     
                     <div class="history-content">
                         <?php if (empty($history)): ?>
-                            <p style="text-align:center; color:var(--text-secondary); padding:20px;">Aucun match joué pour le moment.</p>
+                            <p style="text-align:center; color:var(--text-secondary); padding:20px;"><?php echo __('dash_no_match'); ?></p>
                         <?php else: ?>
                             <?php foreach($history as $match): 
                                 // Détermine si victoire ou défaite
@@ -192,29 +193,29 @@ class Dashboard {
                     </div>
 
                 <div class="dash-card stats-card">
-                    <h3><i class="fas fa-chart-pie"></i> Performances (Classé)</h3>
+                    <h3><i class="fas fa-chart-pie"></i> <?php echo __('dash_stats_title'); ?></h3>
                     
                     <div class="winrate-container">
                         <div class="progress-circle" style="--p:<?php echo $winrate; ?>; --b:10px; --c:var(--primary-purple);">
                             <div class="stat-value"><?php echo $winrate; ?>%</div>
                         </div>
-                        <p class="stat-label">Taux de Victoire</p>
+                        <p class="stat-label"><?php echo __('dash_winrate'); ?></p>
                     </div>
 
                     <div class="mini-stats-grid">
                         <div class="mini-stat">
                             <span class="val"><?php echo $wins; ?></span>
-                            <span class="lbl">Victoires</span>
+                            <span class="lbl"><?php echo __('dash_wins'); ?></span>
                         </div>
                         <div class="mini-stat">
                             <span class="val"><?php echo $losses; ?></span>
-                            <span class="lbl">Défaites</span>
+                            <span class="lbl"><?php echo __('dash_losses'); ?></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="dash-card rank-card">
-                    <h3><i class="fas fa-crown"></i> Classement</h3>
+                    <h3><i class="fas fa-crown"></i> <?php echo __('dash_ladder_title'); ?></h3>
                     
                     <div class="leaderboard-container" id="leaderboardScroll">
                         <?php 
@@ -278,12 +279,9 @@ class Dashboard {
                     item.style.display = 'none';
                 }
             });
-
-            // Petit détail UX : Si aucun match dans cette catégorie, tu pourrais afficher un msg, 
-            // mais pour l'instant on laisse vide.
         }
 
-        // AUTO SCROLL (Version Fixe : Ne bouge QUE la boîte, pas la page)
+        // AUTO SCROLL
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
                 const container = document.getElementById('leaderboardScroll');

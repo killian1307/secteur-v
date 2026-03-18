@@ -4,34 +4,33 @@ require 'db.php';
 
 require 'assets/header.php';
 require 'assets/footer.php';
-require 'assets/ladder.php';
 require 'assets/privacy_popup.php';
 
 # Titre
-$header = new Header("SECTEUR V - Classement");
+$header = new Header(__('edp_title'));
 
 // Affiche le header
 $header->render();
 ?>
 
     <main class="ladder-main">
-        <h1>L'Échelle du <span style="color: var(--primary-purple)">Pouvoir</span></h1>
+        <h1><?php echo __('edp_h1_1'); ?> <span style="color: var(--primary-purple)"><?php echo __('edp_h1_2'); ?></span></h1>
         
         <p class="subtitle">
-            Le système de classement <b>absolu</b> du Secteur&nbsp;V.
+            <?php echo __('edp_subtitle'); ?>
         </p>
 
         <?php if (!isset($_SESSION['user_id'])) { ?>
         <button class="cta-button" onclick="openPrivacyModal()">
-            <i class="fab fa-discord"></i> Rejoindre la compétition
+            <i class="fab fa-discord"></i> <?php echo __('edp_join_btn'); ?>
         </button>
         <?php } ?>
 
         <div class="process-container">
             <div class="process-step">
                 <div class="step-icon"><i class="fas fa-gamepad"></i></div>
-                <h3>1. Défiez</h3>
-                <p>Trouvez un adversaire via notre matchmaking.</p>
+                <h3><?php echo __('edp_step1_title'); ?></h3>
+                <p><?php echo __('edp_step1_desc'); ?></p>
             </div>
             
             <div class="process-arrow">
@@ -40,8 +39,8 @@ $header->render();
 
             <div class="process-step">
                 <div class="step-icon"><i class="fas fa-trophy"></i></div>
-                <h3>2. Triomphez</h3>
-                <p>Jouez le match sur Victory Road et remportez la victoire.</p>
+                <h3><?php echo __('edp_step2_title'); ?></h3>
+                <p><?php echo __('edp_step2_desc'); ?></p>
             </div>
 
             <div class="process-arrow">
@@ -50,8 +49,8 @@ $header->render();
 
             <div class="process-step">
                 <div class="step-icon"><i class="fas fa-chart-line"></i></div>
-                <h3>3. Progressez</h3>
-                <p>Votre EDP est mis à jour instantanément après validation.</p>
+                <h3><?php echo __('edp_step3_title'); ?></h3>
+                <p><?php echo __('edp_step3_desc'); ?></p>
             </div>
         </div>
     </main> 
@@ -63,22 +62,22 @@ $header->render();
     </div>
 
     <section id="rules" class="info-section">
-        <h2><span style="color: var(--primary-purple)">Règle</span>ment</h2>
+        <h2><span style="color: var(--primary-purple)"><?php echo __('edp_rules_h2_1'); ?></span><?php echo __('edp_rules_h2_2'); ?></h2>
         <div class="info-section-content">
             <div class="info-block">
                 <div class="info-text">
-                    <h3>Les Mathématiques de la Victoire</h3>
+                    <h3><?php echo __('edp_math_title'); ?></h3>
                     <p>
-                        Nous utilisons une variante du système ELO&nbsp;: le <strong>système EDP</strong>. Chaque joueur commence à 1000 points.
+                        <?php echo __('edp_math_p1'); ?>
                     </p>
                     <ul class="info-list-ladder">
                         <li>
                             <i class="fas fa-balance-scale"></i> 
-                            <span class="ladder-li"><strong>Équité&nbsp;:</strong> Battre un joueur mieux classé rapporte beaucoup de points. Battre un débutant en rapporte peu.</span>
+                            <span class="ladder-li"><?php echo __('edp_math_li1'); ?></span>
                         </li>
                         <li>
                             <i class="fas fa-shield-alt"></i> 
-                            <span class="ladder-li"><strong>Protection&nbsp;:</strong> Les défaites contre des adversaires trop forts sont moins pénalisantes.</span>
+                            <span class="ladder-li"><?php echo __('edp_math_li2'); ?></span>
                         </li>
                     </ul>
                 </div>
@@ -89,14 +88,14 @@ $header->render();
 
             <div class="info-block reverse">
                 <div class="info-text">
-                    <h3>Protocole de Match</h3>
+                    <h3><?php echo __('edp_proto_title'); ?></h3>
                     <p>
-                        Pour garantir l'intégrité du classement, chaque match doit suivre le <strong>Protocole Omega</strong>.
+                        <?php echo __('edp_proto_p1'); ?>
                     </p>
                     <p>
-                        Une fois le match terminé, le vainqueur déclare le score. Le perdant doit confirmer. En cas de litige, les <strong>Arbitres du Secteur V</strong> interviennent sur preuves (screenshots).
+                        <?php echo __('edp_proto_p2'); ?>
                     </p>
-                    <a href="rules.php" class="link-arrow">Lire le règlement complet <i class="fas fa-arrow-right"></i></a>
+                    <a href="rules.php" class="link-arrow"><?php echo __('edp_proto_link'); ?> <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="info-visual">
                     <img src="assets/img/img_4.webp" alt="Illustration d'Astero Black se faisant punir par les arbitres" class="feature-img">

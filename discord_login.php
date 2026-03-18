@@ -82,7 +82,7 @@ if (isset($_GET['code'])) {
     curl_setopt($ch, CURLOPT_URL, $user_url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $access_token"]);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Désactive SSL ici aussi (A COMMENTER EN PRODUCTION)
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // CHANGER EN PROD
     $user_data = json_decode(curl_exec($ch), true);
     curl_close($ch);
 

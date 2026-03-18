@@ -5,7 +5,7 @@ require 'db.php';
 require 'assets/header.php';
 require 'assets/footer.php';
 
-$header = new Header("SECTEUR V - Règlement");
+$header = new Header(__('rul_page_title'));
 $header->render();
 ?>
 
@@ -28,50 +28,49 @@ $header->render();
 </style>
 
 <main class="dashboard-container">
-    <h1>Règlement <span style="color:var(--primary-purple)">Officiel</span></h1>
-    <p class="subtitle">Tout ce qu'il faut savoir avant de lancer un match sur le Secteur V.</p>
+    <h1><?php echo __('rul_h1_1'); ?> <span style="color:var(--primary-purple)"><?php echo __('rul_h1_2'); ?></span></h1>
+    <p class="subtitle"><?php echo __('rul_subtitle'); ?></p>
 
     <div class="mm-view active rules-content" style="display: block;">
         
-        <h2>1. Déroulement d'un Match</h2>
-        <p>Par défaut, tous les matchs classés (Ranked) et normaux se jouent en <strong>une seule manche gagnante (BO1)</strong>.</p>
+        <h2><?php echo __('rul_h2_1'); ?></h2>
+        <p><?php echo __('rul_p_1'); ?></p>
         <ul>
-            <li><strong>Résultat :</strong> À la fin du match, le vainqueur et le perdant doivent déclarer le score exact sur le site.</li>
-            <li><strong>Égalité :</strong> C'est la seule exception valable pour rejouer un match. Si la partie se solde par une égalité, vous devez relancer un match pour vous départager.</li>
-            <li><strong>Matchs en BO3 (Best of 3) :</strong> Si les deux joueurs sont d'accord, vous pouvez convenir dans le tchat de jouer en 2 manches gagnantes.<br>
-            <span style="font-size: 0.9rem; opacity: 0.8;"><em>Attention : Le Secteur V décline toute responsabilité en cas de déconnexion ou de litige lors d'un BO3. Si votre adversaire quitte après la première partie, seul ce premier résultat fera foi pour le classement.</em></span></li>
+            <li><?php echo __('rul_li_1_1'); ?></li>
+            <li><?php echo __('rul_li_1_2'); ?></li>
+            <li><?php echo __('rul_li_1_3'); ?></li>
         </ul>
 
-        <h2>2. Comment s'affronter sur Victory Road ?</h2>
-        <p>Pour vous retrouver en jeu, vous devez utiliser le <strong>tchat intégré à votre page de match</strong> sur Secteur V pour vous échanger le mot de passe du salon.</p>
+        <h2><?php echo __('rul_h2_2'); ?></h2>
+        <p><?php echo __('rul_p_2'); ?></p>
         
-        <h3>Pour le Créateur du salon (Hôte) :</h3>
+        <h3><?php echo __('rul_h3_1'); ?></h3>
         <ol>
-            <li>Dans le jeu, allez dans <strong>Jeu en ligne</strong> > <strong>Match de salon</strong>.</li>
-            <li>Choisissez <strong>Créer un salon</strong>.</li>
-            <li>Définissez un <strong>mot de passe</strong> (un code simple à chiffres suffit).</li>
-            <li>Envoyez ce mot de passe à votre adversaire via le tchat Secteur V et attendez qu'il rejoigne.</li>
+            <li><?php echo __('rul_li_2_1'); ?></li>
+            <li><?php echo __('rul_li_2_2'); ?></li>
+            <li><?php echo __('rul_li_2_3'); ?></li>
+            <li><?php echo __('rul_li_2_4'); ?></li>
         </ol>
 
-        <h3>Pour l'Adversaire :</h3>
+        <h3><?php echo __('rul_h3_2'); ?></h3>
         <ol>
-            <li>Dans le jeu, allez dans <strong>Jeu en ligne</strong> > <strong>Match de salon</strong>.</li>
-            <li>Choisissez <strong>Chercher un salon</strong>.</li>
-            <li>Entrez le <strong>mot de passe</strong> communiqué par l'hôte dans le tchat.</li>
-            <li>Rejoignez la salle et préparez-vous au coup d'envoi !</li>
+            <li><?php echo __('rul_li_3_1'); ?></li>
+            <li><?php echo __('rul_li_3_2'); ?></li>
+            <li><?php echo __('rul_li_3_3'); ?></li>
+            <li><?php echo __('rul_li_3_4'); ?></li>
         </ol>
 
-        <h2>3. Fair-play et Comportement (Rappel des CGU)</h2>
-        <p>L'arène du Secteur V est un lieu de compétition saine. Tout manquement aux règles suivantes entraînera des sanctions sévères (perte d'ELO, bannissement temporaire ou définitif).</p>
+        <h2><?php echo __('rul_h2_3'); ?></h2>
+        <p><?php echo __('rul_p_3'); ?></p>
         <ul>
-            <li><strong>Engagement :</strong> Vous devez jouer vos matchs jusqu'au bout. L'abandon volontaire (rage quit) sans raison valable est interdit.</li>
-            <li><strong>Honnêteté :</strong> Déclarez toujours le vrai score. En cas de litige, vous devrez fournir des preuves (capture d'écran de l'écran de fin) aux modérateurs sur Discord.</li>
-            <li><strong>Anti-Triche (Win-Trading) :</strong> Il est strictement interdit d'utiliser plusieurs comptes (smurfs) ou de s'arranger avec d'autres joueurs pour truquer les résultats d'un match afin de manipuler le classement.</li>
-            <li><strong>Respect :</strong> Restez toujours courtois dans le tchat de match. Les provocations, insultes ou comportements toxiques n'ont pas leur place ici.</li>
+            <li><?php echo __('rul_li_4_1'); ?></li>
+            <li><?php echo __('rul_li_4_2'); ?></li>
+            <li><?php echo __('rul_li_4_3'); ?></li>
+            <li><?php echo __('rul_li_4_4'); ?></li>
         </ul>
 
         <div class="warning-box">
-            <strong>Rappel :</strong> En cas de litige, l'équipe de modération du Secteur V a le dernier mot. Jouez fair-play, prenez vos captures d'écran en fin de match par sécurité, et tout se passera bien !
+            <?php echo __('rul_warning'); ?>
         </div>
 
     </div>
