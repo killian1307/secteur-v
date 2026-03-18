@@ -328,5 +328,19 @@ return [
     'trm_p_5' => 'Im Falle von Unstimmigkeiten über das Endergebnis geht das Spiel in den Modus "Diskrepanz" über. Ein privater Kanal wird automatisch auf unserem offiziellen Discord-Server erstellt. Du musst den Moderatoren Video- oder Fotobeweise (Screenshot des Endbildschirms des Spiels) vorlegen. Entscheidungen des Moderationsteams sind endgültig.',
     'trm_p_6' => 'Jeder Versuch des Betrugs während einer Diskrepanz (Fälschung von Beweisen, Lügen) führt zu einem permanenten Bann und dem Verlust deiner EDP-Punkte.',
     'trm_h2_5' => '5. Änderung der Nutzungsbedingungen',
-    'trm_p_7' => 'Secteur V behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern, insbesondere um sich an Änderungen im Spiel oder in der Gesetzgebung anzupassen. Spieler werden über wichtige Änderungen über unseren Discord-Server informiert.'
+    'trm_p_7' => 'Secteur V behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern, insbesondere um sich an Änderungen im Spiel oder in der Gesetzgebung anzupassen. Spieler werden über wichtige Änderungen über unseren Discord-Server informiert.',
+
+    // Profile Grades and Formations
+    'Créateur' => 'Ersteller',
+    'Modérateur' => 'Moderator',
+    'VIP' => 'VIP',
+
+    '4-4-2 Diamant' => '4-4-2 Raute',
+    '4-4-2 Boîte' => '4-4-2 Box',
+    '3-5-2 Liberté' => '3-5-2 Freiheit',
+    '4-3-3 Triangle' => '4-3-3 Dreieck',
+    '4-3-3 Delta' => '4-3-3 Delta',
+    '4-5-1 Équilibré' => '4-5-1 Ausgewogen',
+    '3-6-1 Hexa' => '3-6-1 Hexa',
+    '5-4-1 Double Volante' => '5-4-1 Doppel-Sechs'
 ];

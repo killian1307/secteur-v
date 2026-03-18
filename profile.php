@@ -147,7 +147,7 @@ $header->render();
                         <h1 class="osu-username" title="<?php echo htmlspecialchars($profileUser['username']); ?>">
                             <?php echo $displayUsername; ?>
                         </h1>
-                        <span class="osu-grade <?php echo $gradeClass; ?>"><?php echo htmlspecialchars($grade); ?></span>
+                        <span class="osu-grade <?php echo $gradeClass; ?>"><?php echo htmlspecialchars(__($grade)); ?></span>
                     </div>
 
                     <div class="badges-row">
@@ -213,7 +213,7 @@ $header->render();
                         <div class="formation-selector-wrapper">
                         <span class="formation-tag" id="formationDisplay">
                             <i class="fas fa-chess-board"></i> 
-                            <span id="formationLabelText"><?php echo htmlspecialchars($savedFormation); ?></span>
+                            <span id="formationLabelText"><?php echo htmlspecialchars(__($savedFormation)); ?></span>
 
                             <?php if ($isOwner): ?>
                                 <i class="fas fa-pencil-alt" style="margin-left: 8px; font-size: 0.8em; opacity: 0.7;"></i>
@@ -225,7 +225,7 @@ $header->render();
                                 <?php 
                                 foreach($formationsMap as $name => $cssClass) {
                                     $isSelected = ($name === $savedFormation) ? 'selected' : '';
-                                    echo "<option value='$name' data-class='$cssClass' $isSelected>$name</option>";
+                                    echo "<option value='$name' data-class='$cssClass' $isSelected>" . htmlspecialchars(__($name)) . "</option>";
                                 }
                                 ?>
                             </select>

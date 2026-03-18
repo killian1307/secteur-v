@@ -328,5 +328,19 @@ return [
     'trm_p_5' => 'En caso de desacuerdo sobre el resultado final, el partido entra en modo "Disputa". Se crea automáticamente un canal privado en nuestro servidor oficial de Discord. Debes proporcionar pruebas en vídeo o foto (captura de pantalla del final del partido) a los moderadores. Las decisiones tomadas por el equipo de moderación son definitivas.',
     'trm_p_6' => 'Cualquier intento de fraude durante una disputa (falsificación de pruebas, mentiras) resultará en un ban permanente y la pérdida de tus puntos EDP.',
     'trm_h2_5' => '5. Modificación de los TDS',
-    'trm_p_7' => 'Secteur V se reserva el derecho de modificar estos TDS en cualquier momento, en particular para adaptarse a los cambios en el juego o la legislación. Los jugadores serán informados de los cambios importantes a través de nuestro servidor de Discord.'
+    'trm_p_7' => 'Secteur V se reserva el derecho de modificar estos TDS en cualquier momento, en particular para adaptarse a los cambios en el juego o la legislación. Los jugadores serán informados de los cambios importantes a través de nuestro servidor de Discord.',
+
+    // Profile Grades and Formations
+    'Créateur' => 'Creador',
+    'Modérateur' => 'Moderador',
+    'VIP' => 'VIP',
+
+    '4-4-2 Diamant' => '4-4-2 Diamante',
+    '4-4-2 Boîte' => '4-4-2 Caja',
+    '3-5-2 Liberté' => '3-5-2 Libertad',
+    '4-3-3 Triangle' => '4-3-3 Triángulo',
+    '4-3-3 Delta' => '4-3-3 Delta',
+    '4-5-1 Équilibré' => '4-5-1 Equilibrado',
+    '3-6-1 Hexa' => '3-6-1 Hexa',
+    '5-4-1 Double Volante' => '5-4-1 Doble Pivote'
 ];

@@ -328,5 +328,19 @@ return [
     'trm_p_5' => 'In the event of a disagreement over the final score, the match goes into "Dispute" mode. A private channel is automatically created on our official Discord server. You must provide video or photo evidence (screenshot of the end match screen) to the moderators. Decisions made by the moderation team are final.',
     'trm_p_6' => 'Any attempt at fraud during a dispute (falsification of evidence, lying) will result in a permanent ban and the loss of your EDP points.',
     'trm_h2_5' => '5. Modification of the TOS',
-    'trm_p_7' => 'Secteur V reserves the right to modify these TOS at any time, in particular to adapt to changes in the game or legislation. Players will be informed of major changes via our Discord server.'
+    'trm_p_7' => 'Secteur V reserves the right to modify these TOS at any time, in particular to adapt to changes in the game or legislation. Players will be informed of major changes via our Discord server.',
+
+    // Profile Grades and Formations
+    'Créateur' => 'Creator',
+    'Modérateur' => 'Moderator',
+    'VIP' => 'VIP',
+
+    '4-4-2 Diamant' => '4-4-2 Diamond',
+    '4-4-2 Boîte' => '4-4-2 Box',
+    '3-5-2 Liberté' => '3-5-2 Liberty',
+    '4-3-3 Triangle' => '4-3-3 Triangle',
+    '4-3-3 Delta' => '4-3-3 Delta',
+    '4-5-1 Équilibré' => '4-5-1 Balanced',
+    '3-6-1 Hexa' => '3-6-1 Hexa',
+    '5-4-1 Double Volante' => '5-4-1 Double Volante'
 ];
