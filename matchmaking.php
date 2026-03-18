@@ -124,6 +124,28 @@ $header->render();
     .subtitle-match {
         margin-bottom: 0.5rem !important;
     }
+
+    h4 {
+        margin-top: 1.5rem;
+        color: var(--primary-purple);
+    }
+
+    i.rulespopup {
+        color: var(--primary-purple);
+        padding-right: 10px;
+    }
+
+    .retour-accueil {
+        display: inline-block;
+        margin-top: 2rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .retour-accueil:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <main class="dashboard-container">
@@ -149,7 +171,7 @@ $header->render();
                 <button class="btn-large btn-switch"><i class="fas fa-exchange-alt"></i> Jouer en mode <?php echo $otherMode; ?></button>
             </a>
             
-            <a href="/" style="display:block; margin-top:2rem; color:var(--text-secondary);"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
+            <a href="/" class="retour-accueil"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
         </div>
 
         <div id="view-queue" class="mm-view">
@@ -221,6 +243,36 @@ $header->render();
 
     </div>
 </main>
+
+<!-- Popup à l'ouverture de la page pour la première fois -->
+ <div id="match-rules-modal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header" style="color: var(--background-main);">
+            <i class="fas fa-info-circle" style="color: var(--background-main);"></i> Déroulement des matchs
+        </div>
+        <div class="modal-body" style="text-align:justify;">
+            <p>Lisez attentivement ces instructions avant de lancer votre première recherche&nbsp:</p>
+                
+                    
+                    <h4><i class="fas fa-gamepad rulespopup"></i>Création du salon</h4>
+                    <p>Utilisez le tchat Secteur V qui apparaîtra une fois votre adversaire connecté pour échanger le mot de passe d'un "Match de salon" sur Victory Road.</p>
+                    <p style="padding-top: 10px;"><strong><i class="fas fa-arrow-right rulespopup"></i>Vous ne savez pas comment le créer ?</strong> Veuillez vous référer au règlement complet ci-dessous.</p>
+
+                    <h4><i class="fas fa-trophy rulespopup"></i>Résultat final</h4>
+                    <p>Les matchs se jouent en 1 manche (BO1). Ne quittez pas cette page et renseignez le score exact à la fin de la partie.</p>
+
+                    <h4><i class="fas fa-exclamation-triangle rulespopup"></i>En cas de litige</h4>
+                    <p>Si votre adversaire ment sur le score, prenez une capture d'écran du résultat ou un enregistrement vidéo de la partie. Un ticket sera ouvert sur notre Discord.</p>
+            
+            <div class="links-row">
+                <a href="rules.php" target="_blank" class="text-link">Lire le règlement complet</a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="other-button" onclick="closeRulesModal()" style="margin: 0 auto; width: 100%; justify-content: center; color: var(--background-main);">J'ai compris, c'est parti !</button>
+        </div>
+    </div>
+</div>
 
 <!-- Son de notification pour les nouveaux messages -->
 <audio id="chat-sound" src="assets/sounds/notification.wav" preload="auto"></audio>
@@ -494,11 +546,21 @@ $header->render();
         }
     });
 
+    function closeRulesModal() {
+        document.getElementById('match-rules-modal').classList.remove('active');
+        localStorage.setItem('hasSeenMatchRules', 'true');
+    }
+
     // Lance dès le chargement de la page
     document.addEventListener('DOMContentLoaded', () => {
         pollServer(); 
         fetchQueueCount();
         setInterval(fetchQueueCount, 5000); // Boucle toutes les 5s
+
+        // Affiche le modal de règles si c'est la première visite
+        if (!localStorage.getItem('hasSeenMatchRules')) {
+            document.getElementById('match-rules-modal').classList.add('active');
+        }
     });
 </script>
 

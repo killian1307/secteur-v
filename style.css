@@ -1288,13 +1288,13 @@ input:valid {
 
 .text-link {
     color: var(--text-primary);
-    text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
 }
 
 .text-link:hover {
-    text-decoration: underline;
+    color: var(--primary-purple);
+    text-decoration: dotted underline;
 }
 
 /* Boutons */
