@@ -378,13 +378,14 @@ function updateLabels(formationName) {
 async function changeFormation(selectElement) {
     // Récupère la vraie valeur (BDD) et la classe CSS (affichage)
     const newFormationName = selectElement.value; // "4-4-2 Diamant"
+    const translatedName = selectElement.options[selectElement.selectedIndex].text;
     const cssClass = selectElement.options[selectElement.selectedIndex].getAttribute('data-class'); // "4-4-2-diamant"
 
     console.log("Changement vers :", newFormationName, "| Classe CSS :", cssClass);
 
     const labelText = document.getElementById('formationLabelText');
     if (labelText) {
-        labelText.innerText = newFormationName;
+        labelText.innerText = translatedName;
     }
 
     const field = document.getElementById('field-container');
