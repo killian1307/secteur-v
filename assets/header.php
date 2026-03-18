@@ -59,6 +59,28 @@ class Header {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>' . htmlspecialchars($this->pageTitle) . '</title>
+
+    <meta name="description" content="' . htmlspecialchars(__('footer_desc')) . '">
+    <meta name="keywords" content="Inazuma Eleven, Victory Road, Secteur V, Classement, ELO, Matchmaking, PvP">
+    <meta name="author" content="K">
+    
+    <meta name="theme-color" content="#FFD700"> <meta property="og:type" content="website">
+    <meta property="og:url" content="https://secteur-v.letterk.me/">
+    <meta property="og:title" content="' . htmlspecialchars($this->pageTitle) . '">
+    <meta property="og:description" content="' . htmlspecialchars(__('footer_desc')) . '">
+    <meta property="og:image" content="https://secteur-v.letterk.me/assets/img/v.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://secteur-v.letterk.me/">
+    <meta name="twitter:title" content="' . htmlspecialchars($this->pageTitle) . '">
+    <meta name="twitter:description" content="' . htmlspecialchars(__('footer_desc')) . '">
+    <meta name="twitter:image" content="https://secteur-v.letterk.me/assets/img/v.webp">
+
+    <link rel="alternate" hreflang="fr" href="https://secteur-v.letterk.me/?lang=fr" />
+    <link rel="alternate" hreflang="en" href="https://secteur-v.letterk.me/?lang=en" />
+    <link rel="alternate" hreflang="es" href="https://secteur-v.letterk.me/?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://secteur-v.letterk.me/" />
+
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
