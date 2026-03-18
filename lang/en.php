@@ -342,5 +342,10 @@ return [
     '4-3-3 Delta' => '4-3-3 Delta',
     '4-5-1 Équilibré' => '4-5-1 Balanced',
     '3-6-1 Hexa' => '3-6-1 Hexa',
-    '5-4-1 Double Volante' => '5-4-1 Double Volante'
+    '5-4-1 Double Volante' => '5-4-1 Double Volante',
+
+    // Special Genders
+    '両性' => 'Bigender',
+    '不明' => 'Unknown',
+    '不可' => 'N/A',
 ];

@@ -175,10 +175,10 @@ $header->render();
                         <span><?php echo __('pb_th_position'); ?> <i class="fas fa-filter" style="font-size:0.7rem; opacity:0.7;"></i></span>
                         <div class="dropdown-content">
                             <a href="<?php echo getLink(1, null, $search, ''); ?>" class="<?php echo !$filter_pos ? 'active' : ''; ?>"><?php echo __('pb_filter_all'); ?></a>
-                            <a href="<?php echo getLink(1, null, $search, 'GK'); ?>" class="<?php echo $filter_pos === 'GK' ? 'active' : ''; ?>">GK</a>
-                            <a href="<?php echo getLink(1, null, $search, 'DF'); ?>" class="<?php echo $filter_pos === 'DF' ? 'active' : ''; ?>">DF</a>
-                            <a href="<?php echo getLink(1, null, $search, 'MF'); ?>" class="<?php echo $filter_pos === 'MF' ? 'active' : ''; ?>">MF</a>
-                            <a href="<?php echo getLink(1, null, $search, 'FW'); ?>" class="<?php echo $filter_pos === 'FW' ? 'active' : ''; ?>">FW</a>
+                            <a href="<?php echo getLink(1, null, $search, 'GK'); ?>" class="<?php echo $filter_pos === 'GK' ? 'active' : ''; ?>"><?php echo __('GK'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, 'DF'); ?>" class="<?php echo $filter_pos === 'DF' ? 'active' : ''; ?>"><?php echo __('DF'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, 'MF'); ?>" class="<?php echo $filter_pos === 'MF' ? 'active' : ''; ?>"><?php echo __('MF'); ?></a>
+                            <a href="<?php echo getLink(1, null, $search, 'FW'); ?>" class="<?php echo $filter_pos === 'FW' ? 'active' : ''; ?>"><?php echo __('FW'); ?></a>
                         </div>
                     </th>
 
@@ -209,13 +209,13 @@ $header->render();
                             <td data-label="<?php echo __('pb_th_name_jp'); ?>" style="color:var(--text-secondary)"><?php echo htmlspecialchars($p['name_jp']); ?></td>
                             
                             <td data-label="<?php echo __('pb_th_position'); ?>">
-                                <span class="badge pos-<?php echo strtolower($p['position']); ?>"><?php echo $p['position']; ?></span>
+                                <span class="badge pos-<?php echo strtolower($p['position']); ?>"><?php echo __($p['position']); ?></span>
                             </td>
                             <td data-label="<?php echo __('pb_th_element'); ?>">
-                                <span class="badge elem-<?php echo strtolower($p['element']); ?>"><?php echo $p['element']; ?></span>
+                                <span class="badge elem-<?php echo strtolower($p['element']); ?>"><?php echo __($p['element']); ?></span>
                             </td>
                             
-                            <td data-label="<?php echo __('pb_th_gender'); ?>"><?php echo $p['gender']; ?></td>
+                            <td data-label="<?php echo __('pb_th_gender'); ?>"><?php echo __($p['gender']); ?></td>
                             <td data-label="<?php echo __('pb_th_stats'); ?>" class="stat-cell"><?php echo $p['total_stats']; ?></td>
                         </tr>
                     <?php endforeach; ?>

@@ -342,5 +342,13 @@ return [
     '4-3-3 Delta' => '4-3-3 デルタ',
     '4-5-1 Équilibré' => '4-5-1 バランス',
     '3-6-1 Hexa' => '3-6-1 ヘキサ',
-    '5-4-1 Double Volante' => '5-4-1 ダブルボランチ'
+    '5-4-1 Double Volante' => '5-4-1 ダブルボランチ',
+
+    // Elements & Positions & Genders
+    'Wind' => '風',
+    'Mountain' => '山',
+    'Fire' => '火',
+    'Forest' => '林',
+    'Male' => '男性',
+    'Female' => '女性'
 ];

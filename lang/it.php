@@ -342,5 +342,20 @@ return [
     '4-3-3 Delta' => '4-3-3 Delta',
     '4-5-1 Équilibré' => '4-5-1 Equilibrato',
     '3-6-1 Hexa' => '3-6-1 Hexa',
-    '5-4-1 Double Volante' => '5-4-1 Doppio Mediano'
+    '5-4-1 Double Volante' => '5-4-1 Doppio Mediano',
+
+    // Elements & Positions & Genders
+    'Wind' => 'Aria',
+    'Mountain' => 'Montagna',
+    'Fire' => 'Fuoco',
+    'Forest' => 'Foresta',
+    'GK' => 'PT',  // Portiere
+    'DF' => 'DIF', // Difensore
+    'MF' => 'CEN', // Centrocampista
+    'FW' => 'ATT', // Attaccante
+    'Male' => 'Maschile',
+    'Female' => 'Femminile',
+    '両性' => 'Bigendere',
+    '不明' => 'Sconosciuto',
+    '不可' => 'N/A'
 ];

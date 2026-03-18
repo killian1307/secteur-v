@@ -328,5 +328,20 @@ return [
     'trm_p_5' => 'En cas de désaccord sur le score final, le match passe en mode "Litige". Un salon privé est automatiquement créé sur notre serveur Discord officiel. Vous devez fournir une preuve vidéo ou photo (capture d\'écran de l\'écran de fin de match) aux modérateurs. Les décisions prises par l\'équipe de modération sont définitives.',
     'trm_p_6' => 'Toute tentative de fraude lors d\'un litige (falsification de preuves, mensonge) entraînera un bannissement définitif et la perte de vos points EDP.',
     'trm_h2_5' => '5. Modification des CGU',
-    'trm_p_7' => 'Secteur V se réserve le droit de modifier ces CGU à tout moment, notamment pour s\'adapter aux évolutions du jeu ou de la législation. Les joueurs seront informés des changements majeurs via notre serveur Discord.'
+    'trm_p_7' => 'Secteur V se réserve le droit de modifier ces CGU à tout moment, notamment pour s\'adapter aux évolutions du jeu ou de la législation. Les joueurs seront informés des changements majeurs via notre serveur Discord.',
+
+    // Elements & Positions & Genders
+    'Wind' => 'Air',
+    'Mountain' => 'Terre',
+    'Fire' => 'Feu',
+    'Forest' => 'Bois',
+    'GK' => 'GAR',
+    'DF' => 'DEF',
+    'MF' => 'MIL',
+    'FW' => 'ATT',
+    'Male' => 'Masculin',
+    'Female' => 'Féminin',
+    '両性' => 'Bigenre',
+    '不明' => 'Inconnu',
+    '不可' => 'N/A'
 ];
