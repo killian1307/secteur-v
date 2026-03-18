@@ -32,7 +32,7 @@ class Footer {
             <div class="footer-col">
                 <h4>' . __('footer_follow_us') . '</h4>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://x.com/secteurvictory" target="_blank"><i class="fab fa-x-twitter"></i></a>
                     <a href="https://discord.gg/85AT6gGNGD" target="_blank"><i class="fab fa-discord"></i></a>
                     <a href="https://github.com/killian1307/secteur-v" target="_blank"><i class="fab fa-github"></i></a>
                 </div>
