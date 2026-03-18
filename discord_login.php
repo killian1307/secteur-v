@@ -82,7 +82,8 @@ if (isset($_GET['code'])) {
     curl_setopt($ch, CURLOPT_URL, $user_url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $access_token"]);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // CHANGER EN PROD
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, !IS_LOCAL); // Vérification SSL selon l'environnement
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, IS_LOCAL ? 0 : 2); // 0 en local, 2 en prod
     $user_data = json_decode(curl_exec($ch), true);
     curl_close($ch);
 
@@ -103,7 +104,8 @@ if (isset($_GET['code'])) {
         "Authorization: Bot $botToken",
         "Content-Type: application/json"
     ]);
-    curl_setopt($chJoin, CURLOPT_SSL_VERIFYPEER, false); // CHANGER EN PROD
+    curl_setopt($chJoin, CURLOPT_SSL_VERIFYPEER, !IS_LOCAL); // Vérification SSL selon l'environnement
+    curl_setopt($chJoin, CURLOPT_SSL_VERIFYHOST, IS_LOCAL ? 0 : 2); // 0 en local, 2 en prod
     curl_exec($chJoin);
     curl_close($chJoin);
 
@@ -116,7 +118,6 @@ if (isset($_GET['code'])) {
     // Si le nom est trop long (> 12)
     if (mb_strlen($raw_username) > 12) {
         // On garde les 8 premiers caractères et on ajoute 4 chiffres aléatoires
-        // Ex: "SuperLongPseudo" devient "SuperLon4829"
         $username = mb_substr($raw_username, 0, 8) . rand(1000, 9999);
     } else {
         $username = $raw_username;

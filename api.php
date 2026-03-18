@@ -542,7 +542,8 @@ function createDiscordTicket($pdo, $matchId, $p1Id, $p2Id, $scoreP1, $scoreP2) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($channelData));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bot $botToken", "Content-Type: application/json"]);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, !IS_LOCAL); // Vérification SSL selon l'environnement
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, IS_LOCAL ? 0 : 2); // 0 en local, 2 en prod
     $response = curl_exec($ch);
     curl_close($ch);
 
