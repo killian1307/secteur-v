@@ -118,7 +118,7 @@ class Dashboard {
                 </div>
             </div>
             <div class="dashboard-header">
-                <h1 class="dashboard-h1">Bon retour, <span class="highlight-name"><?php echo $username; ?></span>.</h1>
+                <h1 class="dashboard-h1">Bon retour, <span class="highlight-name"><?php echo $username; ?></span></h1>
                 <p class="subtitle dashboard-sub" style="gap:10px;">Prêt à prouver qui est le meilleur ?
                 </p>
                 <span class="live-dot"></span>

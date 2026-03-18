@@ -123,7 +123,7 @@ $header->render();
     
     <div class="pb-header">
         <h1 class="dashboard-h1">Liste de <span style="color:var(--primary-purple)">Joueurs</span></h1>
-        <p class="subtitle">Base de données officielle du Secteur V.</p>
+        <p class="subtitle subtitle-playerbook">Base de données officielle du Secteur V.</p>
     </div>
 
     <div class="controls-wrapper">

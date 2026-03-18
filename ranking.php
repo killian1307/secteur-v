@@ -55,13 +55,17 @@ $header->render();
     /* Ajustement de la largeur des colonnes */
     .col-rank { width: 100px; text-align: center !important; font-weight: bold; font-size: 1.2rem; }
     .col-elo { width: 150px; text-align: right !important; font-weight: bold; color: var(--primary-purple); font-size: 1.1rem; }
+
+    .subtitle-ranking {
+        margin-bottom: 0.5rem !important;
+    }
 </style>
 
 <main class="playerbook-container">
     
     <div class="pb-header">
         <h1 class="dashboard-h1">Classement <span style="color:var(--primary-purple)">Global</span></h1>
-        <p class="subtitle">Les meilleurs joueurs du Secteur V.</p>
+        <p class="subtitle subtitle-ranking">Les meilleurs joueurs du Secteur V.</p>
     </div>
 
     <div class="controls-wrapper" style="justify-content: flex-end;">

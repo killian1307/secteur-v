@@ -301,3 +301,7 @@
 .page-input {
   -moz-appearance: textfield;
 }
+
+.subtitle-playerbook {
+        margin-bottom: 0.5rem !important;
+    }
