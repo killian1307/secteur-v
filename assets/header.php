@@ -21,17 +21,17 @@ class Header {
         $logoClass = ($this->isHome && !$isLoggedIn) ? 'header-logo logo-hidden' : 'header-logo';
 
         // Détermination du drapeau actuel
-        $currentLang = $_SESSION['lang'] ?? 'fr';
+        $currentLang = $_SESSION['lang'] ?? 'en';
         $flags = [
-            'fr' => '🇫🇷',
             'en' => '🇬🇧',
+            'fr' => '🇫🇷',
             'es' => '🇪🇸',
             'it' => '🇮🇹',
             'de' => '🇩🇪',
             'ja' => '🇯🇵',
             'ar' => '🇸🇦'
         ];
-        $flag = $flags[$currentLang] ?? '🇫🇷';
+        $flag = $flags[$currentLang] ?? '🇬🇧';
 
         echo '<!DOCTYPE html>
 <html lang="' . htmlspecialchars($currentLang) . '">
@@ -68,8 +68,8 @@ class Header {
                     ' . $flag . '
                 </div>
                 <div class="dropdown-menu" id="langDropdown" style="width: max-content; right: -10px; top: 150%;">
+                    <a href="?lang=en" class="dropdown-item">🇬🇧 English</a>    
                     <a href="?lang=fr" class="dropdown-item">🇫🇷 Français</a>
-                    <a href="?lang=en" class="dropdown-item">🇬🇧 English</a>
                     <a href="?lang=es" class="dropdown-item">🇪🇸 Español</a>
                     <a href="?lang=it" class="dropdown-item">🇮🇹 Italiano</a>
                     <a href="?lang=de" class="dropdown-item">🇩🇪 Deutsch</a>
