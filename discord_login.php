@@ -123,10 +123,10 @@ if (isset($_GET['code'])) {
     if ($smurfCheck === false) {
     // Si c'est un smurf, détruit la session dégage avec un message d'erreur
     session_destroy();
-    die("<h1>Accès Refusé : Tentative de Double Compte</h1>
-         <p>Un compte Secteur V a déjà été créé depuis cet appareil ou ce réseau WiFi.<br>
-         Le multi-compte (Smurf) est strictement interdit sur notre plateforme pour garantir l'équité du classement.</p>
-         <a href='/'>Retour à l'accueil</a>");
+    die("<h1>Access Denied : Potential Smurf Detected</h1>
+         <p>An account has already been created using this device of network on Secteur V.<br>
+         Smurfs and multi-accounts are strictly prohibited and will result in a definive ban from the platform.</p>
+         <a href='/'>Back to Home</a>");
     }
 
     // Si le nom est trop long (> 12)
