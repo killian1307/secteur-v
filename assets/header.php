@@ -21,24 +21,24 @@ class Header {
         $logoClass = ($this->isHome && !$isLoggedIn) ? 'header-logo logo-hidden' : 'header-logo';
 
         // Détermination du drapeau actuel
-        $currentLang = $_SESSION['lang'] ?? 'en';
+        $currentLang = $_SESSION['lang'] ?? 'fr';
         $flags = [
-            'en' => '🇬🇧',
             'fr' => '🇫🇷',
+            'en' => '🇬🇧',
             'es' => '🇪🇸',
             'it' => '🇮🇹',
             'de' => '🇩🇪',
             'ja' => '🇯🇵',
             'ar' => '🇸🇦'
         ];
-        $flag = $flags[$currentLang] ?? '🇬🇧';
+        $flag = $flags[$currentLang] ?? '🇫🇷';
 
         // --- Construction dynamique des liens de langue ---
         $currentParams = $_GET; // On copie tous les paramètres actuels
         
         $availableLangs = [
-            'en' => '🇬🇧 English',
             'fr' => '🇫🇷 Français',
+            'en' => '🇬🇧 English',
             'es' => '🇪🇸 Español',
             'it' => '🇮🇹 Italiano',
             'de' => '🇩🇪 Deutsch',
