@@ -22,7 +22,16 @@ class Header {
 
         // Détermination du drapeau actuel
         $currentLang = $_SESSION['lang'] ?? 'fr';
-        $flag = $currentLang === 'en' ? '🇬🇧' : '🇫🇷';
+        $flags = [
+            'fr' => '🇫🇷',
+            'en' => '🇬🇧',
+            'es' => '🇪🇸',
+            'it' => '🇮🇹',
+            'de' => '🇩🇪',
+            'ja' => '🇯🇵',
+            'ar' => '🇸🇦'
+        ];
+        $flag = $flags[$currentLang] ?? '🇫🇷';
 
         echo '<!DOCTYPE html>
 <html lang="' . htmlspecialchars($currentLang) . '">
@@ -61,6 +70,12 @@ class Header {
                 <div class="dropdown-menu" id="langDropdown" style="width: max-content; right: -10px; top: 150%;">
                     <a href="?lang=fr" class="dropdown-item">🇫🇷 Français</a>
                     <a href="?lang=en" class="dropdown-item">🇬🇧 English</a>
+                    <a href="?lang=es" class="dropdown-item">🇪🇸 Español</a>
+                    <a href="?lang=it" class="dropdown-item">🇮🇹 Italiano</a>
+                    <a href="?lang=de" class="dropdown-item">🇩🇪 Deutsch</a>
+                    <a href="?lang=ja" class="dropdown-item">🇯🇵 日本語</a>
+                    <a href="?lang=ar" class="dropdown-item">🇸🇦 العربية</a>
+
                 </div>
             </div>
 
