@@ -148,6 +148,16 @@ function updateCharCount(textarea) {
     }
 }
 
+// Menu langue
+window.addEventListener('click', function(e) {
+    if (!e.target.closest('.lang-container')) {
+        const langDropdown = document.getElementById('langDropdown');
+        if (langDropdown && langDropdown.classList.contains('active')) {
+            langDropdown.classList.remove('active');
+        }
+    }
+});
+
 // TEAM BUILDING
 window.currentSlot = null;
 
