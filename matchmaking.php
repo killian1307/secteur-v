@@ -137,7 +137,7 @@ $header->render();
 
     .retour-accueil {
         display: inline-block;
-        margin-top: 2rem;
+        margin-top: 0.5rem;
         color: var(--text-secondary);
         text-decoration: none;
         transition: color 0.3s;
@@ -170,8 +170,12 @@ $header->render();
             <a href="matchmaking.php?mode=<?php echo $otherMode; ?>" style="text-decoration:none;">
                 <button class="btn-large btn-switch"><i class="fas fa-exchange-alt"></i> Jouer en mode <?php echo $otherMode; ?></button>
             </a>
-            
+
+        <div style="margin-top: 2rem;">
+            <a href="#" class="retour-accueil" onclick="document.getElementById('match-rules-modal').classList.add('active');"><i class="fas fa-book"></i> Revoir le tutoriel</a>
+            |
             <a href="/" class="retour-accueil"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
+        </div>
         </div>
 
         <div id="view-queue" class="mm-view">
