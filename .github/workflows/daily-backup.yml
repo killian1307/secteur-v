@@ -1,0 +1,12 @@
+name: 💽 Sauvegarde Base de Données
+on:
+  schedule:
+    - cron: '0 3 * * *' # Tous les jours à 3h du matin
+  workflow_dispatch:
+
+jobs:
+  run-backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Déclenchement du script Ionos
+        run: curl -s "https://secteur-v.letterk.me/backup_db.php?key=${{ secrets.BACKUP_SECRET_KEY }}"
