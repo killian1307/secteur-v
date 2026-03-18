@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚀 Déclenchement du script Ionos
-        run: curl -s "https://secteur-v.letterk.me/backup_db.php?key=${{ secrets.BACKUP_SECRET_KEY }}"
+        run: curl -fSL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "https://secteur-v.letterk.me/backup_db.php?key=${{ secrets.BACKUP_SECRET_KEY }}"
