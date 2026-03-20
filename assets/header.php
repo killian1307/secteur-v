@@ -140,7 +140,7 @@ class Header {
                    <div class="dropdown-divider"></div>
                    <a href="logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> ' . __('nav_logout') . '</a>';
         } else {
-             echo '<a onclick="openPrivacyModal()" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> ' . __('nav_login') . '</a>';
+             echo '<a href="discord_login.php" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> ' . __('nav_login') . '</a>';
         }
 
         echo '
