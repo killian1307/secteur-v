@@ -334,7 +334,9 @@ return [
 
     // Profile Grades and Formations
     'Créateur' => 'Creador',
+    'Administrateur' => 'Administrador',
     'Modérateur' => 'Moderador',
+    'Partenaire' => 'Socio',
     'VIP' => 'VIP',
     'Membre' => 'Miembro',
 
@@ -360,5 +362,15 @@ return [
     'Female' => 'Femenino',
     '両性' => 'Bigenérico',
     '不明' => 'Desconocido',
-    '不可' => 'N/A'
+    '不可' => 'N/A',
+
+    // Server Cards
+    'sup_page_title' => 'SECTEUR V - Nuestros Socios',
+    'sup_h1_1' => 'Comunidades',
+    'sup_h1_2' => 'Asociadas',
+    'sup_subtitle' => 'Descubre los servidores que apoyan el desarrollo de Secteur V.',
+    'sup_col_first' => 'Los Pioneros',
+    'sup_col_popular' => 'Más Populares',
+    'sup_col_newest' => 'Más Recientes',
+    'sup_join' => 'Unirse',
 ];

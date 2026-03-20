@@ -334,7 +334,9 @@ return [
 
     // Profile Grades and Formations
     'Créateur' => 'منشئ',
+    'Administrateur' => 'مدير',
     'Modérateur' => 'مشرف',
+    'Partenaire' => 'شريك',
     'VIP' => 'VIP',
     'Membre' => 'عضو',
 
@@ -360,5 +362,15 @@ return [
     'Female' => 'أنثى',
     '両性' => 'ثنائي الجنس',
     '不明' => 'غير معروف',
-    '不可' => 'غير متاح'
+    '不可' => 'غير متاح',
+
+    // Server Cards
+    'sup_page_title' => 'SECTEUR V - شركاؤنا',
+    'sup_h1_1' => 'المجتمعات',
+    'sup_h1_2' => 'الشريكة',
+    'sup_subtitle' => 'اكتشف السيرفرات التي تدعم تطوير Secteur V.',
+    'sup_col_first' => 'الداعمون الأوائل',
+    'sup_col_popular' => 'الأكثر شعبية',
+    'sup_col_newest' => 'أحدث الإضافات',
+    'sup_join' => 'انضم للسيرفر',
 ];
