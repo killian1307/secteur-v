@@ -353,5 +353,15 @@ return [
     'Fire' => '火',
     'Forest' => '林',
     'Male' => '男性',
-    'Female' => '女性'
+    'Female' => '女性',
+
+    // Server Cards
+    'sup_page_title' => 'SECTEUR V - パートナー',
+    'sup_h1_1' => 'パートナー',
+    'sup_h1_2' => 'コミュニティ',
+    'sup_subtitle' => 'Secteur Vの開発を支援しているサーバーを見つけよう。',
+    'sup_col_first' => 'パイオニア',
+    'sup_col_popular' => '人気のサーバー',
+    'sup_col_newest' => '新着サーバー',
+    'sup_join' => '参加する',
 ];

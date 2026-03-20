@@ -355,5 +355,5 @@ return [
     'sup_col_first' => 'Les Pionniers',
     'sup_col_popular' => 'Les Plus Populaires',
     'sup_col_newest' => 'Derniers Ajouts',
-    'sup_join' => 'Rejoindre'
+    'sup_join' => 'Rejoindre',
 ];

@@ -360,5 +360,15 @@ return [
     'Female' => 'Femminile',
     '両性' => 'Bigendere',
     '不明' => 'Sconosciuto',
-    '不可' => 'N/A'
+    '不可' => 'N/A',
+
+    // Server Cards
+    'sup_page_title' => 'SECTEUR V - I Nostri Partner',
+    'sup_h1_1' => 'Comunità',
+    'sup_h1_2' => 'Partner',
+    'sup_subtitle' => 'Scopri i server che supportano lo sviluppo di Secteur V.',
+    'sup_col_first' => 'I Pionieri',
+    'sup_col_popular' => 'I Più Popolari',
+    'sup_col_newest' => 'Ultimi Arrivi',
+    'sup_join' => 'Unisciti',
 ];
