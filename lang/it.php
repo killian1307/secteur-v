@@ -334,6 +334,7 @@ return [
     'Créateur' => 'Creatore',
     'Modérateur' => 'Moderatore',
     'VIP' => 'VIP',
+    'Membre' => 'Membro',
 
     '4-4-2 Diamant' => '4-4-2 Rombo',
     '4-4-2 Boîte' => '4-4-2 Quadrato',

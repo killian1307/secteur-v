@@ -334,6 +334,7 @@ return [
     'Créateur' => 'Ersteller',
     'Modérateur' => 'Moderator',
     'VIP' => 'VIP',
+    'Membre' => 'Mitglied',
 
     '4-4-2 Diamant' => '4-4-2 Raute',
     '4-4-2 Boîte' => '4-4-2 Box',

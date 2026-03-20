@@ -334,6 +334,7 @@ return [
     'Créateur' => 'منشئ',
     'Modérateur' => 'مشرف',
     'VIP' => 'VIP',
+    'Membre' => 'عضو',
 
     '4-4-2 Diamant' => '4-4-2 ماسة',
     '4-4-2 Boîte' => '4-4-2 صندوق',
