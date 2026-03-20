@@ -28,6 +28,8 @@ $header->render();
             <li><?php echo __('priv_li_1_2'); ?></li>
             <li><?php echo __('priv_li_1_3'); ?></li>
             <li><?php echo __('priv_li_1_4'); ?></li>
+            <li><?php echo __('priv_li_1_5'); ?></li>
+            <li><?php echo __('priv_li_1_6'); ?></li>
         </ul>
 
         <h2><?php echo __('priv_h2_2'); ?></h2>

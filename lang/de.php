@@ -206,6 +206,8 @@ return [
     'priv_li_1_2' => '<strong>Discord-Benutzername:</strong> Wird als dein öffentlicher Anzeigename in unserer Rangliste und während der Spiele verwendet.',
     'priv_li_1_3' => '<strong>Profilbild (Avatar):</strong> Wird in deinem Profil und in der Matchmaking-Arena angezeigt.',
     'priv_li_1_4' => '<strong>E-Mail-Adresse:</strong> Gesammelt aus Sicherheits- und Kommunikationsgründen (du kannst sie jederzeit in deinen Profileinstellungen verbergen oder löschen).',
+    'priv_li_1_5' => '<strong>IP-Adresse:</strong> Gesammelt (in gehashter und anonymisierter Form), um Betrug und Smurf-Konten zu verhindern.',
+    'priv_li_1_6' => '<strong>Gerätetracker:</strong> Ein eindeutiger (anonymer) Identifikator, der in einem Cookie gespeichert wird, um Smurfs zu erkennen und die Integrität der Rangliste zu schützen.',
     'priv_h2_2' => '2. Datennutzung',
     'priv_p_2' => 'Diese Daten werden streng für den Betrieb der Website verwendet:',
     'priv_li_2_1' => 'Verwaltung deiner Rangliste (ELO-Punkte, Siege/Niederlagen).',

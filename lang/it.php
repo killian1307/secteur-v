@@ -206,6 +206,8 @@ return [
     'priv_li_1_2' => '<strong>Nome utente Discord:</strong> Utilizzato come nome visualizzato pubblico nella nostra classifica e durante le partite.',
     'priv_li_1_3' => '<strong>Foto profilo (Avatar):</strong> Mostrata sul tuo profilo e nell\'arena di matchmaking.',
     'priv_li_1_4' => '<strong>Indirizzo Email:</strong> Raccolto per motivi di sicurezza e comunicazione (puoi nasconderlo o eliminarlo dalle impostazioni del profilo in qualsiasi momento).',
+    'priv_li_1_5' => '<strong>Indirizzo IP:</strong> Raccolto (in forma hashata e anonimizzata) per prevenire frodi e account smurf.',
+    'priv_li_1_6' => '<strong>Tracciatore del dispositivo:</strong> Un identificatore unico (anonimo) memorizzato in un cookie per rilevare smurf e proteggere l\'integrità della classifica.',
     'priv_h2_2' => '2. Utilizzo dei Dati',
     'priv_p_2' => 'Questi dati sono rigorosamente utilizzati per il funzionamento del sito:',
     'priv_li_2_1' => 'Gestione della tua classifica (punti ELO, vittorie/sconfitte).',
