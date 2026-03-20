@@ -353,7 +353,7 @@ h1 {
 /* Autres boutons */
 .other-button {
     background: linear-gradient(135deg, var(--button-gradient-start), var(--button-gradient-end));
-    color: white; 
+    color: var(--background-main); 
     padding: 1rem 3rem;
     border: none;
     border-radius: 50px;
@@ -1183,7 +1183,7 @@ input:valid {
 
 /* La boîte principale */
 .modal-box {
-    max-height: 100vh; 
+    max-height: 60vh; 
     display: flex;
     flex-direction: column;
     background: #0f2038;
@@ -1235,7 +1235,7 @@ input:valid {
     padding: 15px 20px;
     font-size: 1.2rem;
     font-weight: bold;
-    color: white;
+    color: var(--background-main);
     display: flex;
     align-items: center;
     gap: 10px;
