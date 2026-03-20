@@ -334,7 +334,9 @@ return [
 
     // Profile Grades and Formations
     'Créateur' => 'Creatore',
+    'Administrateur' => 'Administrador',
     'Modérateur' => 'Moderatore',
+    'Partenaire' => 'Socio',
     'VIP' => 'VIP',
     'Membre' => 'Membro',
 

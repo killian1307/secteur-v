@@ -1690,18 +1690,32 @@ input:valid {
     text-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
 }
 
+/* Style Administrateur */
+.is-admin {
+    color: #9b59b6 !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(155, 89, 182, 0.4);
+}
+
+/* Style Modérateur */
+.is-moderator {
+    color: #2a7aca !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(42, 122, 202, 0.4);
+}
+
+/* Style Partenaire */
+.is-partner {
+    color: #f39c12 !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(243, 156, 18, 0.4);
+}
+
 /* Style VIP (Vert) */
 .is-vip {
     color: #2ecc71 !important;
     font-weight: bold;
     text-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
-}
-
-/* Style Modérateur */
-.is-moderator {
-    color: #cc2ebf !important;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(199, 46, 204, 0.4);
 }
 
 /* Effet de fond */

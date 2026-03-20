@@ -130,8 +130,10 @@ $header->render();
             // Grade coloring
             $gradeClass = '';
             if ($grade === 'Créateur') $gradeClass = 'is-creator';
-            elseif ($grade === 'VIP') $gradeClass = 'is-vip';
+            elseif ($grade === 'Administrateur') $gradeClass = 'is-admin';
             elseif ($grade === 'Modérateur') $gradeClass = 'is-moderator';
+            elseif ($grade === 'Partenaire') $gradeClass = 'is-partner';
+            elseif ($grade === 'VIP') $gradeClass = 'is-vip';
         ?>
 
         <div class="osu-layout">

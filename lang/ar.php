@@ -334,7 +334,9 @@ return [
 
     // Profile Grades and Formations
     'Créateur' => 'منشئ',
+    'Administrateur' => 'مدير',
     'Modérateur' => 'مشرف',
+    'Partenaire' => 'شريك',
     'VIP' => 'VIP',
     'Membre' => 'عضو',
 

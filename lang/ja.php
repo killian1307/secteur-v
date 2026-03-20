@@ -334,7 +334,9 @@ return [
 
     // Profile Grades and Formations
     'Créateur' => 'クリエイター',
+    'Administrateur' => '管理者',
     'Modérateur' => 'モデレーター',
+    'Partenaire' => 'パートナー',
     'VIP' => 'VIP',
     'Membre' => 'メンバー',
 
