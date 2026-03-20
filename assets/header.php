@@ -8,8 +8,15 @@ class Header {
         $this->pageTitle = $pageTitle;
         $this->customCss = $customCss;
         
-        // Détecte si c'est l'accueil en regardant le titre de la page
-        $this->isHome = (strpos($pageTitle, 'Accueil') !== false || strpos($pageTitle, 'Home') !== false);
+        // Détecte si c'est l'accueil en regardant le titre de la page dans les 7 langues
+        $this->isHome = (
+            strpos($pageTitle, 'Accueil') !== false ||    // Français
+            strpos($pageTitle, 'Home') !== false ||       // Anglais & Italien
+            strpos($pageTitle, 'Inicio') !== false ||     // Espagnol
+            strpos($pageTitle, 'Startseite') !== false || // Allemand
+            strpos($pageTitle, 'ホーム') !== false ||       // Japonais
+            strpos($pageTitle, 'الرئيسية') !== false        // Arabe
+        );
     }
 
     public function render() {
