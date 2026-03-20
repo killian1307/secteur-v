@@ -351,4 +351,14 @@ return [
     '両性' => 'Bigender',
     '不明' => 'Unknown',
     '不可' => 'N/A',
+
+    // Server Cards
+    'sup_page_title' => 'SECTEUR V - Our Partners',
+    'sup_h1_1' => 'Partner',
+    'sup_h1_2' => 'Communities',
+    'sup_subtitle' => 'Discover the servers supporting the development of Secteur V.',
+    'sup_col_first' => 'First Supporters',
+    'sup_col_popular' => 'Most Popular',
+    'sup_col_newest' => 'Newest Arrivals',
+    'sup_join' => 'Join Server'
 ];
