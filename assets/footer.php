@@ -17,6 +17,7 @@ class Footer {
                 <h4>' . __('footer_links_title') . '</h4>
                 <ul>
                     <li><a href="edp.php">' . __('footer_how_it_works') . '</a></li>
+                    <li><a href="supports.php">' . __('nav_partners') . '</a></li>
                     <li><a href="rules.php">' . __('footer_rules') . '</a></li>
                     <li><a href="mailto:secteur-v@letterk.me">' . __('footer_contact') . '</a></li>
                 </ul>

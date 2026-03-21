@@ -11,6 +11,7 @@ return [
     'nav_playerbook' => 'قاعدة بيانات اللاعبين',
     'nav_edp' => 'مقياس القوة',
     'nav_rules' => 'القوانين',
+    'nav_partners' => 'الشركاء',
 
     'footer_desc' => 'التحدي النهائي لمحبي Inazuma Eleven.',
     'footer_links_title' => 'روابط مفيدة',

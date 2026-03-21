@@ -11,6 +11,7 @@ return [
     'nav_playerbook' => 'Lista de jugadores',
     'nav_edp' => 'Escala de Poder',
     'nav_rules' => 'Reglas',
+    'nav_partners' => 'Socios',
 
     'footer_desc' => 'El desafío definitivo para los fans de Inazuma Eleven.',
     'footer_links_title' => 'Enlaces útiles',

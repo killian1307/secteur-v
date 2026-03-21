@@ -11,6 +11,7 @@ return [
     'nav_playerbook' => 'Playerbook',
     'nav_edp' => 'Power Scale',
     'nav_rules' => 'Rules',
+    'nav_partners' => 'Partners',
 
     'footer_desc' => 'The ultimate challenge for Inazuma Eleven fans.',
     'footer_links_title' => 'Useful Links',
@@ -362,5 +363,5 @@ return [
     'sup_col_first' => 'First Supporters',
     'sup_col_popular' => 'Most Popular',
     'sup_col_newest' => 'Newest Arrivals',
-    'sup_join' => 'Join Server'
+    'sup_join' => 'Join Server',
 ];

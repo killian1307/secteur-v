@@ -11,6 +11,7 @@ return [
     'nav_playerbook' => 'Spielerdatenbank',
     'nav_edp' => 'Machtskala',
     'nav_rules' => 'Regeln',
+    'nav_partners' => 'Partner',
 
     'footer_desc' => 'Die ultimative Herausforderung für Inazuma Eleven-Fans.',
     'footer_links_title' => 'Nützliche Links',

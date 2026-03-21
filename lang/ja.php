@@ -11,6 +11,7 @@ return [
     'nav_playerbook' => '選手リスト',
     'nav_edp' => 'パワースケール',
     'nav_rules' => 'ルール',
+    'nav_partners' => 'パートナー',
 
     'footer_desc' => '「イナズマイレブン」ファンのための究極の挑戦。',
     'footer_links_title' => '便利なリンク',
