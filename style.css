@@ -1381,6 +1381,36 @@ input:valid {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
+.creator-border {
+    border-color: #e74c3c;
+    /* glow */
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.7);
+}
+
+.admin-border {
+    border-color: #9b59b6;
+    /* glow */
+    box-shadow: 0 0 15px rgba(155, 89, 182, 0.7);
+}
+
+.moderator-border {
+    border-color: #3498db;
+    /* glow */
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+}
+
+.partner-border {
+    border-color: #f39c12;
+    /* glow */
+    box-shadow: 0 0 15px rgba(243, 156, 18, 0.7);
+}
+
+.vip-border {
+    border-color: #2ecc71;
+    /* glow */
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.7);
+}
+
 /* --- MIDDLE: INFO --- */
 .header-info-section {
     flex: 1; /* Takes available space */

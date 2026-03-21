@@ -134,6 +134,13 @@ $header->render();
             elseif ($grade === 'Modérateur') $gradeClass = 'is-moderator';
             elseif ($grade === 'Partenaire') $gradeClass = 'is-partner';
             elseif ($grade === 'VIP') $gradeClass = 'is-vip';
+
+            $border_class = '';
+            if ($grade === 'Créateur') $border_class = 'creator-border';
+            elseif ($grade === 'Administrateur') $border_class = 'admin-border';
+            elseif ($grade === 'Modérateur') $border_class = 'moderator-border';
+            elseif ($grade === 'Partenaire') $border_class = 'partner-border';
+            elseif ($grade === 'VIP') $border_class = 'vip-border';
         ?>
 
         <div class="osu-layout">
@@ -141,7 +148,7 @@ $header->render();
             <div class="osu-profile-header">
                 
                 <div class="header-avatar-section">
-                    <img src="<?php echo $displayAvatar; ?>" alt="<?php echo $displayUsername; ?>" class="osu-avatar">
+                    <img src="<?php echo $displayAvatar; ?>" alt="<?php echo $displayUsername; ?>" class="osu-avatar <?php echo $border_class; ?>">
                 </div>
 
                 <div class="header-info-section">
