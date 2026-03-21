@@ -21,6 +21,22 @@ class Header {
 
     public function render() {
         $isLoggedIn = isset($_SESSION['user_id']);
+        
+        // Vérifie si l'utilisateur est le créateur
+        $isAdmin = false;
+        
+        if (isset($_SESSION['user_id'])) {
+            global $pdo;
+            
+            $stmtGrade = $pdo->prepare("SELECT grade FROM users WHERE id = ?");
+            $stmtGrade->execute([$_SESSION['user_id']]);
+            $userGrade = $stmtGrade->fetchColumn();
+            
+            if ($userGrade === 'Créateur' || $userGrade === 'Administrateur') {
+                $isAdmin = true;
+            }
+        }
+
         $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
         $initial = $isLoggedIn ? strtoupper(substr($username, 0, 1)) : '';
         $avatarUrl = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null;
@@ -142,7 +158,11 @@ class Header {
                 <div class="dropdown-menu" id="userDropdown">';
                 
         if ($isLoggedIn) {
-             echo '<a href="profile.php" class="dropdown-item"><i class="fas fa-user"></i> ' . __('nav_profile') . '</a>
+             echo '<a href="profile.php" class="dropdown-item"><i class="fas fa-user"></i> ' . __('nav_profile') . '</a>';
+             if ($isAdmin) {
+                echo '<a href="panel.php" class="dropdown-item"><i class="fas fa-tools"></i> Admin Panel</a>';
+             }
+             echo '
                    <a href="profile_settings.php" class="dropdown-item"><i class="fas fa-cog"></i> ' . __('nav_settings') . '</a>
                    <div class="dropdown-divider"></div>
                    <a href="logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> ' . __('nav_logout') . '</a>';
