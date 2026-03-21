@@ -4,7 +4,7 @@
   <img src="assets/img/banner.png" alt="Secteur V Banner" width="100%">
 </div>
 
-[![Static Badge](https://img.shields.io/badge/lang-en-0000FF)](README.md) [![Static Badge](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://www.php.net/) [![Static Badge](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/) [![Static Badge](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![Static Badge](https://img.shields.io/badge/lang-en-0000FF)](README.md) [![Static Badge](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://www.php.net/) [![Static Badge](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/) [![Static Badge](https://img.shields.io/badge/License-AGPL%203.0-yellow)](LICENSE)
 
 ## 🌐 Online Access
 
