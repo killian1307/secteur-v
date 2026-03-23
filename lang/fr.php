@@ -352,7 +352,7 @@ return [
     'sup_page_title' => 'SECTEUR V - Nos Partenaires',
     'sup_h1_1' => 'Communautés',
     'sup_h1_2' => 'Partenaires',
-    'sup_subtitle' => 'Découvrez les serveurs qui soutiennent le développement du Secteur V.',
+    'sup_subtitle' => 'Découvrez les serveurs qui soutiennent le développement du Secteur&nbsp;V.',
     'sup_col_first' => 'Les Pionniers',
     'sup_col_popular' => 'Les Plus Populaires',
     'sup_col_newest' => 'Derniers Ajouts',
