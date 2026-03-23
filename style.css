@@ -2256,13 +2256,6 @@ input:valid {
     transition: text-shadow 0.3s ease;
 }
 
-/* Effet de lueur (Glow) selon le grade */
-.grade-vip { text-shadow: 0 0 8px rgba(241, 196, 15, 0.4); }
-.grade-partenaire { text-shadow: 0 0 8px rgba(52, 152, 219, 0.4); }
-.grade-moderateur { text-shadow: 0 0 8px rgba(46, 204, 113, 0.4); }
-.grade-admin { text-shadow: 0 0 8px rgba(231, 76, 60, 0.4); }
-.grade-createur { text-shadow: 0 0 10px rgba(155, 89, 182, 0.6); }
-
 /* --- STYLES DES BADGES --- */
 .badge-stylised {
     padding: 4px 10px;

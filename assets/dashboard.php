@@ -236,7 +236,7 @@ class Dashboard {
                             <div class="<?php echo $rowClass; ?>" <?php if($isMe) echo 'id="my-rank-row"'; ?> onclick="window.location.href='<?php echo $profileUrl; ?>'">
                                 <div class="rank-pos">
                                     <?php if($isFirst): ?>
-                                        <i class="fas fa-crown"></i>
+                                        <i class="fas fa-crown crown-icon"></i>
                                     <?php else: ?>
                                         #<?php echo $rankCounter; ?>
                                     <?php endif; ?>

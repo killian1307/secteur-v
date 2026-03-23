@@ -310,17 +310,15 @@
     top: 0;
     z-index: 10;
     
-    background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+    background: var(--background-card);
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border: 1px solid #fff;
+    border: 3px solid var(--primary-purple);
     margin-bottom: 12px;
-    color: #000;
 }
 
 .rank-row.rank-1 .r-name,
 .rank-row.rank-1 .rank-pos,
 .rank-row.rank-1 .rank-elo small {
-    color: #000;
     text-shadow: none;
 }
 
@@ -328,8 +326,8 @@
     color: red;
 }
 
-.rank-row.rank-1 .mini-avatar {
-    border-color: #000;
+.crown-icon {
+    color: var(--primary-purple);
 }
 
 /* Utilisateur connecté */

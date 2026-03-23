@@ -17,9 +17,11 @@ require 'assets/footer.php';
 $username = $_SESSION['username'];
 
 // Récupération de l'Elo pour l'affichage
-$stmtElo = $pdo->prepare("SELECT elo FROM users WHERE id = ?");
+$stmtElo = $pdo->prepare("SELECT elo, grade FROM users WHERE id = ?");
 $stmtElo->execute([$_SESSION['user_id']]);
-$myElo = $stmtElo->fetchColumn();
+$userData = $stmtElo->fetch();
+$myElo = $userData['elo'];
+$myGrade = $userData['grade'];
 
 $header = new Header(__('mm_title'));
 $header->render();
@@ -189,7 +191,7 @@ $header->render();
             <div class="vs-screen">
                 <div class="player-box">
                     <img src="<?php echo $_SESSION['avatar'] ?? 'assets/img/default_user.webp'; ?>" alt="<?php echo __('mm_me'); ?>">
-                    <h3 style="margin-top:10px;"><?php echo htmlspecialchars($username); ?></h3>
+                    <h3 style="margin-top:10px;"><?php echo display_username($username, $myGrade, true); ?></h3>
                     <p style="color:var(--text-secondary); font-size:0.9rem;"><?php echo __('mm_elo'); ?> <?php echo $myElo; ?></p>
                 </div>
                 <div class="vs-text">VS</div>
@@ -442,7 +444,7 @@ $header->render();
                 if (currentState !== 'in_match' && currentState !== 'resolving') {
                     currentState = 'in_match';
                     setView('view-match');
-                    document.getElementById('opp-name').innerText = data.opponent.username;
+                    document.getElementById('opp-name').innerHTML = data.opponent.display_name;
                     document.getElementById('opp-elo').innerText = "<?php echo addslashes(__('mm_elo')); ?> " + data.opponent.elo;
                     document.getElementById('opp-avatar').src = data.opponent.avatar || 'assets/img/default_user.webp';
                 }

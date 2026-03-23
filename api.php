@@ -220,7 +220,7 @@ if ($action === 'poll_match') {
         }
 
         // Récupérer infos et envoyer l'état
-        $stmtOpp = $pdo->prepare("SELECT username, elo, avatar FROM users WHERE id = ?");
+        $stmtOpp = $pdo->prepare("SELECT username, elo, avatar, grade FROM users WHERE id = ?");
         $stmtOpp->execute([$oppId]);
         $oppInfo = $stmtOpp->fetch();
 
@@ -233,7 +233,12 @@ if ($action === 'poll_match') {
             'state' => 'in_match',
             'status' => $match['status'], 
             'match_id' => $match['id'],
-            'opponent' => ['username' => $oppInfo['username'], 'elo' => $oppInfo['elo'], 'avatar' => $oppInfo['avatar']],
+            'opponent' => [
+                'username' => $oppInfo['username'], 
+                'elo' => $oppInfo['elo'], 
+                'avatar' => $oppInfo['avatar'],
+                'display_name' => display_username($oppInfo['username'], $oppInfo['grade'], true)
+                ],
             'chat' => $chat,
             'my_id' => $userId
         ]);
@@ -299,7 +304,7 @@ if ($action === 'poll_match') {
             $pdo->prepare("DELETE FROM matchmaking_queue WHERE user_id IN (?, ?)")->execute([$userId, $oppId]);
             $pdo->commit();
 
-            $stmtOpp = $pdo->prepare("SELECT username, elo, avatar FROM users WHERE id = ?");
+            $stmtOpp = $pdo->prepare("SELECT username, elo, avatar, grade FROM users WHERE id = ?");
             $stmtOpp->execute([$oppId]);
             $oppInfo = $stmtOpp->fetch();
 
@@ -307,7 +312,12 @@ if ($action === 'poll_match') {
                 'state' => 'in_match',
                 'status' => 'ongoing',
                 'match_id' => $matchId,
-                'opponent' => ['username' => $oppInfo['username'], 'elo' => $oppInfo['elo'], 'avatar' => $oppInfo['avatar']],
+                'opponent' => [
+                    'username' => $oppInfo['username'], 
+                    'elo' => $oppInfo['elo'], 
+                    'avatar' => $oppInfo['avatar'], 
+                    'display_name' => display_username($oppInfo['username'], $oppInfo['grade'], true)
+                ],
                 'chat' => [],
                 'my_id' => $userId
             ]);

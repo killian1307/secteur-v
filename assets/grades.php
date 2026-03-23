@@ -12,7 +12,7 @@ function get_grade_config($grade) {
         ],
         'Vétéran' => [
             // Couleur 
-            'color' => '#f36c12', // Orange
+            'color' => '#ffffff', // Blanc
             'icon'  => '<i class="fas fa-medal" style="margin-right: 5px;"></i>',
             'class' => 'grade-vip'
         ],
@@ -37,8 +37,8 @@ function get_grade_config($grade) {
             'class' => 'grade-admin'
         ],
         'Créateur' => [
-            'color' => '#f1c40f', // Or
-            'icon'  => '<i class="fas fa-crown" style="margin-right: 5px;"></i>',
+            'color' => '#f17c0f', // Orange
+            'icon'  => '<i class="fas fa-chess-king" style="margin-right: 5px;"></i>', //icone de créateur
             'class' => 'grade-createur'
         ]
     ];
