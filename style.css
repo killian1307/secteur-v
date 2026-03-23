@@ -1381,42 +1381,12 @@ input:valid {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-.creator-border {
-    border-color: #e74c3c;
-    /* glow */
-    box-shadow: 0 0 15px rgba(231, 76, 60, 0.7);
-}
-
-.admin-border {
-    border-color: #9b59b6;
-    /* glow */
-    box-shadow: 0 0 15px rgba(155, 89, 182, 0.7);
-}
-
-.moderator-border {
-    border-color: #3498db;
-    /* glow */
-    box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
-}
-
-.partner-border {
-    border-color: #f39c12;
-    /* glow */
-    box-shadow: 0 0 15px rgba(243, 156, 18, 0.7);
-}
-
-.vip-border {
-    border-color: #2ecc71;
-    /* glow */
-    box-shadow: 0 0 15px rgba(46, 204, 113, 0.7);
-}
-
 /* --- MIDDLE: INFO --- */
 .header-info-section {
-    flex: 1; /* Takes available space */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Left align text */
+    align-items: flex-start;
     text-align: left;
     gap: 8px;
 }
@@ -1711,41 +1681,6 @@ input:valid {
     align-items: center;
     padding: 2rem;
     background: radial-gradient(circle at top, #1a253a 0%, #050a14 100%);
-}
-
-/* Style Créateur */
-.is-creator {
-    color: #e74c3c !important;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
-}
-
-/* Style Administrateur */
-.is-admin {
-    color: #9b59b6 !important;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(155, 89, 182, 0.4);
-}
-
-/* Style Modérateur */
-.is-moderator {
-    color: #2a7aca !important;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(42, 122, 202, 0.4);
-}
-
-/* Style Partenaire */
-.is-partner {
-    color: #f39c12 !important;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(243, 156, 18, 0.4);
-}
-
-/* Style VIP (Vert) */
-.is-vip {
-    color: #2ecc71 !important;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
 }
 
 /* Effet de fond */
@@ -2314,6 +2249,30 @@ input:valid {
 .coach-slot {
     margin: 0 !important;
     flex-shrink: 0;
+}
+
+/* --- STYLES DES GRADES --- */
+.pseudo-stylised {
+    font-weight: bold;
+    transition: text-shadow 0.3s ease;
+}
+
+/* Effet de lueur (Glow) selon le grade */
+.grade-vip { text-shadow: 0 0 8px rgba(241, 196, 15, 0.4); }
+.grade-partenaire { text-shadow: 0 0 8px rgba(52, 152, 219, 0.4); }
+.grade-moderateur { text-shadow: 0 0 8px rgba(46, 204, 113, 0.4); }
+.grade-admin { text-shadow: 0 0 8px rgba(231, 76, 60, 0.4); }
+.grade-createur { text-shadow: 0 0 10px rgba(155, 89, 182, 0.6); }
+
+/* --- STYLES DES BADGES --- */
+.badge-stylised {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2); /* Fond légèrement assombri */
 }
 
 /* Responsive */
