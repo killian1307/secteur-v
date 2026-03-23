@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'Scala del Potere',
     'nav_rules' => 'Regolamento',
     'nav_partners' => 'Partner',
+    'nav_articles' => 'Articoli',
 
     'footer_desc' => 'La sfida definitiva per i fan di Inazuma Eleven.',
     'footer_links_title' => 'Link Utili',

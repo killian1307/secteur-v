@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'Escala de Poder',
     'nav_rules' => 'Reglas',
     'nav_partners' => 'Socios',
+    'nav_articles' => 'Artículos',
 
     'footer_desc' => 'El desafío definitivo para los fans de Inazuma Eleven.',
     'footer_links_title' => 'Enlaces útiles',

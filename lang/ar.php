@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'مقياس القوة',
     'nav_rules' => 'القوانين',
     'nav_partners' => 'الشركاء',
+    'nav_articles' => 'المقالات',
 
     'footer_desc' => 'التحدي النهائي لمحبي Inazuma Eleven.',
     'footer_links_title' => 'روابط مفيدة',

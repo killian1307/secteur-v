@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'Machtskala',
     'nav_rules' => 'Regeln',
     'nav_partners' => 'Partner',
+    'nav_articles' => 'Artikel',
 
     'footer_desc' => 'Die ultimative Herausforderung für Inazuma Eleven-Fans.',
     'footer_links_title' => 'Nützliche Links',

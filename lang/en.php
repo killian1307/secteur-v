@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'Power Scale',
     'nav_rules' => 'Rules',
     'nav_partners' => 'Partners',
+    'nav_articles' => 'Articles',
 
     'footer_desc' => 'The ultimate challenge for Inazuma Eleven fans.',
     'footer_links_title' => 'Useful Links',
