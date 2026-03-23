@@ -6,9 +6,15 @@ function get_grade_config($grade) {
     // Liste de tous les grades du site
     $grades = [
         'Membre' => [
-            'color' => 'var(--text-primary)',
+            'color' => 'var(--text-secondary)',
             'icon'  => '',
             'class' => 'grade-membre'
+        ],
+        'Vétéran' => [
+            // Couleur 
+            'color' => '#f36c12', // Orange
+            'icon'  => '<i class="fas fa-medal" style="margin-right: 5px;"></i>',
+            'class' => 'grade-vip'
         ],
         'VIP' => [
             'color' => '#9b59b6', // Violet
@@ -61,6 +67,6 @@ function display_username($username, $grade, $show_icon = false) {
 function display_grade_badge($grade) {
     $config = get_grade_config($grade);
     
-    return '<span class="badge-stylised ' . $config['class'] . '-badge" style="border: 1px solid ' . $config['color'] . '; color: ' . $config['color'] . ';">' . $config['icon'] . htmlspecialchars($grade) . '</span>';
+    return '<span class="badge-stylised ' . $config['class'] . '-badge" style="border: 1px solid ' . $config['color'] . '; color: ' . $config['color'] . ';">' . $config['icon'] . __(htmlspecialchars($grade)) . '</span>';
 }
 ?>

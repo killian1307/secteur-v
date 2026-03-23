@@ -35,7 +35,7 @@ class Dashboard {
         $winrate = $totalMatches > 0 ? round(($wins / $totalMatches) * 100) : 0;
 
         // Récupère ID, Username, ELO et Avatar triés par ELO
-        $stmtRank = $this->pdo->query("SELECT id, username, elo, avatar FROM users ORDER BY elo DESC");
+        $stmtRank = $this->pdo->query("SELECT id, username, elo, avatar, grade FROM users ORDER BY elo DESC");
         $allPlayers = $stmtRank->fetchAll(PDO::FETCH_ASSOC);
 
         // Récupération de l'historique
@@ -244,7 +244,8 @@ class Dashboard {
                                 
                                 <div class="rank-user">
                                     <img src="<?php echo $avatar; ?>" alt="avatar" class="mini-avatar">
-                                    <span class="r-name"><?php echo htmlspecialchars($player['username']); ?></span>
+                                    <span class="r-name"><?php echo display_username($player['username'], $player['grade']); ?></span>
+                                    
                                 </div>
                                 
                                 <div class="rank-elo">

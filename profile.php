@@ -122,25 +122,12 @@ $header->render();
             $bio = $profileUser['bio'];
             $matchCount = $profileUser['wins'] + $profileUser['losses'];
             $winRate = $matchCount > 0 ? round(($profileUser['wins'] / $matchCount) * 100, 0) : 0;
+
+            $gradeConfig = get_grade_config($grade);
             
             // Bio check
             $displayBio = empty($bio) ? __('prof_no_bio') : htmlspecialchars($bio);
             $bioClass = empty($bio) ? "empty-bio" : "";
-
-            // Grade coloring
-            $gradeClass = '';
-            if ($grade === 'Créateur') $gradeClass = 'is-creator';
-            elseif ($grade === 'Administrateur') $gradeClass = 'is-admin';
-            elseif ($grade === 'Modérateur') $gradeClass = 'is-moderator';
-            elseif ($grade === 'Partenaire') $gradeClass = 'is-partner';
-            elseif ($grade === 'VIP') $gradeClass = 'is-vip';
-
-            $border_class = '';
-            if ($grade === 'Créateur') $border_class = 'creator-border';
-            elseif ($grade === 'Administrateur') $border_class = 'admin-border';
-            elseif ($grade === 'Modérateur') $border_class = 'moderator-border';
-            elseif ($grade === 'Partenaire') $border_class = 'partner-border';
-            elseif ($grade === 'VIP') $border_class = 'vip-border';
         ?>
 
         <div class="osu-layout">
@@ -148,15 +135,15 @@ $header->render();
             <div class="osu-profile-header">
                 
                 <div class="header-avatar-section">
-                    <img src="<?php echo $displayAvatar; ?>" alt="<?php echo $displayUsername; ?>" class="osu-avatar <?php echo $border_class; ?>">
+                    <img src="<?php echo $displayAvatar; ?>" alt="<?php echo $displayUsername; ?>" class="osu-avatar" style="border: 4px solid <?php echo $gradeConfig['color']; ?>; box-shadow: 0 0 10px <?php echo $gradeConfig['color']; ?>;">
                 </div>
 
                 <div class="header-info-section">
                     <div class="name-row">
                         <h1 class="osu-username" title="<?php echo htmlspecialchars($profileUser['username']); ?>">
-                            <?php echo $displayUsername; ?>
+                            <?php echo $profileUser['username']; ?>
                         </h1>
-                        <span class="osu-grade <?php echo $gradeClass; ?>"><?php echo htmlspecialchars(__($grade)); ?></span>
+                        <?php echo display_grade_badge($grade); ?>
                     </div>
 
                     <div class="badges-row">

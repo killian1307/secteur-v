@@ -16,7 +16,7 @@ $totalPages = ceil($totalPlayers / $limit);
 if ($totalPages < 1) $totalPages = 1;
 
 // Récupérer les joueurs de la page actuelle, triés par ELO
-$sqlRank = "SELECT id, username, elo, avatar FROM users ORDER BY elo DESC LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+$sqlRank = "SELECT id, username, elo, avatar, grade FROM users ORDER BY elo DESC LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
 $stmtRank = $pdo->query($sqlRank);
 $players = $stmtRank->fetchAll(PDO::FETCH_ASSOC);
 
@@ -124,7 +124,9 @@ $header->render();
                             
                             <td data-label="<?php echo __('rnk_th_player'); ?>">
                                 <img src="<?php echo $avatar; ?>" alt="<?php echo __('rnk_avatar_of'); ?> <?php echo htmlspecialchars($p['username']); ?>" class="rank-avatar" loading="lazy">
-                                <a href="<?php echo $profileUrl; ?>" class="rank-name"><?php echo htmlspecialchars($p['username']); ?></a>
+                                <a href="<?php echo $profileUrl; ?>" class="rank-name" style="text-decoration: none;">
+                                    <?php echo display_username($p['username'], $p['grade'], true); ?>
+                                </a>
                             </td>
                             
                             <td data-label="<?php echo __('rnk_th_points'); ?>" class="col-elo">
