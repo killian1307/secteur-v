@@ -339,6 +339,7 @@ return [
     'Modérateur' => 'Moderador',
     'Partenaire' => 'Socio',
     'VIP' => 'VIP',
+    'Vétéran' => 'Veterano',
     'Membre' => 'Miembro',
 
     '4-4-2 Diamant' => '4-4-2 Diamante',
