@@ -161,6 +161,7 @@ class Header {
              echo '<a href="profile.php" class="dropdown-item"><i class="fas fa-user"></i> ' . __('nav_profile') . '</a>';
              if ($isAdmin) {
                 echo '<a href="panel.php" class="dropdown-item"><i class="fas fa-tools"></i> Admin Panel</a>';
+                echo '<a href="write_article.php" class="dropdown-item"><i class="fas fa-pen"></i> Write Article</a>';
              }
              echo '
                    <a href="profile_settings.php" class="dropdown-item"><i class="fas fa-cog"></i> ' . __('nav_settings') . '</a>
