@@ -39,4 +39,7 @@ function __($key, ...$vars) {
     }
     return $text;
 }
+
+// Chargement du gestionnaire des grades
+require_once __DIR__ . '/grades.php';
 ?>

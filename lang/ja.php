@@ -339,6 +339,7 @@ return [
     'Modérateur' => 'モデレーター',
     'Partenaire' => 'パートナー',
     'VIP' => 'VIP',
+    'Vétéran' => 'ベテラン',
     'Membre' => 'メンバー',
 
     '4-4-2 Diamant' => '4-4-2 ダイヤモンド',

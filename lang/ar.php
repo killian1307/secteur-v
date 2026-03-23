@@ -339,6 +339,7 @@ return [
     'Modérateur' => 'مشرف',
     'Partenaire' => 'شريك',
     'VIP' => 'VIP',
+    'Vétéran' => 'محارب قديم',
     'Membre' => 'عضو',
 
     '4-4-2 Diamant' => '4-4-2 ماسة',
