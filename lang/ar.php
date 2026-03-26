@@ -387,4 +387,8 @@ return [
     'arts_sort_popular' => 'الأكثر شعبية',
     'arts_sort_author' => 'حسب الكاتب',
     'arts_no_articles' => 'لا توجد مقالات منشورة حتى الآن.',
+
+    'dash_articles_title' => 'أحدث المقالات',
+    'dash_no_articles' => 'لا توجد مقالات حديثة.',
+    'dash_view_all_articles' => 'عرض جميع المقالات',
 ];

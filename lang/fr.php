@@ -369,4 +369,8 @@ return [
     'arts_sort_popular' => 'Populaires',
     'arts_sort_author' => 'Par Auteur',
     'arts_no_articles' => 'Aucun article publié pour le moment.',
+
+    'dash_articles_title' => 'Derniers Articles',
+    'dash_no_articles' => 'Aucun article récent.',
+    'dash_view_all_articles' => 'Voir tous les articles',
 ];

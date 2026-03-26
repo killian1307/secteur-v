@@ -380,4 +380,8 @@ return [
     'arts_sort_popular' => '人気',
     'arts_sort_author' => '著者別',
     'arts_no_articles' => '公開されている記事はまだありません。',
+
+    'dash_articles_title' => '最新記事',
+    'dash_no_articles' => '最近の記事はありません。',
+    'dash_view_all_articles' => 'すべての記事を見る',
 ];

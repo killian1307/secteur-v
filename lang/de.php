@@ -387,4 +387,8 @@ return [
     'arts_sort_popular' => 'Beliebt',
     'arts_sort_author' => 'Nach Autor',
     'arts_no_articles' => 'Noch keine Artikel veröffentlicht.',
+
+    'dash_articles_title' => 'Neueste Artikel',
+    'dash_no_articles' => 'Keine aktuellen Artikel.',
+    'dash_view_all_articles' => 'Alle Artikel ansehen',
 ];

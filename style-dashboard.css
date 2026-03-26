@@ -1,5 +1,5 @@
 .dashboard-main {
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
@@ -74,7 +74,7 @@
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
@@ -360,10 +360,34 @@
     font-size: 0.9rem;
 }
 
+.articles-button {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.articles-button:hover {
+    text-decoration: underline;
+}
+
 @keyframes pulseLive {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
     70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+/* Responsive */
+@media (max-width: 1530px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2,1fr);
+        width: 100%;
+    }
+
+    .dashboard-main {
+        width: 100%;
+    }
 }
 
 /* Responsive */
