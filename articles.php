@@ -27,16 +27,16 @@ $stmt = $pdo->query("
 $articles = $stmt->fetchAll();
 
 require 'assets/header.php';
-$header = new Header("Articles");
+$header = new Header(__('arts_page_title'));
 $header->render();
 ?>
 
 <main class="dashboard-container">
-        <h1>Nos <span style="color:var(--primary-purple)">Articles</span></h1>
+        <h1><?php echo __('arts_h1_1'); ?> <span style="color:var(--primary-purple)"><?php echo __('arts_h1_2'); ?></span></h1>
         <div style="display: flex; gap: 10px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;">
-            <a href="?sort=recent" style="padding: 8px 15px; color: <?php echo $sort === 'recent' ? 'var(--primary-purple)' : 'white'; ?>; text-decoration: none; font-weight: bold;">Récents</a>
-            <a href="?sort=popular" style="padding: 8px 15px; color: <?php echo $sort === 'popular' ? 'var(--primary-purple)' : 'white'; ?>; text-decoration: none; font-weight: bold;">Populaires</a>
-            <a href="?sort=author" style="padding: 8px 15px; color: <?php echo $sort === 'author' ? 'var(--primary-purple)' : 'white'; ?>; text-decoration: none; font-weight: bold;">Par Auteur</a>
+            <a href="?sort=recent" style="padding: 8px 15px; color: <?php echo $sort === 'recent' ? 'var(--primary-purple)' : 'white'; ?>; text-decoration: none; font-weight: bold;"><?php echo __('arts_sort_recent'); ?></a>
+            <a href="?sort=popular" style="padding: 8px 15px; color: <?php echo $sort === 'popular' ? 'var(--primary-purple)' : 'white'; ?>; text-decoration: none; font-weight: bold;"><?php echo __('arts_sort_popular'); ?></a>
+            <a href="?sort=author" style="padding: 8px 15px; color: <?php echo $sort === 'author' ? 'var(--primary-purple)' : 'white'; ?>; text-decoration: none; font-weight: bold;"><?php echo __('arts_sort_author'); ?></a>
         </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
@@ -63,7 +63,7 @@ $header->render();
         <?php endforeach; ?>
 
         <?php if (empty($articles)): ?>
-            <p style="text-align: center; grid-column: 1 / -1; color: var(--text-secondary);">Aucun article publié pour le moment.</p>
+            <p style="text-align: center; grid-column: 1 / -1; color: var(--text-secondary);"><?php echo __('arts_no_articles'); ?></p>
         <?php endif; ?>
     </div>
 </main>

@@ -366,4 +366,15 @@ return [
     'sup_col_popular' => 'Most Popular',
     'sup_col_newest' => 'Newest Arrivals',
     'sup_join' => 'Join Server',
+
+    // Articles & Article
+    'art_views' => 'views',
+    'art_back_to_articles' => 'Back to articles',
+    'arts_page_title' => 'Articles',
+    'arts_h1_1' => 'Our',
+    'arts_h1_2' => 'Articles',
+    'arts_sort_recent' => 'Recent',
+    'arts_sort_popular' => 'Popular',
+    'arts_sort_author' => 'By Author',
+    'arts_no_articles' => 'No articles published yet.',
 ];

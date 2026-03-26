@@ -358,4 +358,15 @@ return [
     'sup_col_popular' => 'Les Plus Populaires',
     'sup_col_newest' => 'Derniers Ajouts',
     'sup_join' => 'Rejoindre',
+
+    // Articles & Article
+    'art_views' => 'vues',
+    'art_back_to_articles' => 'Retour aux articles',
+    'arts_page_title' => 'Articles',
+    'arts_h1_1' => 'Nos',
+    'arts_h1_2' => 'Articles',
+    'arts_sort_recent' => 'Récents',
+    'arts_sort_popular' => 'Populaires',
+    'arts_sort_author' => 'Par Auteur',
+    'arts_no_articles' => 'Aucun article publié pour le moment.',
 ];

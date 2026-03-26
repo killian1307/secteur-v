@@ -376,4 +376,15 @@ return [
     'sup_col_popular' => 'Más Populares',
     'sup_col_newest' => 'Más Recientes',
     'sup_join' => 'Unirse',
+    
+    // Articles & Article
+    'art_views' => 'vistas',
+    'art_back_to_articles' => 'Volver a los artículos',
+    'arts_page_title' => 'Artículos',
+    'arts_h1_1' => 'Nuestros',
+    'arts_h1_2' => 'Artículos',
+    'arts_sort_recent' => 'Recientes',
+    'arts_sort_popular' => 'Populares',
+    'arts_sort_author' => 'Por Autor',
+    'arts_no_articles' => 'Aún no hay artículos publicados.',
 ];

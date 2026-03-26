@@ -376,4 +376,15 @@ return [
     'sup_col_popular' => 'Beliebteste',
     'sup_col_newest' => 'Neueste',
     'sup_join' => 'Beitreten',
+
+    // Articles & Article
+    'art_views' => 'Aufrufe',
+    'art_back_to_articles' => 'Zurück zu den Artikeln',
+    'arts_page_title' => 'Artikel',
+    'arts_h1_1' => 'Unsere',
+    'arts_h1_2' => 'Artikel',
+    'arts_sort_recent' => 'Neueste',
+    'arts_sort_popular' => 'Beliebt',
+    'arts_sort_author' => 'Nach Autor',
+    'arts_no_articles' => 'Noch keine Artikel veröffentlicht.',
 ];

@@ -85,6 +85,11 @@ $header->render();
         text-decoration: underline;
     }
 
+    p {
+        margin-bottom: 20px;
+        text-align: justify;
+    }
+
 </style>
 
 <main class="dashboard-container">
@@ -94,7 +99,7 @@ $header->render();
             <h1 style="color: white; font-size: 2.5rem;"><?php echo htmlspecialchars($article['title']); ?></h1>
             <div class="article-meta">
                 <span><i class="fas fa-calendar-alt"></i> <?php echo date('d/m/Y', strtotime($article['created_at'])); ?></span>
-                <span><i class="fas fa-eye"></i> <?php echo $article['views'] + 1; ?> vues</span>
+                <span><i class="fas fa-eye"></i> <?php echo $article['views'] + 1; ?> <?php echo __('art_views'); ?></span>
                 <span>
                     <img src="<?php echo htmlspecialchars($article['avatar'] ?? 'assets/img/default_user.webp'); ?>" style="width:20px; border-radius:50%; vertical-align:middle;">
                     <?php echo display_username($article['username'], $article['grade'], true); ?>
@@ -107,7 +112,7 @@ $header->render();
         </div>
 
         <div style="text-align: center; margin-top: 3rem;">
-            <a href="articles.php" class="retour-accueil"><i class="fas fa-arrow-left"></i> Retour aux articles</a>
+            <a href="articles.php" class="retour-accueil"><i class="fas fa-arrow-left"></i> <?php echo __('art_back_to_articles'); ?></a>
         </div>
 
     </div>

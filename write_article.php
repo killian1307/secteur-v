@@ -115,30 +115,30 @@ $header->render();
 </script>
 
 <main class="dashboard-container">
-    <h1>Rédiger un <span style="color:var(--primary-purple)">Article</span></h1>
+    <h1>write an <span style="color:var(--primary-purple)">Article</span></h1>
     
     <div class="profile-card" style="max-width: 900px; margin: 2rem auto; text-align: left;">
         <?php echo $message; ?>
         
         <form method="POST" action="write_article.php" class="profile-form">
             <div class="form-group" style="margin-bottom: 1rem;">
-                <label>Titre de l'article *</label>
-                <input type="text" id="title" name="title" required placeholder="Ex: La nouvelle méta d'Inazuma" onkeyup="generateSlug()" style="width:100%; padding:10px; border-radius:5px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:white;">
+                <label>Title *</label>
+                <input type="text" id="title" name="title" required placeholder="Ex: The new meta of Inazuma" onkeyup="generateSlug()" style="width:100%; padding:10px; border-radius:5px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:white;">
             </div>
 
             <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label>Lien de l'article (URL) *</label>
-                <input type="text" id="slug" name="slug" required placeholder="ex: la-nouvelle-meta" style="width:100%; padding:10px; border-radius:5px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:#aaa;">
-                <small style="color:#aaa;">C'est le nom du dossier qui sera créé pour ranger les images.</small>
+                <label>Article Link (URL) *</label>
+                <input type="text" id="slug" name="slug" required placeholder="ex: the-new-meta" style="width:100%; padding:10px; border-radius:5px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:#aaa;">
+                <small style="color:#aaa;">This is the name of the folder that will be created to store the images.</small>
             </div>
 
             <div class="form-group" style="margin-bottom: 2rem;">
-                <label>Contenu de l'article *</label>
+                <label>Content *</label>
                 <textarea id="article-content" name="content"></textarea>
             </div>
 
             <button type="submit" class="other-button" style="width: 100%; justify-content: center;">
-                <i class="fas fa-paper-plane"></i> Publier l'article
+                <i class="fas fa-paper-plane"></i> Publish Article
             </button>
         </form>
     </div>

@@ -376,4 +376,15 @@ return [
     'sup_col_popular' => 'I Più Popolari',
     'sup_col_newest' => 'Ultimi Arrivi',
     'sup_join' => 'Unisciti',
+
+    // Articles & Article
+    'art_views' => 'visualizzazioni',
+    'art_back_to_articles' => 'Torna agli articoli',
+    'arts_page_title' => 'Articoli',
+    'arts_h1_1' => 'I Nostri',
+    'arts_h1_2' => 'Articoli',
+    'arts_sort_recent' => 'Recenti',
+    'arts_sort_popular' => 'Popolari',
+    'arts_sort_author' => 'Per Autore',
+    'arts_no_articles' => 'Nessun articolo pubblicato al momento.',
 ];
