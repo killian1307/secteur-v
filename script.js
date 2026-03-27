@@ -4,16 +4,6 @@ function toggleMenu() {
     dropdown.classList.toggle('active');
 }
 
-// Ferme le menu si on clique ailleurs sur la page
-window.onclick = function(event) {
-    if (!event.target.closest('.profile-container')) {
-        const dropdown = document.getElementById('userDropdown');
-        if (dropdown.classList.contains('active')) {
-            dropdown.classList.remove('active');
-        }
-    }
-}
-
 // Gestion du scroll pour la flèche
 window.addEventListener('scroll', function() {
     const indicator = document.querySelector('.scroll-indicator-container');
@@ -148,12 +138,29 @@ function updateCharCount(textarea) {
     }
 }
 
-// Menu langue
-window.addEventListener('click', function(e) {
-    if (!e.target.closest('.lang-container')) {
+// Ferme les menus si on clique ailleurs sur la page
+window.addEventListener('click', function(event) {
+    // Menu Profil
+    if (!event.target.closest('.profile-container')) {
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown && userDropdown.classList.contains('active')) {
+            userDropdown.classList.remove('active');
+        }
+    }
+    
+    // Menu Langue
+    if (!event.target.closest('.lang-container:not(.friends-container)')) {
         const langDropdown = document.getElementById('langDropdown');
         if (langDropdown && langDropdown.classList.contains('active')) {
             langDropdown.classList.remove('active');
+        }
+    }
+    
+    // Menu Amis
+    if (!event.target.closest('.friends-container')) {
+        const friendsDropdown = document.getElementById('friendsDropdown');
+        if (friendsDropdown && friendsDropdown.classList.contains('active')) {
+            friendsDropdown.classList.remove('active');
         }
     }
 });

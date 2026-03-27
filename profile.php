@@ -92,6 +92,21 @@ $targetUserId = $profileUser['id'];
 // Classe CSS pour désactiver le curseur si on n'est pas proprio
 $fieldClass = $isOwner ? 'editable-mode' : 'readonly-mode';
 
+// --- STATUT AMI ---
+$friendStatus = 'none'; // 'none', 'pending_sent', 'pending_received', 'accepted'
+if (isset($_SESSION['user_id']) && !$isOwner) {
+    $stmtFriend = $pdo->prepare("SELECT sender_id, status FROM friends WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)");
+    $stmtFriend->execute([$_SESSION['user_id'], $profileUser['id'], $profileUser['id'], $_SESSION['user_id']]);
+    $rel = $stmtFriend->fetch();
+    if ($rel) {
+        if ($rel['status'] === 'accepted') {
+            $friendStatus = 'accepted';
+        } else {
+            $friendStatus = ($rel['sender_id'] == $_SESSION['user_id']) ? 'pending_sent' : 'pending_received';
+        }
+    }
+}
+
 require 'assets/header.php';
 require 'assets/footer.php';
 
@@ -143,7 +158,7 @@ $header->render();
                         <h1 class="osu-username" title="<?php echo htmlspecialchars($profileUser['username']); ?>">
                             <?php echo $profileUser['username']; ?>
                         </h1>
-                        <?php echo display_grade_badge($grade); ?>
+                        <?php echo display_grade_badge($grade); ?>   
                     </div>
 
                     <div class="badges-row">
@@ -154,6 +169,20 @@ $header->render();
                             <i class="fas fa-calendar-alt"></i> <?php echo $joinDate; ?>
                         </div>
                         </div>
+
+                        <?php if (isset($_SESSION['user_id']) && !$isOwner): ?>
+                            <div>
+                                <?php if ($friendStatus === 'none'): ?>
+                                    <button onclick="handleFriendAction(<?php echo $profileUser['id']; ?>, 'send'); location.reload();" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#2ecc71; border-color:#e74c3c;"><i class="fas fa-user-plus"></i> Ajouter</button>
+                                <?php elseif ($friendStatus === 'pending_sent'): ?>
+                                    <button class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; cursor: default;" disabled><i class="fas fa-clock"></i> En attente</button>
+                                <?php elseif ($friendStatus === 'pending_received'): ?>
+                                    <button onclick="handleFriendAction(<?php echo $profileUser['id']; ?>, 'accept'); location.reload();" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#2ecc71; border-color:#e74c3c;"><i class="fas fa-user-check"></i> Accepter</button>
+                                <?php elseif ($friendStatus === 'accepted'): ?>
+                                    <button onclick="if(confirm('Retirer des amis ?')) { handleFriendAction(<?php echo $profileUser['id']; ?>, 'remove'); location.reload(); }" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#e74c3c; border-color:#e74c3c;"><i class="fas fa-user-times"></i> Retirer</button>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
 
                     <div class="bio-row">
                         <p class="osu-bio <?php echo $bioClass; ?>"><?php echo $displayBio; ?></p>
