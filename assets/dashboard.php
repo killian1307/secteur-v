@@ -289,7 +289,7 @@ class Dashboard {
                                 <?php endforeach; ?>
                             </div>
                             
-                            <a href="articles.php" class="articles-button" style="width: 100%; display: flex; justify-content: center; margin-top: 15px;">
+                            <a href="articles_db.php" class="articles-button" style="width: 100%; display: flex; justify-content: center; margin-top: 15px;">
                                 <?php echo __('dash_view_all_articles'); ?> <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                             </a>
                         <?php endif; ?>

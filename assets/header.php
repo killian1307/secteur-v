@@ -188,7 +188,7 @@ if ($isLoggedIn) {
             echo '<a href="index.php#presentation" class="mobile-link"><i class="fas fa-info-circle"></i> ' . __('nav_presentation') . '</a>';
             echo '<a href="edp.php" class="mobile-link"><i class="fas fa-dumbbell"></i> ' . __('nav_edp') . '</a>';
         }
-        echo '<a href="articles.php" class="mobile-link"><i class="fas fa-newspaper"></i> ' . __('nav_articles') . '</a>';
+        echo '<a href="articles_db.php" class="mobile-link"><i class="fas fa-newspaper"></i> ' . __('nav_articles') . '</a>';
         echo '<a href="ranking.php" class="mobile-link"><i class="fas fa-list-ol"></i> ' . __('nav_ranking') . '</a>';
         echo '<a href="playerbook.php" class="mobile-link"><i class="fas fa-address-card"></i> ' . __('nav_playerbook') . '</a>';
         echo '<a href="rules.php" class="mobile-link"><i class="fas fa-book"></i> ' . __('nav_rules') . '</a>';
