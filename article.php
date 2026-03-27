@@ -112,7 +112,7 @@ $header->render();
         </div>
 
         <div style="text-align: center; margin-top: 3rem;">
-            <a href="articles-db.php" class="retour-accueil"><i class="fas fa-arrow-left"></i> <?php echo __('art_back_to_articles'); ?></a>
+            <a href="articles_db.php" class="retour-accueil"><i class="fas fa-arrow-left"></i> <?php echo __('art_back_to_articles'); ?></a>
         </div>
 
     </div>
