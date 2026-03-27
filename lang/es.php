@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'Escala de Poder',
     'nav_rules' => 'Reglas',
     'nav_partners' => 'Socios',
+    'nav_articles' => 'Artículos',
 
     'footer_desc' => 'El desafío definitivo para los fans de Inazuma Eleven.',
     'footer_links_title' => 'Enlaces útiles',
@@ -375,4 +376,19 @@ return [
     'sup_col_popular' => 'Más Populares',
     'sup_col_newest' => 'Más Recientes',
     'sup_join' => 'Unirse',
+
+    // Articles & Article
+    'art_views' => 'vistas',
+    'art_back_to_articles' => 'Volver a los artículos',
+    'arts_page_title' => 'Artículos',
+    'arts_h1_1' => 'Nuestros',
+    'arts_h1_2' => 'Artículos',
+    'arts_sort_recent' => 'Recientes',
+    'arts_sort_popular' => 'Populares',
+    'arts_sort_author' => 'Por Autor',
+    'arts_no_articles' => 'Aún no hay artículos publicados.',
+
+    'dash_articles_title' => 'Últimos Artículos',
+    'dash_no_articles' => 'No hay artículos recientes.',
+    'dash_view_all_articles' => 'Ver todos los artículos',
 ];

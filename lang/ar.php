@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'مقياس القوة',
     'nav_rules' => 'القوانين',
     'nav_partners' => 'الشركاء',
+    'nav_articles' => 'المقالات',
 
     'footer_desc' => 'التحدي النهائي لمحبي Inazuma Eleven.',
     'footer_links_title' => 'روابط مفيدة',
@@ -375,4 +376,19 @@ return [
     'sup_col_popular' => 'الأكثر شعبية',
     'sup_col_newest' => 'أحدث الإضافات',
     'sup_join' => 'انضم للسيرفر',
+
+    // Articles & Article
+    'art_views' => 'مشاهدات',
+    'art_back_to_articles' => 'العودة إلى المقالات',
+    'arts_page_title' => 'المقالات',
+    'arts_h1_1' => 'أحدث',
+    'arts_h1_2' => 'المقالات',
+    'arts_sort_recent' => 'الأحدث',
+    'arts_sort_popular' => 'الأكثر شعبية',
+    'arts_sort_author' => 'حسب الكاتب',
+    'arts_no_articles' => 'لا توجد مقالات منشورة حتى الآن.',
+
+    'dash_articles_title' => 'أحدث المقالات',
+    'dash_no_articles' => 'لا توجد مقالات حديثة.',
+    'dash_view_all_articles' => 'عرض جميع المقالات',
 ];

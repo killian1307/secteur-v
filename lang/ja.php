@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'パワースケール',
     'nav_rules' => 'ルール',
     'nav_partners' => 'パートナー',
+    'nav_articles' => '記事',
 
     'footer_desc' => '「イナズマイレブン」ファンのための究極の挑戦。',
     'footer_links_title' => '便利なリンク',
@@ -368,4 +369,19 @@ return [
     'sup_col_popular' => '人気のサーバー',
     'sup_col_newest' => '新着サーバー',
     'sup_join' => '参加する',
+
+    // Articles & Article
+    'art_views' => 'ビュー',
+    'art_back_to_articles' => '記事一覧に戻る',
+    'arts_page_title' => '記事',
+    'arts_h1_1' => '私たちの',
+    'arts_h1_2' => '記事',
+    'arts_sort_recent' => '最新',
+    'arts_sort_popular' => '人気',
+    'arts_sort_author' => '著者別',
+    'arts_no_articles' => '公開されている記事はまだありません。',
+
+    'dash_articles_title' => '最新記事',
+    'dash_no_articles' => '最近の記事はありません。',
+    'dash_view_all_articles' => 'すべての記事を見る',
 ];

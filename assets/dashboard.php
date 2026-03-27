@@ -38,6 +38,17 @@ class Dashboard {
         $stmtRank = $this->pdo->query("SELECT id, username, elo, avatar, grade FROM users ORDER BY elo DESC");
         $allPlayers = $stmtRank->fetchAll(PDO::FETCH_ASSOC);
 
+        // --- NOUVEAU : Récupération des 3 derniers articles ---
+        $stmtArticles = $this->pdo->query("
+            SELECT a.title, a.slug, a.content, a.created_at, u.username, u.grade 
+            FROM articles a 
+            JOIN users u ON a.author_id = u.id 
+            ORDER BY a.created_at DESC 
+            LIMIT 3
+        ");
+        $latestArticles = $stmtArticles->fetchAll(PDO::FETCH_ASSOC);
+        // ------------------------------------------------------
+
         // Récupération de l'historique
         $sqlHistory = "
             (SELECT m.*, 
@@ -104,11 +115,6 @@ class Dashboard {
                 @keyframes scrollText {
                     0% { transform: translateX(0); }
                     100% { transform: translateX(-100%); }
-                }
-
-                /* Met l'animation en pause quand on passe la souris dessus pour pouvoir lire tranquillement */
-                .beta-banner:hover .beta-banner-content {
-                    animation-play-state: paused;
                 }
             </style>
 
@@ -190,7 +196,7 @@ class Dashboard {
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                    </div>
+                </div>
 
                 <div class="dash-card stats-card">
                     <h3><i class="fas fa-chart-pie"></i> <?php echo __('dash_stats_title'); ?></h3>
@@ -256,6 +262,37 @@ class Dashboard {
                             $rankCounter++; 
                         endforeach; 
                         ?>
+                    </div>
+                </div>
+
+                <div class="dash-card articles-card">
+                    <h3><i class="fas fa-newspaper"></i> <?php echo __('dash_articles_title'); ?></h3>
+                    
+                    <div class="articles-content" style="margin-top: 15px;">
+                        <?php if (empty($latestArticles)): ?>
+                            <p style="text-align:center; color:var(--text-secondary); padding:20px;"><?php echo __('dash_no_articles'); ?></p>
+                        <?php else: ?>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <?php foreach($latestArticles as $art): ?>
+                                    <?php 
+                                        $excerpt = strip_tags($art['content']);
+                                        if (strlen($excerpt) > 70) $excerpt = substr($excerpt, 0, 70) . '...';
+                                    ?>
+                                    <a href="article.php?slug=<?php echo htmlspecialchars($art['slug']); ?>" style="text-decoration: none; display: block; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); transition: background 0.3s;" onmouseover="this.style.background='rgba(0,0,0,0.4)'" onmouseout="this.style.background='rgba(0,0,0,0.2)'">
+                                        <h4 style="margin: 0 0 5px 0; color: var(--primary-purple); font-size: 1rem;"><?php echo htmlspecialchars($art['title']); ?></h4>
+                                        <p style="margin: 0 0 8px 0; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;"><?php echo $excerpt; ?></p>
+                                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                                            <span><?php echo display_username($art['username'], $art['grade'], false); ?></span>
+                                            <span style="color: var(--text-secondary);"><i class="fas fa-calendar-alt"></i> <?php echo date('d/m/Y', strtotime($art['created_at'])); ?></span>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                            
+                            <a href="articles.php" class="articles-button" style="width: 100%; display: flex; justify-content: center; margin-top: 15px;">
+                                <?php echo __('dash_view_all_articles'); ?> <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
 

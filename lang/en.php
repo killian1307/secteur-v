@@ -12,6 +12,7 @@ return [
     'nav_edp' => 'Power Scale',
     'nav_rules' => 'Rules',
     'nav_partners' => 'Partners',
+    'nav_articles' => 'Articles',
 
     'footer_desc' => 'The ultimate challenge for Inazuma Eleven fans.',
     'footer_links_title' => 'Useful Links',
@@ -365,4 +366,19 @@ return [
     'sup_col_popular' => 'Most Popular',
     'sup_col_newest' => 'Newest Arrivals',
     'sup_join' => 'Join Server',
+
+    // Articles & Article
+    'art_views' => 'views',
+    'art_back_to_articles' => 'Back to articles',
+    'arts_page_title' => 'Articles',
+    'arts_h1_1' => 'Our',
+    'arts_h1_2' => 'Articles',
+    'arts_sort_recent' => 'Recent',
+    'arts_sort_popular' => 'Popular',
+    'arts_sort_author' => 'By Author',
+    'arts_no_articles' => 'No articles published yet.',
+
+    'dash_articles_title' => 'Latest Articles',
+    'dash_no_articles' => 'No recent articles.',
+    'dash_view_all_articles' => 'View all articles',
 ];
