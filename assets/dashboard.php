@@ -279,7 +279,7 @@ class Dashboard {
                                         if (strlen($excerpt) > 70) $excerpt = substr($excerpt, 0, 70) . '...';
                                     ?>
                                     <a href="article.php?slug=<?php echo htmlspecialchars($art['slug']); ?>" style="text-decoration: none; display: block; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); transition: background 0.3s;" onmouseover="this.style.background='rgba(0,0,0,0.4)'" onmouseout="this.style.background='rgba(0,0,0,0.2)'">
-                                        <h4 style="margin: 0 0 5px 0; color: var(--primary-purple); font-size: 1rem;"><?php echo htmlspecialchars($art['title']); ?></h4>
+                                        <h4 style="margin: 0 0 5px 0; color: var(--text-primary); font-size: 1rem;"><?php echo htmlspecialchars($art['title']); ?></h4>
                                         <p style="margin: 0 0 8px 0; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;"><?php echo $excerpt; ?></p>
                                         <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
                                             <span><?php echo display_username($art['username'], $art['grade'], false); ?></span>
@@ -289,7 +289,7 @@ class Dashboard {
                                 <?php endforeach; ?>
                             </div>
                             
-                            <a href="articles_db.php" class="articles-button" style="width: 100%; display: flex; justify-content: center; margin-top: 15px;">
+                            <a href="articles_db.php" class="articles-button" style="width: 100%; display: flex; justify-content: center; margin-top: 15px; color: var(--primary-purple);">
                                 <?php echo __('dash_view_all_articles'); ?> <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                             </a>
                         <?php endif; ?>

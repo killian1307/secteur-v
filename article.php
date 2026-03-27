@@ -76,7 +76,7 @@ $header->render();
     .retour-accueil {
         display: inline-block;
         margin-top: 0.5rem;
-        color: var(--text-secondary);
+        color: var(--text-secondary) !important;
         text-decoration: none;
         transition: color 0.3s;
     }
@@ -88,6 +88,16 @@ $header->render();
     p {
         margin-bottom: 20px;
         text-align: justify;
+    }
+
+
+    .article-content a {
+        color: var(--primary-purple);
+        text-decoration: none;
+    }
+
+    .article-content a:hover {
+        text-decoration: underline;
     }
 
 </style>
