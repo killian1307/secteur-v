@@ -670,4 +670,42 @@ if ($action === 'get_friends_data') {
     exit;
 }
 
+// ============================================================
+// PARTIE 4 : MESSAGERIE PRIVÉE GLOBALE
+// ============================================================
+
+if ($action === 'get_private_chat') {
+    $friendId = (int)$_GET['friend_id'];
+    
+    // Récupérer l'historique des messages entre les deux joueurs
+    $stmt = $pdo->prepare("SELECT * FROM private_messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY sent_at ASC");
+    $stmt->execute([$userId, $friendId, $friendId, $userId]);
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Marquer les messages reçus comme lus
+    $pdo->prepare("UPDATE private_messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = ?")->execute([$friendId, $userId]);
+
+    echo json_encode(['success' => true, 'messages' => $messages, 'my_id' => $userId]);
+    exit;
+}
+
+if ($action === 'send_private_message' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $friendId = (int)$input['friend_id'];
+    $message = trim($input['message']);
+
+    // Sécurité de longueur de message
+    if (mb_strlen($message) > 500) {
+        $message = mb_substr($message, 0, 500);
+    }
+
+    if (!empty($message)) {
+        $pdo->prepare("INSERT INTO private_messages (sender_id, receiver_id, message) VALUES (?, ?, ?)")
+            ->execute([$userId, $friendId, htmlspecialchars($message)]);
+    }
+    
+    echo json_encode(['success' => true]);
+    exit;
+}
+
 ?>

@@ -137,7 +137,7 @@ class Header {
                 </div>
             </div>';
 
-        // --- MENU AMIS ---
+        // --- MENU AMIS & MESSAGERIE GLOBALE ---
         if ($isLoggedIn) {
             ?>
             <div class="lang-container friends-container" style="position: relative;">
@@ -151,13 +151,43 @@ class Header {
                         <button onclick="switchFriendTab('friends')" id="tab-friends" style="flex:1; padding:10px; background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-weight:bold;">Amis</button>
                         <button onclick="switchFriendTab('requests')" id="tab-requests" style="flex:1; padding:10px; background:transparent; color:white; border:none; cursor:pointer; font-weight:bold;">Demandes</button>
                     </div>
-                    
-                    <div id="friends-list-content" class="scrollable-menu" style="max-height: 300px; overflow-y: auto; padding: 10px;">
+                    <div id="friends-list-content" class="scrollable-menu" style="max-height: 300px; overflow-y: auto; padding: 10px;"></div>
+                </div>
+            </div>
+
+            <div class="chat-toggle-btn" onclick="toggleGlobalChat()">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+
+            <div id="globalChatPanel" class="global-chat-panel">
+                <div class="chat-sidebar scrollable-menu" id="chatSidebar">
                     </div>
+
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <h3 id="chatActiveName">Secteur V Tchat</h3>
+                        <button class="close-chat-btn" onclick="toggleGlobalChat()"><i class="fas fa-times"></i></button>
+                    </div>
+                    
+                    <div class="chat-messages-area scrollable-menu" id="chatMessagesArea">
+                        <p style="text-align:center; color:var(--text-secondary); margin-top:20px;">Sélectionnez un ami pour discuter.</p>
+                    </div>
+                    
+                    <form class="chat-input-area" onsubmit="sendPrivateMessage(event)">
+                        <input type="text" id="chatMessageInput" placeholder="Écrire un message..." autocomplete="off">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
                 </div>
             </div>
 
             <script>
+                // ---- VARIABLES GLOBALES ----
+                let currentFriendTab = 'friends';
+                let friendsData = { pending: [], friends: [] };
+                let activeChatFriendId = null;
+                let chatInterval = null;
+
+                // ---- GESTION DU MENU DÉROULANT AMIS ----
                 function toggleFriendsMenu() {
                     const dropdown = document.getElementById('friendsDropdown');
                     dropdown.classList.toggle('active');
@@ -166,8 +196,6 @@ class Header {
                     if(dropdown.classList.contains('active')) loadFriendsData();
                 }
 
-                let currentFriendTab = 'friends';
-
                 function switchFriendTab(tab) {
                     currentFriendTab = tab;
                     document.getElementById('tab-friends').style.color = tab === 'friends' ? 'var(--primary-purple)' : 'white';
@@ -175,14 +203,16 @@ class Header {
                     renderFriendsList();
                 }
 
-                let friendsData = { pending: [], friends: [] };
-
                 async function loadFriendsData() {
                     const res = await fetch('api.php?action=get_friends_data');
                     const data = await res.json();
                     if(data.success) {
                         friendsData = data;
                         renderFriendsList();
+                        
+                        // Met à jour la barre latérale du tchat en arrière-plan
+                        populateChatSidebar();
+
                         const badge = document.getElementById('friend-notif-badge');
                         if(data.pending_count > 0) {
                             badge.innerText = data.pending_count;
@@ -196,7 +226,6 @@ class Header {
                 function renderFriendsList() {
                     const container = document.getElementById('friends-list-content');
                     container.innerHTML = '';
-                    
                     document.getElementById('tab-friends').innerText = `Amis (${friendsData.friends.length}/50)`;
                     
                     const list = currentFriendTab === 'friends' ? friendsData.friends : friendsData.pending;
@@ -208,10 +237,12 @@ class Header {
 
                     list.forEach(user => {
                         const avatar = user.avatar || 'assets/img/default_user.webp';
+                        
                         const actions = currentFriendTab === 'requests' 
                             ? `<button onclick="handleFriendAction(${user.id}, 'accept')" style="background:#2ecc71; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer; margin-right:5px;"><i class="fas fa-check"></i></button>
                                <button onclick="handleFriendAction(${user.id}, 'reject')" style="background:#e74c3c; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer;"><i class="fas fa-times"></i></button>`
-                            : `<a href="profile.php?username=${user.username}" style="color:var(--text-secondary);"><i class="fas fa-external-link-alt"></i></a>`;
+                            : `<button onclick="openChatWith(${user.id})" style="background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-size:1.1rem; margin-right:15px;" title="Discuter"><i class="fas fa-comment-dots"></i></button>
+                               <a href="profile.php?username=${user.username}" style="color:var(--text-secondary);"><i class="fas fa-external-link-alt"></i></a>`;
 
                         container.innerHTML += `
                             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -231,18 +262,116 @@ class Header {
                         body: JSON.stringify({ target_id: targetId, type: type })
                     });
                     const data = await res.json();
-                    
-                    if (!data.success && data.message) {
-                        alert(data.message);
-                    }
+                    if (!data.success && data.message) alert(data.message);
                     loadFriendsData();
                 }
 
+                // ---- GESTION DU PANNEAU DE TCHAT GLISSANT ----
+                function toggleGlobalChat() {
+                    const panel = document.getElementById('globalChatPanel');
+                    panel.classList.toggle('active');
+                    
+                    if (panel.classList.contains('active')) {
+                        // S'il s'ouvre, on actualise la liste et on relance le rafraîchissement des messages
+                        loadFriendsData();
+                        if (activeChatFriendId) {
+                            clearInterval(chatInterval);
+                            chatInterval = setInterval(loadChatMessages, 3000);
+                        }
+                    } else {
+                        // S'il se ferme, on arrête de demander les messages au serveur pour économiser les ressources
+                        clearInterval(chatInterval);
+                    }
+                }
+
+                function openChatWith(friendId) {
+                    const panel = document.getElementById('globalChatPanel');
+                    
+                    // Si on ouvre via la liste d'amis, on ferme la liste d'amis et on glisse le panneau
+                    document.getElementById('friendsDropdown').classList.remove('active');
+                    if (!panel.classList.contains('active')) panel.classList.add('active');
+                    
+                    activeChatFriendId = friendId;
+                    populateChatSidebar();
+                    loadChatMessages();
+                    
+                    // Relance la boucle d'actualisation des messages (toutes les 3s)
+                    clearInterval(chatInterval);
+                    chatInterval = setInterval(loadChatMessages, 3000);
+                }
+
+                function populateChatSidebar() {
+                    const sidebar = document.getElementById('chatSidebar');
+                    sidebar.innerHTML = '';
+                    
+                    friendsData.friends.forEach(f => {
+                        const img = document.createElement('img');
+                        img.src = f.avatar || 'assets/img/default_user.webp';
+                        img.className = 'chat-friend-avatar' + (f.id === activeChatFriendId ? ' active' : '');
+                        img.title = f.username;
+                        img.onclick = () => openChatWith(f.id);
+                        sidebar.appendChild(img);
+                    });
+
+                    // Met à jour le nom en haut de la fenêtre
+                    if (activeChatFriendId) {
+                        const friend = friendsData.friends.find(f => f.id === activeChatFriendId);
+                        if (friend) document.getElementById('chatActiveName').innerText = friend.username;
+                    }
+                }
+
+                async function loadChatMessages() {
+                    if (!activeChatFriendId || !document.getElementById('globalChatPanel').classList.contains('active')) return;
+                    
+                    const res = await fetch(`api.php?action=get_private_chat&friend_id=${activeChatFriendId}`);
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        const container = document.getElementById('chatMessagesArea');
+                        
+                        // On vérifie si l'utilisateur est tout en bas du scroll pour savoir s'il faut auto-scroller
+                        const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+                        
+                        container.innerHTML = '';
+                        
+                        if (data.messages.length === 0) {
+                            container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top:20px;">Envoyez le premier message !</p>`;
+                        } else {
+                            data.messages.forEach(m => {
+                                const div = document.createElement('div');
+                                div.className = 'chat-bubble ' + (m.sender_id === data.my_id ? 'sent' : 'received');
+                                div.innerText = m.message;
+                                container.appendChild(div);
+                            });
+                        }
+
+                        // Scroll auto seulement si on était déjà en bas
+                        if (isAtBottom) container.scrollTop = container.scrollHeight;
+                    }
+                }
+
+                async function sendPrivateMessage(e) {
+                    e.preventDefault();
+                    const input = document.getElementById('chatMessageInput');
+                    const msg = input.value.trim();
+                    if (!msg || !activeChatFriendId) return;
+
+                    input.value = '';
+                    await fetch('api.php?action=send_private_message', {
+                        method: 'POST',
+                        body: JSON.stringify({ friend_id: activeChatFriendId, message: msg })
+                    });
+                    
+                    // Recharge immédiatement les messages après envoi
+                    loadChatMessages();
+                }
+
+                // Initialisation au démarrage
                 document.addEventListener('DOMContentLoaded', loadFriendsData);
             </script>
             <?php
         }
-        // --- FIN DU MENU AMIS ---
+        // --- FIN DU MENU AMIS & MESSAGERIE ---
 
         echo '
             <div class="profile-container">
