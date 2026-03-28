@@ -135,8 +135,273 @@ class Header {
                 <div class="dropdown-menu" id="langDropdown" style="width: max-content; right: -10px; top: 150%;">
                     ' . $langLinksHtml . '
                 </div>
+            </div>';
+
+        // --- MENU AMIS & MESSAGERIE GLOBALE ---
+        if ($isLoggedIn) {
+            ?>
+            <div class="lang-container friends-container" style="position: relative;">
+                <div class="lang-icon" onclick="toggleFriendsMenu()" style="position: relative;">
+                    <i class="fas fa-user-friends"></i>
+                    <span id="friend-notif-badge" style="display:none; position:absolute; top:-5px; right:-10px; background:#e74c3c; color:white; font-size:0.7rem; font-weight:bold; padding:2px 6px; border-radius:50%;">0</span>
+                </div>
+                
+                <div class="dropdown-menu" id="friendsDropdown" style="width: 300px; right: -10px; top: 150%; padding: 0; overflow: hidden;">
+                    <div style="display:flex; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <button onclick="switchFriendTab('friends')" id="tab-friends" style="flex:1; padding:10px; background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-weight:bold;"><?php echo __('hdr_friends'); ?></button>
+                        <button onclick="switchFriendTab('requests')" id="tab-requests" style="flex:1; padding:10px; background:transparent; color:white; border:none; cursor:pointer; font-weight:bold;"><?php echo __('hdr_requests'); ?></button>
+                    </div>
+                    <div id="friends-list-content" class="scrollable-menu" style="max-height: 300px; overflow-y: auto; padding: 10px;"></div>
+                </div>
             </div>
 
+            <div class="chat-toggle-btn" onclick="toggleGlobalChat()">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+
+            <div id="globalChatPanel" class="global-chat-panel">
+                <div class="chat-sidebar scrollable-menu" id="chatSidebar">
+                    </div>
+
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <h3 id="chatActiveName"><?php echo __('hdr_chat_title'); ?></h3>
+                        <button class="close-chat-btn" onclick="toggleGlobalChat()"><i class="fas fa-times"></i></button>
+                    </div>
+                    
+                    <div class="chat-messages-area scrollable-menu" id="chatMessagesArea">
+                        <p style="text-align:center; color:var(--text-secondary); margin-top:20px;"><?php echo __('hdr_chat_select_friend'); ?></p>
+                    </div>
+                    
+                    <form class="chat-input-area" onsubmit="sendPrivateMessage(event)">
+                        <input type="text" id="chatMessageInput" placeholder="<?php echo __('hdr_chat_placeholder'); ?>" autocomplete="off">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                // ---- VARIABLES GLOBALES ----
+                let currentFriendTab = 'friends';
+                let friendsData = { pending: [], friends: [], pending_count: 0, unread_count: 0 };
+                let activeChatFriendId = null;
+                let chatInterval = null;
+
+                // ---- GESTION DU MENU DÉROULANT AMIS ----
+                function toggleFriendsMenu() {
+                    const dropdown = document.getElementById('friendsDropdown');
+                    dropdown.classList.toggle('active');
+                    document.getElementById('userDropdown').classList.remove('active');
+                    document.getElementById('langDropdown').classList.remove('active');
+                    if(dropdown.classList.contains('active')) loadFriendsData();
+                }
+
+                function switchFriendTab(tab) {
+                    currentFriendTab = tab;
+                    document.getElementById('tab-friends').style.color = tab === 'friends' ? 'var(--primary-purple)' : 'white';
+                    document.getElementById('tab-requests').style.color = tab === 'requests' ? 'var(--primary-purple)' : 'white';
+                    renderFriendsList();
+                }
+
+                async function loadFriendsData() {
+                    const res = await fetch('api.php?action=get_friends_data');
+                    const data = await res.json();
+                    if(data.success) {
+                        friendsData = data;
+                        renderFriendsList();
+                        populateChatSidebar();
+
+                        // CUMUL DES NOTIFICATIONS GLOBALES (Demandes + Messages non lus)
+                        const badge = document.getElementById('friend-notif-badge');
+                        const totalNotifs = data.pending_count + data.unread_count;
+                        if(totalNotifs > 0) {
+                            badge.innerText = totalNotifs;
+                            badge.style.display = 'block';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    }
+                }
+
+                function renderFriendsList() {
+                    const container = document.getElementById('friends-list-content');
+                    container.innerHTML = '';
+                    
+                    // Titres des onglets
+                    document.getElementById('tab-friends').innerText = `<?php echo addslashes(__('hdr_friends')); ?> (${friendsData.friends.length}/50)`;
+                    
+                    const reqText = `<?php echo addslashes(__('hdr_requests')); ?>`;
+                    if (friendsData.pending_count > 0) {
+                        document.getElementById('tab-requests').innerHTML = `${reqText} <span style="background:#e74c3c; color:white; border-radius:50%; padding:2px 6px; font-size:0.7rem; margin-left:5px;">${friendsData.pending_count}</span>`;
+                    } else {
+                        document.getElementById('tab-requests').innerText = reqText;
+                    }
+
+                    const list = currentFriendTab === 'friends' ? friendsData.friends : friendsData.pending;
+                    
+                    if(list.length === 0) {
+                        container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); font-size:0.9rem; padding:10px;"><?php echo addslashes(__('hdr_no_results')); ?></p>`;
+                        return;
+                    }
+
+                    list.forEach(user => {
+                        const avatar = user.avatar || 'assets/img/default_user.webp';
+                        
+                        // Construction de l'icône de tchat avec badge rouge si message non lu
+                        let chatIconHtml = `<i class="fas fa-comment-dots"></i>`;
+                        if (user.unread_count > 0) {
+                            chatIconHtml += `<span style="position:absolute; top:-8px; right:-8px; background:#e74c3c; color:white; font-size:0.6rem; font-weight:bold; padding:2px 5px; border-radius:50%;">${user.unread_count}</span>`;
+                        }
+                        
+                        const actions = currentFriendTab === 'requests' 
+                            ? `<button onclick="handleFriendAction(${user.id}, 'accept')" style="background:#2ecc71; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer; margin-right:5px;"><i class="fas fa-check"></i></button>
+                               <button onclick="handleFriendAction(${user.id}, 'reject')" style="background:#e74c3c; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer;"><i class="fas fa-times"></i></button>`
+                            : `<button onclick="openChatWith(${user.id})" style="position:relative; background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-size:1.1rem; margin-right:15px;" title="<?php echo addslashes(__('hdr_chat_talk')); ?>">
+                                   ${chatIconHtml}
+                               </button>
+                               <a href="profile.php?username=${user.username}" style="color:var(--text-secondary);"><i class="fas fa-external-link-alt"></i></a>`;
+
+                        container.innerHTML += `
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.05);">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <img src="${avatar}" style="width:30px; height:30px; border-radius:50%; object-fit:cover;">
+                                    <span style="font-size:0.9rem; color: white;">${user.display_name}</span>
+                                </div>
+                                <div>${actions}</div>
+                            </div>
+                        `;
+                    });
+                }
+
+                async function handleFriendAction(targetId, type) {
+                    const res = await fetch('api.php?action=friend_action', {
+                        method: 'POST',
+                        body: JSON.stringify({ target_id: targetId, type: type })
+                    });
+                    const data = await res.json();
+                    if (!data.success && data.message) alert(data.message);
+                    loadFriendsData();
+                }
+
+                // ---- GESTION DU PANNEAU DE TCHAT GLISSANT ----
+                function toggleGlobalChat() {
+                    const panel = document.getElementById('globalChatPanel');
+                    panel.classList.toggle('active');
+                    
+                    if (panel.classList.contains('active')) {
+                        loadFriendsData();
+                        if (activeChatFriendId) {
+                            clearInterval(chatInterval);
+                            chatInterval = setInterval(loadChatMessages, 3000);
+                        }
+                    } else {
+                        clearInterval(chatInterval);
+                    }
+                }
+
+                function openChatWith(friendId) {
+                    const panel = document.getElementById('globalChatPanel');
+                    document.getElementById('friendsDropdown').classList.remove('active');
+                    if (!panel.classList.contains('active')) panel.classList.add('active');
+                    
+                    activeChatFriendId = friendId;
+                    populateChatSidebar();
+                    loadChatMessages();
+                    
+                    clearInterval(chatInterval);
+                    chatInterval = setInterval(loadChatMessages, 3000);
+                }
+
+                function populateChatSidebar() {
+                    const sidebar = document.getElementById('chatSidebar');
+                    sidebar.innerHTML = '';
+                    
+                    friendsData.friends.forEach(f => {
+                        const wrapper = document.createElement('div');
+                        wrapper.style.position = 'relative';
+                        wrapper.style.cursor = 'pointer';
+                        wrapper.onclick = () => openChatWith(f.id);
+
+                        const img = document.createElement('img');
+                        img.src = f.avatar || 'assets/img/default_user.webp';
+                        img.className = 'chat-friend-avatar' + (f.id === activeChatFriendId ? ' active' : '');
+                        img.title = f.username;
+                        wrapper.appendChild(img);
+
+                        // Badge rouge sur l'avatar de la sidebar si message non lu
+                        if (f.unread_count > 0 && f.id !== activeChatFriendId) {
+                            const badge = document.createElement('span');
+                            badge.style.cssText = 'position:absolute; top:0; right:0; background:#e74c3c; color:white; font-size:0.6rem; font-weight:bold; padding:2px 5px; border-radius:50%; z-index:2; pointer-events:none; box-shadow: 0 2px 4px rgba(0,0,0,0.5);';
+                            badge.innerText = f.unread_count;
+                            wrapper.appendChild(badge);
+                        }
+
+                        sidebar.appendChild(wrapper);
+                    });
+
+                    if (activeChatFriendId) {
+                        const friend = friendsData.friends.find(f => f.id === activeChatFriendId);
+                        if (friend) document.getElementById('chatActiveName').innerText = friend.username;
+                    }
+                }
+
+                async function loadChatMessages() {
+                    if (!activeChatFriendId || !document.getElementById('globalChatPanel').classList.contains('active')) return;
+                    
+                    const res = await fetch(`api.php?action=get_private_chat&friend_id=${activeChatFriendId}`);
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        const container = document.getElementById('chatMessagesArea');
+                        const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+                        
+                        container.innerHTML = '';
+                        
+                        if (data.messages.length === 0) {
+                            container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top:20px;"><?php echo addslashes(__('hdr_chat_first_msg')); ?></p>`;
+                        } else {
+                            data.messages.forEach(m => {
+                                const div = document.createElement('div');
+                                div.className = 'chat-bubble ' + (m.sender_id === data.my_id ? 'sent' : 'received');
+                                div.innerHTML = m.message;
+                                container.appendChild(div);
+                            });
+                        }
+
+                        if (isAtBottom) container.scrollTop = container.scrollHeight;
+                        
+                        // Si on vient de charger des messages, on met à jour les badges globaux en arrière-plan
+                        // (Car l'API vient de marquer nos messages comme "lus")
+                        loadFriendsData();
+                    }
+                }
+
+                async function sendPrivateMessage(e) {
+                    e.preventDefault();
+                    const input = document.getElementById('chatMessageInput');
+                    const msg = input.value.trim();
+                    if (!msg || !activeChatFriendId) return;
+
+                    input.value = '';
+                    await fetch('api.php?action=send_private_message', {
+                        method: 'POST',
+                        body: JSON.stringify({ friend_id: activeChatFriendId, message: msg })
+                    });
+                    
+                    loadChatMessages();
+                }
+
+                // Initialisation au démarrage et vérification toutes les 15 secondes
+                document.addEventListener('DOMContentLoaded', () => {
+                    loadFriendsData();
+                    setInterval(loadFriendsData, 15000); // Polling global pour les notifs
+                });
+            </script>
+            <?php
+        }
+        // --- FIN DU MENU AMIS & MESSAGERIE ---
+
+        echo '
             <div class="profile-container">
                 <div class="profile-icon" onclick="document.getElementById(\'userDropdown\').classList.toggle(\'active\'); document.getElementById(\'langDropdown\').classList.remove(\'active\');">';
 

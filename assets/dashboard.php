@@ -268,7 +268,7 @@ class Dashboard {
                 <div class="dash-card articles-card">
                     <h3><i class="fas fa-newspaper"></i> <?php echo __('dash_articles_title'); ?></h3>
                     
-                    <div class="articles-content" style="margin-top: 15px;">
+                    <div class="articles-content">
                         <?php if (empty($latestArticles)): ?>
                             <p style="text-align:center; color:var(--text-secondary); padding:20px;"><?php echo __('dash_no_articles'); ?></p>
                         <?php else: ?>

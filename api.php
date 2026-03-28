@@ -592,4 +592,140 @@ if ($action === 'get_queue_count') {
     exit;
 }
 
+// ============================================================
+// PARTIE 3 : SYSTÈME D'AMIS
+// ============================================================
+
+if ($action === 'friend_action' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $targetId = (int)$input['target_id'];
+    $type = $input['type']; // 'send', 'accept', 'reject', 'remove'
+
+    if ($targetId === $userId || $targetId <= 0) {
+        echo json_encode(['success' => false, 'message' => __('api_invalid_action')]);
+        exit;
+    }
+
+    try {
+        if ($type === 'send') {
+            // Vérifier si une relation existe déjà
+            $stmt = $pdo->prepare("SELECT id FROM friends WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)");
+            $stmt->execute([$userId, $targetId, $targetId, $userId]);
+            if (!$stmt->fetch()) {
+                $pdo->prepare("INSERT INTO friends (sender_id, receiver_id, status) VALUES (?, ?, 'pending')")->execute([$userId, $targetId]);
+            }
+        } elseif ($type === 'accept') {
+            // On compte le nombre d'amis actuels de l'utilisateur
+            $stmtCount = $pdo->prepare("SELECT COUNT(*) FROM friends WHERE (sender_id = ? OR receiver_id = ?) AND status = 'accepted'");
+            $stmtCount->execute([$userId, $userId]);
+            $count = $stmtCount->fetchColumn();
+            
+            if ($count >= 50) {
+                echo json_encode(['success' => false, 'message' => __('api_friends_limit')]);
+                exit;
+            }
+            
+            // Si c'est bon, on accepte
+            $pdo->prepare("UPDATE friends SET status = 'accepted' WHERE sender_id = ? AND receiver_id = ?")->execute([$targetId, $userId]);
+        } elseif ($type === 'reject') {
+            $pdo->prepare("DELETE FROM friends WHERE sender_id = ? AND receiver_id = ? AND status = 'pending'")->execute([$targetId, $userId]);
+        } elseif ($type === 'remove') {
+            $pdo->prepare("DELETE FROM friends WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)")->execute([$userId, $targetId, $targetId, $userId]);
+        }
+        echo json_encode(['success' => true]);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => __('api_db_error')]);
+    }
+    exit;
+}
+
+if ($action === 'get_friends_data') {
+    // Récupérer les demandes en attente (on est le receveur)
+    $stmtPending = $pdo->prepare("
+        SELECT f.sender_id as id, u.username, u.avatar, u.grade 
+        FROM friends f JOIN users u ON f.sender_id = u.id 
+        WHERE f.receiver_id = ? AND f.status = 'pending'
+    ");
+    $stmtPending->execute([$userId]);
+    $pending = $stmtPending->fetchAll(PDO::FETCH_ASSOC);
+
+    // Récupérer les amis acceptés
+    $stmtFriends = $pdo->prepare("
+        SELECT u.id, u.username, u.avatar, u.grade, u.elo
+        FROM friends f 
+        JOIN users u ON (u.id = f.sender_id OR u.id = f.receiver_id) 
+        WHERE (f.sender_id = ? OR f.receiver_id = ?) 
+          AND f.status = 'accepted' 
+          AND u.id != ?
+        ORDER BY u.elo DESC
+    ");
+    $stmtFriends->execute([$userId, $userId, $userId]);
+    $friends = $stmtFriends->fetchAll(PDO::FETCH_ASSOC);
+
+    // Récupérer les messages non lus
+    $stmtUnread = $pdo->prepare("
+        SELECT sender_id, COUNT(*) as unread_count 
+        FROM private_messages 
+        WHERE receiver_id = ? AND is_read = 0 
+        GROUP BY sender_id
+    ");
+    $stmtUnread->execute([$userId]);
+    $unreadData = $stmtUnread->fetchAll(PDO::FETCH_KEY_PAIR); // Crée un tableau [id_ami => nombre_messages]
+    $totalUnread = array_sum($unreadData) ?: 0;
+
+    // Formater les pseudos et attacher le compte de messages
+    foreach ($pending as &$p) { $p['display_name'] = display_username($p['username'], $p['grade'], true); }
+    foreach ($friends as &$f) { 
+        $f['display_name'] = display_username($f['username'], $f['grade'], true); 
+        $f['unread_count'] = isset($unreadData[$f['id']]) ? $unreadData[$f['id']] : 0;
+    }
+
+    echo json_encode([
+        'success' => true, 
+        'pending' => $pending, 
+        'friends' => $friends, 
+        'pending_count' => count($pending),
+        'unread_count' => $totalUnread
+    ]);
+    exit;
+}
+
+// ============================================================
+// PARTIE 4 : MESSAGERIE PRIVÉE GLOBALE
+// ============================================================
+
+if ($action === 'get_private_chat') {
+    $friendId = (int)$_GET['friend_id'];
+    
+    // Récupérer l'historique des messages entre les deux joueurs
+    $stmt = $pdo->prepare("SELECT * FROM private_messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY sent_at ASC");
+    $stmt->execute([$userId, $friendId, $friendId, $userId]);
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Marquer les messages reçus comme lus
+    $pdo->prepare("UPDATE private_messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = ?")->execute([$friendId, $userId]);
+
+    echo json_encode(['success' => true, 'messages' => $messages, 'my_id' => $userId]);
+    exit;
+}
+
+if ($action === 'send_private_message' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $friendId = (int)$input['friend_id'];
+    $message = trim($input['message']);
+
+    // Sécurité de longueur de message
+    if (mb_strlen($message) > 500) {
+        $message = mb_substr($message, 0, 500);
+    }
+
+    if (!empty($message)) {
+        $pdo->prepare("INSERT INTO private_messages (sender_id, receiver_id, message) VALUES (?, ?, ?)")
+            ->execute([$userId, $friendId, htmlspecialchars($message)]);
+    }
+    
+    echo json_encode(['success' => true]);
+    exit;
+}
+
 ?>
