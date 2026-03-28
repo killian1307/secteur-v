@@ -373,4 +373,31 @@ return [
     'dash_articles_title' => 'Derniers Articles',
     'dash_no_articles' => 'Aucun article récent.',
     'dash_view_all_articles' => 'Voir tous les articles',
+
+    // Système d'Amis & Tchat (Header, Profile, API)
+    'hdr_friends' => 'Amis',
+    'hdr_requests' => 'Demandes',
+    'hdr_no_results' => 'Aucun résultat.',
+    'hdr_chat_title' => 'Secteur V Tchat',
+    'hdr_chat_select_friend' => 'Sélectionnez un ami pour discuter.',
+    'hdr_chat_placeholder' => 'Écrire un message...',
+    'hdr_chat_first_msg' => 'Envoyez le premier message !',
+    'hdr_chat_talk' => 'Discuter',
+    'prof_add_friend' => 'Ajouter',
+    'prof_pending_friend' => 'En attente',
+    'prof_accept_friend' => 'Accepter',
+    'prof_remove_friend' => 'Retirer',
+    'prof_confirm_remove' => 'Retirer des amis ?',
+    'api_invalid_action' => 'Action invalide.',
+    'api_friends_limit' => 'Tu as atteint la limite maximum de 50 amis.',
+    'api_db_error' => 'Erreur de base de données.',
+    
+    // CGU - Messagerie Privée
+    'cgu_chat_title' => 'Messagerie Privée et Confidentialité',
+    'cgu_chat_p1' => 'Le Site met à disposition des utilisateurs un outil de messagerie instantanée privée. Les messages échangés via cet outil sont stockés sur nos serveurs pour assurer le bon fonctionnement du service.',
+    'cgu_chat_p2' => 'Les utilisateurs sont informés que ces messages ne bénéficient pas d\'un chiffrement de bout en bout (End-to-End Encryption). Par défaut, le contenu de ces correspondances est strictement confidentiel. Toutefois, l\'équipe d\'administration et de modération du Secteur V se réserve le droit d\'y accéder de manière exceptionnelle, et uniquement dans les cas suivants :',
+    'cgu_chat_li1' => 'Signalement d\'un utilisateur pour harcèlement, insultes ou comportement toxique.',
+    'cgu_chat_li2' => 'Suspicion de triche, d\'arrangement de matchs (boost d\'ELO) ou de litige grave.',
+    'cgu_chat_li3' => 'Réquisition légale par les autorités compétentes.',
+    'cgu_chat_warn' => 'Recommandation de sécurité : Nous demandons expressément à nos utilisateurs de ne jamais communiquer d\'informations personnelles sensibles (mots de passe, coordonnées bancaires, numéro de téléphone, adresse personnelle complète) via la messagerie du site. Le Secteur V ne vous demandera jamais ce type d\'informations par message privé.',
 ];

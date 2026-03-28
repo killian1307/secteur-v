@@ -602,7 +602,7 @@ if ($action === 'friend_action' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = $input['type']; // 'send', 'accept', 'reject', 'remove'
 
     if ($targetId === $userId || $targetId <= 0) {
-        echo json_encode(['success' => false, 'message' => 'Action invalide']);
+        echo json_encode(['success' => false, 'message' => __('api_invalid_action')]);
         exit;
     }
 
@@ -621,7 +621,7 @@ if ($action === 'friend_action' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $count = $stmtCount->fetchColumn();
             
             if ($count >= 50) {
-                echo json_encode(['success' => false, 'message' => 'Tu as atteint la limite maximum de 50 amis.']);
+                echo json_encode(['success' => false, 'message' => __('api_friends_limit')]);
                 exit;
             }
             
@@ -634,7 +634,7 @@ if ($action === 'friend_action' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         echo json_encode(['success' => true]);
     } catch (Exception $e) {
-        echo json_encode(['success' => false, 'message' => 'Erreur BDD']);
+        echo json_encode(['success' => false, 'message' => __('api_db_error')]);
     }
     exit;
 }

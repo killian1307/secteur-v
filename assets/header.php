@@ -148,8 +148,8 @@ class Header {
                 
                 <div class="dropdown-menu" id="friendsDropdown" style="width: 300px; right: -10px; top: 150%; padding: 0; overflow: hidden;">
                     <div style="display:flex; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                        <button onclick="switchFriendTab('friends')" id="tab-friends" style="flex:1; padding:10px; background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-weight:bold;">Amis</button>
-                        <button onclick="switchFriendTab('requests')" id="tab-requests" style="flex:1; padding:10px; background:transparent; color:white; border:none; cursor:pointer; font-weight:bold;">Demandes</button>
+                        <button onclick="switchFriendTab('friends')" id="tab-friends" style="flex:1; padding:10px; background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-weight:bold;"><?php echo __('hdr_friends'); ?></button>
+                        <button onclick="switchFriendTab('requests')" id="tab-requests" style="flex:1; padding:10px; background:transparent; color:white; border:none; cursor:pointer; font-weight:bold;"><?php echo __('hdr_requests'); ?></button>
                     </div>
                     <div id="friends-list-content" class="scrollable-menu" style="max-height: 300px; overflow-y: auto; padding: 10px;"></div>
                 </div>
@@ -165,16 +165,16 @@ class Header {
 
                 <div class="chat-main">
                     <div class="chat-header">
-                        <h3 id="chatActiveName">Secteur V Tchat</h3>
+                        <h3 id="chatActiveName"><?php echo __('hdr_chat_title'); ?></h3>
                         <button class="close-chat-btn" onclick="toggleGlobalChat()"><i class="fas fa-times"></i></button>
                     </div>
                     
                     <div class="chat-messages-area scrollable-menu" id="chatMessagesArea">
-                        <p style="text-align:center; color:var(--text-secondary); margin-top:20px;">Sélectionnez un ami pour discuter.</p>
+                        <p style="text-align:center; color:var(--text-secondary); margin-top:20px;"><?php echo __('hdr_chat_select_friend'); ?></p>
                     </div>
                     
                     <form class="chat-input-area" onsubmit="sendPrivateMessage(event)">
-                        <input type="text" id="chatMessageInput" placeholder="Écrire un message..." autocomplete="off">
+                        <input type="text" id="chatMessageInput" placeholder="<?php echo __('hdr_chat_placeholder'); ?>" autocomplete="off">
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
@@ -226,12 +226,12 @@ class Header {
                 function renderFriendsList() {
                     const container = document.getElementById('friends-list-content');
                     container.innerHTML = '';
-                    document.getElementById('tab-friends').innerText = `Amis (${friendsData.friends.length}/50)`;
+                    document.getElementById('tab-friends').innerText = `<?php echo addslashes(__('hdr_friends')); ?> (${friendsData.friends.length}/50)`;
                     
                     const list = currentFriendTab === 'friends' ? friendsData.friends : friendsData.pending;
                     
                     if(list.length === 0) {
-                        container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); font-size:0.9rem; padding:10px;">Aucun résultat.</p>`;
+                        container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); font-size:0.9rem; padding:10px;"><?php echo addslashes(__('hdr_no_results')); ?></p>`;
                         return;
                     }
 
@@ -241,7 +241,7 @@ class Header {
                         const actions = currentFriendTab === 'requests' 
                             ? `<button onclick="handleFriendAction(${user.id}, 'accept')" style="background:#2ecc71; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer; margin-right:5px;"><i class="fas fa-check"></i></button>
                                <button onclick="handleFriendAction(${user.id}, 'reject')" style="background:#e74c3c; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer;"><i class="fas fa-times"></i></button>`
-                            : `<button onclick="openChatWith(${user.id})" style="background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-size:1.1rem; margin-right:15px;" title="Discuter"><i class="fas fa-comment-dots"></i></button>
+                            : `<button onclick="openChatWith(${user.id})" style="background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-size:1.1rem; margin-right:15px;" title="<?php echo addslashes(__('hdr_chat_talk')); ?>"><i class="fas fa-comment-dots"></i></button>
                                <a href="profile.php?username=${user.username}" style="color:var(--text-secondary);"><i class="fas fa-external-link-alt"></i></a>`;
 
                         container.innerHTML += `
@@ -335,7 +335,7 @@ class Header {
                         container.innerHTML = '';
                         
                         if (data.messages.length === 0) {
-                            container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top:20px;">Envoyez le premier message !</p>`;
+                            container.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top:20px;"><?php echo addslashes(__('hdr_chat_first_msg')); ?></p>`;
                         } else {
                             data.messages.forEach(m => {
                                 const div = document.createElement('div');

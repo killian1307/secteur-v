@@ -173,13 +173,13 @@ $header->render();
                         <?php if (isset($_SESSION['user_id']) && !$isOwner): ?>
                             <div>
                                 <?php if ($friendStatus === 'none'): ?>
-                                    <button onclick="handleFriendAction(<?php echo $profileUser['id']; ?>, 'send'); location.reload();" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#2ecc71; border-color:#e74c3c;"><i class="fas fa-user-plus"></i> Ajouter</button>
+                                    <button onclick="handleFriendAction(<?php echo $profileUser['id']; ?>, 'send'); location.reload();" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#2ecc71; border-color:#e74c3c;"><i class="fas fa-user-plus"></i> <?php echo __('prof_add_friend'); ?></button>
                                 <?php elseif ($friendStatus === 'pending_sent'): ?>
-                                    <button class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; cursor: default;" disabled><i class="fas fa-clock"></i> En attente</button>
+                                    <button class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; cursor: default;" disabled><i class="fas fa-clock"></i> <?php echo __('prof_pending_friend'); ?></button>
                                 <?php elseif ($friendStatus === 'pending_received'): ?>
-                                    <button onclick="handleFriendAction(<?php echo $profileUser['id']; ?>, 'accept'); location.reload();" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#2ecc71; border-color:#e74c3c;"><i class="fas fa-user-check"></i> Accepter</button>
+                                    <button onclick="handleFriendAction(<?php echo $profileUser['id']; ?>, 'accept'); location.reload();" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#2ecc71; border-color:#e74c3c;"><i class="fas fa-user-check"></i> <?php echo __('prof_accept_friend'); ?></button>
                                 <?php elseif ($friendStatus === 'accepted'): ?>
-                                    <button onclick="if(confirm('Retirer des amis ?')) { handleFriendAction(<?php echo $profileUser['id']; ?>, 'remove'); location.reload(); }" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#e74c3c; border-color:#e74c3c;"><i class="fas fa-user-times"></i> Retirer</button>
+                                    <button onclick="if(confirm('<?php echo addslashes(__('prof_confirm_remove')); ?>')) { handleFriendAction(<?php echo $profileUser['id']; ?>, 'remove'); location.reload(); }" class="ghost-btn" style="padding: 5px 10px; font-size: 0.8rem; color:#e74c3c; border-color:#e74c3c;"><i class="fas fa-user-times"></i> <?php echo __('prof_remove_friend'); ?></button>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
