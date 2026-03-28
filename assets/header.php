@@ -183,7 +183,7 @@ class Header {
             <script>
                 // ---- VARIABLES GLOBALES ----
                 let currentFriendTab = 'friends';
-                let friendsData = { pending: [], friends: [] };
+                let friendsData = { pending: [], friends: [], pending_count: 0, unread_count: 0 };
                 let activeChatFriendId = null;
                 let chatInterval = null;
 
@@ -209,13 +209,13 @@ class Header {
                     if(data.success) {
                         friendsData = data;
                         renderFriendsList();
-                        
-                        // Met à jour la barre latérale du tchat en arrière-plan
                         populateChatSidebar();
 
+                        // CUMUL DES NOTIFICATIONS GLOBALES (Demandes + Messages non lus)
                         const badge = document.getElementById('friend-notif-badge');
-                        if(data.pending_count > 0) {
-                            badge.innerText = data.pending_count;
+                        const totalNotifs = data.pending_count + data.unread_count;
+                        if(totalNotifs > 0) {
+                            badge.innerText = totalNotifs;
                             badge.style.display = 'block';
                         } else {
                             badge.style.display = 'none';
@@ -226,8 +226,17 @@ class Header {
                 function renderFriendsList() {
                     const container = document.getElementById('friends-list-content');
                     container.innerHTML = '';
+                    
+                    // Titres des onglets
                     document.getElementById('tab-friends').innerText = `<?php echo addslashes(__('hdr_friends')); ?> (${friendsData.friends.length}/50)`;
                     
+                    const reqText = `<?php echo addslashes(__('hdr_requests')); ?>`;
+                    if (friendsData.pending_count > 0) {
+                        document.getElementById('tab-requests').innerHTML = `${reqText} <span style="background:#e74c3c; color:white; border-radius:50%; padding:2px 6px; font-size:0.7rem; margin-left:5px;">${friendsData.pending_count}</span>`;
+                    } else {
+                        document.getElementById('tab-requests').innerText = reqText;
+                    }
+
                     const list = currentFriendTab === 'friends' ? friendsData.friends : friendsData.pending;
                     
                     if(list.length === 0) {
@@ -238,10 +247,18 @@ class Header {
                     list.forEach(user => {
                         const avatar = user.avatar || 'assets/img/default_user.webp';
                         
+                        // Construction de l'icône de tchat avec badge rouge si message non lu
+                        let chatIconHtml = `<i class="fas fa-comment-dots"></i>`;
+                        if (user.unread_count > 0) {
+                            chatIconHtml += `<span style="position:absolute; top:-8px; right:-8px; background:#e74c3c; color:white; font-size:0.6rem; font-weight:bold; padding:2px 5px; border-radius:50%;">${user.unread_count}</span>`;
+                        }
+                        
                         const actions = currentFriendTab === 'requests' 
                             ? `<button onclick="handleFriendAction(${user.id}, 'accept')" style="background:#2ecc71; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer; margin-right:5px;"><i class="fas fa-check"></i></button>
                                <button onclick="handleFriendAction(${user.id}, 'reject')" style="background:#e74c3c; color:white; border:none; border-radius:3px; padding:3px 8px; cursor:pointer;"><i class="fas fa-times"></i></button>`
-                            : `<button onclick="openChatWith(${user.id})" style="background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-size:1.1rem; margin-right:15px;" title="<?php echo addslashes(__('hdr_chat_talk')); ?>"><i class="fas fa-comment-dots"></i></button>
+                            : `<button onclick="openChatWith(${user.id})" style="position:relative; background:transparent; color:var(--primary-purple); border:none; cursor:pointer; font-size:1.1rem; margin-right:15px;" title="<?php echo addslashes(__('hdr_chat_talk')); ?>">
+                                   ${chatIconHtml}
+                               </button>
                                <a href="profile.php?username=${user.username}" style="color:var(--text-secondary);"><i class="fas fa-external-link-alt"></i></a>`;
 
                         container.innerHTML += `
@@ -272,22 +289,18 @@ class Header {
                     panel.classList.toggle('active');
                     
                     if (panel.classList.contains('active')) {
-                        // S'il s'ouvre, on actualise la liste et on relance le rafraîchissement des messages
                         loadFriendsData();
                         if (activeChatFriendId) {
                             clearInterval(chatInterval);
                             chatInterval = setInterval(loadChatMessages, 3000);
                         }
                     } else {
-                        // S'il se ferme, on arrête de demander les messages au serveur pour économiser les ressources
                         clearInterval(chatInterval);
                     }
                 }
 
                 function openChatWith(friendId) {
                     const panel = document.getElementById('globalChatPanel');
-                    
-                    // Si on ouvre via la liste d'amis, on ferme la liste d'amis et on glisse le panneau
                     document.getElementById('friendsDropdown').classList.remove('active');
                     if (!panel.classList.contains('active')) panel.classList.add('active');
                     
@@ -295,7 +308,6 @@ class Header {
                     populateChatSidebar();
                     loadChatMessages();
                     
-                    // Relance la boucle d'actualisation des messages (toutes les 3s)
                     clearInterval(chatInterval);
                     chatInterval = setInterval(loadChatMessages, 3000);
                 }
@@ -305,15 +317,28 @@ class Header {
                     sidebar.innerHTML = '';
                     
                     friendsData.friends.forEach(f => {
+                        const wrapper = document.createElement('div');
+                        wrapper.style.position = 'relative';
+                        wrapper.style.cursor = 'pointer';
+                        wrapper.onclick = () => openChatWith(f.id);
+
                         const img = document.createElement('img');
                         img.src = f.avatar || 'assets/img/default_user.webp';
                         img.className = 'chat-friend-avatar' + (f.id === activeChatFriendId ? ' active' : '');
                         img.title = f.username;
-                        img.onclick = () => openChatWith(f.id);
-                        sidebar.appendChild(img);
+                        wrapper.appendChild(img);
+
+                        // Badge rouge sur l'avatar de la sidebar si message non lu
+                        if (f.unread_count > 0 && f.id !== activeChatFriendId) {
+                            const badge = document.createElement('span');
+                            badge.style.cssText = 'position:absolute; top:0; right:0; background:#e74c3c; color:white; font-size:0.6rem; font-weight:bold; padding:2px 5px; border-radius:50%; z-index:2; pointer-events:none; box-shadow: 0 2px 4px rgba(0,0,0,0.5);';
+                            badge.innerText = f.unread_count;
+                            wrapper.appendChild(badge);
+                        }
+
+                        sidebar.appendChild(wrapper);
                     });
 
-                    // Met à jour le nom en haut de la fenêtre
                     if (activeChatFriendId) {
                         const friend = friendsData.friends.find(f => f.id === activeChatFriendId);
                         if (friend) document.getElementById('chatActiveName').innerText = friend.username;
@@ -328,8 +353,6 @@ class Header {
                     
                     if (data.success) {
                         const container = document.getElementById('chatMessagesArea');
-                        
-                        // On vérifie si l'utilisateur est tout en bas du scroll pour savoir s'il faut auto-scroller
                         const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
                         
                         container.innerHTML = '';
@@ -340,13 +363,16 @@ class Header {
                             data.messages.forEach(m => {
                                 const div = document.createElement('div');
                                 div.className = 'chat-bubble ' + (m.sender_id === data.my_id ? 'sent' : 'received');
-                                div.innerText = m.message;
+                                div.innerHTML = m.message;
                                 container.appendChild(div);
                             });
                         }
 
-                        // Scroll auto seulement si on était déjà en bas
                         if (isAtBottom) container.scrollTop = container.scrollHeight;
+                        
+                        // Si on vient de charger des messages, on met à jour les badges globaux en arrière-plan
+                        // (Car l'API vient de marquer nos messages comme "lus")
+                        loadFriendsData();
                     }
                 }
 
@@ -362,12 +388,14 @@ class Header {
                         body: JSON.stringify({ friend_id: activeChatFriendId, message: msg })
                     });
                     
-                    // Recharge immédiatement les messages après envoi
                     loadChatMessages();
                 }
 
-                // Initialisation au démarrage
-                document.addEventListener('DOMContentLoaded', loadFriendsData);
+                // Initialisation au démarrage et vérification toutes les 15 secondes
+                document.addEventListener('DOMContentLoaded', () => {
+                    loadFriendsData();
+                    setInterval(loadFriendsData, 15000); // Polling global pour les notifs
+                });
             </script>
             <?php
         }

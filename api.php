@@ -662,11 +662,31 @@ if ($action === 'get_friends_data') {
     $stmtFriends->execute([$userId, $userId, $userId]);
     $friends = $stmtFriends->fetchAll(PDO::FETCH_ASSOC);
 
-    // Formater les pseudos avec l'API existante
-    foreach ($pending as &$p) { $p['display_name'] = display_username($p['username'], $p['grade'], true); }
-    foreach ($friends as &$f) { $f['display_name'] = display_username($f['username'], $f['grade'], true); }
+    // Récupérer les messages non lus
+    $stmtUnread = $pdo->prepare("
+        SELECT sender_id, COUNT(*) as unread_count 
+        FROM private_messages 
+        WHERE receiver_id = ? AND is_read = 0 
+        GROUP BY sender_id
+    ");
+    $stmtUnread->execute([$userId]);
+    $unreadData = $stmtUnread->fetchAll(PDO::FETCH_KEY_PAIR); // Crée un tableau [id_ami => nombre_messages]
+    $totalUnread = array_sum($unreadData) ?: 0;
 
-    echo json_encode(['success' => true, 'pending' => $pending, 'friends' => $friends, 'pending_count' => count($pending)]);
+    // Formater les pseudos et attacher le compte de messages
+    foreach ($pending as &$p) { $p['display_name'] = display_username($p['username'], $p['grade'], true); }
+    foreach ($friends as &$f) { 
+        $f['display_name'] = display_username($f['username'], $f['grade'], true); 
+        $f['unread_count'] = isset($unreadData[$f['id']]) ? $unreadData[$f['id']] : 0;
+    }
+
+    echo json_encode([
+        'success' => true, 
+        'pending' => $pending, 
+        'friends' => $friends, 
+        'pending_count' => count($pending),
+        'unread_count' => $totalUnread
+    ]);
     exit;
 }
 
