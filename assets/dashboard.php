@@ -319,6 +319,13 @@ class Dashboard {
             });
         }
 
+        if (window.secteurV) {
+            window.secteurV.sendRPCData({
+                username: "<?php echo addslashes($username); ?>",
+                elo: <?php echo $elo; ?>
+            });
+        }
+
         // AUTO SCROLL
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
