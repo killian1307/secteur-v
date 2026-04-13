@@ -16,16 +16,59 @@ if (window.secteurV) {
     });
 }
 
-// 2. The Master Fetch Loop
+let currentPollRate = 3000; // Default to 3 seconds
+
+// 2. The Master Fetch Smart-Loop
 async function fetchState() {
     try {
-        const response = await fetch('api_overlay.php');
+        // --- 1. FETCH OVERLAY DATA ---
+        const response = await fetch('api_overlay.php', { credentials: 'include' });
         const data = await response.json();
-
         updateUI(data);
+
+        // --- 2. DYNAMIC CHAT SPEED ---
+        // If in a match, shift into Turbo Mode (1 second) for smooth chat! Otherwise, relax at 3 seconds.
+        currentPollRate = (data.state === "in_match") ? 1000 : 3000;
+
+        // --- 3. THE TRUE AFK FIX & STATUS MESSAGES ---
+        // As long as we are logged in, ALWAYS check the official match status to catch popups!
+        if (data.state !== "not_logged_in") {
+            
+            const currentMode = document.getElementById('queue-mode-select') 
+                ? document.getElementById('queue-mode-select').value 
+                : 'ranked';
+
+            const officialRes = await fetch(`api.php?action=poll_match&mode=${currentMode}`, { credentials: 'include' });
+            const officialData = await officialRes.json();
+
+            // Check for match-ending events
+            if (officialData.state === 'opponent_left') {
+                alert("Opponent left the match! Returning to Lobby.");
+                window.location.reload(); 
+            } 
+            else if (officialData.state === 'finished_agreement') {
+                alert("Scores validated! Match is complete. Returning to Lobby.");
+                window.location.reload();
+            }
+            else if (officialData.state === 'lobby' && data.state === 'in_match') {
+                alert("Match was closed or timed out.");
+                window.location.reload();
+            }
+            else if (officialData.status === 'disputed') {
+                const statusText = document.getElementById('ui-score-status');
+                if (statusText) {
+                    statusText.innerHTML = "<span style='color: #ff4444; font-weight: bold;'>DISPUTE! Scores do not match.<br>Please check the website.</span>";
+                    statusText.style.display = 'block';
+                }
+            }
+        }
+
     } catch (error) {
         console.error("API Error:", error);
     }
+
+    // Call itself again after the timer finishes
+    setTimeout(fetchState, currentPollRate);
 }
 
 // 3. The UI Director
@@ -103,6 +146,38 @@ function updateUI(data) {
             }
         }
     }
+
+    // --- DISCORD RPC DYNAMIC UPDATES ---
+    if (window.secteurV && window.secteurV.sendRPCData) {
+        let rpcData = null;
+
+        if (data.state === "idle" && data.user) {
+            rpcData = {
+                details: "Navigating Secteur V",
+                state: "In Menus",
+                hover: `${data.user.username} - ${data.user.elo} EDP`
+            };
+        } 
+        else if (data.state === "in_queue" && data.user) {
+            rpcData = {
+                details: "Searching for a Match",
+                state: "In Queue",
+                hover: `${data.user.username} - ${data.user.elo} EDP`
+            };
+        } 
+        else if (data.state === "in_match" && data.match && data.user) {
+            rpcData = {
+                details: "In a Match",
+                state: `VS ${data.match.opponent_name}`,
+                hover: `${data.user.username} - ${data.user.elo} EDP`
+            };
+        }
+
+        // Send the payload to Electron
+        if (rpcData) {
+            window.secteurV.sendRPCData(rpcData);
+        }
+    }
 }
 
 // 4. Send Actions back to the Server (Join/Leave Queue)
@@ -138,7 +213,6 @@ function sendJoinQueue() {
 // 5. Start the Engine!
 // Run immediately once, then poll every 3 seconds
 fetchState();
-setInterval(fetchState, 3000);
 
 // --- CHAT & SCORE API FUNCTIONS ---
 
