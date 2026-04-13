@@ -282,6 +282,7 @@ $header->render();
 
 <!-- Son de notification pour les nouveaux messages -->
 <audio id="chat-sound" src="assets/sounds/notification.wav" preload="auto"></audio>
+<audio id="match-found-sound" src="assets/sounds/match_found.wav" preload="auto"></audio>
 
 <script>
     const MODE = "<?php echo $mode; ?>";
@@ -442,6 +443,12 @@ $header->render();
                 currentMatchId = data.match_id;
                 
                 if (currentState !== 'in_match' && currentState !== 'resolving') {
+
+                    // Joue un son de notification à la trouvaille du match
+                    let matchSound = document.getElementById('match-found-sound');
+                    matchSound.volume = 1.0;
+                    matchSound.play().catch(e => console.log("Sound blocked", e));
+
                     currentState = 'in_match';
                     setView('view-match');
                     document.getElementById('opp-name').innerHTML = data.opponent.display_name;

@@ -2385,6 +2385,26 @@ input:valid {
     text-decoration: underline;
 }
 
+/* --- CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #FFD700;
+    border-radius: 10px;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e6c200;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     
