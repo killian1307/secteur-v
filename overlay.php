@@ -38,7 +38,16 @@
     <div id="panel-idle" class="panel">
         <h3 style="margin: 0; color: #FFD700;" id="ui-username">Loading...</h3>
         <p style="margin: 5px 0 0 0;">ELO: <span id="ui-elo">--</span></p>
-        <button onclick="sendAction('join_queue')" style="margin-top: 10px; background: #FFD700; color: #000; border: none; padding: 5px 10px; cursor: pointer;">Enter Queue</button>
+        
+        <div style="margin-top: 10px; display: flex; gap: 5px;">
+            <select id="queue-mode-select" style="background: #222; color: #fff; border: 1px solid #555; padding: 5px; border-radius: 4px;">
+                <option value="ranked">Ranked</option>
+                <option value="normal">Normal</option>
+            </select>
+            <button onclick="sendJoinQueue()" style="background: #FFD700; color: #000; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; font-weight: bold;">
+                Enter Queue
+            </button>
+        </div>
     </div>
 
     <div id="panel-queue" class="panel">

@@ -16,6 +16,13 @@ $stmt = $pdo->prepare("SELECT username, elo, grade FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
 
+// --- ANTI-AFK FIX ---
+// Tell the server this user is actively looking at the overlay so they don't get forfeited
+$currentPhpTime = date('Y-m-d H:i:s');
+$updateActivity = $pdo->prepare("UPDATE users SET last_activity = ? WHERE id = ?");
+$updateActivity->execute([$currentPhpTime, $userId]);
+// --------------------
+
 $state = "idle";
 $matchData = null;
 $queueData = null;

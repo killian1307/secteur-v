@@ -106,32 +106,33 @@ function updateUI(data) {
 }
 
 // 4. Send Actions back to the Server (Join/Leave Queue)
-async function sendAction(actionType) {
+async function sendAction(actionType, extraData = {}) {
     console.log("Sending action to server:", actionType);
     
+    // Combine our action type with any extra data (like 'mode')
+    const payload = new URLSearchParams({ action: actionType, ...extraData });
+
     try {
         const response = await fetch('api_overlay_action.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                'action': actionType
-            })
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: payload
         });
         
         const result = await response.json();
         
-        if (result.success) {
-            // The database was successfully updated!
-            // Instantly fetch the new state to update the UI
-            fetchState();
-        } else {
-            console.error("Server refused action:", result.error);
-        }
+        if (result.success) fetchState();
+        else console.error("Server refused action:", result.error);
+        
     } catch (error) {
         console.error("Failed to reach action API:", error);
     }
+}
+
+function sendJoinQueue() {
+    const mode = document.getElementById('queue-mode-select').value;
+    sendAction('join_queue', { mode: mode });
 }
 
 // 5. Start the Engine!

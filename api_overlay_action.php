@@ -14,12 +14,16 @@ $action = $_POST['action'];
 
 try {
     if ($action === 'join_queue') {
+        // Grab the mode, default to ranked if someone tries to hack the JS
+        $mode = (isset($_POST['mode']) && $_POST['mode'] === 'normal') ? 'normal' : 'ranked';
+
         // Prevent double-queueing
         $check = $pdo->prepare("SELECT user_id FROM matchmaking_queue WHERE user_id = ?");
         $check->execute([$userId]);
         if (!$check->fetch()) {
-            $insert = $pdo->prepare("INSERT INTO matchmaking_queue (user_id, mode) VALUES (?, 'ranked')");
-            $insert->execute([$userId]);
+            // Insert with the selected mode!
+            $insert = $pdo->prepare("INSERT INTO matchmaking_queue (user_id, mode) VALUES (?, ?)");
+            $insert->execute([$userId, $mode]);
         }
         echo json_encode(["success" => true]);
         
