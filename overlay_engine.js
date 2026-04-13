@@ -88,6 +88,7 @@ function updateUI(data) {
     if (data.user) {
         document.getElementById('ui-username').innerText = data.user.username;
         document.getElementById('ui-elo').innerText = data.user.elo;
+        document.getElementById('ui-avatar').src = data.user.avatar || 'assets/img/default_user.webp';
     }
 
     // Show the correct panel based on state
@@ -107,6 +108,7 @@ function updateUI(data) {
             currentMatchId = data.match.match_id;
             document.getElementById('ui-opponent-name').innerText = data.match.opponent_name;
             document.getElementById('ui-opponent-elo').innerText = data.match.opponent_elo;
+            document.getElementById('ui-opponent-avatar').src = data.match.opponent_avatar || 'assets/img/default_user.webp';
 
             // --- 1. RENDER CHAT ---
             const chatBox = document.getElementById('ui-chat-box');

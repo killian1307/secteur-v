@@ -36,8 +36,13 @@
     </div>
 
     <div id="panel-idle" class="panel">
-        <h3 style="margin: 0; color: #FFD700;" id="ui-username">Loading...</h3>
-        <p style="margin: 5px 0 0 0;">ELO: <span id="ui-elo">--</span></p>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img id="ui-avatar" src="" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #FFD700; object-fit: cover;">
+            <div>
+                <h3 style="margin: 0; color: #FFD700;" id="ui-username">Loading...</h3>
+                <p style="margin: 5px 0 0 0;">ELO: <span id="ui-elo">--</span></p>
+            </div>
+        </div>
         
         <div style="margin-top: 10px; display: flex; gap: 5px;">
             <select id="queue-mode-select" style="background: #222; color: #fff; border: 1px solid #555; padding: 5px; border-radius: 4px;">
@@ -59,8 +64,15 @@
     <div id="panel-match" class="panel" style="width: 500px; display: flex; gap: 20px; border-color: #ff0055;">
         
         <div style="flex: 1; display: flex; flex-direction: column;">
-            <h3 style="margin: 0; color: #ff0055;">MATCH FOUND!</h3>
-            <p style="margin: 5px 0 10px 0;">VS <strong id="ui-opponent-name">Unknown</strong> (ELO: <span id="ui-opponent-elo">--</span>)</p>
+            <h3 style="margin: 0 0 10px 0; color: #ff0055;">MATCH FOUND!</h3>
+            
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <img id="ui-opponent-avatar" src="" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ff0055; object-fit: cover;">
+                <div>
+                    <p style="margin: 0;">VS <strong id="ui-opponent-name">Unknown</strong></p>
+                    <p style="margin: 0; font-size: 13px; color: #ccc;">ELO: <span id="ui-opponent-elo">--</span></p>
+                </div>
+            </div>
             
             <div id="ui-chat-box" style="flex: 1; min-height: 120px; background: rgba(0,0,0,0.5); padding: 8px; overflow-y: auto; border: 1px solid #444; font-size: 13px; margin-bottom: 5px; border-radius: 4px;">
                 </div>

@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 
 // 1. Fetch User Stats
-$stmt = $pdo->prepare("SELECT username, elo, grade FROM users WHERE id = ?");
+$stmt = $pdo->prepare("SELECT username, elo, grade, avatar FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
 
@@ -30,8 +30,8 @@ $queueData = null;
 // 2. Are they in an active match?
 $stmtMatch = $pdo->prepare("
     SELECT am.*, 
-           u1.username as p1_name, u1.elo as p1_elo, 
-           u2.username as p2_name, u2.elo as p2_elo
+           u1.username as p1_name, u1.elo as p1_elo, u1.avatar as p1_avatar,
+           u2.username as p2_name, u2.elo as p2_elo, u2.avatar as p2_avatar
     FROM active_matches am
     JOIN users u1 ON am.player1_id = u1.id
     JOIN users u2 ON am.player2_id = u2.id
@@ -63,6 +63,7 @@ if ($match) {
         "match_id" => $matchId,
         "opponent_name" => $isPlayer1 ? $match['p2_name'] : $match['p1_name'],
         "opponent_elo" => $isPlayer1 ? $match['p2_elo'] : $match['p1_elo'],
+        "opponent_avatar" => $isPlayer1 ? $match['p2_avatar'] : $match['p1_avatar'],
         "my_score_claim" => $isPlayer1 ? $match['p1_score_claim'] : $match['p2_score_claim'],
         "chat" => $chatHistory
     ];
@@ -87,7 +88,8 @@ echo json_encode([
     "state" => $state,
     "user" => [
         "username" => $user['username'],
-        "elo" => $user['elo']
+        "elo" => $user['elo'],
+        "avatar" => $user['avatar']
     ],
     "queue" => $queueData,
     "match" => $matchData
