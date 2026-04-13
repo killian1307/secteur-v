@@ -367,6 +367,14 @@ $footer->render();
         isOwner: <?php echo $isOwner ? 'true' : 'false'; ?>,
         currentFormation: "<?php echo htmlspecialchars($savedFormation); ?>"
     };
+
+    // RPC Discord - Affiche que l'on est sur un profil
+    if (window.secteurV) {
+        window.secteurV.sendRPCData({
+            details: "<?php echo addslashes(__('rpc_profile_details')); ?>",
+            state: "<?php echo addslashes(__('rpc_profile_state')) . ' ' . addslashes($targetUsername); ?>"
+        });
+    }
 </script>
 </body>
 </html>

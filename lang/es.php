@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Bienvenido de nuevo,',
     'dash_subtitle' => '¿Listo para demostrar quién es el mejor?',
     'dash_online_count' => '%d jugador%s en línea',
-    'dash_btn_ranked' => 'Jugar Clasificatoria',
-    'dash_btn_normal' => 'Partida Amistosa',
+    'dash_btn' => 'Jugar en 1c1',
     'dash_history_title' => 'Historial de partidas',
     'dash_tab_ranked' => 'Clasificatoria',
     'dash_tab_normal' => 'Normal',
@@ -416,4 +415,50 @@ return [
     'cgu_chat_li2' => 'Sospecha de trampas, arreglo de partidos (boost de ELO) o disputas graves.',
     'cgu_chat_li3' => 'Requisición legal por parte de las autoridades competentes.',
     'cgu_chat_warn' => 'Recomendación de seguridad: Pedimos expresamente a nuestros usuarios que nunca compartan información personal sensible (contraseñas, datos bancarios, números de teléfono, direcciones personales completas) a través de la mensajería del sitio. Secteur V nunca le pedirá este tipo de información por mensaje privado.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'Configuración de la App',
+    'set_autostart_title' => 'Inicio Automático',
+    'set_autostart_desc' => 'Iniciar Secteur V automáticamente al encender el ordenador.',
+    'set_not_client' => 'Estos ajustes solo están disponibles dentro de la aplicación de escritorio.',
+
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'En el tablero de control',
+    'rpc_dash_state' => 'En los menús',
+
+    // Profile
+    'rpc_profile_details' => 'Consulte un perfil',
+    'rpc_profile_state' => 'Observando',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'En búsqueda de partido',
+    'rpc_queue_state' => 'Modo : ',
+
+    // Match Actif
+    'rpc_match_details' => 'En un partido en vivo',
+    'rpc_match_state1' => 'Juega contra',
+    'rpc_match_state2' => 'en',
+
+    'dash_btn_tournament' => 'Torneos',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Descargar el Cliente',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Cliente',
+    'dl_subtitle' => 'Los torneos requieren la aplicación de escritorio oficial para garantizar una experiencia fluida y altamente competitiva.',
+    'dl_cta' => 'Descargar para Windows',
+    
+    'dl_card1_title' => 'Gestión de Torneos',
+    'dl_card1_desc' => 'Nunca vuelvas a perderte un partido. El cliente gestiona la progresión automática del árbol de torneo y el emparejamiento.',
+    
+    'dl_card2_title' => 'Notificaciones Instantáneas',
+    'dl_card2_desc' => 'Recibe alertas nativas en tu escritorio cuando tu partido comienza o tu oponente está listo.',
+    
+    'dl_card3_title' => 'Sincronización en Vivo & RPC',
+    'dl_card3_desc' => 'Tu estado, partidos en curso y progreso están sincronizados en tiempo real con Discord para que todos puedan seguir tu trayectoria.',
+    
+    'nav_download_client' => 'Descargar el Cliente',
+    
+    ];

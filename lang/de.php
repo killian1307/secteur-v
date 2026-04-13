@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Willkommen zurück,',
     'dash_subtitle' => 'Bereit zu beweisen, wer der Beste ist?',
     'dash_online_count' => '%d Spieler online',
-    'dash_btn_ranked' => 'Rangliste spielen',
-    'dash_btn_normal' => 'Freundschaftsspiel',
+    'dash_btn' => '1c1 spielen',
     'dash_history_title' => 'Spielverlauf',
     'dash_tab_ranked' => 'Rangliste',
     'dash_tab_normal' => 'Normal',
@@ -416,4 +415,50 @@ return [
     'cgu_chat_li2' => 'Verdacht auf Betrug, Spielmanipulation (ELO-Boosting) oder schwerwiegende Streitigkeiten.',
     'cgu_chat_li3' => 'Gesetzliche Anforderung durch zuständige Behörden.',
     'cgu_chat_warn' => 'Sicherheitsempfehlung: Wir fordern unsere Nutzer ausdrücklich auf, niemals sensible persönliche Daten (Passwörter, Bankdaten, Telefonnummern, vollständige Privatadressen) über das Nachrichtensystem der Website weiterzugeben. Secteur V wird Sie niemals per privater Nachricht nach solchen Informationen fragen.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'App-Einstellungen',
+    'set_autostart_title' => 'Automatischer Start',
+    'set_autostart_desc' => 'Secteur V automatisch beim Start des Computers starten.',
+    'set_not_client' => 'Diese Einstellungen sind nur innerhalb der Desktop-Anwendung verfügbar.',
+
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'Auf dem Dashboard',
+    'rpc_dash_state' => 'In den Menüs',
+
+    // Profile
+    'rpc_profile_details' => 'Auf einem Profil',
+    'rpc_profile_state' => 'Beobachtet',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'In der Warteschlange',
+    'rpc_queue_state' => 'Modus : ',
+
+    // Match Actif
+    'rpc_match_details' => 'In einem Match',
+    'rpc_match_state1' => 'Spielt gegen',
+    'rpc_match_state2' => 'in',
+
+    'dash_btn_tournament' => 'Turniermodus',
+
+        // --- Download Client Page in german ---
+    'dl_title' => 'SECTEUR V - Offizieller Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Für ein reibungsloses und wettbewerbsorientiertes Turniererlebnis ist die offizielle Desktop-Anwendung erforderlich.',
+    'dl_cta' => 'Für Windows herunterladen',
+    
+    'dl_card1_title' => 'Automatischer Fortschritt',
+    'dl_card1_desc' => 'Dein Fortschritt, deine EDP und dein Spielverlauf werden automatisch synchronisiert, ohne dass du manuell Ergebnisse eingeben musst.',
+    
+    'dl_card2_title' => 'Benachrichtigungen',
+    'dl_card2_desc' => 'Erhalten Sie native Benachrichtigungen auf Ihrem Desktop, wenn Ihr Match beginnt oder Ihr Gegner bereit ist.',
+    
+    'dl_card3_title' => 'Echtzeit-Discord-Integration',
+    'dl_card3_desc' => 'Ihr Status, Ihre laufenden Spiele und Ihr Fortschritt werden in Echtzeit mit Discord synchronisiert, sodass alle Ihren Weg verfolgen können.',
+
+    'nav_download_client' => 'Client herunterladen',
+
+    ];

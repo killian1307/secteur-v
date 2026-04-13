@@ -76,6 +76,9 @@ class Header {
             $langLinksHtml .= '<a href="' . htmlspecialchars($newUrl) . '" class="dropdown-item">' . $label . '</a>';
         }
 
+        // Check if the user is using the desktop app
+        $isDesktopApp = strpos($_SERVER['HTTP_USER_AGENT'], 'SecteurV-Desktop-App') !== false;
+
         echo '<!DOCTYPE html>
 <html lang="' . htmlspecialchars($currentLang) . '">
 <head>
@@ -434,6 +437,12 @@ class Header {
                    <a href="logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> ' . __('nav_logout') . '</a>';
         } else {
              echo '<a href="discord_login.php" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> ' . __('nav_login') . '</a>';
+        }
+
+        if ($isDesktopApp) {
+            echo '<a href="app_settings.php" class="dropdown-item"><i class="fas fa-desktop"></i> ' . __('nav_app_settings') . '</a>';
+        } else {
+            echo '<a href="download_client.php" class="dropdown-item"><i class="fas fa-download"></i> ' . __('nav_download_client') . '</a>';
         }
 
         echo '

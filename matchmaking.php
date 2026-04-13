@@ -447,6 +447,18 @@ $header->render();
                     document.getElementById('opp-name').innerHTML = data.opponent.display_name;
                     document.getElementById('opp-elo').innerText = "<?php echo addslashes(__('mm_elo')); ?> " + data.opponent.elo;
                     document.getElementById('opp-avatar').src = data.opponent.avatar || 'assets/img/default_user.webp';
+
+                    // RPC Discord
+                    const targetUsername = data.opponent.display_name || <?php echo json_encode(__('mm_opp')); ?>;
+
+                    if (window.secteurV) {
+                        const matchState = <?php echo json_encode(__('rpc_match_state1') . ' '); ?> + targetUsername + <?php echo json_encode(' ' . __('rpc_match_state2') . ' ' . $mode); ?>;
+
+                        window.secteurV.sendRPCData({
+                            details: <?php echo json_encode(__('rpc_match_details')); ?>,
+                            state: matchState
+                        });
+                    }
                 }
 
                 if (data.status === 'disputed' && currentState !== 'disputed') {
@@ -569,6 +581,17 @@ $header->render();
             document.getElementById('match-rules-modal').classList.add('active');
         }
     });
+
+    // RPC Discord - Affiche que l'on est en file d'attente pour un match
+    if (window.secteurV) {
+        const queueState = <?php echo json_encode(__('rpc_queue_state') . ' '); ?> + MODE;
+        
+        window.secteurV.sendRPCData({
+            details: <?php echo json_encode(__('rpc_queue_details')); ?>,
+            state: queueState
+        });
+    }
+
 </script>
 
 <?php

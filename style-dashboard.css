@@ -51,8 +51,8 @@
     color: var(--background-card);
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     width:fit-content;
-
 }
+
 .btn-mode.ranked:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
@@ -70,6 +70,19 @@
     transform: translateY(-3px) scale(1.05);
     color: #fff;
     border-color: #fff;
+}
+
+/* Bouton Tournois */
+.btn-mode.tournament {
+    background: linear-gradient(135deg, rgb(166, 0, 231), rgb(255, 0, 128));
+    color: var(--text-primary);
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.4);
+    width:fit-content;
+}
+
+.btn-mode.tournament:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 0, 128, 0.6);
 }
 
 .dashboard-grid {

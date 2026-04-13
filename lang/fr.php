@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Bon retour,',
     'dash_subtitle' => 'Prêt à prouver qui est le meilleur ?',
     'dash_online_count' => '%d joueur%s en ligne',
-    'dash_btn_ranked' => 'Jouer en Classé',
-    'dash_btn_normal' => 'Match Amical',
+    'dash_btn' => 'Jouer en 1c1',
     'dash_history_title' => 'Historique',
     'dash_tab_ranked' => 'Classé',
     'dash_tab_normal' => 'Normal',
@@ -400,4 +399,50 @@ return [
     'cgu_chat_li2' => 'Suspicion de triche, d\'arrangement de matchs (boost d\'ELO) ou de litige grave.',
     'cgu_chat_li3' => 'Réquisition légale par les autorités compétentes.',
     'cgu_chat_warn' => 'Recommandation de sécurité : Nous demandons expressément à nos utilisateurs de ne jamais communiquer d\'informations personnelles sensibles (mots de passe, coordonnées bancaires, numéro de téléphone, adresse personnelle complète) via la messagerie du site. Le Secteur V ne vous demandera jamais ce type d\'informations par message privé.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'Paramètres de l\'App',
+    'set_autostart_title' => 'Démarrage Automatique',
+    'set_autostart_desc' => 'Lancer Secteur V automatiquement au démarrage de l\'ordinateur.',
+    'set_not_client' => 'Ces paramètres ne sont disponibles que dans l\'application de bureau.',
+
+    // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'Sur le tableau de bord',
+    'rpc_dash_state' => 'Dans les menus',
+
+    // Profile
+    'rpc_profile_details' => 'Consulte un profil',
+    'rpc_profile_state' => 'Observe',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'En recherche de match',
+    'rpc_queue_state' => 'Mode : ',
+
+    // Match Actif
+    'rpc_match_details' => 'En plein match',
+    'rpc_match_state1' => 'Joue contre',
+    'rpc_match_state2' => 'en',
+
+    'dash_btn_tournament' => 'Tournois',
+
+    // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Télécharger le Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Les tournois nécessitent l\'application de bureau officielle pour garantir une expérience fluide et hautement compétitive.',
+    'dl_cta' => 'Télécharger pour Windows',
+    
+    'dl_card1_title' => 'Organisation Absolue',
+    'dl_card1_desc' => 'Ne ratez plus jamais un match. Le client gère la progression automatique de l\'arbre de tournoi et le matchmaking.',
+    
+    'dl_card2_title' => 'Notifications Instantanées',
+    'dl_card2_desc' => 'Recevez des alertes natives sur votre bureau lorsque votre manche commence ou que votre adversaire est prêt.',
+    
+    'dl_card3_title' => 'Synchro Live & RPC',
+    'dl_card3_desc' => 'Votre statut, vos matchs en cours et votre progression sont synchronisés en direct avec Discord pour que tout le monde puisse suivre votre parcours.',
+    
+    'nav_download_client' => 'Télécharger le Client',
+    
+    ];

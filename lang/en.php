@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Welcome back,',
     'dash_subtitle' => 'Ready to prove who is the best?',
     'dash_online_count' => '%d player%s online',
-    'dash_btn_ranked' => 'Play Ranked',
-    'dash_btn_normal' => 'Friendly Match',
+    'dash_btn' => 'Play 1v1',
     'dash_history_title' => 'Match History',
     'dash_tab_ranked' => 'Ranked',
     'dash_tab_normal' => 'Normal',
@@ -406,4 +405,50 @@ return [
     'cgu_chat_li2' => 'Suspicion of cheating, match-fixing (ELO boosting), or serious disputes.',
     'cgu_chat_li3' => 'Legal requisition by competent authorities.',
     'cgu_chat_warn' => 'Security recommendation: We expressly ask our users never to share sensitive personal information (passwords, bank details, phone numbers, full personal addresses) via the site\'s messaging. Secteur V will never ask you for this type of information via private message.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'App Settings',
+    'set_autostart_title' => 'Auto-Start',
+    'set_autostart_desc' => 'Launch Secteur V automatically when your computer starts.',
+    'set_not_client' => 'These settings are only available within the desktop application.',
+
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'On the dashboard',
+    'rpc_dash_state' => 'In the menus',
+
+    // Profile
+    'rpc_profile_details' => 'Consulting a profile',
+    'rpc_profile_state' => 'Observing',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'Searching for a match',
+    'rpc_queue_state' => 'Mode: ',
+
+    // Match Actif
+    'rpc_match_details' => 'In a live match',
+    'rpc_match_state1' => 'Playing against',
+    'rpc_match_state2' => 'in',
+
+    'dash_btn_tournament' => 'Tournaments',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Download Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Tournaments require the official desktop application to ensure a smooth and highly competitive experience.',
+    'dl_cta' => 'Download for Windows',
+    
+    'dl_card1_title' => 'Absolute Organization',
+    'dl_card1_desc' => 'Never miss a match again. The client handles the automatic progression of the tournament tree and matchmaking.',
+    
+    'dl_card2_title' => 'Instant Notifications',
+    'dl_card2_desc' => 'Receive native alerts on your desktop when your match starts or your opponent is ready.',
+    
+    'dl_card3_title' => 'Live Synchronization & RPC',
+    'dl_card3_desc' => 'Your status, ongoing matches, and progress are synchronized in real-time with Discord so everyone can follow your journey.',
+    
+    'nav_download_client' => 'Download Client',
+    
+    ];

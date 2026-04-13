@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Bentornato,',
     'dash_subtitle' => 'Pronto a dimostrare chi è il migliore?',
     'dash_online_count' => '%d giocator%s online',
-    'dash_btn_ranked' => 'Gioca Classificata',
-    'dash_btn_normal' => 'Partita Amichevole',
+    'dash_btn' => 'Gioca in 1c1',
     'dash_history_title' => 'Cronologia Partite',
     'dash_tab_ranked' => 'Classificata',
     'dash_tab_normal' => 'Normale',
@@ -416,4 +415,50 @@ return [
     'cgu_chat_li2' => 'Sospetto di imbrogli, partite truccate (ELO boosting) o controversie gravi.',
     'cgu_chat_li3' => 'Requisizione legale da parte delle autorità competenti.',
     'cgu_chat_warn' => 'Raccomandazione di sicurezza: Chiediamo espressamente ai nostri utenti di non condividere mai informazioni personali sensibili (password, coordinate bancarie, numeri di telefono, indirizzi personali completi) tramite la messaggistica del sito. Secteur V non ti chiederà mai questo tipo di informazioni tramite messaggio privato.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'Impostazioni dell\'App',
+    'set_autostart_title' => 'Avvio Automatico',
+    'set_autostart_desc' => 'Avvia Secteur V automaticamente all\'avvio del computer.',
+    'set_not_client' => 'Queste impostazioni sono disponibili solo all\'interno dell\'applicazione desktop.',
+
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'Sul cruscotto',
+    'rpc_dash_state' => 'Nei menu',
+
+    // Profile
+    'rpc_profile_details' => 'Consulta un profilo',
+    'rpc_profile_state' => 'Osserva',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'Ricerca di una partita',
+    'rpc_queue_state' => 'Modalità: ',
+
+    // Match Actif
+    'rpc_match_details' => 'Nella partita in corso',
+    'rpc_match_state1' => 'Gioca contro',
+    'rpc_match_state2' => 'in',
+
+    'dash_btn_tournament' => 'Tornei',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Download del Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Il compagno indispensabile per ogni giocatore competitivo di Inazuma Eleven.',
+    'dl_cta' => 'Scarica per Windows',
+    
+    'dl_card1_title' => 'Organizzazione Assoluta',
+    'dl_card1_desc' => 'Non perdere mai più una partita. Il client gestisce la progressione automatica dell\'albero del torneo e il matchmaking.',
+    
+    'dl_card2_title' => 'Notifiche Desktop',
+    'dl_card2_desc' => 'Ricevi notifiche native sul tuo desktop quando la tua partita inizia o quando il tuo avversario è pronto.',
+    
+    'dl_card3_title' => 'Sincronizzazione Live & RPC',
+    'dl_card3_desc' => 'Il tuo stato, le tue partite in corso e la tua progressione sono sincronizzati in tempo reale con Discord per permettere a tutti di seguire il tuo percorso.',
+    
+    'nav_download_client' => 'Scarica il Client',
+    
+    ];
