@@ -47,13 +47,37 @@
         <button onclick="sendAction('leave_queue')" style="margin-top: 10px; background: #ff4444; color: #fff; border: none; padding: 5px 10px; cursor: pointer;">Cancel Search</button>
     </div>
 
-    <div id="panel-match" class="panel">
-        <h3 style="margin: 0; color: #ff0055;">MATCH FOUND!</h3>
-        <p style="margin: 10px 0 5px 0;">VS <strong id="ui-opponent-name">Unknown</strong> (ELO: <span id="ui-opponent-elo">--</span>)</p>
-        <div style="height: 100px; background: #000; margin-top: 10px; padding: 5px; overflow-y: auto;">
-            <p style="color: gray; font-size: 12px; margin: 0;">Live chat connected...</p>
+    <div id="panel-match" class="panel" style="width: 500px; display: flex; gap: 20px; border-color: #ff0055;">
+        
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <h3 style="margin: 0; color: #ff0055;">MATCH FOUND!</h3>
+            <p style="margin: 5px 0 10px 0;">VS <strong id="ui-opponent-name">Unknown</strong> (ELO: <span id="ui-opponent-elo">--</span>)</p>
+            
+            <div id="ui-chat-box" style="flex: 1; min-height: 120px; background: rgba(0,0,0,0.5); padding: 8px; overflow-y: auto; border: 1px solid #444; font-size: 13px; margin-bottom: 5px; border-radius: 4px;">
+                </div>
+            
+            <form onsubmit="submitChat(event)" style="display: flex; gap: 5px;">
+                <input type="text" id="chat-input" autocomplete="off" placeholder="Type message..." style="flex: 1; padding: 6px; background: #222; color: #fff; border: 1px solid #555; border-radius: 3px;">
+                <button type="submit" style="background: #FFD700; color: #000; border: none; padding: 0 15px; cursor: pointer; border-radius: 3px; font-weight: bold;">Send</button>
+            </form>
         </div>
-        <input type="text" placeholder="Type message..." style="width: 100%; box-sizing: border-box; margin-top: 5px; padding: 5px;">
+
+        <div id="ui-score-section" style="width: 140px; border-left: 1px solid #444; padding-left: 20px; display: flex; flex-direction: column; justify-content: center;">
+            <h4 style="margin: 0 0 10px 0; color: #FFD700; text-align: center;">Report Score</h4>
+            
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 12px; color: #aaa;">Your Score:</label>
+                <input type="number" id="score-you" min="0" max="99" style="width: 100%; box-sizing: border-box; padding: 6px; background: #222; color: #fff; border: 1px solid #555; text-align: center; border-radius: 3px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #aaa;">Opponent Score:</label>
+                <input type="number" id="score-opp" min="0" max="99" style="width: 100%; box-sizing: border-box; padding: 6px; background: #222; color: #fff; border: 1px solid #555; text-align: center; border-radius: 3px; font-size: 16px;">
+            </div>
+            
+            <button id="score-submit-btn" onclick="submitMatchScore()" style="width: 100%; background: #00ffcc; color: #000; border: none; padding: 8px; font-weight: bold; cursor: pointer; border-radius: 3px;">Confirm</button>
+            <p id="ui-score-status" style="font-size: 11px; color: #ffcc00; display: none; text-align: center; margin-top: 10px; line-height: 1.3;">Score submitted.<br>Waiting for opponent...</p>
+        </div>
     </div>
 
     <div class="hint">Press SHIFT + TAB to interact</div>

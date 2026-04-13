@@ -1,6 +1,7 @@
 // overlay_engine.js
 
 let currentState = null; // Keeps track of where we are so we don't redraw unnecessarily
+let currentMatchId = null;
 
 // 1. Setup the Electron Hotkey Bridge
 if (window.secteurV) {
@@ -57,10 +58,49 @@ function updateUI(data) {
         }
 
     } else if (data.state === "in_match") {
-        document.getElementById('panel-match').style.display = 'block';
+        document.getElementById('panel-match').style.display = 'flex'; // Use flex for the dual-box layout
+        
         if (data.match) {
+            currentMatchId = data.match.match_id;
             document.getElementById('ui-opponent-name').innerText = data.match.opponent_name;
             document.getElementById('ui-opponent-elo').innerText = data.match.opponent_elo;
+
+            // --- 1. RENDER CHAT ---
+            const chatBox = document.getElementById('ui-chat-box');
+            // Check if user is currently scrolled to the bottom
+            const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 10;
+            
+            chatBox.innerHTML = ''; // Clear old chat
+            if (data.match.chat) {
+                data.match.chat.forEach(msg => {
+                    chatBox.innerHTML += `<div style="margin-bottom: 4px;"><strong style="color: #FFD700;">${msg.username}:</strong> <span style="color: #eee;">${msg.message}</span></div>`;
+                });
+            }
+            
+            // Auto-scroll down if they were already at the bottom
+            if (isScrolledToBottom) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            // --- 2. RENDER SCORE STATE ---
+            const scoreBtn = document.getElementById('score-submit-btn');
+            const scoreStatus = document.getElementById('ui-score-status');
+            const inputYou = document.getElementById('score-you');
+            const inputOpp = document.getElementById('score-opp');
+
+            if (data.match.my_score_claim !== null) {
+                // User already submitted their score! Lock the inputs.
+                inputYou.disabled = true;
+                inputOpp.disabled = true;
+                scoreBtn.style.display = 'none';
+                scoreStatus.style.display = 'block';
+            } else {
+                // Waiting for user to submit
+                inputYou.disabled = false;
+                inputOpp.disabled = false;
+                scoreBtn.style.display = 'block';
+                scoreStatus.style.display = 'none';
+            }
         }
     }
 }
@@ -98,3 +138,41 @@ async function sendAction(actionType) {
 // Run immediately once, then poll every 3 seconds
 fetchState();
 setInterval(fetchState, 3000);
+
+// --- CHAT & SCORE API FUNCTIONS ---
+
+async function submitChat(e) {
+    e.preventDefault(); // Prevent page reload
+    const input = document.getElementById('chat-input');
+    const msg = input.value;
+    
+    if (!msg || !currentMatchId) return;
+    
+    input.value = ''; // Instantly clear the input box
+    
+    // Send to server (Remembering our credentials: 'include' fix!)
+    await fetch('api_overlay_action.php', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ action: 'send_chat', match_id: currentMatchId, message: msg })
+    });
+    
+    fetchState(); // Force an immediate refresh to show the message
+}
+
+async function submitMatchScore() {
+    const myScore = document.getElementById('score-you').value;
+    const oppScore = document.getElementById('score-opp').value;
+    
+    if (myScore === '' || oppScore === '' || !currentMatchId) return;
+    
+    await fetch('api_overlay_action.php', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ action: 'submit_score', match_id: currentMatchId, my_score: myScore, opp_score: oppScore })
+    });
+    
+    fetchState(); // Refresh to lock the inputs
+}

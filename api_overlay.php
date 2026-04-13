@@ -39,10 +39,25 @@ if ($match) {
     $state = "in_match";
     // Determine which player is the opponent
     $isPlayer1 = ($match['player1_id'] == $userId);
+    $matchId = $match['id'];
+
+    // Grab the live chat history
+    $stmtChat = $pdo->prepare("
+        SELECT mc.message, u.username 
+        FROM match_chat mc 
+        JOIN users u ON mc.sender_id = u.id 
+        WHERE mc.match_id = ? 
+        ORDER BY mc.sent_at ASC
+    ");
+    $stmtChat->execute([$matchId]);
+    $chatHistory = $stmtChat->fetchAll(PDO::FETCH_ASSOC);
+
     $matchData = [
-        "match_id" => $match['id'],
+        "match_id" => $matchId,
         "opponent_name" => $isPlayer1 ? $match['p2_name'] : $match['p1_name'],
-        "opponent_elo" => $isPlayer1 ? $match['p2_elo'] : $match['p1_elo']
+        "opponent_elo" => $isPlayer1 ? $match['p2_elo'] : $match['p1_elo'],
+        "my_score_claim" => $isPlayer1 ? $match['p1_score_claim'] : $match['p2_score_claim'],
+        "chat" => $chatHistory
     ];
 } else {
     // 3. If not in a match, are they in the queue?
