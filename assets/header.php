@@ -441,6 +441,8 @@ class Header {
 
         if ($isDesktopApp) {
             echo '<a href="app_settings.php" class="dropdown-item"><i class="fas fa-desktop"></i> ' . __('nav_app_settings') . '</a>';
+        } else {
+            echo '<a href="download_client.php" class="dropdown-item"><i class="fas fa-download"></i> ' . __('nav_download_client') . '</a>';
         }
 
         echo '

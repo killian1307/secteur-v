@@ -442,4 +442,7 @@ return [
     
     'dl_card3_title' => 'Synchro Live & RPC',
     'dl_card3_desc' => 'Votre statut, vos matchs en cours et votre progression sont synchronisés en direct avec Discord pour que tout le monde puisse suivre votre parcours.',
+    
+    'nav_download_client' => 'Télécharger le Client',
+    
     ];

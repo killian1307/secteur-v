@@ -448,4 +448,7 @@ return [
     
     'dl_card3_title' => 'Live Synchronization & RPC',
     'dl_card3_desc' => 'Your status, ongoing matches, and progress are synchronized in real-time with Discord so everyone can follow your journey.',
+    
+    'nav_download_client' => 'Download Client',
+    
     ];

@@ -459,4 +459,6 @@ return [
     'dl_card3_title' => 'Echtzeit-Discord-Integration',
     'dl_card3_desc' => 'Ihr Status, Ihre laufenden Spiele und Ihr Fortschritt werden in Echtzeit mit Discord synchronisiert, sodass alle Ihren Weg verfolgen können.',
 
+    'nav_download_client' => 'Client herunterladen',
+
     ];

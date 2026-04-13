@@ -458,4 +458,7 @@ return [
     
     'dl_card3_title' => 'Sincronización en Vivo & RPC',
     'dl_card3_desc' => 'Tu estado, partidos en curso y progreso están sincronizados en tiempo real con Discord para que todos puedan seguir tu trayectoria.',
+    
+    'nav_download_client' => 'Descargar el Cliente',
+    
     ];

@@ -451,4 +451,7 @@ return [
     
     'dl_card3_title' => 'ライブ同期 & RPC',
     'dl_card3_desc' => 'あなたの状態、現在のマッチ、そして進行状況がDiscordとリアルタイムで同期され、すべての人があなたの成長を追跡できるようになります。',
+    
+    'nav_download_client' => 'ダウンロード',
+    
     ];
