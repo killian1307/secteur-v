@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Bentornato,',
     'dash_subtitle' => 'Pronto a dimostrare chi è il migliore?',
     'dash_online_count' => '%d giocator%s online',
-    'dash_btn_ranked' => 'Gioca Classificata',
-    'dash_btn_normal' => 'Partita Amichevole',
+    'dash_btn' => 'Gioca in 1c1',
     'dash_history_title' => 'Cronologia Partite',
     'dash_tab_ranked' => 'Classificata',
     'dash_tab_normal' => 'Normale',
@@ -441,4 +440,22 @@ return [
     'rpc_match_details' => 'Nella partita in corso',
     'rpc_match_state1' => 'Gioca contro',
     'rpc_match_state2' => 'in',
+
+    'dash_btn_tournament' => 'Tornei',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Download del Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Il compagno indispensabile per ogni giocatore competitivo di Inazuma Eleven.',
+    'dl_cta' => 'Scarica per Windows',
+    
+    'dl_card1_title' => 'Organizzazione Assoluta',
+    'dl_card1_desc' => 'Non perdere mai più una partita. Il client gestisce la progressione automatica dell\'albero del torneo e il matchmaking.',
+    
+    'dl_card2_title' => 'Notifiche Desktop',
+    'dl_card2_desc' => 'Ricevi notifiche native sul tuo desktop quando la tua partita inizia o quando il tuo avversario è pronto.',
+    
+    'dl_card3_title' => 'Sincronizzazione Live & RPC',
+    'dl_card3_desc' => 'Il tuo stato, le tue partite in corso e la tua progressione sono sincronizzati in tempo reale con Discord per permettere a tutti di seguire il tuo percorso.',
     ];

@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'おかえりなさい、',
     'dash_subtitle' => '誰が一番か証明する準備はできてる？',
     'dash_online_count' => '現在 %d 人のプレイヤーがオンライン',
-    'dash_btn_ranked' => 'ランクマッチをプレイ',
-    'dash_btn_normal' => 'フレンドリーマッチ',
+    'dash_btn' => '1v1で遊ぶ',
     'dash_history_title' => '対戦履歴',
     'dash_tab_ranked' => 'ランクマッチ',
     'dash_tab_normal' => 'ノーマル',
@@ -434,4 +433,22 @@ return [
     'rpc_match_details' => '試合中',
     'rpc_match_state1' => '対戦相手',
     'rpc_match_state2' => 'で',
+
+    'dash_btn_tournament' => 'トーナメント',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - クライアントをダウンロード',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'クライアント',
+    'dl_subtitle' => 'イナズマイレブンの競技シーンのための究極のツールをダウンロードしよう。',
+    'dl_cta' => '今すぐダウンロード',
+    
+    'dl_card1_title' => '自動トーナメント管理',
+    'dl_card1_desc' => '試合を逃すことはありません。クライアントはトーナメントツリーの自動進行とマッチメイキングを管理します。',
+    
+    'dl_card2_title' => '即時通知',
+    'dl_card2_desc' => 'マッチが開始されるか、敵対者が準備完了になるときに、デスクトップ上でネイティブなアラートを受け取ります。',
+    
+    'dl_card3_title' => 'ライブ同期 & RPC',
+    'dl_card3_desc' => 'あなたの状態、現在のマッチ、そして進行状況がDiscordとリアルタイムで同期され、すべての人があなたの成長を追跡できるようになります。',
     ];

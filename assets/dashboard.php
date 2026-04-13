@@ -25,6 +25,12 @@ class Dashboard {
         $elo = $this->user['elo'];
         $grade = htmlspecialchars($this->user['grade']);
 
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        $isDesktopApp = strpos($userAgent, 'SecteurV-Desktop-App') !== false;
+        
+        // Define the link based on the platform
+        $tournamentLink = $isDesktopApp ? 'tournaments.php' : 'download_client.php';
+
         // Membres en ligne
         $stmtOnline = $this->pdo->query("SELECT COUNT(*) FROM users WHERE last_activity >= NOW() - INTERVAL 5 MINUTE");
         $onlineCount = $stmtOnline->fetchColumn();
@@ -133,11 +139,11 @@ class Dashboard {
                 
                 <div class="mode-actions">
                     <a href="matchmaking.php?mode=ranked" class="btn-mode ranked">
-                        <i class="fas fa-trophy"></i> <?php echo __('dash_btn_ranked'); ?>
+                        <i class="fas fa-trophy"></i> <?php echo __('dash_btn'); ?>
                     </a>
 
-                    <a href="matchmaking.php?mode=normal" class="btn-mode normal">
-                        <i class="fas fa-running"></i> <?php echo __('dash_btn_normal'); ?>
+                    <a href="<?php echo $tournamentLink; ?>" class="btn-mode tournament">
+                        <i class="fas fa-sitemap"></i> <?php echo __('dash_btn_tournament'); ?>
                     </a>
                 </div>
             </div>

@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Willkommen zurück,',
     'dash_subtitle' => 'Bereit zu beweisen, wer der Beste ist?',
     'dash_online_count' => '%d Spieler online',
-    'dash_btn_ranked' => 'Rangliste spielen',
-    'dash_btn_normal' => 'Freundschaftsspiel',
+    'dash_btn' => '1c1 spielen',
     'dash_history_title' => 'Spielverlauf',
     'dash_tab_ranked' => 'Rangliste',
     'dash_tab_normal' => 'Normal',
@@ -441,5 +440,23 @@ return [
     'rpc_match_details' => 'In einem Match',
     'rpc_match_state1' => 'Spielt gegen',
     'rpc_match_state2' => 'in',
+
+    'dash_btn_tournament' => 'Turniermodus',
+
+        // --- Download Client Page in german ---
+    'dl_title' => 'SECTEUR V - Offizieller Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Für ein reibungsloses und wettbewerbsorientiertes Turniererlebnis ist die offizielle Desktop-Anwendung erforderlich.',
+    'dl_cta' => 'Für Windows herunterladen',
+    
+    'dl_card1_title' => 'Automatischer Fortschritt',
+    'dl_card1_desc' => 'Dein Fortschritt, deine EDP und dein Spielverlauf werden automatisch synchronisiert, ohne dass du manuell Ergebnisse eingeben musst.',
+    
+    'dl_card2_title' => 'Benachrichtigungen',
+    'dl_card2_desc' => 'Erhalten Sie native Benachrichtigungen auf Ihrem Desktop, wenn Ihr Match beginnt oder Ihr Gegner bereit ist.',
+    
+    'dl_card3_title' => 'Echtzeit-Discord-Integration',
+    'dl_card3_desc' => 'Ihr Status, Ihre laufenden Spiele und Ihr Fortschritt werden in Echtzeit mit Discord synchronisiert, sodass alle Ihren Weg verfolgen können.',
 
     ];

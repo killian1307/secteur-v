@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Welcome back,',
     'dash_subtitle' => 'Ready to prove who is the best?',
     'dash_online_count' => '%d player%s online',
-    'dash_btn_ranked' => 'Play Ranked',
-    'dash_btn_normal' => 'Friendly Match',
+    'dash_btn' => 'Play 1v1',
     'dash_history_title' => 'Match History',
     'dash_tab_ranked' => 'Ranked',
     'dash_tab_normal' => 'Normal',
@@ -431,4 +430,22 @@ return [
     'rpc_match_details' => 'In a live match',
     'rpc_match_state1' => 'Playing against',
     'rpc_match_state2' => 'in',
+
+    'dash_btn_tournament' => 'Tournaments',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Download Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Tournaments require the official desktop application to ensure a smooth and highly competitive experience.',
+    'dl_cta' => 'Download for Windows',
+    
+    'dl_card1_title' => 'Absolute Organization',
+    'dl_card1_desc' => 'Never miss a match again. The client handles the automatic progression of the tournament tree and matchmaking.',
+    
+    'dl_card2_title' => 'Instant Notifications',
+    'dl_card2_desc' => 'Receive native alerts on your desktop when your match starts or your opponent is ready.',
+    
+    'dl_card3_title' => 'Live Synchronization & RPC',
+    'dl_card3_desc' => 'Your status, ongoing matches, and progress are synchronized in real-time with Discord so everyone can follow your journey.',
     ];

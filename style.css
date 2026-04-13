@@ -2373,6 +2373,18 @@ input:valid {
     transform: translateX(-10px);
 }
 
+.retour-accueil {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.retour-accueil:hover {
+    text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     

@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Bienvenido de nuevo,',
     'dash_subtitle' => '¿Listo para demostrar quién es el mejor?',
     'dash_online_count' => '%d jugador%s en línea',
-    'dash_btn_ranked' => 'Jugar Clasificatoria',
-    'dash_btn_normal' => 'Partida Amistosa',
+    'dash_btn' => 'Jugar en 1c1',
     'dash_history_title' => 'Historial de partidas',
     'dash_tab_ranked' => 'Clasificatoria',
     'dash_tab_normal' => 'Normal',
@@ -442,4 +441,21 @@ return [
     'rpc_match_state1' => 'Juega contra',
     'rpc_match_state2' => 'en',
 
+    'dash_btn_tournament' => 'Torneos',
+
+        // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Descargar el Cliente',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Cliente',
+    'dl_subtitle' => 'Los torneos requieren la aplicación de escritorio oficial para garantizar una experiencia fluida y altamente competitiva.',
+    'dl_cta' => 'Descargar para Windows',
+    
+    'dl_card1_title' => 'Gestión de Torneos',
+    'dl_card1_desc' => 'Nunca vuelvas a perderte un partido. El cliente gestiona la progresión automática del árbol de torneo y el emparejamiento.',
+    
+    'dl_card2_title' => 'Notificaciones Instantáneas',
+    'dl_card2_desc' => 'Recibe alertas nativas en tu escritorio cuando tu partido comienza o tu oponente está listo.',
+    
+    'dl_card3_title' => 'Sincronización en Vivo & RPC',
+    'dl_card3_desc' => 'Tu estado, partidos en curso y progreso están sincronizados en tiempo real con Discord para que todos puedan seguir tu trayectoria.',
     ];

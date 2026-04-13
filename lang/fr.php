@@ -34,8 +34,7 @@ return [
     'dash_welcome' => 'Bon retour,',
     'dash_subtitle' => 'Prêt à prouver qui est le meilleur ?',
     'dash_online_count' => '%d joueur%s en ligne',
-    'dash_btn_ranked' => 'Jouer en Classé',
-    'dash_btn_normal' => 'Match Amical',
+    'dash_btn' => 'Jouer en 1c1',
     'dash_history_title' => 'Historique',
     'dash_tab_ranked' => 'Classé',
     'dash_tab_normal' => 'Normal',
@@ -426,4 +425,21 @@ return [
     'rpc_match_state1' => 'Joue contre',
     'rpc_match_state2' => 'en',
 
+    'dash_btn_tournament' => 'Tournois',
+
+    // --- Download Client Page ---
+    'dl_title' => 'SECTEUR V - Télécharger le Client',
+    'dl_h1_1' => 'Secteur V',
+    'dl_h1_2' => 'Client',
+    'dl_subtitle' => 'Les tournois nécessitent l\'application de bureau officielle pour garantir une expérience fluide et hautement compétitive.',
+    'dl_cta' => 'Télécharger pour Windows',
+    
+    'dl_card1_title' => 'Organisation Absolue',
+    'dl_card1_desc' => 'Ne ratez plus jamais un match. Le client gère la progression automatique de l\'arbre de tournoi et le matchmaking.',
+    
+    'dl_card2_title' => 'Notifications Instantanées',
+    'dl_card2_desc' => 'Recevez des alertes natives sur votre bureau lorsque votre manche commence ou que votre adversaire est prêt.',
+    
+    'dl_card3_title' => 'Synchro Live & RPC',
+    'dl_card3_desc' => 'Votre statut, vos matchs en cours et votre progression sont synchronisés en direct avec Discord pour que tout le monde puisse suivre votre parcours.',
     ];
