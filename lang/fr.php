@@ -406,4 +406,24 @@ return [
     'set_autostart_title' => 'Démarrage Automatique',
     'set_autostart_desc' => 'Lancer Secteur V automatiquement au démarrage de l\'ordinateur.',
     'set_not_client' => 'Ces paramètres ne sont disponibles que dans l\'application de bureau.',
-];
+
+    // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'Sur le tableau de bord',
+    'rpc_dash_state' => 'Dans les menus',
+
+    // Profile
+    'rpc_profile_details' => 'Consulte un profil',
+    'rpc_profile_state' => 'Observe',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'En recherche de match',
+    'rpc_queue_state' => 'Mode : ',
+
+    // Match Actif
+    'rpc_match_details' => 'En plein match',
+    'rpc_match_state1' => 'Joue contre',
+    'rpc_match_state2' => 'en',
+
+    ];

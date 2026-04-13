@@ -413,4 +413,22 @@ return [
     'set_autostart_desc' => 'Launch Secteur V automatically when your computer starts.',
     'set_not_client' => 'These settings are only available within the desktop application.',
 
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'On the dashboard',
+    'rpc_dash_state' => 'In the menus',
+
+    // Profile
+    'rpc_profile_details' => 'Consulting a profile',
+    'rpc_profile_state' => 'Observing',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'Searching for a match',
+    'rpc_queue_state' => 'Mode: ',
+
+    // Match Actif
+    'rpc_match_details' => 'In a live match',
+    'rpc_match_state1' => 'Playing against',
+    'rpc_match_state2' => 'in',
     ];

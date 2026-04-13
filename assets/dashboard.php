@@ -319,10 +319,12 @@ class Dashboard {
             });
         }
 
+        // RPC Discord - Affiche que l'on est sur le dashboard
         if (window.secteurV) {
             window.secteurV.sendRPCData({
-                username: "<?php echo addslashes($username); ?>",
-                elo: <?php echo $elo; ?>
+                details: "<?php echo addslashes(__('rpc_dash_details')); ?>",
+                state: "<?php echo addslashes(__('rpc_dash_state')); ?>",
+                hover: "<?php echo addslashes($username); ?> - <?php echo $elo; ?> EDP"
             });
         }
 

@@ -416,4 +416,22 @@ return [
     'set_autostart_desc' => 'コンピュータの起動時にSecteur Vを自動的に起動します。',
     'set_not_client' => 'これらの設定はデスクトップアプリ内でのみ利用可能です。',
 
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'ダッシュボード上で',
+    'rpc_dash_state' => 'メニュー内',
+
+    // Profile
+    'rpc_profile_details' => 'プロフィールを閲覧',
+    'rpc_profile_state' => '観察',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => '試合を検索中',
+    'rpc_queue_state' => 'モード : ',
+
+    // Match Actif
+    'rpc_match_details' => '試合中',
+    'rpc_match_state1' => '対戦相手',
+    'rpc_match_state2' => 'で',
     ];

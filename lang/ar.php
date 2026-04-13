@@ -423,4 +423,22 @@ return [
     'set_autostart_desc' => 'تشغيل Secteur V تلقائيًا عند تشغيل الحاسوب.',
     'set_not_client' => 'هذه الإعدادات متوفرة فقط داخل التطبيق سطح المكتب.',
 
+    // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'يتصفح اللوحة الرئيسية',
+    'rpc_dash_state' => 'في القائمة الرئيسية',
+
+    // Profile
+    'rpc_profile_details' => 'يتصفح الملف الشخصي',
+    'rpc_profile_state' => 'يُراقب',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'يبحث عن مباراة',
+    'rpc_queue_state' => 'الوضع : ',
+
+    // Match Actif
+    'rpc_match_details' => 'يتصفح المباراة الحية',
+    'rpc_match_state1' => 'يلعب ضد',
+    'rpc_match_state2' => 'في',
     ];

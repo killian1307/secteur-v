@@ -423,4 +423,23 @@ return [
     'set_autostart_desc' => 'Iniciar Secteur V automáticamente al encender el ordenador.',
     'set_not_client' => 'Estos ajustes solo están disponibles dentro de la aplicación de escritorio.',
 
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'En el tablero de control',
+    'rpc_dash_state' => 'En los menús',
+
+    // Profile
+    'rpc_profile_details' => 'Consulte un perfil',
+    'rpc_profile_state' => 'Observando',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'En búsqueda de partido',
+    'rpc_queue_state' => 'Modo : ',
+
+    // Match Actif
+    'rpc_match_details' => 'En un partido en vivo',
+    'rpc_match_state1' => 'Juega contra',
+    'rpc_match_state2' => 'en',
+
     ];

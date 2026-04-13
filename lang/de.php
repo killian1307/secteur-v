@@ -423,4 +423,23 @@ return [
     'set_autostart_desc' => 'Secteur V automatisch beim Start des Computers starten.',
     'set_not_client' => 'Diese Einstellungen sind nur innerhalb der Desktop-Anwendung verfügbar.',
 
+        // --- Discord RPC ---
+
+    // Dashboard
+    'rpc_dash_details' => 'Auf dem Dashboard',
+    'rpc_dash_state' => 'In den Menüs',
+
+    // Profile
+    'rpc_profile_details' => 'Auf einem Profil',
+    'rpc_profile_state' => 'Beobachtet',
+
+    // Queue (Matchmaking)
+    'rpc_queue_details' => 'In der Warteschlange',
+    'rpc_queue_state' => 'Modus : ',
+
+    // Match Actif
+    'rpc_match_details' => 'In einem Match',
+    'rpc_match_state1' => 'Spielt gegen',
+    'rpc_match_state2' => 'in',
+
     ];
