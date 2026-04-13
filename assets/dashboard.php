@@ -332,6 +332,11 @@ class Dashboard {
                 state: "<?php echo addslashes(__('rpc_dash_state')); ?>",
                 hover: "<?php echo addslashes($username); ?> - <?php echo $elo; ?> EDP"
             });
+
+            // Logique de notification de login pour refresh overlay
+            if (window.secteurV.notifyLogin) {
+                window.secteurV.notifyLogin();
+            }
         }
 
         // AUTO SCROLL
