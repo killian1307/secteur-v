@@ -1,131 +1,65 @@
-<?php
-require_once 'assets/init_session.php';
-require 'db.php';
-
-// Check if the user is logged in, but DO NOT exit if they aren't!
-$isLoggedIn = isset($_SESSION['user_id']);
-$user = null;
-
-if ($isLoggedIn) {
-    // Only fetch data if the session exists
-    $stmt = $pdo->prepare("SELECT username, elo, grade FROM users WHERE id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $user = $stmt->fetch();
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Secteur V Overlay</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: transparent !important; 
-            overflow: hidden; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: transparent !important; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+        #overlay-wrapper { width: 100%; height: 100%; transition: background-color 0.2s ease; }
+        #overlay-wrapper.interactive { background-color: rgba(0, 0, 0, 0.6); }
+
+        /* The Base Panel Style */
+        .panel {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(10, 25, 49, 0.9); border: 2px solid #FFD700;
+            border-radius: 8px; padding: 15px; color: #EDEEF2;
+            pointer-events: auto; display: none; /* HIDDEN BY DEFAULT */
         }
 
-        #overlay-wrapper {
-            width: 100%;
-            height: 100%;
-            transition: background-color 0.2s ease;
-        }
-        
-        #overlay-wrapper.interactive {
-            background-color: rgba(0, 0, 0, 0.4); 
-        }
+        /* Specific Panel Colors */
+        #panel-error { border-color: #ff4444; }
+        #panel-queue { border-color: #00ffcc; animation: pulse 2s infinite; }
+        #panel-match { border-color: #ff0055; width: 300px; }
 
-        /* The Standard Gold Widget */
-        .widget-stats {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(10, 25, 49, 0.85); 
-            border: 2px solid #FFD700;
-            border-radius: 8px;
-            padding: 15px;
-            color: #EDEEF2;
-            pointer-events: auto; 
-        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); } 70% { box-shadow: 0 0 10px 10px rgba(0, 255, 204, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); } }
 
-        /* The Error Red Widget */
-        .widget-error {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(10, 25, 49, 0.85); 
-            border: 2px solid #ff4444; /* Red border */
-            border-radius: 8px;
-            padding: 15px;
-            color: #EDEEF2;
-            pointer-events: auto; 
-        }
-
-        .hint {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-        }
+        .hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #FFD700; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
     </style>
 </head>
 <body>
 
 <div id="overlay-wrapper">
     
-    <?php if ($isLoggedIn && $user): ?>
-        <div class="widget-stats">
-            <h3 style="margin: 0; color: #FFD700;"><?php echo htmlspecialchars($user['username']); ?></h3>
-            <p style="margin: 5px 0 0 0;">ELO: <?php echo $user['elo']; ?></p>
-            <button onclick="joinQueue()" style="margin-top: 10px; background: #FFD700; color: #000; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
-                Enter Queue
-            </button>
-        </div>
-        <div class="hint">Press SHIFT + TAB to interact with Secteur V</div>
+    <div id="panel-error" class="panel">
+        <h3 style="margin: 0; color: #ff4444;">Login Required</h3>
+        <p style="margin: 5px 0 0 0; font-size: 14px;">Please log in to the main client.</p>
+    </div>
 
-    <?php else: ?>
-        <div class="widget-error">
-            <h3 style="margin: 0; color: #ff4444;">Login Required</h3>
-            <p style="margin: 5px 0 0 0; font-size: 14px; max-width: 250px; line-height: 1.4;">
-                Please log in to the main Secteur V client first to enable the overlay.
-            </p>
-        </div>
-    <?php endif; ?>
+    <div id="panel-idle" class="panel">
+        <h3 style="margin: 0; color: #FFD700;" id="ui-username">Loading...</h3>
+        <p style="margin: 5px 0 0 0;">ELO: <span id="ui-elo">--</span></p>
+        <button onclick="sendAction('join_queue')" style="margin-top: 10px; background: #FFD700; color: #000; border: none; padding: 5px 10px; cursor: pointer;">Enter Queue</button>
+    </div>
 
+    <div id="panel-queue" class="panel">
+        <h3 style="margin: 0; color: #00ffcc;">Searching for Opponent...</h3>
+        <p style="margin: 5px 0 0 0;">Players searching: <span id="ui-queue-count">1</span></p>
+        <button onclick="sendAction('leave_queue')" style="margin-top: 10px; background: #ff4444; color: #fff; border: none; padding: 5px 10px; cursor: pointer;">Cancel Search</button>
+    </div>
+
+    <div id="panel-match" class="panel">
+        <h3 style="margin: 0; color: #ff0055;">MATCH FOUND!</h3>
+        <p style="margin: 10px 0 5px 0;">VS <strong id="ui-opponent-name">Unknown</strong> (ELO: <span id="ui-opponent-elo">--</span>)</p>
+        <div style="height: 100px; background: #000; margin-top: 10px; padding: 5px; overflow-y: auto;">
+            <p style="color: gray; font-size: 12px; margin: 0;">Live chat connected...</p>
+        </div>
+        <input type="text" placeholder="Type message..." style="width: 100%; box-sizing: border-box; margin-top: 5px; padding: 5px;">
+    </div>
+
+    <div class="hint">Press SHIFT + TAB to interact</div>
 </div>
 
-<script>
-    if (window.secteurV) {
-        // Handle the Shift+Tab interaction
-        window.secteurV.onOverlayToggle((isInteractive) => {
-            const wrapper = document.getElementById('overlay-wrapper');
-            if (isInteractive) {
-                wrapper.classList.add('interactive');
-            } else {
-                wrapper.classList.remove('interactive');
-            }
-        });
-
-        // Listen for login notifications to refresh the overlay
-        if (window.secteurV.onUpdateOverlay) {
-            window.secteurV.onUpdateOverlay(() => {
-                console.log("Login detected! Fetching live stats...");
-                // Seamlessly reload the overlay to execute the PHP session check again
-                window.location.reload();
-            });
-        }
-    }
-
-    function joinQueue() {
-        console.log("Queue joined via overlay!");
-    }
-</script>
+<script src="overlay_engine.js"></script>
 
 </body>
 </html>
