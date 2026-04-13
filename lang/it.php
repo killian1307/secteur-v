@@ -416,4 +416,11 @@ return [
     'cgu_chat_li2' => 'Sospetto di imbrogli, partite truccate (ELO boosting) o controversie gravi.',
     'cgu_chat_li3' => 'Requisizione legale da parte delle autorità competenti.',
     'cgu_chat_warn' => 'Raccomandazione di sicurezza: Chiediamo espressamente ai nostri utenti di non condividere mai informazioni personali sensibili (password, coordinate bancarie, numeri di telefono, indirizzi personali completi) tramite la messaggistica del sito. Secteur V non ti chiederà mai questo tipo di informazioni tramite messaggio privato.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'Impostazioni dell\'App',
+    'set_autostart_title' => 'Avvio Automatico',
+    'set_autostart_desc' => 'Avvia Secteur V automaticamente all\'avvio del computer.',
+    'set_not_client' => 'Queste impostazioni sono disponibili solo all\'interno dell\'applicazione desktop.',
+
+    ];

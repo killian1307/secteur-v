@@ -406,4 +406,11 @@ return [
     'cgu_chat_li2' => 'Suspicion of cheating, match-fixing (ELO boosting), or serious disputes.',
     'cgu_chat_li3' => 'Legal requisition by competent authorities.',
     'cgu_chat_warn' => 'Security recommendation: We expressly ask our users never to share sensitive personal information (passwords, bank details, phone numbers, full personal addresses) via the site\'s messaging. Secteur V will never ask you for this type of information via private message.',
-];
+
+    // App Settings
+    'nav_app_settings' => 'App Settings',
+    'set_autostart_title' => 'Auto-Start',
+    'set_autostart_desc' => 'Launch Secteur V automatically when your computer starts.',
+    'set_not_client' => 'These settings are only available within the desktop application.',
+
+    ];

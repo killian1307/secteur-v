@@ -400,4 +400,10 @@ return [
     'cgu_chat_li2' => 'Suspicion de triche, d\'arrangement de matchs (boost d\'ELO) ou de litige grave.',
     'cgu_chat_li3' => 'Réquisition légale par les autorités compétentes.',
     'cgu_chat_warn' => 'Recommandation de sécurité : Nous demandons expressément à nos utilisateurs de ne jamais communiquer d\'informations personnelles sensibles (mots de passe, coordonnées bancaires, numéro de téléphone, adresse personnelle complète) via la messagerie du site. Le Secteur V ne vous demandera jamais ce type d\'informations par message privé.',
+
+    // App Settings
+    'nav_app_settings' => 'Paramètres de l\'App',
+    'set_autostart_title' => 'Démarrage Automatique',
+    'set_autostart_desc' => 'Lancer Secteur V automatiquement au démarrage de l\'ordinateur.',
+    'set_not_client' => 'Ces paramètres ne sont disponibles que dans l\'application de bureau.',
 ];
