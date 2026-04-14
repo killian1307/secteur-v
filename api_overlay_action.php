@@ -148,7 +148,22 @@ try {
         
         echo json_encode(["notifications" => $requests]);
         exit;
-        } else {
+
+    } elseif ($action === 'get_social_counts') {
+        // Count unread DMs globally
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM private_messages WHERE receiver_id = ? AND is_read = 0");
+        $stmt->execute([$userId]);
+        $unreadDms = $stmt->fetchColumn();
+
+        // Count pending friend requests globally
+        $stmt2 = $pdo->prepare("SELECT COUNT(*) FROM friends WHERE receiver_id = ? AND status = 'pending'");
+        $stmt2->execute([$userId]);
+        $pendingReqs = $stmt2->fetchColumn();
+
+        echo json_encode(["unread_dms" => $unreadDms, "pending_requests" => $pendingReqs]);
+        exit;
+
+    } else {
         echo json_encode(["success" => false, "error" => "Unknown action"]);
     }
 } catch (PDOException $e) {

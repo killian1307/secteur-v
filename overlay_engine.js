@@ -389,6 +389,14 @@ async function pollSocialSystem() {
     }
 
     try {
+        // --- ALWAYS UPDATE THE RED DOTS FIRST ---
+        const countData = await fetchSocial('get_social_counts');
+        if (countData) {
+            document.getElementById('tab-dms').innerHTML = countData.unread_dms > 0 ? '💬<span class="tab-badge"></span>' : '💬';
+            document.getElementById('tab-notifs').innerHTML = countData.pending_requests > 0 ? '🔔<span class="tab-badge"></span>' : '🔔';
+        }
+
+        // --- LOAD TAB DATA ---
         if (activeDMUserId) {
             const data = await fetchSocial('get_chat', { target_id: activeDMUserId });
             const isScrolledToBottom = contentBox.scrollHeight - contentBox.clientHeight <= contentBox.scrollTop + 10;
