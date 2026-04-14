@@ -93,6 +93,7 @@ function updateUI(data) {
     document.getElementById('panel-idle').style.display = 'none';
     document.getElementById('panel-queue').style.display = 'none';
     document.getElementById('panel-match').style.display = 'none';
+    document.getElementById('panel-social').style.display = 'none';
 
     if (data.state === "not_logged_in") {
         document.getElementById('panel-error').style.display = 'block';
