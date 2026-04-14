@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
-// 1. Fetch User Stats
+// Fetch User Stats
 $stmt = $pdo->prepare("SELECT username, elo, grade, avatar FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
@@ -27,7 +27,7 @@ $state = "idle";
 $matchData = null;
 $queueData = null;
 
-// 2. Are they in an active match?
+// Are they in an active match
 $stmtMatch = $pdo->prepare("
     SELECT am.*, 
            u1.username as p1_name, u1.elo as p1_elo, u1.avatar as p1_avatar,
@@ -68,7 +68,7 @@ if ($match) {
         "chat" => $chatHistory
     ];
 } else {
-    // 3. If not in a match, are they in the queue?
+    // If not in a match, are they in the queue
     $stmtQueue = $pdo->prepare("SELECT mode FROM matchmaking_queue WHERE user_id = ?");
     $stmtQueue->execute([$userId]);
     $inQueue = $stmtQueue->fetch();
@@ -82,7 +82,7 @@ if ($match) {
     }
 }
 
-// 4. Return the JSON payload
+// Return the JSON payload
 echo json_encode([
     "status" => "success",
     "state" => $state,

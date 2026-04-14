@@ -14,7 +14,7 @@ $action = $_POST['action'];
 
 try {
     if ($action === 'join_queue') {
-        // Grab the mode, default to ranked if someone tries to hack the JS
+        // Grab the mode, default to ranked
         $mode = (isset($_POST['mode']) && $_POST['mode'] === 'normal') ? 'normal' : 'ranked';
 
         // Prevent double-queueing

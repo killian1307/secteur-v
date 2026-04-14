@@ -3,14 +3,13 @@
 let currentState = null; // Keeps track of where we are so we don't redraw unnecessarily
 let currentMatchId = null;
 
-// 1. Setup the Electron Hotkey Bridge
+// Setup the Electron Hotkey Bridge
 if (window.secteurV) {
     window.secteurV.onOverlayToggle((isInteractive) => {
         const wrapper = document.getElementById('overlay-wrapper');
         isInteractive ? wrapper.classList.add('interactive') : wrapper.classList.remove('interactive');
     });
 
-    // If the main app says "I just logged in!", trigger a fast refresh
     window.secteurV.onUpdateOverlay(() => {
         fetchState(); 
     });
@@ -18,20 +17,20 @@ if (window.secteurV) {
 
 let currentPollRate = 3000; // Default to 3 seconds
 
-// 2. The Master Fetch Smart-Loop
+// The Master Fetch Loop
 async function fetchState() {
     try {
-        // --- 1. FETCH OVERLAY DATA ---
+        // --- FETCH OVERLAY DATA ---
         const response = await fetch('api_overlay.php', { credentials: 'include' });
         const data = await response.json();
         updateUI(data);
 
-        // --- 2. DYNAMIC CHAT SPEED ---
-        // If in a match, shift into Turbo Mode (1 second) for smooth chat! Otherwise, relax at 3 seconds.
+        // --- DYNAMIC CHAT SPEED ---
+        // If in a match, shift to 1 second for smooth chat! Otherwise, relax at 3 seconds.
         currentPollRate = (data.state === "in_match") ? 1000 : 3000;
 
-        // --- 3. THE TRUE AFK FIX & STATUS MESSAGES ---
-        // As long as we are logged in, ALWAYS check the official match status to catch popups!
+        // --- AFK FIX & STATUS MESSAGES ---
+        // As long as we are logged in, ALWAYS check the official match status to catch any changes (like opponent leaving or match finishing), even if the user isn't actively looking at the overlay.
         if (data.state !== "not_logged_in") {
             
             const currentMode = document.getElementById('queue-mode-select') 
@@ -71,7 +70,7 @@ async function fetchState() {
     setTimeout(fetchState, currentPollRate);
 }
 
-// 3. The UI Director
+// The UI Director
 function updateUI(data) {
     // Hide all panels first
     document.getElementById('panel-error').style.display = 'none';
@@ -102,7 +101,7 @@ function updateUI(data) {
         }
 
     } else if (data.state === "in_match") {
-        document.getElementById('panel-match').style.display = 'flex'; // Use flex for the dual-box layout
+        document.getElementById('panel-match').style.display = 'flex';
         
         if (data.match) {
             currentMatchId = data.match.match_id;
@@ -110,7 +109,7 @@ function updateUI(data) {
             document.getElementById('ui-opponent-elo').innerText = data.match.opponent_elo;
             document.getElementById('ui-opponent-avatar').src = data.match.opponent_avatar || 'assets/img/default_user.webp';
 
-            // --- 1. RENDER CHAT ---
+            // --- RENDER CHAT ---
             const chatBox = document.getElementById('ui-chat-box');
             // Check if user is currently scrolled to the bottom
             const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 10;
@@ -127,14 +126,14 @@ function updateUI(data) {
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
 
-            // --- 2. RENDER SCORE STATE ---
+            // --- RENDER SCORE STATE ---
             const scoreBtn = document.getElementById('score-submit-btn');
             const scoreStatus = document.getElementById('ui-score-status');
             const inputYou = document.getElementById('score-you');
             const inputOpp = document.getElementById('score-opp');
 
             if (data.match.my_score_claim !== null) {
-                // User already submitted their score! Lock the inputs.
+                // User already submitted their score, lock the inputs.
                 inputYou.disabled = true;
                 inputOpp.disabled = true;
                 scoreBtn.style.display = 'none';
@@ -182,7 +181,7 @@ function updateUI(data) {
     }
 }
 
-// 4. Send Actions back to the Server (Join/Leave Queue)
+// Send Actions back to the Server (Join/Leave Queue)
 async function sendAction(actionType, extraData = {}) {
     console.log("Sending action to server:", actionType);
     
@@ -212,8 +211,7 @@ function sendJoinQueue() {
     sendAction('join_queue', { mode: mode });
 }
 
-// 5. Start the Engine!
-// Run immediately once, then poll every 3 seconds
+// Start the Engine
 fetchState();
 
 // --- CHAT & SCORE API FUNCTIONS ---
@@ -227,7 +225,7 @@ async function submitChat(e) {
     
     input.value = ''; // Instantly clear the input box
     
-    // Send to server (Remembering our credentials: 'include' fix!)
+    // Send to server
     await fetch('api_overlay_action.php', {
         method: 'POST',
         credentials: 'include',

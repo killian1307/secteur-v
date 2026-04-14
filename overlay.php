@@ -13,7 +13,7 @@
             position: absolute; top: 20px; left: 20px;
             background: rgba(10, 25, 49, 0.9); border: 2px solid #FFD700;
             border-radius: 8px; padding: 15px; color: #EDEEF2;
-            pointer-events: auto; display: none; /* HIDDEN BY DEFAULT */
+            pointer-events: auto; display: none;
         }
 
         /* Specific Panel Colors */
