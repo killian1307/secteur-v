@@ -50,7 +50,9 @@ if ($isLoggedIn) {
 
     <div id="panel-queue" class="panel">
         <h3 style="margin: 0; color: #00ffcc;">Searching for Opponent...</h3>
-        <p style="margin: 5px 0 0 0;">Players searching: <span id="ui-queue-count">1</span></p>
+        <div style="margin: 5px 0 0 0; display: flex; align-items: center; gap: 8px;">
+            <p style="margin: 0;">Players searching: <span id="ui-queue-count">1</span></p>
+            <div class="loader"></div> </div>
         <button onclick="sendAction('leave_queue')" style="margin-top: 10px; background: #ff4444; color: #fff; border: none; padding: 5px 10px; cursor: pointer;">Cancel Search</button>
     </div>
 
