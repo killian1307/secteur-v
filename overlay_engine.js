@@ -3,6 +3,10 @@
 let currentState = null; // Keeps track of where we are so we don't redraw unnecessarily
 let currentMatchId = null;
 
+// For game and messages notifications
+let lastKnownGameState = null;
+let lastUnreadDMCount = 0;
+
 // Setup the Electron Hotkey Bridge
 if (window.secteurV) {
     // Check if we had an active state before reload and restore it
@@ -42,6 +46,15 @@ async function fetchState() {
         // --- FETCH OVERLAY DATA ---
         const response = await fetch('api_overlay.php', { credentials: 'include' });
         const data = await response.json();
+
+        // --- MATCH FOUND AUDIO ---
+        if (lastKnownGameState !== data.state) {
+            if (data.state === "in_match") {
+                new Audio('assets/sounds/match_found.wav').play().catch(e => console.log("Audio blocked:", e));
+            }
+            lastKnownGameState = data.state;
+        }
+
         updateUI(data);
 
         // --- DYNAMIC CHAT SPEED ---
@@ -422,6 +435,12 @@ async function pollSocialSystem() {
         // --- ALWAYS UPDATE THE RED DOTS FIRST ---
         const countData = await fetchSocial('get_social_counts');
         if (countData) {
+            // --- NEW MESSAGE AUDIO ---
+            if (countData.unread_dms > lastUnreadDMCount) {
+                new Audio('assets/sounds/notification.wav').play().catch(e => console.log("Audio blocked:", e));
+            }
+            lastUnreadDMCount = countData.unread_dms;
+
             document.getElementById('tab-dms').innerHTML = countData.unread_dms > 0 ? '💬<span class="tab-badge"></span>' : '💬';
             document.getElementById('tab-notifs').innerHTML = countData.pending_requests > 0 ? '🔔<span class="tab-badge"></span>' : '🔔';
         }

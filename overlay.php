@@ -117,7 +117,7 @@ if ($isLoggedIn) {
         </div>
         
         <form id="social-chat-form" class="chat-input-area" style="display:none; margin-top: auto; padding: 5px;" onsubmit="sendDMChat(event)">
-            <input type="text" id="social-chat-input" class="chat-input-field" autocomplete="off" placeholder="Aa..." maxlength="255">
+            <input type="text" id="social-chat-input" class="chat-input-field" autocomplete="off" placeholder="Type a message..." maxlength="255">
             <button type="submit" class="chat-submit-btn" style="padding: 0 8px;">></button>
         </form>
     </div>
