@@ -45,6 +45,9 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     color: #EDEEF2; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
+
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
 }
 
 .scoreboard-teams { display: flex; align-items: center; gap: 2vw; }
@@ -255,8 +258,8 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 }
 
 /* Elements inside the scoreboard */
-.scoreboard-teams { transition: gap 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.team-block { transition: min-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.scoreboard-teams { transition: gap 0.3s linear; }
+.team-block { transition: min-width 0.3s linear; }
 
 /* --- WHEN OVERLAY IS ACTIVE --- */
 
@@ -266,8 +269,12 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     transform: translateY(0) scale(1);
 }
 #overlay-wrapper.interactive .score-expandable { 
-    max-height: 120px; opacity: 1; 
+    max-height: 150px; opacity: 1; 
     transform: translateY(0) scale(1);
+}
+
+#overlay-wrapper.interactive .match-scoreboard {
+    max-width: 500px;
 }
 
 /* Hide the yellow arrows */
@@ -285,7 +292,7 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 /* Make the match scoreboard tighter when inactive */
 #overlay-wrapper:not(.interactive) .match-scoreboard {
     padding: 0.8vh 1vw; /* Less padding */
-    width: 14vw; /* Shrinks the overall width */
+    max-width: 14vw; /* Shrinks the overall width */
 }
 #overlay-wrapper:not(.interactive) .scoreboard-teams {
     gap: 0.5vw; /* Brings teams closer together */
