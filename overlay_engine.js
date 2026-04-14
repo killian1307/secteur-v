@@ -51,6 +51,11 @@ async function fetchState() {
             const officialRes = await fetch(`api.php?action=poll_match&mode=${currentMode}`, { credentials: 'include' });
             const officialData = await officialRes.json();
 
+            // --- PULL SOCIAL DATA ---
+            if (data.state === "idle" || data.state === "in_queue") {
+                pollSocialSystem();
+            }
+
             // Check for match-ending events
             if (officialData.state === 'opponent_left') {
                 alert("Opponent left the match! Returning to Lobby.");
@@ -164,6 +169,18 @@ function updateUI(data) {
                 scoreBtn.style.display = 'block';
                 scoreStatus.style.display = 'none';
             }
+        }
+    }
+
+    // Toggle Social Panel visibility based on whether we're in the lobby or not
+    const panelSocial = document.getElementById('panel-social');
+    if (panelSocial) {
+        if (data.state === "idle" || data.state === "in_queue") {
+            panelSocial.style.display = 'flex';
+            setTimeout(() => panelSocial.classList.add('show'), 10);
+        } else {
+            panelSocial.classList.remove('show');
+            setTimeout(() => panelSocial.style.display = 'none', 400);
         }
     }
 
@@ -288,3 +305,163 @@ window.addEventListener('beforeunload', () => {
         navigator.sendBeacon('api_overlay_action.php', payload);
     }
 });
+
+// ==========================================
+// OVERLAY SOCIAL ENGINE
+// ==========================================
+let currentSocialTab = 'dms';
+let activeDMUserId = null;
+
+function setSocialTab(tabName) {
+    currentSocialTab = tabName;
+    activeDMUserId = null; // Close any active DM when switching tabs
+    
+    // Update Tab UI
+    ['dms', 'friends', 'notifs'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.remove('active');
+    });
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+    
+    // Reset internal UI
+    document.getElementById('social-back').style.display = 'none';
+    document.getElementById('social-chat-form').style.display = 'none';
+    document.getElementById('social-content').innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">Loading...</div>';
+    
+    pollSocialSystem(); // Force immediate update
+}
+
+function openDM(userId) {
+    activeDMUserId = userId;
+    document.getElementById('social-back').style.display = 'block';
+    document.getElementById('social-chat-form').style.display = 'flex';
+    document.getElementById('social-chat-input').focus();
+    pollSocialSystem(); // Immediately fetch the chat history
+}
+
+function closeActiveDM() {
+    activeDMUserId = null;
+    document.getElementById('social-back').style.display = 'none';
+    document.getElementById('social-chat-form').style.display = 'none';
+    pollSocialSystem();
+}
+
+async function sendDMChat(e) {
+    e.preventDefault();
+    const input = document.getElementById('social-chat-input');
+    const msg = input.value;
+    if (!msg || !activeDMUserId) return;
+    
+    input.value = '';
+    
+    // Added "action: 'send_message'" so the PHP server actually knows what to do!
+    const payload = new URLSearchParams({ 
+        action: 'send_message', 
+        target_id: activeDMUserId, 
+        message: msg 
+    });
+
+    await fetch('api_overlay_action.php', {
+        method: 'POST', 
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: payload
+    });
+    
+    pollSocialSystem(); // Instantly refresh chat to show the new message
+}
+
+async function pollSocialSystem() {
+    const contentBox = document.getElementById('social-content');
+    if (!contentBox) return;
+
+    // Helper function to force strict POST requests
+    async function fetchSocial(actionName, extraParams = {}) {
+        const payload = new URLSearchParams({ action: actionName, ...extraParams });
+        const res = await fetch('api_overlay_action.php', {
+            method: 'POST', credentials: 'include',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: payload
+        });
+        return await res.json();
+    }
+
+    try {
+        if (activeDMUserId) {
+            const data = await fetchSocial('get_chat', { target_id: activeDMUserId });
+            const isScrolledToBottom = contentBox.scrollHeight - contentBox.clientHeight <= contentBox.scrollTop + 10;
+            contentBox.innerHTML = '';
+            
+            if (data.messages && data.messages.length > 0) {
+                data.messages.forEach(msg => {
+                    const isMe = (msg.sender_id != activeDMUserId);
+                    const bubbleClass = isMe ? 'me' : 'them';
+                    contentBox.innerHTML += `<div class="dm-bubble ${bubbleClass}">${msg.message}</div>`;
+                });
+            } else {
+                contentBox.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">Start a conversation!</div>';
+            }
+            if (isScrolledToBottom) contentBox.scrollTop = contentBox.scrollHeight;
+            return;
+        }
+
+        if (currentSocialTab === 'dms') {
+            const data = await fetchSocial('poll_messages');
+            contentBox.innerHTML = '';
+            if (data.conversations && data.conversations.length > 0) {
+                data.conversations.forEach(conv => {
+                    const unreadDot = conv.unread > 0 ? '<span class="unread-dot"></span>' : '';
+                    contentBox.innerHTML += `
+                        <div class="social-item" onclick="openDM(${conv.user_id})">
+                            <img src="${conv.avatar || 'assets/img/default_user.webp'}" class="social-avatar">
+                            <div style="flex: 1;">
+                                <p class="social-name">${conv.username}</p>
+                                <p class="social-sub">${conv.last_message}</p>
+                            </div>
+                            ${unreadDot}
+                        </div>`;
+                });
+            } else {
+                contentBox.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">No messages yet.</div>';
+            }
+        }
+        else if (currentSocialTab === 'friends') {
+            const data = await fetchSocial('poll_social');
+            contentBox.innerHTML = '';
+            if (data.friends && data.friends.length > 0) {
+                data.friends.forEach(friend => {
+                    contentBox.innerHTML += `
+                        <div class="social-item" onclick="setSocialTab('dms'); openDM(${friend.id});">
+                            <img src="${friend.avatar || 'assets/img/default_user.webp'}" class="social-avatar">
+                            <div>
+                                <p class="social-name">${friend.username}</p>
+                                <p class="social-sub">ELO: ${friend.elo}</p>
+                            </div>
+                        </div>`;
+                });
+            } else {
+                contentBox.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">No friends online.</div>';
+            }
+        }
+        else if (currentSocialTab === 'notifs') {
+            const data = await fetchSocial('poll_notifications');
+            contentBox.innerHTML = '';
+            if (data.notifications && data.notifications.length > 0) {
+                data.notifications.forEach(notif => {
+                    const dot = notif.is_read == 0 ? '<span class="unread-dot"></span>' : '';
+                    contentBox.innerHTML += `
+                        <div class="social-item" style="cursor: default;">
+                            <div style="flex: 1;">
+                                <p class="social-sub" style="color: #fff; max-width: 100%; white-space: normal;">${notif.message}</p>
+                                <p class="social-sub" style="font-size: 0.65rem;">${notif.created_at}</p>
+                            </div>
+                            ${dot}
+                        </div>`;
+                });
+            } else {
+                contentBox.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">No notifications.</div>';
+            }
+        }
+    } catch (e) {
+        console.error("Social Polling Error:", e);
+    }
+}

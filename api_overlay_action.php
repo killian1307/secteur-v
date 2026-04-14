@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id']) || !isset($_POST['action'])) {
 }
 
 $userId = $_SESSION['user_id'];
-$action = $_POST['action'];
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 try {
     if ($action === 'join_queue') {
@@ -63,7 +63,90 @@ try {
         }
         echo json_encode(["success" => true]);
     
-    } else {
+// ==========================================
+// OVERLAY SOCIAL ENGINE ENDPOINTS
+// ==========================================
+
+    } elseif ($action === 'poll_social') {
+        // Fetch accepted friends using 'friends' table and 'sender_id' / 'receiver_id'
+        $stmt = $pdo->prepare("
+            SELECT u.id, u.username, u.elo, u.avatar
+            FROM friends f
+            JOIN users u ON (u.id = f.sender_id OR u.id = f.receiver_id) AND u.id != ?
+            WHERE (f.sender_id = ? OR f.receiver_id = ?) AND f.status = 'accepted'
+        ");
+        $stmt->execute([$userId, $userId, $userId]);
+        $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo json_encode(["friends" => $friends]);
+        exit;
+
+    } elseif ($action === 'poll_messages') {
+        // Fetch recent DM conversations using 'private_messages' and 'sent_at'
+        $stmt = $pdo->prepare("
+            SELECT u.id as user_id, u.username, u.avatar,
+                   (SELECT message FROM private_messages WHERE (sender_id = ? AND receiver_id = u.id) OR (sender_id = u.id AND receiver_id = ?) ORDER BY sent_at DESC LIMIT 1) as last_message,
+                   (SELECT COUNT(*) FROM private_messages WHERE sender_id = u.id AND receiver_id = ? AND is_read = 0) as unread
+            FROM users u
+            WHERE u.id IN (
+                SELECT sender_id FROM private_messages WHERE receiver_id = ?
+                UNION
+                SELECT receiver_id FROM private_messages WHERE sender_id = ?
+            )
+        ");
+        $stmt->execute([$userId, $userId, $userId, $userId, $userId]);
+        $conversations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo json_encode(["conversations" => $conversations]);
+        exit;
+
+    } elseif ($action === 'get_chat') {
+        // Fetch a specific conversation between the user and a friend
+        $targetId = (int)$_POST['target_id'];
+        
+        // Mark their messages as read
+        $upd = $pdo->prepare("UPDATE private_messages SET is_read = 1 WHERE sender_id = ? AND receiver_id = ?");
+        $upd->execute([$targetId, $userId]);
+
+        // Fetch the message history
+        $stmt = $pdo->prepare("
+            SELECT sender_id, message, DATE_FORMAT(sent_at, '%H:%i') as time 
+            FROM private_messages 
+            WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)
+            ORDER BY sent_at ASC
+        ");
+        $stmt->execute([$userId, $targetId, $targetId, $userId]);
+        $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo json_encode(["messages" => $messages]);
+        exit;
+
+    } elseif ($action === 'send_message') {
+        // Send a new DM to a friend
+        $targetId = (int)$_POST['target_id'];
+        $message = trim($_POST['message']);
+        
+        if (!empty($message)) {
+            $stmt = $pdo->prepare("INSERT INTO private_messages (sender_id, receiver_id, message, is_read) VALUES (?, ?, ?, 0)");
+            $stmt->execute([$userId, $targetId, $message]);
+        }
+        
+        echo json_encode(["success" => true]);
+        exit;
+
+    } elseif ($action === 'poll_notifications') {
+        $stmt = $pdo->prepare("
+            SELECT message, is_read, DATE_FORMAT(created_at, '%m/%d %H:%i') as created_at 
+            FROM notifications 
+            WHERE user_id = ? 
+            ORDER BY created_at DESC LIMIT 20
+        ");
+        $stmt->execute([$userId]);
+        $notifs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo json_encode(["notifications" => $notifs]);
+        exit;
+        } else {
         echo json_encode(["success" => false, "error" => "Unknown action"]);
     }
 } catch (PDOException $e) {

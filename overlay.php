@@ -96,6 +96,25 @@ if ($isLoggedIn) {
 
     </div>
 
+    <div id="panel-social" class="panel">
+        <div class="social-nav">
+            <button id="tab-dms" onclick="setSocialTab('dms')" class="social-tab-btn active">💬</button>
+            <button id="tab-friends" onclick="setSocialTab('friends')" class="social-tab-btn">👥</button>
+            <button id="tab-notifs" onclick="setSocialTab('notifs')" class="social-tab-btn">🔔</button>
+        </div>
+        
+        <button id="social-back" class="social-back-btn" style="display:none;" onclick="closeActiveDM()">← Back</button>
+        
+        <div id="social-content" class="social-list">
+            <div style="text-align: center; color: #888; font-size: 0.9rem; margin-top: 20px;">Loading...</div>
+        </div>
+        
+        <form id="social-chat-form" class="chat-input-area" style="display:none; margin-top: auto; padding: 5px;" onsubmit="sendDMChat(event)">
+            <input type="text" id="social-chat-input" class="chat-input-field" autocomplete="off" placeholder="Aa..." maxlength="255">
+            <button type="submit" class="chat-submit-btn" style="padding: 0 8px;">></button>
+        </form>
+    </div>
+
     <div class="hint">Press SHIFT + TAB to interact with Secteur V</div>
 </div>
 
