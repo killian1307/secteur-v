@@ -22,11 +22,15 @@ if ($isLoggedIn) {
 
 <div id="overlay-wrapper">
     
+    <div class="overlay-logo">
+        <span>Secteur</span>
+        <img src="assets/img/v.webp" alt="V">
+    </div>
 
-        <div id="panel-error" class="panel" style="display: block;">
-            <h3 style="margin: 0; color: #ff4444;">Login Required</h3>
-            <p style="margin: 5px 0 0 0; font-size: 14px;">Please log in to the main client.</p>
-        </div>
+    <div id="panel-error" class="panel" style="display: block;">
+        <h3 style="margin: 0; color: #ff4444;">Login Required</h3>
+        <p style="margin: 5px 0 0 0; font-size: 14px;">Please log in to the main client.</p>
+    </div>
 
     <div id="panel-idle" class="panel">
         <div style="display: flex; align-items: center; gap: 15px;">

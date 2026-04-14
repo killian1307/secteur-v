@@ -5,7 +5,15 @@ let currentMatchId = null;
 
 // Setup the Electron Hotkey Bridge
 if (window.secteurV) {
+    // Check if we had an active state before reload and restore it
+    if (sessionStorage.getItem('overlayActive') === 'true') {
+        document.getElementById('overlay-wrapper').classList.add('interactive');
+    }
+
     window.secteurV.onOverlayToggle((isInteractive) => {
+        // Save the state to memory so reloads don't break it
+        sessionStorage.setItem('overlayActive', isInteractive);
+
         const wrapper = document.getElementById('overlay-wrapper');
         if (isInteractive) {
             wrapper.classList.add('interactive');
