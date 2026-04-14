@@ -208,6 +208,34 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 }
 
 /* =========================================
+   SOCIAL PANEL SMART COLLAPSE
+   ========================================= */
+#panel-social {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+/* INACTIVE STATE */
+#overlay-wrapper:not(.interactive) #panel-social {
+    height: 50px !important;
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#overlay-wrapper:not(.interactive) #panel-social > *:not(.social-nav) {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+/* ACTIVE STATE */
+#overlay-wrapper.interactive #panel-social > *:not(.social-nav) {
+    transition: all 0.4s ease 0.1s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
    ANIMATIONS
    ========================================= */
 
