@@ -105,6 +105,10 @@ function updateUI(data) {
         
         if (data.match) {
             currentMatchId = data.match.match_id;
+            document.getElementById('match-my-name').innerText = data.user.username;
+            document.getElementById('match-my-elo').innerText = data.user.elo;
+            document.getElementById('match-my-avatar').src = data.user.avatar || 'assets/img/default_user.webp';
+
             document.getElementById('ui-opponent-name').innerText = data.match.opponent_name;
             document.getElementById('ui-opponent-elo').innerText = data.match.opponent_elo;
             document.getElementById('ui-opponent-avatar').src = data.match.opponent_avatar || 'assets/img/default_user.webp';
@@ -117,7 +121,11 @@ function updateUI(data) {
             chatBox.innerHTML = ''; // Clear old chat
             if (data.match.chat) {
                 data.match.chat.forEach(msg => {
-                    chatBox.innerHTML += `<div style="margin-bottom: 4px;"><strong style="color: #FFD700;">${msg.username}:</strong> <span style="color: #eee;">${msg.message}</span></div>`;
+                    // Decide the color
+                    const isMe = (msg.username === data.user.username);
+                    const nameColor = isMe ? '#FFD700' : '#2b9927';
+                    
+                    chatBox.innerHTML += `<div class="chat-bubble"><strong style="color: ${nameColor};">${msg.username}:</strong> <span style="color: #eee;">${msg.message}</span></div>`;
                 });
             }
             
@@ -251,3 +259,11 @@ async function submitMatchScore() {
     
     fetchState(); // Refresh to lock the inputs
 }
+
+// --- Auto Fade the SHIFT+TAB Hint ---
+setTimeout(() => {
+    const hintElement = document.querySelector('.hint');
+    if (hintElement) {
+        hintElement.style.opacity = '0';
+    }
+}, 5000);
