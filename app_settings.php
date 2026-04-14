@@ -96,6 +96,36 @@ $header->render();
             </label>
         </div>
 
+        <div class="setting-item">
+            <div class="setting-info">
+                <h3>Enable In-Game Overlay</h3>
+                <p>Show the Secteur V interface over Victory Road.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="overlayEnabledToggle" onchange="toggleOverlaySetting(this)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-info">
+                <h3>Mute Overlay Sounds</h3>
+                <p>Disable notifications and match found sounds.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="overlayMuteToggle" onchange="toggleOverlayMuteSetting(this)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-info">
+                <h3>Overlay Sound Volume</h3>
+                <p>Adjust the loudness of overlay alerts.</p>
+            </div>
+            <input type="range" id="overlayVolumeSlider" min="0" max="1" step="0.05" oninput="setOverlayVolumeSetting(this)" style="width: 150px; cursor: pointer;">
+        </div>
+
     </div>
     
     <div id="notClientMessage" style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">
@@ -123,6 +153,14 @@ $header->render();
                     const isStartMinimizedEnabled = await window.secteurV.getStartMinimizedStatus();
                     document.getElementById('startMinimizedToggle').checked = isStartMinimizedEnabled;
                 }
+
+                // Fetch Overlay Settings
+                if(typeof window.secteurV.getOverlaySettings === 'function'){
+                    const ovSettings = await window.secteurV.getOverlaySettings();
+                    document.getElementById('overlayEnabledToggle').checked = ovSettings.overlayEnabled;
+                    document.getElementById('overlayMuteToggle').checked = ovSettings.overlayMuted;
+                    document.getElementById('overlayVolumeSlider').value = ovSettings.overlayVolume;
+                }
             } catch (e) {
                 console.warn("Could not fetch initial settings from client.", e);
             }
@@ -146,6 +184,23 @@ $header->render();
             window.secteurV.toggleStartMinimized(checkbox.checked);
         } else {
             checkbox.checked = !checkbox.checked; // Revert if failed
+        }
+    }
+
+    // Overlay Setting Functions
+    function toggleOverlaySetting(checkbox) {
+        if (window.secteurV && window.secteurV.toggleOverlay) {
+            window.secteurV.toggleOverlay(checkbox.checked);
+        }
+    }
+    function toggleOverlayMuteSetting(checkbox) {
+        if (window.secteurV && window.secteurV.toggleOverlayMute) {
+            window.secteurV.toggleOverlayMute(checkbox.checked);
+        }
+    }
+    function setOverlayVolumeSetting(slider) {
+        if (window.secteurV && window.secteurV.setOverlayVolume) {
+            window.secteurV.setOverlayVolume(slider.value);
         }
     }
 </script>

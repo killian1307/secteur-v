@@ -50,7 +50,7 @@ async function fetchState() {
         // --- MATCH FOUND AUDIO ---
         if (lastKnownGameState !== data.state) {
             if (data.state === "in_match") {
-                new Audio('assets/sounds/match_found.wav').play().catch(e => console.log("Audio blocked:", e));
+                playOverlaySound('assets/sounds/match_found.wav');
             }
             lastKnownGameState = data.state;
         }
@@ -105,6 +105,21 @@ async function fetchState() {
 
     // Call itself again after the timer finishes
     setTimeout(fetchState, currentPollRate);
+}
+
+// --- SMART AUDIO PLAYER ---
+async function playOverlaySound(soundPath) {
+    if (!window.secteurV || !window.secteurV.getOverlaySettings) return;
+    try {
+        const settings = await window.secteurV.getOverlaySettings();
+        if (settings.overlayMuted) return; // Completely disabled
+        
+        const audio = new Audio(soundPath);
+        audio.volume = settings.overlayVolume; // Apply user volume
+        await audio.play();
+    } catch (e) {
+        console.log("Audio blocked or failed:", e);
+    }
 }
 
 // The UI Director
@@ -437,7 +452,7 @@ async function pollSocialSystem() {
         if (countData) {
             // --- NEW MESSAGE AUDIO ---
             if (countData.unread_dms > lastUnreadDMCount) {
-                new Audio('assets/sounds/notification.wav').play().catch(e => console.log("Audio blocked:", e));
+                playOverlaySound('assets/sounds/notification.wav');
             }
             lastUnreadDMCount = countData.unread_dms;
 
