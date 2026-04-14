@@ -315,20 +315,30 @@ let activeDMUserId = null;
 
 function setSocialTab(tabName) {
     currentSocialTab = tabName;
-    activeDMUserId = null; // Close any active DM when switching tabs
+    activeDMUserId = null; 
     
-    // Update Tab UI
+    // Update the tab colors
     ['dms', 'friends', 'notifs'].forEach(t => {
-        document.getElementById(`tab-${t}`).classList.remove('active');
+        const tab = document.getElementById(`tab-${t}`);
+        if (tab) tab.classList.remove('active');
     });
-    document.getElementById(`tab-${tabName}`).classList.add('active');
+    const activeTab = document.getElementById(`tab-${tabName}`);
+    if (activeTab) activeTab.classList.add('active');
     
-    // Reset internal UI
-    document.getElementById('social-back').style.display = 'none';
-    document.getElementById('social-chat-form').style.display = 'none';
-    document.getElementById('social-content').innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">Loading...</div>';
+    // Hide chat UI
+    const header = document.getElementById('social-chat-header');
+    if (header) header.style.display = 'none';
+    const form = document.getElementById('social-chat-form');
+    if (form) form.style.display = 'none';
     
-    pollSocialSystem(); // Force immediate update
+    // Force the loader onto the screen instantly
+    const content = document.getElementById('social-content');
+    if (content) {
+        content.innerHTML = '<div style="display:flex; justify-content:center; margin-top:20px;"><div class="loader"></div></div>';
+    }
+    
+    // Fetch the new data in the background
+    pollSocialSystem(); 
 }
 
 function openDM(userId, username) {
