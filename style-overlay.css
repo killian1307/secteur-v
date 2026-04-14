@@ -58,7 +58,7 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 .score-inputs { display: flex; align-items: center; gap: 0.8vw; margin-top: 1vh; background: rgba(0, 0, 0, 0.25); padding: 0.8vh 1vw; border-radius: 8px; }
 .score-input-box { width: 2.5rem; font-size: 1.2rem; text-align: center; background: rgba(17, 17, 34, 0.6); color: #fff; border: 1px solid rgba(255,215,0,0.4); border-radius: 4px; padding: 0.3vh; }
 .score-submit-btn { background: rgba(255, 215, 0, 0.9); color: #000; border: none; padding: 0.6vh 0.8vw; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; font-size: 0.8rem; }
-.score-submit-btn:hover { background: #33ffdd; }
+.score-submit-btn:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
 
 /* BOTTOM LEFT CHAT */
 .match-chat {
@@ -87,6 +87,11 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     font-size: 0.9rem; align-self: flex-start; 
     text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+    max-width: 90%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .chat-input-area { 
@@ -107,6 +112,22 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
     pointer-events: none; 
     opacity: 1; transition: opacity 1s ease-in-out; 
+}
+
+/* Make score input arrows white and remove bg */
+.score-input-box::-webkit-inner-spin-button, 
+.score-input-box::-webkit-outer-spin-button {
+    filter: invert(1) opacity(0.8);
+    background: transparent;
+    cursor: pointer;
+}
+
+/* --- CUSTOM FOCUS OUTLINES --- */
+.score-input-box:focus, 
+.chat-input-field:focus {
+    outline: 2px solid rgba(255, 215, 0, 0.9) !important;
+    outline-offset: -1px;
+    box-shadow: none !important;
 }
 
 /* =========================================

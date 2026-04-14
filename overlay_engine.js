@@ -7,7 +7,18 @@ let currentMatchId = null;
 if (window.secteurV) {
     window.secteurV.onOverlayToggle((isInteractive) => {
         const wrapper = document.getElementById('overlay-wrapper');
-        isInteractive ? wrapper.classList.add('interactive') : wrapper.classList.remove('interactive');
+        if (isInteractive) {
+            wrapper.classList.add('interactive');
+            // If we are currently in a match, auto-focus the chat box!
+            if (document.getElementById('panel-match').style.display === 'flex') {
+                setTimeout(() => {
+                    document.getElementById('chat-input')?.focus();
+                }, 50); // Tiny delay to ensure the window is active
+            }
+        } else {
+            wrapper.classList.remove('interactive');
+            document.getElementById('chat-input')?.blur(); // Unfocus when hiding
+        }
     });
 
     window.secteurV.onUpdateOverlay(() => {
@@ -267,3 +278,13 @@ setTimeout(() => {
         hintElement.style.opacity = '0';
     }
 }, 5000);
+
+// --- AUTO-LEAVE QUEUE ON APP QUIT ---
+window.addEventListener('beforeunload', () => {
+    // If the queue panel is visible when the window is being killed
+    if (document.getElementById('panel-queue').style.display === 'block') {
+
+        const payload = new URLSearchParams({ action: 'leave_queue' });
+        navigator.sendBeacon('api_overlay_action.php', payload);
+    }
+});
