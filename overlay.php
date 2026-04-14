@@ -33,22 +33,27 @@ if ($isLoggedIn) {
     </div>
 
     <div id="panel-idle" class="panel">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <img id="ui-avatar" src="" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #FFD700; object-fit: cover;">
-            <div>
-                <h3 style="margin: 0; color: #FFD700;" id="ui-username">Loading...</h3>
-                <p style="margin: 5px 0 0 0;">ELO: <span id="ui-elo">--</span></p>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img id="ui-avatar" src="" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #FFD700; object-fit: cover;">
+                <div>
+                    <h3 style="margin: 0; color: #FFD700;" id="ui-username">Loading...</h3>
+                    <p style="margin: 5px 0 0 0;">ELO: <span id="ui-elo">--</span></p>
+                </div>
             </div>
+            <div class="expand-arrow">▼</div>
         </div>
         
-        <div style="margin-top: 15px; display: flex; gap: 5px;">
-            <select id="queue-mode-select" style="background: #222; color: #fff; border: 1px solid #555; padding: 5px; border-radius: 4px;">
-                <option value="ranked">Ranked</option>
-                <option value="normal">Normal</option>
-            </select>
-            <button onclick="sendJoinQueue()" style="background: #FFD700; color: #000; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; font-weight: bold;">
-                Enter Queue
-            </button>
+        <div class="idle-expandable">
+            <div style="margin-top: 15px; display: flex; gap: 5px;">
+                <select id="queue-mode-select" style="background: #222; color: #fff; border: 1px solid #555; padding: 5px; border-radius: 4px;">
+                    <option value="ranked">Ranked</option>
+                    <option value="normal">Normal</option>
+                </select>
+                <button onclick="sendJoinQueue()" style="background: #FFD700; color: #000; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; font-weight: bold;">
+                    Enter Queue
+                </button>
+            </div>
         </div>
     </div>
 
@@ -77,15 +82,19 @@ if ($isLoggedIn) {
                 </div>
             </div>
 
-            <div class="score-inputs">
-                <span style="color: #aaa; font-size: 0.8rem; font-weight: bold;">YOUR SCORE</span>
-                <input type="number" id="score-you" class="score-input-box" min="0" max="99">
-                <span style="color: #555; font-size: 1.5rem;">-</span>
-                <input type="number" id="score-opp" class="score-input-box" min="0" max="99">
-                <span style="color: #aaa; font-size: 0.8rem; font-weight: bold;">OPP SCORE</span>
-                <button id="score-submit-btn" class="score-submit-btn" onclick="submitMatchScore()">Confirm</button>
+            <div class="expand-arrow" style="margin-top: 8px;">▼</div>
+
+            <div class="score-expandable">
+                <div class="score-inputs">
+                    <span style="color: #aaa; font-size: 0.8rem; font-weight: bold;">YOUR SCORE</span>
+                    <input type="number" id="score-you" class="score-input-box" min="0" max="99">
+                    <span style="color: #555; font-size: 1.5rem;">-</span>
+                    <input type="number" id="score-opp" class="score-input-box" min="0" max="99">
+                    <span style="color: #aaa; font-size: 0.8rem; font-weight: bold;">OPP SCORE</span>
+                    <button id="score-submit-btn" class="score-submit-btn" onclick="submitMatchScore()">Confirm</button>
+                </div>
+                <p id="ui-score-status" style="font-size: 0.85rem; color: #ffcc00; display: none; text-align: center; margin-top: 5px; margin-bottom: 0;">Score submitted. Waiting for opponent...</p>
             </div>
-            <p id="ui-score-status" style="font-size: 0.85rem; color: #ffcc00; display: none; text-align: center; margin-top: 5px; margin-bottom: 0;">Score submitted. Waiting for opponent...</p>
         </div>
 
         <div class="match-chat">
@@ -121,6 +130,8 @@ if ($isLoggedIn) {
             <button type="submit" class="chat-submit-btn" style="padding: 0 8px;">></button>
         </form>
     </div>
+
+    <div class="overlay-copyright">Overlay made by K (Secteur V's Owner) &copy; 2026</div>
 
     <div class="hint">Press SHIFT + TAB to interact with Secteur V</div>
 </div>
