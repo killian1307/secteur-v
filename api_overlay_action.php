@@ -163,6 +163,23 @@ try {
         echo json_encode(["unread_dms" => $unreadDms, "pending_requests" => $pendingReqs]);
         exit;
 
+    } elseif ($action === 'respond_friend_request') {
+        // Handle Accept or Deny clicks from the overlay
+        $senderId = (int)$_POST['sender_id'];
+        $response = $_POST['response']; // Will be 'accepted' or 'declined'
+
+        if ($response === 'accepted') {
+            // Update the status to accepted
+            $stmt = $pdo->prepare("UPDATE friends SET status = 'accepted' WHERE sender_id = ? AND receiver_id = ?");
+            $stmt->execute([$senderId, $userId]);
+        } else {
+            // If declined, delete the pending request so it disappears from the notification feed
+            $stmt = $pdo->prepare("DELETE FROM friends WHERE sender_id = ? AND receiver_id = ? AND status = 'pending'");
+            $stmt->execute([$senderId, $userId]);
+        }
+
+        echo json_encode(["success" => true]);
+        exit;
     } else {
         echo json_encode(["success" => false, "error" => "Unknown action"]);
     }

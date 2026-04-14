@@ -373,6 +373,17 @@ async function sendDMChat(e) {
     pollSocialSystem(); // Instantly refresh chat to show the new message
 }
 
+async function respondRequest(senderId, responseStatus) {
+    // Send the Accept or Deny request to the PHP server
+    await fetch('api_overlay_action.php', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ action: 'respond_friend_request', sender_id: senderId, response: responseStatus })
+    });
+    // Instantly refresh the UI
+    pollSocialSystem(); 
+}
+
 async function pollSocialSystem() {
     const contentBox = document.getElementById('social-content');
     if (!contentBox) return;
@@ -463,7 +474,11 @@ async function pollSocialSystem() {
                             <img src="${req.avatar || 'assets/img/default_user.webp'}" class="social-avatar">
                             <div style="flex: 1;">
                                 <p class="social-name" style="font-size: 0.9rem;">${req.username}</p>
-                                <p class="social-sub" style="color: #FFD700;">Sent you a friend request</p>
+                                <p class="social-sub" style="color: #FFD700;">Sent a friend request</p>
+                            </div>
+                            <div style="display: flex; gap: 5px;">
+                                <button onclick="respondRequest(${req.sender_id}, 'accepted')" style="background: rgba(0, 255, 204, 0.8); color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; padding: 4px 8px; transition: 0.2s;">✓</button>
+                                <button onclick="respondRequest(${req.sender_id}, 'declined')" style="background: rgba(255, 68, 68, 0.8); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; padding: 4px 8px; transition: 0.2s;">✕</button>
                             </div>
                         </div>`;
                 });
