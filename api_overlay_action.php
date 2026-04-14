@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id']) || !isset($_POST['action'])) {
 }
 
 $userId = $_SESSION['user_id'];
-$action = $_POST['action'] ?? $_GET['action'] ?? '';
+$action = $_POST['action'] ?? '';
 
 try {
     if ($action === 'join_queue') {
@@ -124,7 +124,7 @@ try {
     } elseif ($action === 'send_message') {
         // Send a new DM to a friend
         $targetId = (int)$_POST['target_id'];
-        $message = trim($_POST['message']);
+        $message = htmlspecialchars(trim($_POST['message']), ENT_QUOTES, 'UTF-8');
         
         if (!empty($message)) {
             $stmt = $pdo->prepare("INSERT INTO private_messages (sender_id, receiver_id, message, is_read) VALUES (?, ?, ?, 0)");
@@ -135,16 +135,18 @@ try {
         exit;
 
     } elseif ($action === 'poll_notifications') {
+        // Notifications are actually PENDING friend requests received by the user
         $stmt = $pdo->prepare("
-            SELECT message, is_read, DATE_FORMAT(created_at, '%m/%d %H:%i') as created_at 
-            FROM notifications 
-            WHERE user_id = ? 
-            ORDER BY created_at DESC LIMIT 20
+            SELECT u.id as sender_id, u.username, u.avatar, DATE_FORMAT(f.created_at, '%m/%d %H:%i') as created_at 
+            FROM friends f
+            JOIN users u ON f.sender_id = u.id
+            WHERE f.receiver_id = ? AND f.status = 'pending'
+            ORDER BY f.created_at DESC
         ");
         $stmt->execute([$userId]);
-        $notifs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        echo json_encode(["notifications" => $notifs]);
+        echo json_encode(["notifications" => $requests]);
         exit;
         } else {
         echo json_encode(["success" => false, "error" => "Unknown action"]);

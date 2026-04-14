@@ -330,17 +330,20 @@ function setSocialTab(tabName) {
     pollSocialSystem(); // Force immediate update
 }
 
-function openDM(userId) {
+function openDM(userId, username) {
     activeDMUserId = userId;
-    document.getElementById('social-back').style.display = 'block';
+    // Inject the username into the header!
+    if (username) document.getElementById('social-chat-name').innerText = username;
+    
+    document.getElementById('social-chat-header').style.display = 'flex';
     document.getElementById('social-chat-form').style.display = 'flex';
     document.getElementById('social-chat-input').focus();
-    pollSocialSystem(); // Immediately fetch the chat history
+    pollSocialSystem(); 
 }
 
 function closeActiveDM() {
     activeDMUserId = null;
-    document.getElementById('social-back').style.display = 'none';
+    document.getElementById('social-chat-header').style.display = 'none';
     document.getElementById('social-chat-form').style.display = 'none';
     pollSocialSystem();
 }
@@ -411,7 +414,7 @@ async function pollSocialSystem() {
                 data.conversations.forEach(conv => {
                     const unreadDot = conv.unread > 0 ? '<span class="unread-dot"></span>' : '';
                     contentBox.innerHTML += `
-                        <div class="social-item" onclick="openDM(${conv.user_id})">
+                        <div class="social-item" onclick="openDM(${conv.user_id}, '${conv.username.replace(/'/g, "\\'")}')">
                             <img src="${conv.avatar || 'assets/img/default_user.webp'}" class="social-avatar">
                             <div style="flex: 1;">
                                 <p class="social-name">${conv.username}</p>
@@ -430,7 +433,7 @@ async function pollSocialSystem() {
             if (data.friends && data.friends.length > 0) {
                 data.friends.forEach(friend => {
                     contentBox.innerHTML += `
-                        <div class="social-item" onclick="setSocialTab('dms'); openDM(${friend.id});">
+                        <div class="social-item" onclick="setSocialTab('dms'); openDM(${friend.id}, '${friend.username.replace(/'/g, "\\'")}');">
                             <img src="${friend.avatar || 'assets/img/default_user.webp'}" class="social-avatar">
                             <div>
                                 <p class="social-name">${friend.username}</p>
@@ -446,19 +449,18 @@ async function pollSocialSystem() {
             const data = await fetchSocial('poll_notifications');
             contentBox.innerHTML = '';
             if (data.notifications && data.notifications.length > 0) {
-                data.notifications.forEach(notif => {
-                    const dot = notif.is_read == 0 ? '<span class="unread-dot"></span>' : '';
+                data.notifications.forEach(req => {
                     contentBox.innerHTML += `
                         <div class="social-item" style="cursor: default;">
+                            <img src="${req.avatar || 'assets/img/default_user.webp'}" class="social-avatar">
                             <div style="flex: 1;">
-                                <p class="social-sub" style="color: #fff; max-width: 100%; white-space: normal;">${notif.message}</p>
-                                <p class="social-sub" style="font-size: 0.65rem;">${notif.created_at}</p>
+                                <p class="social-name" style="font-size: 0.9rem;">${req.username}</p>
+                                <p class="social-sub" style="color: #FFD700;">Sent you a friend request</p>
                             </div>
-                            ${dot}
                         </div>`;
                 });
             } else {
-                contentBox.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">No notifications.</div>';
+                contentBox.innerHTML = '<div style="text-align:center; color:#888; margin-top:20px;">No pending requests.</div>';
             }
         }
     } catch (e) {

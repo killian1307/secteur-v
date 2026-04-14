@@ -103,7 +103,10 @@ if ($isLoggedIn) {
             <button id="tab-notifs" onclick="setSocialTab('notifs')" class="social-tab-btn">🔔</button>
         </div>
         
-        <button id="social-back" class="social-back-btn" style="display:none;" onclick="closeActiveDM()">← Back</button>
+        <div id="social-chat-header" style="display:none; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 8px; margin-bottom: 8px;">
+            <span id="social-chat-name" style="font-weight: bold; color: #fff; font-size: 0.95rem;">Username</span>
+            <button class="social-back-btn" style="margin-bottom: 0;" onclick="closeActiveDM()">Back →</button>
+        </div>
         
         <div id="social-content" class="social-list">
             <div style="text-align: center; color: #888; font-size: 0.9rem; margin-top: 20px;">Loading...</div>
