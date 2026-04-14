@@ -39,6 +39,16 @@ if (!isset($_GET['code'])) {
 
 // Échange du Code contre Token
 if (isset($_GET['code'])) {
+
+    // --- THE ANTI-DOUBLE-FIRE FIX ---
+    $oauth_code = $_GET['code'];
+    if (isset($_SESSION['last_oauth_code']) && $_SESSION['last_oauth_code'] === $oauth_code) {
+        // Kill the duplicate background request instantly
+        die("Duplicate OAuth request intercepted.");
+    }
+    $_SESSION['last_oauth_code'] = $oauth_code;
+    // --------------------------------
+
     $token_url = "https://discord.com/api/oauth2/token";
     $post_data = [
         'client_id' => $client_id,

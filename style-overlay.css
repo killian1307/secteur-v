@@ -1,0 +1,349 @@
+/* --- BASE & WRAPPER --- */
+body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: transparent !important; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+#overlay-wrapper { width: 100%; height: 100%; transition: background-color 0.2s ease; pointer-events: none; }
+#overlay-wrapper.interactive { background-color: rgba(0, 0, 0, 0.4); } 
+
+/* Make sure interactive elements catch clicks, but empty space passes through to the game */
+.panel, .match-scoreboard, .match-chat { pointer-events: auto; }
+
+/* =========================================
+   STANDARD PANELS (Error, Idle, Queue) 
+   ========================================= */
+.panel {
+    position: absolute; top: 20px; left: 20px;
+    background: rgba(10, 25, 49, 0.65); /* Less opaque */
+    border: 1.5px solid rgba(255, 215, 0, 0.6);
+    border-radius: 8px; padding: 15px; color: #EDEEF2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    display: none;
+}
+
+#panel-error { border-color: rgba(255, 68, 68, 0.7); }
+#panel-queue { border-color: rgba(0, 255, 204, 0.7); animation: pulse 2s infinite; }
+
+@keyframes pulse { 
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.2); } 
+    70% { box-shadow: 0 0 15px 5px rgba(0, 255, 204, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); } 
+}
+
+/* =========================================
+   FULLSCREEN MATCH UI
+   ========================================= */
+#panel-match {
+    display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none;
+}
+
+/* TOP RIGHT SCOREBOARD */
+.match-scoreboard {
+    position: absolute; top: 2vh; right: 2vw; left: auto; transform: none; 
+    background: rgba(10, 25, 49, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 12px; padding: 1vh 1.5vw;
+    display: flex; flex-direction: column; align-items: center;
+    color: #EDEEF2; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+.scoreboard-teams { display: flex; align-items: center; gap: 2vw; }
+.team-block { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 8vw; }
+.team-avatar { width: 4.5vh; height: 4.5vh; border-radius: 50%; border: 1.5px solid rgba(255,215,0,0.8); object-fit: cover; margin-bottom: 0.5vh; }
+.team-name { font-size: 1rem; font-weight: bold; color: #FFD700; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); } /* Softer text shadow */
+
+.team-elo { font-size: 0.75rem; color: rgba(160, 172, 208, 0.8); margin: 0; }
+.vs-badge { font-size: 1.5rem; font-weight: 900; color: rgba(255, 0, 85, 0.9); font-style: italic; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+
+.score-inputs { display: flex; align-items: center; gap: 0.8vw; margin-top: 1vh; background: rgba(0, 0, 0, 0.25); padding: 0.8vh 1vw; border-radius: 8px; }
+.score-input-box { width: 2.5rem; font-size: 1.2rem; text-align: center; background: rgba(17, 17, 34, 0.6); color: #fff; border: 1px solid rgba(255,215,0,0.4); border-radius: 4px; padding: 0.3vh; }
+.score-submit-btn { background: rgba(255, 215, 0, 0.9); color: #000; border: none; padding: 0.6vh 0.8vw; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; font-size: 0.8rem; }
+.score-submit-btn:hover { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+
+/* BOTTOM LEFT CHAT */
+.match-chat {
+    position: absolute; bottom: 12vh; left: 2vw;
+    width: 16vw;
+    min-width: 250px;
+    background: transparent; 
+    display: flex; flex-direction: column;
+}
+
+.chat-messages { 
+    max-height: 25vh; overflow-y: scroll; 
+    padding: 1vh 0.5vw; 
+    display: flex; flex-direction: column; gap: 8px; 
+}
+
+/* Custom scrollbar for the chat */
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(255, 217, 0, 0); border-radius: 2px; }
+
+/* Message Bubbles */
+.chat-bubble {
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px; padding: 6px 10px; color: #fff;
+    font-size: 0.9rem; align-self: flex-start; 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+    max-width: 90%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.chat-input-area { 
+    display: flex; gap: 0.5vw; padding: 0.8vh; 
+    background: rgba(10, 25, 49, 0.65);
+    border: 1px solid rgba(85, 85, 85, 0.4); 
+    border-radius: 8px; margin-top: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+}
+.chat-input-field { flex: 1; padding: 0.6vh; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(85,85,85,0.5); border-radius: 4px; font-size: 0.9rem; }
+.chat-submit-btn { background: rgba(255, 215, 0, 0.85); color: #000; border: none; padding: 0 0.8vw; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 0.9rem;}
+
+/* global hint */
+.hint { 
+    position: absolute; bottom: 3vh; left: 50%; transform: translateX(-50%); 
+    color: rgba(255, 215, 0, 1); font-weight: bold; font-size: 1.5rem; 
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
+    pointer-events: none; 
+    opacity: 1; transition: opacity 1s ease-in-out; 
+}
+
+/* Make score input arrows white and remove bg */
+.score-input-box::-webkit-inner-spin-button, 
+.score-input-box::-webkit-outer-spin-button {
+    filter: invert(1) opacity(0.8);
+    background: transparent;
+    cursor: pointer;
+}
+
+/* --- CUSTOM FOCUS OUTLINES --- */
+.score-input-box:focus, 
+.chat-input-field:focus {
+    outline: 2px solid rgba(255, 215, 0, 0.9) !important;
+    outline-offset: -1px;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   SOCIAL / FRIENDS PANEL
+   ========================================= */
+#panel-social {
+    bottom: 20px; right: 20px; top: auto; left: auto; /* Snap to bottom right */
+    width: 18vw; min-width: 280px; height: 45vh; min-height: 350px;
+    display: flex; flex-direction: column; padding: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.social-nav { display: flex; gap: 5px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 8px; margin-bottom: 8px; }
+.social-tab-btn { flex: 1; background: transparent; color: #888; border: none; cursor: pointer; padding: 5px; font-size: 1.2rem; transition: 0.2s; border-radius: 4px; position: relative; }
+.social-tab-btn:hover { background: rgba(255,215,0,0.1); color: #FFD700; }
+.social-tab-btn.active { color: #FFD700; background: rgba(255,215,0,0.2); }
+
+/* Red Dot Badge for Tabs */
+.tab-badge {
+    position: absolute; top: 4px; right: 25%;
+    width: 8px; height: 8px; background: #ff4444;
+    border-radius: 50%; box-shadow: 0 0 5px #ff4444;
+}
+
+.social-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+.social-list::-webkit-scrollbar { width: 4px; }
+.social-list::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.3); border-radius: 2px; }
+
+.social-item { display: flex; align-items: center; gap: 10px; padding: 8px; background: rgba(0,0,0,0.4); border-radius: 6px; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
+.social-item:hover { background: rgba(0,0,0,0.6); border-color: rgba(255,215,0,0.3); }
+.social-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #FFD700; object-fit: cover; }
+.social-name { font-size: 0.9rem; font-weight: bold; color: #fff; margin:0; }
+.social-sub { font-size: 0.75rem; color: #aaa; margin:0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+
+.social-back-btn { background: transparent; color: #FFD700; border: none; cursor: pointer; font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; text-align: left; transition: 0.2s; }
+.social-back-btn:hover { text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+
+/* Sleek Modern Chat Bubbles */
+.dm-bubble { 
+    padding: 8px 12px; border-radius: 16px; font-size: 0.85rem; margin-bottom: 6px; 
+    max-width: 80%; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); border: none !important;
+}
+/* You: Gold bubble, flat bottom-right corner */
+.dm-bubble.me { align-self: flex-end; background: #FFD700; color: #000; border-bottom-right-radius: 4px; }
+/* Them: Dark sleek bubble, flat bottom-left corner */
+.dm-bubble.them { align-self: flex-start; background: rgba(50, 55, 75, 0.95); color: #fff; border-bottom-left-radius: 4px; }
+
+.unread-dot { width: 10px; height: 10px; background: #ff4444; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px #ff4444; }
+
+/* =========================================
+   SECTEUR V LOGO (Shift+Tab Slide-in)
+   ========================================= */
+.overlay-logo {
+    position: absolute; top: 0; left: 50%;
+    transform: translate(-50%, -80px);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; color: #FFD700; text-transform: uppercase;
+    text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
+    pointer-events: none; opacity: 0;
+    letter-spacing: 10px;
+    
+    /* bouncy spring animation */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    z-index: 9999;
+}
+
+.overlay-logo img {
+    height: 4rem; margin-left: 10px;
+    filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.8));
+}
+
+/* Automatically triggers when Shift+Tab adds the interactive class */
+#overlay-wrapper.interactive .overlay-logo {
+    transform: translate(-50%, 30px);
+    opacity: 1;
+}
+
+/* =========================================
+   SOCIAL PANEL SMART COLLAPSE
+   ========================================= */
+#panel-social {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+/* INACTIVE STATE */
+#overlay-wrapper:not(.interactive) #panel-social {
+    height: 50px !important;
+    min-height: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#overlay-wrapper:not(.interactive) #panel-social > *:not(.social-nav) {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+/* ACTIVE STATE */
+#overlay-wrapper.interactive #panel-social > *:not(.social-nav) {
+    transition: all 0.4s ease 0.1s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
+   INTERACTIVE EXPANSION ANIMATIONS
+   ========================================= */
+
+/* yellow expansion arrows */
+.expand-arrow {
+    color: #FFD700; font-size: 0.9rem; text-align: center;
+    transition: all 0.3s ease; height: 15px; line-height: 15px;
+    opacity: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Expandable containers */
+.idle-expandable, .score-expandable {
+    max-height: 0; opacity: 0; overflow: hidden;
+    transform: translateY(-15px) scale(0.95);
+    transform-origin: top;
+    
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Elements inside the scoreboard */
+.scoreboard-teams { transition: gap 0.3s linear; }
+.team-block { transition: min-width 0.3s linear; }
+
+/* --- WHEN OVERLAY IS ACTIVE --- */
+
+/* Expand the menus & trigger the physical bounce */
+#overlay-wrapper.interactive .idle-expandable { 
+    max-height: 100px; opacity: 1; 
+    transform: translateY(0) scale(1);
+}
+#overlay-wrapper.interactive .score-expandable { 
+    max-height: 150px; opacity: 1; 
+    transform: translateY(0) scale(1);
+}
+
+#overlay-wrapper.interactive .match-scoreboard {
+    max-width: 500px;
+}
+
+/* Hide the yellow arrows */
+#overlay-wrapper.interactive .expand-arrow {
+    opacity: 0; height: 0; margin: 0 !important;
+}
+
+/* If the hint is visible, hide it */
+#overlay-wrapper.interactive .hint {
+    opacity: 0 !important; visibility: hidden;
+}
+
+/* --- WHEN OVERLAY IS INACTIVE --- */
+
+/* Make the match scoreboard tighter when inactive */
+#overlay-wrapper:not(.interactive) .match-scoreboard {
+    padding: 0.8vh 1vw; /* Less padding */
+    max-width: 14vw; /* Shrinks the overall width */
+}
+#overlay-wrapper:not(.interactive) .scoreboard-teams {
+    gap: 0.5vw; /* Brings teams closer together */
+}
+#overlay-wrapper:not(.interactive) .team-block {
+    min-width: 5vw; /* Shrinks the container width so names pull inward */
+}
+#overlay-wrapper:not(.interactive) .score-inputs {
+    margin-top: 0; 
+}
+
+
+/* BOTTOM COPYRIGHT TEXT (Slide-Up) */
+.overlay-copyright {
+    position: absolute; bottom: 0; left: 50%;
+    transform: translate(-50%, 80px);
+    font-size: 0.8rem; font-weight: bold;
+    color: #FFD700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    pointer-events: none; opacity: 0;
+    
+    /* Bouncy spring animation matching the top logo */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    z-index: 9999;
+}
+
+/* Drops UP into view when active */
+#overlay-wrapper.interactive .overlay-copyright {
+    transform: translate(-50%, -20px); 
+    opacity: 1;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes slideInFade {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#panel-error, #panel-idle, #panel-queue, #panel-match, #panel-social {
+    animation: slideInFade 0.5s ease-out forwards;
+}
+
+/* Loading Wheel */
+.loader {
+    width: 14px; height: 14px;
+    border: 2.5px solid rgba(0, 255, 204, 0.2);
+    border-top: 2.5px solid #00ffcc; 
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
