@@ -99,7 +99,6 @@ if ($isLoggedIn) {
                 </div>
             </div>
 
-            <div class="expand-arrow" style="margin-top: 8px;">▼</div>
 
             <div class="score-expandable">
                 <div class="score-inputs">

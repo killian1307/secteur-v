@@ -229,44 +229,51 @@ function updateUI(data) {
 
     // --- DISCORD RPC DYNAMIC UPDATES ---
     if (window.secteurV && window.secteurV.sendRPCData) {
-        let rpcData = null;
+        
+        // ANTI-SPAM LOCK: Only send to Discord if your state actually changed!
+        if (data.state !== currentState) {
+            let rpcData = null;
 
-        if (data.state === "idle" && data.user) {
-            rpcData = {
-                details: window.rpcTexts ? window.rpcTexts.dashDetails : "On the dashboard",
-                state: window.rpcTexts ? window.rpcTexts.dashState : "In the menus",
+            if (data.state === "idle" && data.user) {
+                rpcData = {
+                    details: window.rpcTexts ? window.rpcTexts.dashDetails : "On the dashboard",
+                    state: window.rpcTexts ? window.rpcTexts.dashState : "In the menus",
                     hover: `${data.user.username} - ${data.user.elo} EDP`
-            };
-        } 
-        else if (data.state === "in_queue" && data.user) {
-            document.getElementById('panel-queue').style.display = 'block';
-            
-            // Look for data.queueMode and capitalize the first letter for a nicer display in Discord. If it's not available, just show an empty string.
-            const currentMode = data.queueMode 
-                ? data.queueMode.charAt(0).toUpperCase() + data.queueMode.slice(1) 
-                : "";
+                };
+            } 
+            else if (data.state === "in_queue" && data.user) {
+                document.getElementById('panel-queue').style.display = 'block';
                 
-            const statePrefix = window.rpcTexts ? window.rpcTexts.queueState : "Mode: ";
-            
-            if (window.secteurV) {
-                window.secteurV.sendRPCData({
+                const currentMode = data.queueMode 
+                    ? data.queueMode.charAt(0).toUpperCase() + data.queueMode.slice(1) 
+                    : "";
+                    
+                const statePrefix = window.rpcTexts ? window.rpcTexts.queueState : "Mode: ";
+                
+                rpcData = {
                     details: window.rpcTexts ? window.rpcTexts.queueDetails : "Searching for a Match",
                     state: `${statePrefix}${currentMode}`,
                     largeImageKey: "queue_icon"
-                });
+                };
             }
-        }
-        else if (data.state === "in_match" && data.match && data.user) {
-            rpcData = {
-                details: window.rpcTexts ? window.rpcTexts.matchDetails : "In a Match",
-                state: window.rpcTexts ? window.rpcTexts.matchState1 : `VS ${data.match.opponent_name}`,
-                hover: `${data.user.username} - ${data.user.elo} EDP`
-            };
-        }
+            else if (data.state === "in_match" && data.match && data.user) {
 
-        // Send the payload to Electron
-        if (rpcData) {
-            window.secteurV.sendRPCData(rpcData);
+                const matchPrefix = window.rpcTexts ? window.rpcTexts.matchState1 : "VS";
+
+                rpcData = {
+                    details: window.rpcTexts ? window.rpcTexts.matchDetails : "In a Match",
+                    state: `${matchPrefix} ${data.match.opponent_name}`,
+                    hover: `${data.user.username} - ${data.user.elo} EDP`
+                };
+            }
+
+            // Send the payload to Electron
+            if (rpcData) {
+                window.secteurV.sendRPCData(rpcData);
+            }
+            
+            // Lock it so it doesn't fire again until the state changes
+            currentState = data.state; 
         }
     }
 }

@@ -26,6 +26,7 @@ $updateActivity->execute([$currentPhpTime, $userId]);
 $state = "idle";
 $matchData = null;
 $queueData = null;
+$inQueue = null;
 
 // Are they in an active match
 $stmtMatch = $pdo->prepare("
