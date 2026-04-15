@@ -575,7 +575,6 @@ async function updateSpotifyWidget() {
         if (!data.playing) {
             // FIX 2: Keep the text and cover! Just update the button and stop sliding
             playBtn.innerText = "▶";
-            titleEl.style.animation = "none";
             
             // If it's the first time booting and nothing has played yet
             if (currentTrackStr === "") {
@@ -608,10 +607,13 @@ async function updateSpotifyWidget() {
             }
 
             // Always restart the marquee if it's currently playing and long
+            const containerEl = document.querySelector('.spot-marquee-container');
             if (data.track.length > 20) {
                 titleEl.style.animation = "marquee 8s linear infinite";
+                if (containerEl) containerEl.classList.add('is-scrolling'); // Turn ON the fade
             } else {
                 titleEl.style.animation = "none";
+                if (containerEl) containerEl.classList.remove('is-scrolling'); // Turn OFF the fade
             }
         }
     } catch (e) {

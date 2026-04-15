@@ -396,10 +396,15 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     overflow: hidden;
 }
 
+/* Remove the mask from the base container */
 .spot-marquee-container {
     width: 150px; overflow: hidden; white-space: nowrap; position: relative;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* ONLY apply the mask when the text is actively scrolling */
+.spot-marquee-container.is-scrolling {
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .spot-marquee {
