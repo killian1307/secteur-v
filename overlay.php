@@ -27,6 +27,23 @@ if ($isLoggedIn) {
         <img src="assets/img/v.webp" alt="V">
     </div>
 
+    <div id="panel-spotify" class="spotify-widget">
+        <img id="spot-cover" src="assets/img/default_album.webp" alt="Cover">
+        
+        <div class="spot-info">
+            <div class="spot-marquee-container">
+                <div id="spot-title" class="spot-marquee">Not Playing</div>
+            </div>
+            <div id="spot-artist" class="spot-artist">Spotify</div>
+        </div>
+        
+        <div class="spot-controls">
+            <button onclick="sendSpotifyAction('previous')">⏮</button>
+            <button id="spot-playpause" onclick="sendSpotifyAction('playpause')">▶</button>
+            <button onclick="sendSpotifyAction('next')">⏭</button>
+        </div>
+    </div>
+
     <div id="panel-error" class="panel" style="display: block;">
         <h3 style="margin: 0; color: #ff4444;">Login Required</h3>
         <p style="margin: 5px 0 0 0; font-size: 14px;">Please log in to the main client.</p>

@@ -3,6 +3,9 @@
 let currentState = null; // Keeps track of where we are so we don't redraw unnecessarily
 let currentMatchId = null;
 
+// Spotify Widget
+const wrapper = document.getElementById('overlay-wrapper');
+
 // For game and messages notifications
 let lastKnownGameState = null;
 let lastUnreadDMCount = 0;
@@ -155,6 +158,7 @@ function updateUI(data) {
 
     } else if (data.state === "in_match") {
         document.getElementById('panel-match').style.display = 'flex';
+        wrapper.classList.add('is-match');
         
         if (data.match) {
             currentMatchId = data.match.match_id;
@@ -206,6 +210,8 @@ function updateUI(data) {
                 scoreBtn.style.display = 'block';
                 scoreStatus.style.display = 'none';
             }
+        } else {
+            wrapper.classList.remove('is-match');
         }
     }
 
@@ -543,3 +549,83 @@ async function pollSocialSystem() {
         console.error("Social Polling Error:", e);
     }
 }
+
+// ==========================================
+// SPOTIFY WIDGET CONTROLLER
+// ==========================================
+let currentTrackStr = "";
+
+async function updateSpotifyWidget() {
+    if (!window.secteurV || !window.secteurV.getSpotifyTrack) return;
+
+    try {
+        const data = await window.secteurV.getSpotifyTrack();
+        
+        const titleEl = document.getElementById('spot-title');
+        const artistEl = document.getElementById('spot-artist');
+        const coverEl = document.getElementById('spot-cover');
+        const playBtn = document.getElementById('spot-playpause');
+
+        if (!data.playing) {
+            titleEl.innerText = "Paused";
+            artistEl.innerText = "Spotify";
+            playBtn.innerText = "▶";
+            titleEl.style.animation = "none"; // Stop sliding
+            currentTrackStr = "";
+        } else {
+            playBtn.innerText = "⏸";
+            const newTrackStr = `${data.artist} - ${data.track}`;
+            
+            // Only update the DOM and fetch album art if the song changed!
+            if (newTrackStr !== currentTrackStr) {
+                currentTrackStr = newTrackStr;
+                titleEl.innerText = data.track;
+                artistEl.innerText = data.artist;
+
+                // If the track is long, enable the sliding marquee
+                if (data.track.length > 20) {
+                    titleEl.style.animation = "marquee 8s linear infinite";
+                } else {
+                    titleEl.style.animation = "none";
+                }
+
+                // THE APPLE API TRICK: Fetch cover art for free!
+                try {
+                    const query = encodeURIComponent(`${data.artist} ${data.track}`);
+                    const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=1`);
+                    const itunesData = await res.json();
+                    
+                    if (itunesData.results && itunesData.results.length > 0) {
+                        // Get the high-res 300x300 cover art
+                        coverEl.src = itunesData.results[0].artworkUrl100.replace('100x100bb', '300x300bb');
+                    } else {
+                        coverEl.src = 'assets/img/default_album.webp';
+                    }
+                } catch(e) {
+                    coverEl.src = 'assets/img/default_album.webp';
+                }
+            }
+        }
+    } catch (e) {
+        console.error("Spotify Error:", e);
+    }
+
+    // Check again in 2 seconds
+    setTimeout(updateSpotifyWidget, 2000);
+}
+
+// Hook up the buttons
+function sendSpotifyAction(action) {
+    if (window.secteurV && window.secteurV.sendSpotifyControl) {
+        window.secteurV.sendSpotifyControl(action);
+        
+        // Optimistically update the play/pause icon so it feels instant
+        const playBtn = document.getElementById('spot-playpause');
+        if (action === 'playpause') {
+            playBtn.innerText = playBtn.innerText === "▶" ? "⏸" : "▶";
+        }
+    }
+}
+
+// Start the Spotify loop
+updateSpotifyWidget();
