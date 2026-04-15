@@ -92,6 +92,7 @@ echo json_encode([
         "avatar" => $user['avatar']
     ],
     "queue" => $queueData,
-    "match" => $matchData
+    "match" => $matchData,
+    "queueMode" => $inQueue ? $inQueue['mode'] : null
 ]);
 exit;

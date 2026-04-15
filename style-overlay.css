@@ -11,7 +11,7 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
    ========================================= */
 .panel {
     position: absolute; top: 20px; left: 20px;
-    background: rgba(10, 25, 49, 0.65); /* Less opaque */
+    background: rgba(10, 25, 49, 0.8);
     border: 1.5px solid rgba(255, 215, 0, 0.6);
     border-radius: 8px; padding: 15px; color: #EDEEF2;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -347,3 +347,96 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     animation: spin 1s linear infinite;
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* =========================================
+   SPOTIFY WIDGET (Dynamic & Interactive)
+   ========================================= */
+.spotify-widget {
+    position: absolute; bottom: 20px; left: 20px;
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(10, 25, 49, 0.85);
+    border: 1px solid #1DB954; /* Spotify Green */
+    border-radius: 8px; padding: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    overflow: hidden; z-index: 100;
+    
+    /* Smooth slide for dodging the match UI */
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#spot-cover {
+    width: 50px; height: 50px; border-radius: 4px;
+}
+
+.spot-artist {
+    display: block; font-size: 0.75rem; color: #aaa;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.spot-controls {
+    display: flex; gap: 8px; opacity: 1; max-width: 150px; 
+    transition: all 0.4s ease; overflow: hidden;
+}
+
+/* --- INACTIVE STATE --- */
+#overlay-wrapper:not(.interactive) .spot-controls {
+    opacity: 0; max-width: 0; padding: 0; margin: 0; gap: 0;
+    pointer-events: none;
+}
+
+/* --- MATCH AVOIDANCE --- */
+#overlay-wrapper.is-match .spotify-widget {
+    left: calc(100vw - 20px); 
+    transform: translateX(-100%); 
+}
+
+/* --- INNER STYLES & MARQUEE --- */
+.spot-info {
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+}
+
+/* Remove the mask from the base container */
+.spot-marquee-container {
+    width: 150px; overflow: hidden; white-space: nowrap; position: relative;
+}
+
+/* ONLY apply the mask when the text is actively scrolling */
+.spot-marquee-container.is-scrolling {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.spot-marquee {
+    display: inline-block; font-size: 0.9rem; font-weight: bold; color: #fff;
+}
+
+@keyframes marquee {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.spot-controls button {
+    background: transparent; color: #fff; border: none;
+    font-size: 1.2rem; cursor: pointer; transition: 0.2s; padding: 0 4px;
+}
+.spot-controls button:hover { color: #1DB954; transform: scale(1.2); }
+
+/* --- THE ACTIVE (EXPANDED) STATE --- */
+#overlay-wrapper.interactive .spot-controls {
+    display: flex; gap: 8px; opacity: 1; max-width: 150px; 
+    transition: all 0.4s ease 0.1s;
+    pointer-events: auto !important;
+}
+
+.spot-controls button {
+    background: transparent; color: #fff; border: none;
+    font-size: 1.2rem; cursor: pointer; transition: 0.2s; padding: 0 4px;
+    position: relative; z-index: 9999;
+    outline: none;
+}
+
+.spot-controls button:focus, 
+.spot-controls button:active {
+    outline: none;
+}

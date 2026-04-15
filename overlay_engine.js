@@ -3,6 +3,9 @@
 let currentState = null; // Keeps track of where we are so we don't redraw unnecessarily
 let currentMatchId = null;
 
+// Spotify Widget
+const wrapper = document.getElementById('overlay-wrapper');
+
 // For game and messages notifications
 let lastKnownGameState = null;
 let lastUnreadDMCount = 0;
@@ -155,6 +158,7 @@ function updateUI(data) {
 
     } else if (data.state === "in_match") {
         document.getElementById('panel-match').style.display = 'flex';
+        wrapper.classList.add('is-match');
         
         if (data.match) {
             currentMatchId = data.match.match_id;
@@ -206,6 +210,8 @@ function updateUI(data) {
                 scoreBtn.style.display = 'block';
                 scoreStatus.style.display = 'none';
             }
+        } else {
+            wrapper.classList.remove('is-match');
         }
     }
 
@@ -227,22 +233,33 @@ function updateUI(data) {
 
         if (data.state === "idle" && data.user) {
             rpcData = {
-                details: "Navigating Secteur V",
-                state: "In Menus",
-                hover: `${data.user.username} - ${data.user.elo} EDP`
+                details: window.rpcTexts ? window.rpcTexts.dashDetails : "On the dashboard",
+                state: window.rpcTexts ? window.rpcTexts.dashState : "In the menus",
+                    hover: `${data.user.username} - ${data.user.elo} EDP`
             };
         } 
         else if (data.state === "in_queue" && data.user) {
-            rpcData = {
-                details: "Searching for a Match",
-                state: "In Queue",
-                hover: `${data.user.username} - ${data.user.elo} EDP`
-            };
-        } 
+            document.getElementById('panel-queue').style.display = 'block';
+            
+            // Look for data.queueMode and capitalize the first letter for a nicer display in Discord. If it's not available, just show an empty string.
+            const currentMode = data.queueMode 
+                ? data.queueMode.charAt(0).toUpperCase() + data.queueMode.slice(1) 
+                : "";
+                
+            const statePrefix = window.rpcTexts ? window.rpcTexts.queueState : "Mode: ";
+            
+            if (window.secteurV) {
+                window.secteurV.sendRPCData({
+                    details: window.rpcTexts ? window.rpcTexts.queueDetails : "Searching for a Match",
+                    state: `${statePrefix}${currentMode}`,
+                    largeImageKey: "queue_icon"
+                });
+            }
+        }
         else if (data.state === "in_match" && data.match && data.user) {
             rpcData = {
-                details: "In a Match",
-                state: `VS ${data.match.opponent_name}`,
+                details: window.rpcTexts ? window.rpcTexts.matchDetails : "In a Match",
+                state: window.rpcTexts ? window.rpcTexts.matchState1 : `VS ${data.match.opponent_name}`,
                 hover: `${data.user.username} - ${data.user.elo} EDP`
             };
         }
@@ -543,3 +560,107 @@ async function pollSocialSystem() {
         console.error("Social Polling Error:", e);
     }
 }
+
+// ==========================================
+// MEDIA WIDGET CONTROLLER
+// ==========================================
+let currentTrackStr = "";
+let lastSpotifyActionTime = 0;
+
+async function updateSpotifyWidget() {
+    if (!window.secteurV || !window.secteurV.getSpotifyTrack) return;
+
+    try {
+        // Fetch the latest data from Windows
+        const data = await window.secteurV.getSpotifyTrack();
+        
+        const titleEl = document.getElementById('spot-title');
+        const artistEl = document.getElementById('spot-artist');
+        const coverEl = document.getElementById('spot-cover');
+        const playBtn = document.getElementById('spot-playpause');
+        const containerEl = document.querySelector('.spot-marquee-container');
+
+        coverEl.onerror = function() {
+            this.onerror = null; 
+            this.src = 'assets/img/default_album.webp';
+        };
+
+        // Update the song text and cover art
+        if (data.playing || currentTrackStr !== "") {
+            const newTrackStr = data.playing ? `${data.artist} - ${data.track}` : currentTrackStr;
+            
+            if (data.playing && newTrackStr !== currentTrackStr) {
+                currentTrackStr = newTrackStr;
+                titleEl.innerText = data.track;
+                artistEl.innerText = data.artist;
+
+                try {
+                    const query = encodeURIComponent(`${data.artist} ${data.track}`);
+                    const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=5`);
+                    const itunesData = await res.json();
+                    
+                    if (itunesData.results && itunesData.results.length > 0) {
+                        const exactMatch = itunesData.results.find(song => 
+                            song.artistName.toLowerCase() === data.artist.toLowerCase()
+                        );
+                        const bestResult = exactMatch || itunesData.results[0];
+                        coverEl.src = bestResult.artworkUrl100.replace('100x100bb', '300x300bb');
+                    } else {
+                        coverEl.src = 'assets/img/default_album.webp';
+                    }
+                } catch(e) {
+                    coverEl.src = 'assets/img/default_album.webp';
+                }
+            }
+        } else if (currentTrackStr === "") {
+            // Translated default text when nothing is playing
+            titleEl.innerText = window.langTexts ? window.langTexts.readyToPlay : "Ready to Play";
+            artistEl.innerText = window.langTexts ? window.langTexts.mediaPlayer : "Media Player";
+            coverEl.src = 'assets/img/default_album.webp';
+        }
+
+        // Lock the Play/Pause button icon from flickering
+        if (Date.now() - lastSpotifyActionTime > 2500) {
+            if (!data.playing) {
+                playBtn.innerText = "▶";
+                titleEl.style.animation = "none";
+                if (containerEl) containerEl.classList.remove('is-scrolling');
+            } else {
+                playBtn.innerText = "⏸";
+                if (titleEl.innerText.length > 20) {
+                    titleEl.style.animation = "marquee 8s linear infinite";
+                    if (containerEl) containerEl.classList.add('is-scrolling');
+                } else {
+                    titleEl.style.animation = "none";
+                    if (containerEl) containerEl.classList.remove('is-scrolling');
+                }
+            }
+        }
+    } catch (e) {
+        console.error("Media Error:", e);
+    }
+
+    setTimeout(updateSpotifyWidget, 1000); 
+}
+
+// Hook up the buttons
+window.sendSpotifyAction = function(action) {
+
+    if (window.secteurV && window.secteurV.sendSpotifyControl) {
+
+        lastSpotifyActionTime = Date.now();
+
+        window.secteurV.sendSpotifyControl(action);
+        
+        // Optimistically update the play/pause icon so it feels instant
+        const playBtn = document.getElementById('spot-playpause');
+        if (action === 'playpause' && playBtn) {
+            playBtn.innerText = playBtn.innerText === "▶" ? "⏸" : "▶";
+        }
+    } else {
+        console.warn("Spotify control function not available.");
+    }
+};
+
+// Start the Spotify loop
+updateSpotifyWidget();
