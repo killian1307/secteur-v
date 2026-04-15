@@ -239,20 +239,23 @@ function updateUI(data) {
             };
         } 
         else if (data.state === "in_queue" && data.user) {
-            // Grab the mode from the API and capitalize it
-            const currentMode = (data.queue && data.queue.mode) 
-                ? data.queue.mode.charAt(0).toUpperCase() + data.queue.mode.slice(1) 
+            document.getElementById('panel-queue').style.display = 'block';
+            
+            // Look for data.queueMode and capitalize the first letter for a nicer display in Discord. If it's not available, just show an empty string.
+            const currentMode = data.queueMode 
+                ? data.queueMode.charAt(0).toUpperCase() + data.queueMode.slice(1) 
                 : "";
-
-            // Grab the translated prefix
+                
             const statePrefix = window.rpcTexts ? window.rpcTexts.queueState : "Mode: ";
-
-            rpcData = {
-                details: window.rpcTexts ? window.rpcTexts.queueDetails : "Searching for a Match",
-                state: `${statePrefix}${currentMode}`,
-                hover: `${data.user.username} - ${data.user.elo} EDP`
-            };
-        } 
+            
+            if (window.secteurV) {
+                window.secteurV.sendRPCData({
+                    details: window.rpcTexts ? window.rpcTexts.queueDetails : "Searching for a Match",
+                    state: `${statePrefix}${currentMode}`,
+                    largeImageKey: "queue_icon"
+                });
+            }
+        }
         else if (data.state === "in_match" && data.match && data.user) {
             rpcData = {
                 details: window.rpcTexts ? window.rpcTexts.matchDetails : "In a Match",
