@@ -29,9 +29,19 @@ $dashboard->render();
         <h1><?php echo __('idx_h1'); ?> <img src="assets/img/v.webp" alt="V" class="v-icon"></h1>
         <p class="subtitle"><?php echo __('idx_subtitle'); ?></p>
         
-            <button class="cta-button" onclick="openPrivacyModal()">
+        <div class="hero-actions" id="web-btns">
+            <a href="download_client.php" class="cta-button" style="text-decoration: none;">
+                <i class="fas fa-desktop"></i> <?php echo __('nav_download_client'); ?>
+            </a>
+
+            <button class="secondary-outline-btn" onclick="openPrivacyModal()">
                 <i class="fab fa-discord"></i> <?php echo __('idx_cta'); ?>
             </button>
+        </div>
+
+        <button class="cta-button" onclick="openPrivacyModal()" id="app-btns">
+            <i class="fab fa-discord"></i> <?php echo __('idx_cta'); ?>
+        </button>
 
         <div class="cards-container">
             <div class="card">
@@ -108,6 +118,16 @@ $popup->render();
 // Affiche le footer
 $footer->render();
 ?>
-    
+
+<script>
+    if (window.secteurV) {
+        document.getElementById('web-btns').style.display = 'none';
+        document.getElementById('app-btns').style.display = 'inline-block';
+    } else {
+        document.getElementById('web-btns').style.display = 'flex';
+        document.getElementById('app-btns').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

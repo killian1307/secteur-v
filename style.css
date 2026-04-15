@@ -374,6 +374,41 @@ h1 {
     translate: 0 -5px; 
 }
 
+/* --- Boutons de la page d'accueil --- */
+.hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Bouton secondaire (Discord) */
+.secondary-outline-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid var(--text-secondary);
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.secondary-outline-btn:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-3px);
+}
+
 /* Section cartes */
 .cards-container {
     display: flex;
@@ -2533,6 +2568,22 @@ input:valid {
 
     .builder-container {
         width: 95%;
+    }
+
+    /* Responsive buttons */
+    .hero-actions {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .cta-button {
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .secondary-outline-btn {
+        padding: 0.8rem 1.3rem;
+        font-size: 0.8rem;
     }
 
 }
