@@ -551,7 +551,7 @@ async function pollSocialSystem() {
 }
 
 // ==========================================
-// SPOTIFY WIDGET CONTROLLER
+// MEDIA WIDGET CONTROLLER
 // ==========================================
 let currentTrackStr = "";
 let lastSpotifyActionTime = 0;
@@ -560,53 +560,38 @@ async function updateSpotifyWidget() {
     if (!window.secteurV || !window.secteurV.getSpotifyTrack) return;
 
     try {
-        if (Date.now() - lastSpotifyActionTime > 2500) {
+        // Fetch the latest data from Windows
         const data = await window.secteurV.getSpotifyTrack();
         
         const titleEl = document.getElementById('spot-title');
         const artistEl = document.getElementById('spot-artist');
         const coverEl = document.getElementById('spot-cover');
         const playBtn = document.getElementById('spot-playpause');
+        const containerEl = document.querySelector('.spot-marquee-container');
 
-        // FIX 1: If the Apple API image fails, automatically fallback to your default
         coverEl.onerror = function() {
-            this.onerror = null; // Prevent infinite loops
+            this.onerror = null; 
             this.src = 'assets/img/default_album.webp';
         };
 
-        if (!data.playing) {
-            // FIX 2: Keep the text and cover! Just update the button and stop sliding
-            playBtn.innerText = "▶";
+        // Update the song text and cover art
+        if (data.playing || currentTrackStr !== "") {
+            const newTrackStr = data.playing ? `${data.artist} - ${data.track}` : currentTrackStr;
             
-            // If it's the first time booting and nothing has played yet
-            if (currentTrackStr === "") {
-                titleEl.innerText = "Ready to Play";
-                artistEl.innerText = "Spotify";
-                coverEl.src = 'assets/img/default_album.webp';
-            }
-        } else {
-            playBtn.innerText = "⏸";
-            const newTrackStr = `${data.artist} - ${data.track}`;
-            
-            if (newTrackStr !== currentTrackStr) {
+            if (data.playing && newTrackStr !== currentTrackStr) {
                 currentTrackStr = newTrackStr;
                 titleEl.innerText = data.track;
                 artistEl.innerText = data.artist;
 
                 try {
                     const query = encodeURIComponent(`${data.artist} ${data.track}`);
-                    // FETCH 5 RESULTS INSTEAD OF 1
                     const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=5`);
                     const itunesData = await res.json();
                     
                     if (itunesData.results && itunesData.results.length > 0) {
-                        // CROSS-REFERENCE: Find the result where the artist name actually matches!
                         const exactMatch = itunesData.results.find(song => 
-                            song.artistName.toLowerCase().includes(data.artist.toLowerCase()) || 
-                            data.artist.toLowerCase().includes(song.artistName.toLowerCase())
+                            song.artistName.toLowerCase() === data.artist.toLowerCase()
                         );
-                        
-                        // Use the exact match if we found it, otherwise default to the first result
                         const bestResult = exactMatch || itunesData.results[0];
                         coverEl.src = bestResult.artworkUrl100.replace('100x100bb', '300x300bb');
                     } else {
@@ -616,28 +601,38 @@ async function updateSpotifyWidget() {
                     coverEl.src = 'assets/img/default_album.webp';
                 }
             }
+        } else if (currentTrackStr === "") {
+            titleEl.innerText = "Ready to Play";
+            artistEl.innerText = "Media Player";
+            coverEl.src = 'assets/img/default_album.webp';
+        }
 
-            // Always restart the marquee if it's currently playing and long
-            const containerEl = document.querySelector('.spot-marquee-container');
-            if (data.track.length > 20) {
-                titleEl.style.animation = "marquee 8s linear infinite";
-                if (containerEl) containerEl.classList.add('is-scrolling'); // Turn ON the fade
-            } else {
+        // Lock the Play/Pause button icon from flickering
+        if (Date.now() - lastSpotifyActionTime > 2500) {
+            if (!data.playing) {
+                playBtn.innerText = "▶";
                 titleEl.style.animation = "none";
-                if (containerEl) containerEl.classList.remove('is-scrolling'); // Turn OFF the fade
+                if (containerEl) containerEl.classList.remove('is-scrolling');
+            } else {
+                playBtn.innerText = "⏸";
+                if (titleEl.innerText.length > 20) {
+                    titleEl.style.animation = "marquee 8s linear infinite";
+                    if (containerEl) containerEl.classList.add('is-scrolling');
+                } else {
+                    titleEl.style.animation = "none";
+                    if (containerEl) containerEl.classList.remove('is-scrolling');
+                }
             }
         }
-    }
     } catch (e) {
-        console.error("Spotify Error:", e);
+        console.error("Media Error:", e);
     }
 
-    setTimeout(updateSpotifyWidget, 1000);
+    setTimeout(updateSpotifyWidget, 1000); 
 }
 
 // Hook up the buttons
 window.sendSpotifyAction = function(action) {
-    // DIAGNOSTIC ALERT
 
     if (window.secteurV && window.secteurV.sendSpotifyControl) {
 

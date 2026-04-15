@@ -11,7 +11,7 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
    ========================================= */
 .panel {
     position: absolute; top: 20px; left: 20px;
-    background: rgba(10, 25, 49, 0.65); /* Less opaque */
+    background: rgba(10, 25, 49, 0.8);
     border: 1.5px solid rgba(255, 215, 0, 0.6);
     border-radius: 8px; padding: 15px; color: #EDEEF2;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -378,7 +378,7 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     transition: all 0.4s ease; overflow: hidden;
 }
 
-/* --- THE INACTIVE STATE: Just hide the buttons! --- */
+/* --- INACTIVE STATE --- */
 #overlay-wrapper:not(.interactive) .spot-controls {
     opacity: 0; max-width: 0; padding: 0; margin: 0; gap: 0;
     pointer-events: none;
@@ -426,13 +426,13 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 #overlay-wrapper.interactive .spot-controls {
     display: flex; gap: 8px; opacity: 1; max-width: 150px; 
     transition: all 0.4s ease 0.1s;
-    pointer-events: auto !important; /* FORCE clicks to register */
+    pointer-events: auto !important;
 }
 
 .spot-controls button {
     background: transparent; color: #fff; border: none;
     font-size: 1.2rem; cursor: pointer; transition: 0.2s; padding: 0 4px;
-    position: relative; z-index: 9999; /* Force to the top layer */
+    position: relative; z-index: 9999;
     outline: none;
 }
 

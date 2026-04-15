@@ -16,7 +16,7 @@ if ($isLoggedIn) {
 <head>
     <meta charset="UTF-8">
     <title>Secteur V Overlay</title>
-    <link rel="stylesheet" href="style-overlay.css">
+    <link rel="stylesheet" href="style-overlay.css?v=<?php echo filemtime(__DIR__ . '/style-overlay.css'); ?>">
 </head>
 <body>
 
