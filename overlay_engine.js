@@ -233,22 +233,30 @@ function updateUI(data) {
 
         if (data.state === "idle" && data.user) {
             rpcData = {
-                details: "Navigating Secteur V",
-                state: "In Menus",
-                hover: `${data.user.username} - ${data.user.elo} EDP`
+                details: window.rpcTexts ? window.rpcTexts.dashDetails : "On the dashboard",
+                state: window.rpcTexts ? window.rpcTexts.dashState : "In the menus",
+                    hover: `${data.user.username} - ${data.user.elo} EDP`
             };
         } 
         else if (data.state === "in_queue" && data.user) {
+            // Grab the mode from the API and capitalize it
+            const currentMode = (data.queue && data.queue.mode) 
+                ? data.queue.mode.charAt(0).toUpperCase() + data.queue.mode.slice(1) 
+                : "";
+
+            // Grab the translated prefix
+            const statePrefix = window.rpcTexts ? window.rpcTexts.queueState : "Mode: ";
+
             rpcData = {
-                details: "Searching for a Match",
-                state: "In Queue",
+                details: window.rpcTexts ? window.rpcTexts.queueDetails : "Searching for a Match",
+                state: `${statePrefix}${currentMode}`,
                 hover: `${data.user.username} - ${data.user.elo} EDP`
             };
         } 
         else if (data.state === "in_match" && data.match && data.user) {
             rpcData = {
-                details: "In a Match",
-                state: `VS ${data.match.opponent_name}`,
+                details: window.rpcTexts ? window.rpcTexts.matchDetails : "In a Match",
+                state: window.rpcTexts ? window.rpcTexts.matchState1 : `VS ${data.match.opponent_name}`,
                 hover: `${data.user.username} - ${data.user.elo} EDP`
             };
         }
@@ -602,8 +610,9 @@ async function updateSpotifyWidget() {
                 }
             }
         } else if (currentTrackStr === "") {
-            titleEl.innerText = "Ready to Play";
-            artistEl.innerText = "Media Player";
+            // Translated default text when nothing is playing
+            titleEl.innerText = window.langTexts ? window.langTexts.readyToPlay : "Ready to Play";
+            artistEl.innerText = window.langTexts ? window.langTexts.mediaPlayer : "Media Player";
             coverEl.src = 'assets/img/default_album.webp';
         }
 
