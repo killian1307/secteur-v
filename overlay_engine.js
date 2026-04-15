@@ -593,11 +593,20 @@ async function updateSpotifyWidget() {
 
                 try {
                     const query = encodeURIComponent(`${data.artist} ${data.track}`);
-                    const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=1`);
+                    // FETCH 5 RESULTS INSTEAD OF 1
+                    const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=5`);
                     const itunesData = await res.json();
                     
                     if (itunesData.results && itunesData.results.length > 0) {
-                        coverEl.src = itunesData.results[0].artworkUrl100.replace('100x100bb', '300x300bb');
+                        // CROSS-REFERENCE: Find the result where the artist name actually matches!
+                        const exactMatch = itunesData.results.find(song => 
+                            song.artistName.toLowerCase().includes(data.artist.toLowerCase()) || 
+                            data.artist.toLowerCase().includes(song.artistName.toLowerCase())
+                        );
+                        
+                        // Use the exact match if we found it, otherwise default to the first result
+                        const bestResult = exactMatch || itunesData.results[0];
+                        coverEl.src = bestResult.artworkUrl100.replace('100x100bb', '300x300bb');
                     } else {
                         coverEl.src = 'assets/img/default_album.webp';
                     }
