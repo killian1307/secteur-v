@@ -19,12 +19,12 @@ $header->render();
 
     <div class="cards-container" style="margin-top: 50px;">
         <div class="card">
-            <div class="card-icon" style="color: #f1c40f;"><i class="fas fa-sitemap"></i></div>
+            <div class="card-icon" style="color: #f1c40f;"><i class="fas fa-layer-group"></i></div>
             <h3><?php echo __('dl_card1_title'); ?></h3>
             <p><?php echo __('dl_card1_desc'); ?></p>
         </div>
         <div class="card">
-            <div class="card-icon" style="color: #e74c3c;"><i class="fas fa-bell"></i></div>
+            <div class="card-icon" style="color: #e74c3c;"><i class="fas fa-sitemap"></i></div>
             <h3><?php echo __('dl_card2_title'); ?></h3>
             <p><?php echo __('dl_card2_desc'); ?></p>
         </div>
