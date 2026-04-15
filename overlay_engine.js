@@ -554,11 +554,13 @@ async function pollSocialSystem() {
 // SPOTIFY WIDGET CONTROLLER
 // ==========================================
 let currentTrackStr = "";
+let lastSpotifyActionTime = 0;
 
 async function updateSpotifyWidget() {
     if (!window.secteurV || !window.secteurV.getSpotifyTrack) return;
 
     try {
+        if (Date.now() - lastSpotifyActionTime > 2500) {
         const data = await window.secteurV.getSpotifyTrack();
         
         const titleEl = document.getElementById('spot-title');
@@ -625,25 +627,33 @@ async function updateSpotifyWidget() {
                 if (containerEl) containerEl.classList.remove('is-scrolling'); // Turn OFF the fade
             }
         }
+    }
     } catch (e) {
         console.error("Spotify Error:", e);
     }
 
-    setTimeout(updateSpotifyWidget, 2000);
+    setTimeout(updateSpotifyWidget, 1000);
 }
 
 // Hook up the buttons
-function sendSpotifyAction(action) {
+window.sendSpotifyAction = function(action) {
+    // DIAGNOSTIC ALERT
+
     if (window.secteurV && window.secteurV.sendSpotifyControl) {
+
+        lastSpotifyActionTime = Date.now();
+
         window.secteurV.sendSpotifyControl(action);
         
         // Optimistically update the play/pause icon so it feels instant
         const playBtn = document.getElementById('spot-playpause');
-        if (action === 'playpause') {
+        if (action === 'playpause' && playBtn) {
             playBtn.innerText = playBtn.innerText === "▶" ? "⏸" : "▶";
         }
+    } else {
+        console.warn("Spotify control function not available.");
     }
-}
+};
 
 // Start the Spotify loop
 updateSpotifyWidget();
