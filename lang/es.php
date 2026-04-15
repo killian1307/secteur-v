@@ -443,22 +443,22 @@ return [
 
     'dash_btn_tournament' => 'Torneos',
 
-        // --- Download Client Page ---
+    // Client Download Page
     'dl_title' => 'SECTEUR V - Descargar el Cliente',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Cliente',
-    'dl_subtitle' => 'Los torneos requieren la aplicación de escritorio oficial para garantizar una experiencia fluida y altamente competitiva.',
+    'dl_subtitle' => 'Aquí está la última evolución de Secteur V: una aplicación de escritorio dedicada para la experiencia competitiva definitiva en Victory Road.',
     'dl_cta' => 'Descargar para Windows',
     
-    'dl_card1_title' => 'Gestión de Torneos',
-    'dl_card1_desc' => 'Nunca vuelvas a perderte un partido. El cliente gestiona la progresión automática del árbol de torneo y el emparejamiento.',
+    'dl_card1_title' => 'Overlay en el Juego',
+    'dl_card1_desc' => 'Chatea con tus amigos, inicia partidas y sigue tu progreso sin salir de tu juego gracias a nuestro overlay integrado.',
     
-    'dl_card2_title' => 'Notificaciones Instantáneas',
-    'dl_card2_desc' => 'Recibe alertas nativas en tu escritorio cuando tu partido comienza o tu oponente está listo.',
+    'dl_card2_title' => 'Organización Absoluta',
+    'dl_card2_desc' => 'Nunca más te pierdas un partido. El cliente gestiona los torneos y el matchmaking.',
     
-    'dl_card3_title' => 'Sincronización en Vivo & RPC',
-    'dl_card3_desc' => 'Tu estado, partidos en curso y progreso están sincronizados en tiempo real con Discord para que todos puedan seguir tu trayectoria.',
+    'dl_card3_title' => 'Sincronización en Vivo y RPC',
+    'dl_card3_desc' => 'Tu estado, los partidos en curso y tu progreso se sincronizan en vivo con Discord para que todos puedan seguir tu trayectoria.',
     
-    'nav_download_client' => 'Descargar el Cliente',
+    'nav_download_client' => 'Descargar Cliente',
     
     ];

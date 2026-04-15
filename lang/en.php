@@ -433,21 +433,21 @@ return [
 
     'dash_btn_tournament' => 'Tournaments',
 
-        // --- Download Client Page ---
-    'dl_title' => 'SECTEUR V - Download Client',
+    // Client Download Page
+    'dl_title' => 'SECTEUR V - Download the Client',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Client',
-    'dl_subtitle' => 'Tournaments require the official desktop application to ensure a smooth and highly competitive experience.',
+    'dl_subtitle' => 'Here is the latest evolution of Secteur V: a dedicated desktop application for the ultimate competitive experience on Victory Road.',
     'dl_cta' => 'Download for Windows',
     
-    'dl_card1_title' => 'Absolute Organization',
-    'dl_card1_desc' => 'Never miss a match again. The client handles the automatic progression of the tournament tree and matchmaking.',
+    'dl_card1_title' => 'In-Game Overlay',
+    'dl_card1_desc' => 'Chat with your friends, start matches, and track your progress without ever leaving your game thanks to our integrated overlay.',
     
-    'dl_card2_title' => 'Instant Notifications',
-    'dl_card2_desc' => 'Receive native alerts on your desktop when your match starts or your opponent is ready.',
+    'dl_card2_title' => 'Absolute Organization',
+    'dl_card2_desc' => 'Never miss a match again. The client manages tournaments and matchmaking.',
     
-    'dl_card3_title' => 'Live Synchronization & RPC',
-    'dl_card3_desc' => 'Your status, ongoing matches, and progress are synchronized in real-time with Discord so everyone can follow your journey.',
+    'dl_card3_title' => 'Live Sync & RPC',
+    'dl_card3_desc' => 'Your status, ongoing matches, and progression are synced live with Discord so everyone can follow your journey.',
     
     'nav_download_client' => 'Download Client',
     

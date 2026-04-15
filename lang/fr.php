@@ -427,18 +427,18 @@ return [
 
     'dash_btn_tournament' => 'Tournois',
 
-    // --- Download Client Page ---
+    // Download Client Page
     'dl_title' => 'SECTEUR V - Télécharger le Client',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Client',
-    'dl_subtitle' => 'Les tournois nécessitent l\'application de bureau officielle pour garantir une expérience fluide et hautement compétitive.',
+    'dl_subtitle' => 'Voici la dernière évloution du Secteur V : une application de bureau dédiée pour une expérience de compétition ultime sur Victory Road.',
     'dl_cta' => 'Télécharger pour Windows',
     
-    'dl_card1_title' => 'Organisation Absolue',
-    'dl_card1_desc' => 'Ne ratez plus jamais un match. Le client gère la progression automatique de l\'arbre de tournoi et le matchmaking.',
+    'dl_card1_title' => 'Overlay en Jeu',
+    'dl_card1_desc' => 'Chattez avec vos amis, lancez des matchs, et suivez votre progression sans jamais quitter votre partie grâce à notre overlay intégré.',
     
-    'dl_card2_title' => 'Notifications Instantanées',
-    'dl_card2_desc' => 'Recevez des alertes natives sur votre bureau lorsque votre manche commence ou que votre adversaire est prêt.',
+    'dl_card2_title' => 'Organisation Absolue',
+    'dl_card2_desc' => 'Ne ratez plus jamais un match. Le client gère les tournoi et le matchmaking.',
     
     'dl_card3_title' => 'Synchro Live & RPC',
     'dl_card3_desc' => 'Votre statut, vos matchs en cours et votre progression sont synchronisés en direct avec Discord pour que tout le monde puisse suivre votre parcours.',

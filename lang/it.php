@@ -443,21 +443,21 @@ return [
 
     'dash_btn_tournament' => 'Tornei',
 
-        // --- Download Client Page ---
-    'dl_title' => 'SECTEUR V - Download del Client',
+    // Client Download Page
+    'dl_title' => 'SECTEUR V - Scarica il Client',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Client',
-    'dl_subtitle' => 'Il compagno indispensabile per ogni giocatore competitivo di Inazuma Eleven.',
+    'dl_subtitle' => 'Ecco l\'ultima evoluzione di Secteur V: un\'applicazione desktop dedicata per l\'esperienza competitiva definitiva su Victory Road.',
     'dl_cta' => 'Scarica per Windows',
     
-    'dl_card1_title' => 'Organizzazione Assoluta',
-    'dl_card1_desc' => 'Non perdere mai più una partita. Il client gestisce la progressione automatica dell\'albero del torneo e il matchmaking.',
+    'dl_card1_title' => 'Overlay in Gioco',
+    'dl_card1_desc' => 'Chatta con i tuoi amici, avvia le partite e tieni traccia dei tuoi progressi senza mai uscire dal gioco grazie al nostro overlay integrato.',
     
-    'dl_card2_title' => 'Notifiche Desktop',
-    'dl_card2_desc' => 'Ricevi notifiche native sul tuo desktop quando la tua partita inizia o quando il tuo avversario è pronto.',
+    'dl_card2_title' => 'Organizzazione Assoluta',
+    'dl_card2_desc' => 'Non perdere mai più una partita. Il client gestisce i tornei e il matchmaking.',
     
     'dl_card3_title' => 'Sincronizzazione Live & RPC',
-    'dl_card3_desc' => 'Il tuo stato, le tue partite in corso e la tua progressione sono sincronizzati in tempo reale con Discord per permettere a tutti di seguire il tuo percorso.',
+    'dl_card3_desc' => 'Il tuo stato, le partite in corso e i tuoi progressi sono sincronizzati in tempo reale con Discord in modo che tutti possano seguire il tuo percorso.',
     
     'nav_download_client' => 'Scarica il Client',
     

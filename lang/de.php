@@ -443,22 +443,22 @@ return [
 
     'dash_btn_tournament' => 'Turniermodus',
 
-        // --- Download Client Page in german ---
-    'dl_title' => 'SECTEUR V - Offizieller Client',
+    // Client Download Page
+    'dl_title' => 'SECTEUR V - Client Herunterladen',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Client',
-    'dl_subtitle' => 'Für ein reibungsloses und wettbewerbsorientiertes Turniererlebnis ist die offizielle Desktop-Anwendung erforderlich.',
+    'dl_subtitle' => 'Hier ist die neueste Entwicklung von Secteur V: eine dedizierte Desktop-Anwendung für das ultimative Wettkampferlebnis auf Victory Road.',
     'dl_cta' => 'Für Windows herunterladen',
     
-    'dl_card1_title' => 'Automatischer Fortschritt',
-    'dl_card1_desc' => 'Dein Fortschritt, deine EDP und dein Spielverlauf werden automatisch synchronisiert, ohne dass du manuell Ergebnisse eingeben musst.',
+    'dl_card1_title' => 'In-Game Overlay',
+    'dl_card1_desc' => 'Chatten Sie mit Ihren Freunden, starten Sie Spiele und verfolgen Sie Ihren Fortschritt, ohne das Spiel jemals zu verlassen, dank unseres integrierten Overlays.',
     
-    'dl_card2_title' => 'Benachrichtigungen',
-    'dl_card2_desc' => 'Erhalten Sie native Benachrichtigungen auf Ihrem Desktop, wenn Ihr Match beginnt oder Ihr Gegner bereit ist.',
+    'dl_card2_title' => 'Absolute Organisation',
+    'dl_card2_desc' => 'Verpassen Sie nie wieder ein Spiel. Der Client verwaltet Turniere und Matchmaking.',
     
-    'dl_card3_title' => 'Echtzeit-Discord-Integration',
-    'dl_card3_desc' => 'Ihr Status, Ihre laufenden Spiele und Ihr Fortschritt werden in Echtzeit mit Discord synchronisiert, sodass alle Ihren Weg verfolgen können.',
-
-    'nav_download_client' => 'Client herunterladen',
+    'dl_card3_title' => 'Live-Synchronisierung & RPC',
+    'dl_card3_desc' => 'Ihr Status, laufende Spiele und Ihr Fortschritt werden live mit Discord synchronisiert, damit jeder Ihre Reise verfolgen kann.',
+    
+    'nav_download_client' => 'Client Herunterladen',
 
     ];
