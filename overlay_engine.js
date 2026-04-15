@@ -566,37 +566,38 @@ async function updateSpotifyWidget() {
         const coverEl = document.getElementById('spot-cover');
         const playBtn = document.getElementById('spot-playpause');
 
+        // FIX 1: If the Apple API image fails, automatically fallback to your default
+        coverEl.onerror = function() {
+            this.onerror = null; // Prevent infinite loops
+            this.src = 'assets/img/default_album.webp';
+        };
+
         if (!data.playing) {
-            titleEl.innerText = "Paused";
-            artistEl.innerText = "Spotify";
+            // FIX 2: Keep the text and cover! Just update the button and stop sliding
             playBtn.innerText = "▶";
-            titleEl.style.animation = "none"; // Stop sliding
-            currentTrackStr = "";
+            titleEl.style.animation = "none";
+            
+            // If it's the first time booting and nothing has played yet
+            if (currentTrackStr === "") {
+                titleEl.innerText = "Ready to Play";
+                artistEl.innerText = "Spotify";
+                coverEl.src = 'assets/img/default_album.webp';
+            }
         } else {
             playBtn.innerText = "⏸";
             const newTrackStr = `${data.artist} - ${data.track}`;
             
-            // Only update the DOM and fetch album art if the song changed!
             if (newTrackStr !== currentTrackStr) {
                 currentTrackStr = newTrackStr;
                 titleEl.innerText = data.track;
                 artistEl.innerText = data.artist;
 
-                // If the track is long, enable the sliding marquee
-                if (data.track.length > 20) {
-                    titleEl.style.animation = "marquee 8s linear infinite";
-                } else {
-                    titleEl.style.animation = "none";
-                }
-
-                // THE APPLE API TRICK: Fetch cover art for free!
                 try {
                     const query = encodeURIComponent(`${data.artist} ${data.track}`);
                     const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=1`);
                     const itunesData = await res.json();
                     
                     if (itunesData.results && itunesData.results.length > 0) {
-                        // Get the high-res 300x300 cover art
                         coverEl.src = itunesData.results[0].artworkUrl100.replace('100x100bb', '300x300bb');
                     } else {
                         coverEl.src = 'assets/img/default_album.webp';
@@ -605,12 +606,18 @@ async function updateSpotifyWidget() {
                     coverEl.src = 'assets/img/default_album.webp';
                 }
             }
+
+            // Always restart the marquee if it's currently playing and long
+            if (data.track.length > 20) {
+                titleEl.style.animation = "marquee 8s linear infinite";
+            } else {
+                titleEl.style.animation = "none";
+            }
         }
     } catch (e) {
         console.error("Spotify Error:", e);
     }
 
-    // Check again in 2 seconds
     setTimeout(updateSpotifyWidget, 2000);
 }
 

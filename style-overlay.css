@@ -398,6 +398,8 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 
 .spot-marquee-container {
     width: 150px; overflow: hidden; white-space: nowrap; position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .spot-marquee {
@@ -405,7 +407,7 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 }
 
 @keyframes marquee {
-    0%   { transform: translateX(10%); }
+    0%   { transform: translateX(100%); }
     100% { transform: translateX(-100%); }
 }
 
