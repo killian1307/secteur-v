@@ -421,6 +421,14 @@ return [
     'set_autostart_title' => 'التشغيل التلقائي',
     'set_autostart_desc' => 'تشغيل Secteur V تلقائيًا عند تشغيل الحاسوب.',
     'set_not_client' => 'هذه الإعدادات متوفرة فقط داخل التطبيق سطح المكتب.',
+    'set_start_minimized_title' => 'بدء مصغراً',
+    'set_start_minimized_desc' => 'تشغيل التطبيق بصمت في شريط النظام.',
+    'set_overlay_title' => 'تفعيل التراكب داخل اللعبة',
+    'set_overlay_desc' => 'إظهار واجهة القطاع الخامس فوق لعبة Victory Road.',
+    'set_mute_title' => 'كتم أصوات التراكب',
+    'set_mute_desc' => 'تعطيل الإشعارات وأصوات العثور على مباراة.',
+    'set_volume_title' => 'مستوى صوت التراكب',
+    'set_volume_desc' => 'ضبط مستوى صوت تنبيهات التراكب.',
 
     // --- Discord RPC ---
 

@@ -411,6 +411,14 @@ return [
     'set_autostart_title' => 'Auto-Start',
     'set_autostart_desc' => 'Launch Secteur V automatically when your computer starts.',
     'set_not_client' => 'These settings are only available within the desktop application.',
+    'set_start_minimized_title' => 'Start Minimized',
+    'set_start_minimized_desc' => 'Launch the app silently in the system tray.',
+    'set_overlay_title' => 'Enable In-Game Overlay',
+    'set_overlay_desc' => 'Show the Secteur V interface over Victory Road.',
+    'set_mute_title' => 'Mute Overlay Sounds',
+    'set_mute_desc' => 'Disable notifications and match found sounds.',
+    'set_volume_title' => 'Overlay Sound Volume',
+    'set_volume_desc' => 'Adjust the loudness of overlay alerts.',
 
         // --- Discord RPC ---
 

@@ -414,6 +414,14 @@ return [
     'set_autostart_title' => '自動起動',
     'set_autostart_desc' => 'コンピュータの起動時にSecteur Vを自動的に起動します。',
     'set_not_client' => 'これらの設定はデスクトップアプリ内でのみ利用可能です。',
+    'set_start_minimized_title' => '最小化して起動',
+    'set_start_minimized_desc' => 'アプリをシステムトレイにバックグラウンドで起動します。',
+    'set_overlay_title' => 'ゲーム内オーバーレイを有効にする',
+    'set_overlay_desc' => 'Victory Roadの上にSecteur Vのインターフェースを表示します。',
+    'set_mute_title' => 'オーバーレイをミュート',
+    'set_mute_desc' => '通知音やマッチ検出音を無効にします。',
+    'set_volume_title' => 'オーバーレイの音量',
+    'set_volume_desc' => 'オーバーレイのアラート音量を調整します。',
 
         // --- Discord RPC ---
 

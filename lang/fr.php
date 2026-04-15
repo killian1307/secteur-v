@@ -405,6 +405,14 @@ return [
     'set_autostart_title' => 'Démarrage Automatique',
     'set_autostart_desc' => 'Lancer Secteur V automatiquement au démarrage de l\'ordinateur.',
     'set_not_client' => 'Ces paramètres ne sont disponibles que dans l\'application de bureau.',
+    'set_start_minimized_title' => 'Démarrer minimisé',
+    'set_start_minimized_desc' => 'Lancer l\'application silencieusement dans la barre des tâches.',
+    'set_overlay_title' => 'Activer l\'Overlay en jeu',
+    'set_overlay_desc' => 'Afficher l\'interface Secteur V par-dessus Victory Road.',
+    'set_mute_title' => 'Mettre l\'Overlay en sourdine',
+    'set_mute_desc' => 'Désactiver les notifications et les sons de match trouvé.',
+    'set_volume_title' => 'Volume de l\'Overlay',
+    'set_volume_desc' => 'Ajuster le volume des alertes de l\'overlay.',
 
     // --- Discord RPC ---
 

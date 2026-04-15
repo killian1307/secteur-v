@@ -87,8 +87,8 @@ $header->render();
 
         <div class="setting-item">
             <div class="setting-info">
-                <h3>Start Minimized</h3>
-                <p>Launch the app silently in the system tray.</p>
+                <h3><?php echo __('set_start_minimized_title'); ?></h3>
+                <p><?php echo __('set_start_minimized_desc'); ?></p>
             </div>
             <label class="switch">
                 <input type="checkbox" id="startMinimizedToggle" onchange="toggleStartMinimized(this)">
@@ -98,8 +98,8 @@ $header->render();
 
         <div class="setting-item">
             <div class="setting-info">
-                <h3>Enable In-Game Overlay</h3>
-                <p>Show the Secteur V interface over Victory Road.</p>
+                <h3><?php echo __('set_overlay_title'); ?></h3>
+                <p><?php echo __('set_overlay_desc'); ?></p>
             </div>
             <label class="switch">
                 <input type="checkbox" id="overlayEnabledToggle" onchange="toggleOverlaySetting(this)">
@@ -109,8 +109,8 @@ $header->render();
 
         <div class="setting-item">
             <div class="setting-info">
-                <h3>Mute Overlay Sounds</h3>
-                <p>Disable notifications and match found sounds.</p>
+                <h3><?php echo __('set_mute_title'); ?></h3>
+                <p><?php echo __('set_mute_desc'); ?></p>
             </div>
             <label class="switch">
                 <input type="checkbox" id="overlayMuteToggle" onchange="toggleOverlayMuteSetting(this)">
@@ -120,8 +120,8 @@ $header->render();
 
         <div class="setting-item">
             <div class="setting-info">
-                <h3>Overlay Sound Volume</h3>
-                <p>Adjust the loudness of overlay alerts.</p>
+                <h3><?php echo __('set_volume_title'); ?></h3>
+                <p><?php echo __('set_volume_desc'); ?></p>
             </div>
             <input type="range" id="overlayVolumeSlider" min="0" max="1" step="0.05" oninput="setOverlayVolumeSetting(this)" style="width: 150px; cursor: pointer;">
         </div>
