@@ -16,12 +16,11 @@ if ($isLoggedIn) {
 } else {
     // If they are on a phone and NOT logged in, kick them to Discord instantly
     if ($isMobile) {
-        // Change 'login.php' to whatever file handles your Discord OAuth
-        // You may need to update your auth script to check for a ?redirect=overlay param so it sends them back here!
-        header('Location: login.php?redirect=overlay');
+        header('Location: discord_login.php?redirect=overlay');
         exit;
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html>
