@@ -483,4 +483,41 @@ return [
     'ov_hint' => 'Appuyez sur MAJ + TAB pour interagir avec Secteur V',
     'ov_ready_to_play' => 'Prêt à l\'écoute',
     'ov_media_player' => 'Lecteur Média',
+
+    // --- NOUVELLE LANDING PAGE ---
+    // Fonctionnalités Web
+    'idx_feat1_title' => 'Connexion Discord',
+    'idx_feat1_desc' => 'Connectez-vous en un clic avec votre compte Discord. Rapide, sécurisé et sans prise de tête.',
+    'idx_feat2_title' => 'Social & Amis',
+    'idx_feat2_desc' => 'Ajoutez des amis, envoyez des messages privés et développez votre réseau de joueurs compétitifs.',
+    'idx_feat3_title' => 'Profil & Banque',
+    'idx_feat3_desc' => 'Personnalisez votre profil, formez votre équipe et consultez les statistiques des autres joueurs.',
+    
+    // Matchmaking
+    'idx_pres_title1' => 'Matchmaking &',
+    'idx_pres_title2' => 'Écosystème',
+    'idx_mm_title' => 'Matchmaking Ranked & Normal',
+    'idx_mm_desc1' => 'Que vous soyez un débutant cherchant à s\'amuser ou un vétéran visant le sommet, notre système s\'adapte à vous.',
+    'idx_mm_desc2' => 'Trouvez des adversaires de votre niveau en quelques secondes et profitez d\'un système compétitif équitable.',
+    'idx_mm_li1' => 'Algorithme précis basé sur l\'ELO',
+    'idx_mm_li2' => 'Traitement sécurisé des litiges',
+    'idx_mm_li3' => 'Matches amicaux pour s\'entraîner',
+    
+    // Client
+    'idx_client_title' => 'L\'Application Windows',
+    'idx_client_desc1' => 'Passez au niveau supérieur avec notre client de bureau exclusif. Profitez d\'un overlay complet directement par-dessus votre jeu.',
+    'idx_client_desc2' => 'Rejoignez le matchmaking, discutez avec vos amis et mettez à jour votre statut Discord (RPC) sans jamais faire un retour bureau.',
+    
+    // Roadmap / Futur
+    'idx_roadmap_title1' => 'Mises à jour',
+    'idx_roadmap_title2' => 'Futures',
+    'idx_roadmap_subtitle' => 'Découvrez ce qui arrive très prochainement sur Secteur V.',
+    'idx_rdm_tournaments' => 'Tournois',
+    'idx_rdm_tournaments_desc' => 'Tournois hebdomadaires officiels et création de tournois personnalisés gérés par la communauté.',
+    'idx_rdm_clans' => 'Système de Clans',
+    'idx_rdm_clans_desc' => 'Formez des guildes, profitez d\'un tchat privé et grimpez dans le classement mondial des clans.',
+    'idx_rdm_mobile' => 'Application Mobile',
+    'idx_rdm_mobile_desc' => 'Une app iOS et Android compagnon pour remplacer l\'overlay quand vous ne jouez pas sur PC.',
+    'idx_rdm_achievements' => 'Succès & Rangs',
+    'idx_rdm_achievements_desc' => 'Débloquez des succès exclusifs, consultez des guides stratégiques et arborez de nouveaux badges.',
     ];

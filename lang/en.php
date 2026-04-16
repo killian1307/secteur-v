@@ -489,4 +489,37 @@ return [
     'ov_hint' => 'Press SHIFT + TAB to interact with Secteur V',
     'ov_ready_to_play' => 'Ready to Play',
     'ov_media_player' => 'Media Player',
+
+    // --- NOUVELLE PAGE D'ACCUEIL ---
+    'idx_feat1_title' => 'Discord Login',
+    'idx_feat1_desc' => 'Log in with one click using your Discord account. Fast, secure, and hassle-free.',
+    'idx_feat2_title' => 'Social & Friends',
+    'idx_feat2_desc' => 'Add friends, send private messages, and build your competitive gaming network.',
+    'idx_feat3_title' => 'Profile & Database',
+    'idx_feat3_desc' => 'Customize your profile, build your team, and check other players\' stats.',
+    
+    'idx_pres_title1' => 'Matchmaking &',
+    'idx_pres_title2' => 'Ecosystem',
+    'idx_mm_title' => 'Ranked & Normal Matchmaking',
+    'idx_mm_desc1' => 'Whether you are a beginner looking for fun or a veteran aiming for the top, our system adapts to you.',
+    'idx_mm_desc2' => 'Find opponents of your skill level in seconds and enjoy a fair competitive system.',
+    'idx_mm_li1' => 'Precise ELO-based algorithm',
+    'idx_mm_li2' => 'Secure dispute handling',
+    'idx_mm_li3' => 'Friendly matches for practice',
+    
+    'idx_client_title' => 'The Windows App',
+    'idx_client_desc1' => 'Take it to the next level with our exclusive desktop client. Enjoy a full overlay right on top of your game.',
+    'idx_client_desc2' => 'Join matchmaking, chat with friends, and update your Discord status (RPC) without ever alt-tabbing.',
+    
+    'idx_roadmap_title1' => 'Future',
+    'idx_roadmap_title2' => 'Updates',
+    'idx_roadmap_subtitle' => 'See what is coming very soon to Secteur V.',
+    'idx_rdm_tournaments' => 'Tournaments',
+    'idx_rdm_tournaments_desc' => 'Official weekly tournaments and custom community-organized brackets.',
+    'idx_rdm_clans' => 'Clan System',
+    'idx_rdm_clans_desc' => 'Form guilds, enjoy private chat, and climb the global clan leaderboard.',
+    'idx_rdm_mobile' => 'Mobile App',
+    'idx_rdm_mobile_desc' => 'An iOS and Android companion app to replace the overlay when you are not on PC.',
+    'idx_rdm_achievements' => 'Achievements & Ranks',
+    'idx_rdm_achievements_desc' => 'Unlock exclusive achievements, advanced strategy guides, and new badges.',
     ];

@@ -499,4 +499,37 @@ return [
     'ov_hint' => 'Drücke SHIFT + TAB, um mit Secteur V zu interagieren',
     'ov_ready_to_play' => 'Bereit zum Abspielen',
     'ov_media_player' => 'Mediaplayer',
+
+    // --- NOUVELLE PAGE D'ACCUEIL ---
+    'idx_feat1_title' => 'Discord-Login',
+    'idx_feat1_desc' => 'Melden Sie sich mit einem Klick über Ihr Discord-Konto an. Schnell, sicher und problemlos.',
+    'idx_feat2_title' => 'Social & Freunde',
+    'idx_feat2_desc' => 'Fügen Sie Freunde hinzu, senden Sie private Nachrichten und bauen Sie Ihr Netzwerk auf.',
+    'idx_feat3_title' => 'Profil & Datenbank',
+    'idx_feat3_desc' => 'Personalisieren Sie Ihr Profil, stellen Sie Ihr Team zusammen und prüfen Sie die Statistiken anderer.',
+    
+    'idx_pres_title1' => 'Matchmaking &',
+    'idx_pres_title2' => 'Ökosystem',
+    'idx_mm_title' => 'Ranked & Normales Matchmaking',
+    'idx_mm_desc1' => 'Ob Anfänger, der Spaß sucht, oder Veteran, der an die Spitze will – unser System passt sich Ihnen an.',
+    'idx_mm_desc2' => 'Finden Sie in Sekunden Gegner auf Ihrem Niveau und genießen Sie ein faires Wettbewerbssystem.',
+    'idx_mm_li1' => 'Präziser ELO-basierter Algorithmus',
+    'idx_mm_li2' => 'Sichere Streitbeilegung',
+    'idx_mm_li3' => 'Freundschaftsspiele zum Üben',
+    
+    'idx_client_title' => 'Die Windows-App',
+    'idx_client_desc1' => 'Bringen Sie Ihr Spiel auf das nächste Level mit unserem Desktop-Client. Genießen Sie ein Overlay direkt im Spiel.',
+    'idx_client_desc2' => 'Starten Sie die Spielersuche, chatten Sie und aktualisieren Sie Ihren Discord-Status (RPC), ohne das Spiel zu minimieren.',
+    
+    'idx_roadmap_title1' => 'Zukünftige',
+    'idx_roadmap_title2' => 'Updates',
+    'idx_roadmap_subtitle' => 'Sehen Sie, was bald bei Secteur V kommt.',
+    'idx_rdm_tournaments' => 'Turniere',
+    'idx_rdm_tournaments_desc' => 'Offizielle wöchentliche Turniere und von der Community organisierte Events.',
+    'idx_rdm_clans' => 'Clan-System',
+    'idx_rdm_clans_desc' => 'Gründen Sie Gilden, nutzen Sie private Chats und klettern Sie in der weltweiten Clan-Rangliste.',
+    'idx_rdm_mobile' => 'Mobile App',
+    'idx_rdm_mobile_desc' => 'Eine iOS- und Android-App als Overlay-Ersatz, wenn Sie nicht am PC sind.',
+    'idx_rdm_achievements' => 'Erfolge & Ränge',
+    'idx_rdm_achievements_desc' => 'Schalten Sie exklusive Erfolge, Strategie-Guides und neue Abzeichen frei.',
     ];

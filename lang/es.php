@@ -499,4 +499,37 @@ return [
     'ov_hint' => 'Presiona SHIFT + TAB para interactuar con Secteur V',
     'ov_ready_to_play' => 'Listo para escuchar',
     'ov_media_player' => 'Reproductor',
+
+    // --- NOUVELLE PAGE D'ACCUEIL ---
+    'idx_feat1_title' => 'Conexión Discord',
+    'idx_feat1_desc' => 'Inicia sesión con un clic usando tu cuenta de Discord. Rápido, seguro y sin complicaciones.',
+    'idx_feat2_title' => 'Social y Amigos',
+    'idx_feat2_desc' => 'Añade amigos, envía mensajes privados y amplía tu red de jugadores competitivos.',
+    'idx_feat3_title' => 'Perfil y Base de Datos',
+    'idx_feat3_desc' => 'Personaliza tu perfil, forma tu equipo y consulta las estadísticas de otros jugadores.',
+    
+    'idx_pres_title1' => 'Matchmaking y',
+    'idx_pres_title2' => 'Ecosistema',
+    'idx_mm_title' => 'Matchmaking Ranked y Normal',
+    'idx_mm_desc1' => 'Ya seas un principiante buscando diversión o un veterano apuntando a la cima, nuestro sistema se adapta a ti.',
+    'idx_mm_desc2' => 'Encuentra oponentes de tu nivel en segundos y disfruta de un sistema competitivo justo.',
+    'idx_mm_li1' => 'Algoritmo preciso basado en ELO',
+    'idx_mm_li2' => 'Manejo seguro de disputas',
+    'idx_mm_li3' => 'Partidos amistosos para practicar',
+    
+    'idx_client_title' => 'La Aplicación Windows',
+    'idx_client_desc1' => 'Pasa al siguiente nivel con nuestro cliente de escritorio exclusivo. Disfruta de un overlay completo sobre tu juego.',
+    'idx_client_desc2' => 'Únete al matchmaking, chatea con amigos y actualiza tu estado de Discord (RPC) sin tener que minimizar el juego.',
+    
+    'idx_roadmap_title1' => 'Próximas',
+    'idx_roadmap_title2' => 'Actualizaciones',
+    'idx_roadmap_subtitle' => 'Descubre lo que llegará muy pronto a Secteur V.',
+    'idx_rdm_tournaments' => 'Torneos',
+    'idx_rdm_tournaments_desc' => 'Torneos semanales oficiales y creación de torneos personalizados por la comunidad.',
+    'idx_rdm_clans' => 'Sistema de Clanes',
+    'idx_rdm_clans_desc' => 'Forma gremios, disfruta de un chat privado y sube en la clasificación mundial de clanes.',
+    'idx_rdm_mobile' => 'Aplicación Móvil',
+    'idx_rdm_mobile_desc' => 'Una app de iOS y Android para reemplazar el overlay cuando no juegues en PC.',
+    'idx_rdm_achievements' => 'Logros y Rangos',
+    'idx_rdm_achievements_desc' => 'Desbloquea logros exclusivos, consulta guías estratégicas y muestra nuevas insignias.',
     ];

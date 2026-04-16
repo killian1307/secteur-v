@@ -492,4 +492,37 @@ return [
     'ov_hint' => 'SHIFT + TAB を押して Secteur V を操作',
     'ov_ready_to_play' => '再生準備完了',
     'ov_media_player' => 'メディアプレーヤー',
+
+    // --- NOUVELLE PAGE D'ACCUEIL ---
+    'idx_feat1_title' => 'Discordログイン',
+    'idx_feat1_desc' => 'Discordアカウントを使ってワンクリックでログイン。迅速、安全、そして簡単です。',
+    'idx_feat2_title' => 'ソーシャル＆フレンド',
+    'idx_feat2_desc' => '友達を追加し、プライベートメッセージを送信して、対戦ネットワークを広げましょう。',
+    'idx_feat3_title' => 'プロフィールとデータベース',
+    'idx_feat3_desc' => 'プロフィールをカスタマイズし、チームを編成し、他のプレイヤーの統計を確認します。',
+    
+    'idx_pres_title1' => 'マッチメイキング＆',
+    'idx_pres_title2' => 'エコシステム',
+    'idx_mm_title' => 'ランクマッチ＆ノーマルマッチ',
+    'idx_mm_desc1' => '楽しみたい初心者から頂点を目指すベテランまで、私たちのシステムはあなたに適応します。',
+    'idx_mm_desc2' => '数秒で同じレベルの対戦相手を見つけ、公平な対戦システムをお楽しみください。',
+    'idx_mm_li1' => '正確なELOベースのアルゴリズム',
+    'idx_mm_li2' => '安全な紛争処理',
+    'idx_mm_li3' => '練習用のフレンドリーマッチ',
+    
+    'idx_client_title' => 'Windowsアプリ',
+    'idx_client_desc1' => '専用のデスクトップクライアントで次のレベルへ。ゲームの上に直接完全なオーバーレイを表示します。',
+    'idx_client_desc2' => 'ゲーム画面を切り替えることなく、マッチメイキングに参加し、友達とチャットし、Discordステータス（RPC）を更新します。',
+    
+    'idx_roadmap_title1' => '今後の',
+    'idx_roadmap_title2' => 'アップデート',
+    'idx_roadmap_subtitle' => 'Secteur Vにまもなく登場する機能をご覧ください。',
+    'idx_rdm_tournaments' => 'トーナメント',
+    'idx_rdm_tournaments_desc' => '公式のウィークリートーナメントと、コミュニティが主催するカスタムトーナメント。',
+    'idx_rdm_clans' => 'クランシステム',
+    'idx_rdm_clans_desc' => 'ギルドを結成し、プライベートチャットを楽しみ、グローバルクランランキングを駆け上がりましょう。',
+    'idx_rdm_mobile' => 'モバイルアプリ',
+    'idx_rdm_mobile_desc' => 'PCを使用していないときのオーバーレイの代わりとなるiOSおよびAndroidコンパニオンアプリ。',
+    'idx_rdm_achievements' => '実績とランク',
+    'idx_rdm_achievements_desc' => '限定の実績、高度な戦略ガイド、新しいランクバッジのロックを解除します。',
     ];

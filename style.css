@@ -621,6 +621,7 @@ h1 {
     text-transform: uppercase;
     transition: all 0.3s;
     letter-spacing: 0.5px;
+    padding-top: 20px;
 }
 
 .link-arrow:hover {
@@ -2440,6 +2441,95 @@ input:valid {
     background-color: #e6c200;
 }
 
+/* --- LANDING PAGE: CLIENT HIGHLIGHT --- */
+.client-highlight-block {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(10, 25, 49, 0) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.02);
+}
+
+.client-glowing-img {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+/* --- LANDING PAGE: ROADMAP SECTION --- */
+.roadmap-section {
+    padding: 6rem 2rem;
+    background-color: var(--background-main);
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.roadmap-section h2 {
+    font-size: 3rem;
+    color: var(--text-primary);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 1rem;
+}
+
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.roadmap-card {
+    background: var(--background-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.roadmap-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+}
+
+.roadmap-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.roadmap-card:hover::before {
+    background: linear-gradient(90deg, var(--button-gradient-start), var(--button-gradient-end));
+}
+
+.roadmap-icon {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.roadmap-card:hover .roadmap-icon {
+    color: var(--primary-purple);
+}
+
+.roadmap-card h4 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.roadmap-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     
@@ -2585,5 +2675,16 @@ input:valid {
         padding: 0.8rem 1.3rem;
         font-size: 0.8rem;
     }
+
+    /* New landing page */
+    .client-highlight-block {
+        padding: 1.5rem;
+    }
+
+    .roadmap-section h2 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
 
 }
