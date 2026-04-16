@@ -441,21 +441,29 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
     outline: none;
 }
 
-/* =========================================
-   MOBILE PWA OVERRIDES
-   ========================================= */
-body.mobile-mode, body.mobile-mode #overlay-wrapper {
-    background-color: #000000 !important; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto; 
-    pointer-events: auto;
-    padding: 10px;
-    box-sizing: border-box;
+/* =======================================================
+   MOBILE PWA: THE MASTER ARCHITECTURE (V3)
+   ======================================================= */
+
+/* 1. Base App Container */
+body.mobile-mode, 
+body.mobile-mode #overlay-wrapper {
+    background-color: #000000 !important;
+    height: 100dvh !important; 
+    width: 100% !important; /* FIX 1: Prevents the layout from shifting to the right */
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important; /* FIX 2: Global 10px border separation for ALL states */
+    box-sizing: border-box !important;
+    overflow: hidden !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Centers panels horizontally */
+    pointer-events: auto !important;
+    gap: 10px !important; 
 }
 
-/* Hide desktop-only text and widgets */
+/* 2. Hide Desktop Junk */
 body.mobile-mode .overlay-logo,
 body.mobile-mode .overlay-copyright,
 body.mobile-mode .hint,
@@ -463,29 +471,136 @@ body.mobile-mode #panel-spotify {
     display: none !important;
 }
 
-/* Force all panels to be full width, separated by 10px */
+/* 3. Strip absolute positioning from ALL panels */
 body.mobile-mode .panel {
     position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
     transform: none !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 0 10px 0 !important;
-    box-sizing: border-box;
+    margin: 0 !important; 
+    box-sizing: border-box !important;
 }
 
-/* Make the Social Panel fully expand automatically */
-body.mobile-mode #panel-social {
-    height: 400px !important;
-    display: flex !important;
-    flex-direction: column;
+/* =======================================================
+   STATE 1: IDLE / OUT OF MATCH
+   ======================================================= */
+
+body.mobile-mode #panel-match {
+    display: none !important;
 }
-body.mobile-mode .social-content, 
+
+body.mobile-mode #panel-idle {
+    flex-shrink: 0 !important; 
+}
+
+body.mobile-mode #panel-social {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important; 
+    min-height: 0 !important; 
+}
+
+body.mobile-mode .social-content,
 body.mobile-mode .social-list {
     display: block !important;
     opacity: 1 !important;
     pointer-events: auto !important;
+    overflow-y: auto !important;
+    height: 100% !important;
+}
+
+/* =======================================================
+   STATE 2: IN A MATCH (.is-match)
+   ======================================================= */
+
+body.mobile-mode #overlay-wrapper.is-match #panel-social,
+body.mobile-mode #overlay-wrapper.is-match #panel-idle {
+    display: none !important;
+}
+
+/* FIX 2: Confine the match panel so it doesn't overflow the borders */
+body.mobile-mode #overlay-wrapper.is-match #panel-match {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important; 
+    padding: 0 !important;
+    margin: 0 !important; 
+    gap: 10px !important;
+    background: transparent !important;
+    border: none !important;
+    width: 100% !important;
+}
+
+body.mobile-mode .match-scoreboard,
+body.mobile-mode .match-chat {
+    position: relative !important;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+body.mobile-mode .match-scoreboard {
+    flex-shrink: 0 !important;
+}
+
+/* FIX 3: Nuke desktop heights to fix the floating chat gap */
+body.mobile-mode .match-chat {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important; 
+    max-height: none !important;
+    min-height: 0 !important; /* Crucial for internal scrolling */
+    overflow: hidden !important; 
+}
+
+body.mobile-mode #ui-chat-box {
+    flex: 1 !important;
+    height: auto !important; /* Destroy desktop hardcoded heights */
+    max-height: none !important;
+    overflow-y: auto !important;
+    padding: 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+}
+
+/* Lock input bar natively to the bottom */
+body.mobile-mode .match-chat .chat-input-area {
+    position: relative !important;
+    bottom: auto !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+/* =======================================================
+   CHAT BUBBLE FORMATTING
+   ======================================================= */
+
+body.mobile-mode .chat-msg {
+    max-width: 80% !important;
+    width: fit-content !important;
+    margin-bottom: 8px !important;
+    padding: 10px 14px !important;
+    border-radius: 16px !important;
+    word-wrap: break-word !important;
+    display: block !important;
+}
+
+body.mobile-mode .chat-msg-me {
+    align-self: flex-end !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    border-bottom-right-radius: 4px !important;
+}
+
+body.mobile-mode .chat-msg-opp {
+    align-self: flex-start !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    border-bottom-left-radius: 4px !important;
 }
