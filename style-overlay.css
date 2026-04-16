@@ -440,3 +440,52 @@ body, html { margin: 0; padding: 0; width: 100vw; height: 100vh; background: tra
 .spot-controls button:active {
     outline: none;
 }
+
+/* =========================================
+   MOBILE PWA OVERRIDES
+   ========================================= */
+body.mobile-mode, body.mobile-mode #overlay-wrapper {
+    background-color: #000000 !important; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; 
+    pointer-events: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Hide desktop-only text and widgets */
+body.mobile-mode .overlay-logo,
+body.mobile-mode .overlay-copyright,
+body.mobile-mode .hint,
+body.mobile-mode #panel-spotify {
+    display: none !important;
+}
+
+/* Force all panels to be full width, separated by 10px */
+body.mobile-mode .panel {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 10px 0 !important;
+    box-sizing: border-box;
+}
+
+/* Make the Social Panel fully expand automatically */
+body.mobile-mode #panel-social {
+    height: 400px !important;
+    display: flex !important;
+    flex-direction: column;
+}
+body.mobile-mode .social-content, 
+body.mobile-mode .social-list {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}

@@ -671,3 +671,28 @@ window.sendSpotifyAction = function(action) {
 
 // Start the Spotify loop
 updateSpotifyWidget();
+
+// ==========================================
+// MOBILE PWA SCREEN WAKE HACK
+// ==========================================
+if (document.body.classList.contains('mobile-mode')) {
+    const noSleepVideo = document.getElementById('nosleep-video');
+    let isAwake = false;
+
+    // We must wait for the user's first tap on the screen to bypass Safari's autoplay block
+    const wakeUpScreen = () => {
+        if (!isAwake && noSleepVideo) {
+            noSleepVideo.play().then(() => {
+                isAwake = true;
+                console.log("Ghost video playing. Screen will not sleep.");
+            }).catch(err => console.log("Wake play failed: ", err));
+            
+            // Remove the listener once it works
+            document.removeEventListener('touchstart', wakeUpScreen);
+            document.removeEventListener('click', wakeUpScreen);
+        }
+    };
+
+    document.addEventListener('touchstart', wakeUpScreen);
+    document.addEventListener('click', wakeUpScreen);
+}

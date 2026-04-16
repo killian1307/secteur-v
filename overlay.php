@@ -5,10 +5,22 @@ require 'db.php';
 $isLoggedIn = isset($_SESSION['user_id']);
 $user = null;
 
+// Mobile detection
+$isMobile = preg_match("/(android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini)/i", $_SERVER['HTTP_USER_AGENT']);
+$bodyClass = $isMobile ? 'mobile-mode' : '';
+
 if ($isLoggedIn) {
     $stmt = $pdo->prepare("SELECT username, elo, grade FROM users WHERE id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch();
+} else {
+    // If they are on a phone and NOT logged in, kick them to Discord instantly
+    if ($isMobile) {
+        // Change 'login.php' to whatever file handles your Discord OAuth
+        // You may need to update your auth script to check for a ?redirect=overlay param so it sends them back here!
+        header('Location: login.php?redirect=overlay');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -17,10 +29,19 @@ if ($isLoggedIn) {
     <meta charset="UTF-8">
     <title><?php echo __('ov_title'); ?></title>
     <link rel="stylesheet" href="style-overlay.css?v=<?php echo filemtime(__DIR__ . '/style-overlay.css'); ?>">
-</head>
-<body>
 
-<div id="overlay-wrapper">
+    <?php if ($isMobile): ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+        
+        <link rel="manifest" href="manifest.json">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <?php endif; ?>
+</head>
+<body class="<?php echo $bodyClass; ?>">
+
+<div id="overlay-wrapper" class="<?php echo $isMobile ? 'interactive' : ''; ?>">
     
     <div class="overlay-logo">
         <span>Secteur</span>
@@ -151,6 +172,13 @@ if ($isLoggedIn) {
 
     <div class="hint"><?php echo __('ov_hint'); ?></div>
 </div>
+
+<!-- Optional invisible video element to keep mobile devices awake while the overlay is open -->
+<?php if ($isMobile): ?>
+    <video id="nosleep-video" playsinline loop muted style="position:absolute; width:1px; height:1px;">
+        <source src="assets/vid/blank.mp4" type="video/mp4">
+    </video>
+<?php endif; ?>
 
 <script>
     window.langTexts = {
