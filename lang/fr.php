@@ -439,7 +439,7 @@ return [
     'dl_title' => 'SECTEUR V - Télécharger le Client',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Client',
-    'dl_subtitle' => 'Voici la dernière évloution du Secteur V : une application de bureau dédiée pour une expérience de compétition ultime sur Victory Road.',
+    'dl_subtitle' => 'Voici la dernière évolution du Secteur V : une application de bureau dédiée pour une expérience de compétition ultime sur Victory Road.',
     'dl_cta' => 'Télécharger pour Windows',
     
     'dl_card1_title' => 'Overlay en Jeu',

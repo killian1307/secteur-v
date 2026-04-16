@@ -3,9 +3,15 @@
 
 require_once 'assets/init_session.php';
 
+if (isset($_GET['redirect'])) {
+    $_SESSION['redirect_after_login'] = $_GET['redirect'];
+}
+
 // Si l'utilisateur est déjà connecté, renvoie vers l'accueil
 if (isset($_SESSION['user_id'])) {
-    header("Location: /");
+    $destination = (isset($_SESSION['redirect_after_login']) && $_SESSION['redirect_after_login'] === 'overlay') ? '/overlay.php' : '/';
+    unset($_SESSION['redirect_after_login']);
+    header("Location: " . $destination);
     exit;
 }
 
@@ -184,7 +190,11 @@ if (isset($_GET['code'])) {
         $_SESSION['avatar'] = $avatar_url;
     }
 
-    header('Location: /');
+    // Redirect them back to where they came from
+    $destination = (isset($_SESSION['redirect_after_login']) && $_SESSION['redirect_after_login'] === 'overlay') ? '/overlay.php' : '/';
+    unset($_SESSION['redirect_after_login']);
+    
+    header("Location: " . $destination);
     exit;
 }
 ?>
