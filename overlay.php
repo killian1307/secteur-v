@@ -174,7 +174,7 @@ if ($isLoggedIn) {
         profileState: "<?php echo __('rpc_profile_state'); ?>"
     };
 </script>
-<script src="overlay_engine.js"></script>
+<script src="overlay_engine.js?v=<?php echo filemtime(__DIR__ . '/overlay_engine.js'); ?>"></script>
 
 </body>
 </html>
