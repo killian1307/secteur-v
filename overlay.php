@@ -28,6 +28,7 @@ if ($isLoggedIn) {
     <meta charset="UTF-8">
     <title><?php echo __('ov_title'); ?></title>
     <link rel="stylesheet" href="style-overlay.css?v=<?php echo filemtime(__DIR__ . '/style-overlay.css'); ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <?php if ($isMobile): ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -43,9 +44,18 @@ if ($isLoggedIn) {
 <div id="overlay-wrapper" class="<?php echo $isMobile ? 'interactive' : ''; ?>">
     
     <?php if ($isMobile): ?>
-        <a href="index.php" style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #000; background: #FFD700; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; flex-shrink: 0; font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
-            <i class="fas fa-home"></i> <?php echo __('nav_home'); ?>
-        </a>
+        <div id="mobile-dim-layer"></div>
+
+        <div id="mobile-side-drawer">
+            <div class="drawer-content">
+                <a href="index.php" class="drawer-home-link">
+                    <i class="fas fa-home"></i> <?php echo __('nav_home'); ?>
+                </a>
+            </div>
+            <div class="drawer-handle" onclick="toggleSideDrawer()">
+                <i class="fas fa-chevron-right" id="drawer-icon"></i>
+            </div>
+        </div>
     <?php endif; ?>
 
     <div class="overlay-logo">
@@ -208,6 +218,73 @@ if ($isLoggedIn) {
     };
 </script>
 <script src="overlay_engine.js?v=<?php echo filemtime(__DIR__ . '/overlay_engine.js'); ?>"></script>
+<?php if ($isMobile): ?>
+<script>
+    /* =======================================================
+       MOBILE SIDE DRAWER LOGIC
+       ======================================================= */
+    function toggleSideDrawer() {
+        const drawer = document.getElementById('mobile-side-drawer');
+        const icon = document.getElementById('drawer-icon');
+        
+        if (drawer) {
+            drawer.classList.toggle('expanded');
+            
+            // Flip the arrow icon based on state
+            if(drawer.classList.contains('expanded')) {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            } else {
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            }
+        }
+    }
+
+    // Auto-close the drawer if the user taps anywhere else on the screen
+    document.addEventListener('click', (e) => {
+        const drawer = document.getElementById('mobile-side-drawer');
+        const icon = document.getElementById('drawer-icon');
+        
+        if (drawer && drawer.classList.contains('expanded') && !drawer.contains(e.target)) {
+            drawer.classList.remove('expanded');
+            if(icon) {
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            }
+        }
+    });
+
+    /* =======================================================
+       MOBILE IDLE DIMMING LOGIC
+       ======================================================= */
+    let idleTimer;
+    const IDLE_TIME = 30000;
+
+    function resetIdleTimer() {
+        const body = document.body;
+        
+        // If the screen was dim, wake it up
+        if (body.classList.contains('is-idle')) {
+            body.classList.remove('is-idle');
+        }
+        
+        // Clear the old timer and start again
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+            body.classList.add('is-idle');
+        }, IDLE_TIME);
+    }
+
+    // Any touch, click, or typing resets the timer
+    window.addEventListener('touchstart', resetIdleTimer);
+    window.addEventListener('click', resetIdleTimer);
+    window.addEventListener('keydown', resetIdleTimer);
+    
+    // Start the timer the moment the app loads
+    resetIdleTimer();
+</script>
+<?php endif; ?>
 
 </body>
 </html>
