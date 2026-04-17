@@ -453,7 +453,12 @@ body.mobile-mode #overlay-wrapper {
     width: 100% !important; 
     max-width: 100% !important;
     margin: 0 !important;
-    padding: 10px !important; /* THE GOLDEN BORDER */
+    
+    padding-top: max(10px, env(safe-area-inset-top)) !important;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    padding-left: max(10px, env(safe-area-inset-left)) !important;
+    padding-right: max(10px, env(safe-area-inset-right)) !important;
+
     box-sizing: border-box !important;
     overflow: hidden !important; 
     display: flex !important;

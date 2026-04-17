@@ -521,4 +521,6 @@ return [
     'idx_rdm_achievements_desc' => 'Débloquez des succès exclusifs, consultez des guides stratégiques et arborez de nouveaux badges.',
     'idx_rdm_more' => 'Et bien plus à venir...',
     'idx_rdm_more_desc' => 'Découvrez d\'autres fonctionnalités à venir dans les prochaines mises à jour.',
+
+    'ios_redirect_alert' => 'Vous allez être redirigé vers l\'application.\n\nUne fois sur la page, appuyez sur les 3 petits points, puis \'Partager\' (le carré avec une flèche) puis sur \'Sur l\'écran d\'accueil\'.',
     ];

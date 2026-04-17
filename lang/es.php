@@ -534,4 +534,6 @@ return [
     'idx_rdm_achievements_desc' => 'Desbloquea logros exclusivos, consulta guías estratégicas y muestra nuevas insignias.',
     'idx_rdm_more' => 'Y mucho más por venir...',
     'idx_rdm_more_desc' => 'Descubre otras funcionalidades que llegarán en las próximas actualizaciones.',
+
+    'ios_redirect_alert' => 'Serás redirigido a la aplicación.\n\nUna vez en la página, toca los 3 puntitos, luego \'Compartir\' (el cuadrado con una flecha) y después \'Añadir a la pantalla de inicio\'.',
     ];
