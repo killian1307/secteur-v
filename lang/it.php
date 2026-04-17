@@ -534,4 +534,6 @@ return [
     'idx_rdm_achievements_desc' => 'Sblocca obiettivi esclusivi, consulta guide strategiche avanzate e ottieni nuovi badge.',
     'idx_rdm_more' => 'E molto altro ancora...',
     'idx_rdm_more_desc' => 'Scopri altre funzionalità in arrivo nei prossimi aggiornamenti.',
+
+    'ios_redirect_alert' => 'Verrai reindirizzato all\'app.\n\nUna volta sulla pagina, tocca i 3 puntini, poi \'Condividi\' (il quadrato con una freccia) e infine \'Aggiungi alla schermata Home\'.',
     ];

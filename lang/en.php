@@ -524,4 +524,6 @@ return [
     'idx_rdm_achievements_desc' => 'Unlock exclusive achievements, advanced strategy guides, and new badges.',
     'idx_rdm_more' => 'And much more to come...',
     'idx_rdm_more_desc' => 'Discover other features coming in future updates.',
+
+    'ios_redirect_alert' => 'You will be redirected to the app.\n\nOnce on the page, tap the 3 dots, then \'Share\' (the square with an arrow), and then \'Add to Home Screen\'.',
     ];

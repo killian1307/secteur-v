@@ -180,7 +180,8 @@ $footer->render();
                 deferredPrompt = null;
             });
         } else {
-            alert("Pour installer l'application sur iPhone / iPad :\n1. Appuyez sur l'icône Partager (le carré avec une flèche) en bas de l'écran.\n2. Sélectionnez 'Sur l'écran d'accueil'.");
+            alert("<?php echo __('ios_redirect_alert'); ?>");
+                window.location.href = '/overlay.php';
         }
     }
 </script>

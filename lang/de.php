@@ -534,4 +534,6 @@ return [
     'idx_rdm_achievements_desc' => 'Schalten Sie exklusive Erfolge, Strategie-Guides und neue Abzeichen frei.',
     'idx_rdm_more' => 'Und vieles mehr...',
     'idx_rdm_more_desc' => 'Entdecken Sie weitere Funktionen, die in den nächsten Updates folgen werden.',
+
+    'ios_redirect_alert' => 'Sie werden zur App weitergeleitet.\n\nSobald Sie auf der Seite sind, tippen Sie auf die 3 Punkte, dann auf \'Teilen\' (das Viereck mit dem Pfeil) und schließlich auf \'Zum Home-Bildschirm\'.',
     ];
