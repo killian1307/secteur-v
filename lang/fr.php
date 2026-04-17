@@ -439,7 +439,7 @@ return [
     'dl_title' => 'SECTEUR V - Télécharger le Client',
     'dl_h1_1' => 'Secteur V',
     'dl_h1_2' => 'Client',
-    'dl_subtitle' => 'Voici la dernière évloution du Secteur V : une application de bureau dédiée pour une expérience de compétition ultime sur Victory Road.',
+    'dl_subtitle' => 'Voici la dernière évolution du Secteur V : une application de bureau dédiée pour une expérience de compétition ultime sur Victory Road.',
     'dl_cta' => 'Télécharger pour Windows',
     
     'dl_card1_title' => 'Overlay en Jeu',
@@ -504,9 +504,10 @@ return [
     'idx_mm_li3' => 'Matches amicaux pour s\'entraîner',
     
     // Client
-    'idx_client_title' => 'L\'Application Windows',
-    'idx_client_desc1' => 'Passez au niveau supérieur avec notre client de bureau exclusif. Profitez d\'un overlay complet directement par-dessus votre jeu.',
-    'idx_client_desc2' => 'Rejoignez le matchmaking, discutez avec vos amis et mettez à jour votre statut Discord (RPC) sans jamais faire un retour bureau.',
+    'nav_install_app' => 'Installer l\'App',
+    'idx_client_title' => 'Application multiplateforme',
+    'idx_client_desc1' => 'Passez au niveau supérieur avec notre application PC/mobile. Profitez d\'un overlay complet directement par-dessus votre jeu (ou d\'une interface simplifée sur mobile).',
+    'idx_client_desc2' => 'Rejoignez le matchmaking et discutez avec vos amis sans jamais faire un retour bureau.',
     
     // Roadmap / Futur
     'idx_roadmap_title1' => 'Mises à jour',
@@ -516,8 +517,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Tournois hebdomadaires officiels et création de tournois personnalisés gérés par la communauté.',
     'idx_rdm_clans' => 'Système de Clans',
     'idx_rdm_clans_desc' => 'Formez des guildes, profitez d\'un tchat privé et grimpez dans le classement mondial des clans.',
-    'idx_rdm_mobile' => 'Application Mobile',
-    'idx_rdm_mobile_desc' => 'Une app iOS et Android compagnon pour remplacer l\'overlay quand vous ne jouez pas sur PC.',
     'idx_rdm_achievements' => 'Succès & Rangs',
     'idx_rdm_achievements_desc' => 'Débloquez des succès exclusifs, consultez des guides stratégiques et arborez de nouveaux badges.',
+    'idx_rdm_more' => 'Et bien plus à venir...',
+    'idx_rdm_more_desc' => 'Découvrez d\'autres fonctionnalités à venir dans les prochaines mises à jour.',
     ];

@@ -507,9 +507,11 @@ return [
     'idx_mm_li2' => 'Secure dispute handling',
     'idx_mm_li3' => 'Friendly matches for practice',
     
-    'idx_client_title' => 'The Windows App',
-    'idx_client_desc1' => 'Take it to the next level with our exclusive desktop client. Enjoy a full overlay right on top of your game.',
-    'idx_client_desc2' => 'Join matchmaking, chat with friends, and update your Discord status (RPC) without ever alt-tabbing.',
+    // Client
+    'nav_install_app' => 'Install App',
+    'idx_client_title' => 'Cross-platform Application',
+    'idx_client_desc1' => 'Take it to the next level with our PC/mobile app. Enjoy a full overlay directly over your game (or a simplified interface on mobile).',
+    'idx_client_desc2' => 'Join matchmaking and chat with your friends without ever having to Alt-Tab.',
     
     'idx_roadmap_title1' => 'Future',
     'idx_roadmap_title2' => 'Updates',
@@ -518,8 +520,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Official weekly tournaments and custom community-organized brackets.',
     'idx_rdm_clans' => 'Clan System',
     'idx_rdm_clans_desc' => 'Form guilds, enjoy private chat, and climb the global clan leaderboard.',
-    'idx_rdm_mobile' => 'Mobile App',
-    'idx_rdm_mobile_desc' => 'An iOS and Android companion app to replace the overlay when you are not on PC.',
     'idx_rdm_achievements' => 'Achievements & Ranks',
     'idx_rdm_achievements_desc' => 'Unlock exclusive achievements, advanced strategy guides, and new badges.',
+    'idx_rdm_more' => 'And much more to come...',
+    'idx_rdm_more_desc' => 'Discover other features coming in future updates.',
     ];

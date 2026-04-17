@@ -21,6 +21,8 @@ class Header {
 
     public function render() {
         $isLoggedIn = isset($_SESSION['user_id']);
+
+        $isMobile = preg_match("/(android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini)/i", $_SERVER['HTTP_USER_AGENT']);
         
         // Vérifie si l'utilisateur est le créateur
         $isAdmin = false;
@@ -441,6 +443,8 @@ class Header {
 
         if ($isDesktopApp) {
             echo '<a href="app_settings.php" class="dropdown-item"><i class="fas fa-desktop"></i> ' . __('nav_app_settings') . '</a>';
+        } elseif ($isMobile) {
+            echo '';
         } else {
             echo '<a href="download_client.php" class="dropdown-item"><i class="fas fa-download"></i> ' . __('nav_download_client') . '</a>';
         }

@@ -517,9 +517,11 @@ return [
     'idx_mm_li2' => 'Gestione sicura delle controversie',
     'idx_mm_li3' => 'Partite amichevoli per allenarsi',
     
-    'idx_client_title' => 'L\'App Windows',
-    'idx_client_desc1' => 'Passa al livello successivo con il nostro esclusivo client desktop. Goditi un overlay completo direttamente sul tuo gioco.',
-    'idx_client_desc2' => 'Unisciti al matchmaking, chatta con gli amici e aggiorna il tuo stato Discord (RPC) senza mai uscire dal gioco.',
+    // Client
+    'nav_install_app' => 'Installa l\'App',
+    'idx_client_title' => 'Applicazione multipiattaforma',
+    'idx_client_desc1' => 'Passa al livello successivo con la nostra app per PC/mobile. Goditi un overlay completo direttamente sopra il tuo gioco (o un\'interfaccia semplificata su mobile).',
+    'idx_client_desc2' => 'Partecipa al matchmaking e chatta con i tuoi amici senza mai dover tornare al desktop.',
     
     'idx_roadmap_title1' => 'Prossimi',
     'idx_roadmap_title2' => 'Aggiornamenti',
@@ -528,8 +530,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Tornei settimanali ufficiali e creazione di tornei personalizzati gestiti dalla community.',
     'idx_rdm_clans' => 'Sistema di Clan',
     'idx_rdm_clans_desc' => 'Forma gilde, usa una chat privata e scala la classifica globale dei clan.',
-    'idx_rdm_mobile' => 'App Mobile',
-    'idx_rdm_mobile_desc' => 'Un\'app per iOS e Android per sostituire l\'overlay quando non giochi su PC.',
     'idx_rdm_achievements' => 'Obiettivi e Gradi',
     'idx_rdm_achievements_desc' => 'Sblocca obiettivi esclusivi, consulta guide strategiche avanzate e ottieni nuovi badge.',
+    'idx_rdm_more' => 'E molto altro ancora...',
+    'idx_rdm_more_desc' => 'Scopri altre funzionalità in arrivo nei prossimi aggiornamenti.',
     ];

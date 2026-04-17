@@ -510,9 +510,11 @@ return [
     'idx_mm_li2' => '安全な紛争処理',
     'idx_mm_li3' => '練習用のフレンドリーマッチ',
     
-    'idx_client_title' => 'Windowsアプリ',
-    'idx_client_desc1' => '専用のデスクトップクライアントで次のレベルへ。ゲームの上に直接完全なオーバーレイを表示します。',
-    'idx_client_desc2' => 'ゲーム画面を切り替えることなく、マッチメイキングに参加し、友達とチャットし、Discordステータス（RPC）を更新します。',
+    // Client
+    'nav_install_app' => 'アプリをインストール',
+    'idx_client_title' => 'クロスプラットフォーム対応アプリ',
+    'idx_client_desc1' => 'PC/モバイルアプリでさらなる高みへ。ゲーム画面上にフルオーバーレイを表示できます（モバイル版は簡易インターフェース）。',
+    'idx_client_desc2' => 'デスクトップに戻ることなく、マッチメイキングへの参加やフレンドとのチャットが可能です。',
     
     'idx_roadmap_title1' => '今後の',
     'idx_roadmap_title2' => 'アップデート',
@@ -521,8 +523,8 @@ return [
     'idx_rdm_tournaments_desc' => '公式のウィークリートーナメントと、コミュニティが主催するカスタムトーナメント。',
     'idx_rdm_clans' => 'クランシステム',
     'idx_rdm_clans_desc' => 'ギルドを結成し、プライベートチャットを楽しみ、グローバルクランランキングを駆け上がりましょう。',
-    'idx_rdm_mobile' => 'モバイルアプリ',
-    'idx_rdm_mobile_desc' => 'PCを使用していないときのオーバーレイの代わりとなるiOSおよびAndroidコンパニオンアプリ。',
     'idx_rdm_achievements' => '実績とランク',
     'idx_rdm_achievements_desc' => '限定の実績、高度な戦略ガイド、新しいランクバッジのロックを解除します。',
+    'idx_rdm_more' => 'さらに多くの機能を準備中...',
+    'idx_rdm_more_desc' => '今後のアップデートで追加される新機能にご期待ください。',
     ];

@@ -517,9 +517,11 @@ return [
     'idx_mm_li2' => 'Manejo seguro de disputas',
     'idx_mm_li3' => 'Partidos amistosos para practicar',
     
-    'idx_client_title' => 'La Aplicación Windows',
-    'idx_client_desc1' => 'Pasa al siguiente nivel con nuestro cliente de escritorio exclusivo. Disfruta de un overlay completo sobre tu juego.',
-    'idx_client_desc2' => 'Únete al matchmaking, chatea con amigos y actualiza tu estado de Discord (RPC) sin tener que minimizar el juego.',
+    // Client
+    'nav_install_app' => 'Instalar la App',
+    'idx_client_title' => 'Aplicación multiplataforma',
+    'idx_client_desc1' => 'Pasa al siguiente nivel con nuestra aplicación para PC/móvil. Disfruta de una superposición completa directamente sobre tu juego (o una interfaz simplificada en el móvil).',
+    'idx_client_desc2' => 'Únete al matchmaking y chatea con tus amigos sin tener que salir del juego.',
     
     'idx_roadmap_title1' => 'Próximas',
     'idx_roadmap_title2' => 'Actualizaciones',
@@ -528,8 +530,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Torneos semanales oficiales y creación de torneos personalizados por la comunidad.',
     'idx_rdm_clans' => 'Sistema de Clanes',
     'idx_rdm_clans_desc' => 'Forma gremios, disfruta de un chat privado y sube en la clasificación mundial de clanes.',
-    'idx_rdm_mobile' => 'Aplicación Móvil',
-    'idx_rdm_mobile_desc' => 'Una app de iOS y Android para reemplazar el overlay cuando no juegues en PC.',
     'idx_rdm_achievements' => 'Logros y Rangos',
     'idx_rdm_achievements_desc' => 'Desbloquea logros exclusivos, consulta guías estratégicas y muestra nuevas insignias.',
+    'idx_rdm_more' => 'Y mucho más por venir...',
+    'idx_rdm_more_desc' => 'Descubre otras funcionalidades que llegarán en las próximas actualizaciones.',
     ];
