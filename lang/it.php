@@ -530,8 +530,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Tornei settimanali ufficiali e creazione di tornei personalizzati gestiti dalla community.',
     'idx_rdm_clans' => 'Sistema di Clan',
     'idx_rdm_clans_desc' => 'Forma gilde, usa una chat privata e scala la classifica globale dei clan.',
-    'idx_rdm_mobile' => 'App Mobile',
-    'idx_rdm_mobile_desc' => 'Un\'app per iOS e Android per sostituire l\'overlay quando non giochi su PC.',
     'idx_rdm_achievements' => 'Obiettivi e Gradi',
     'idx_rdm_achievements_desc' => 'Sblocca obiettivi esclusivi, consulta guide strategiche avanzate e ottieni nuovi badge.',
+    'idx_rdm_more' => 'E molto altro ancora...',
+    'idx_rdm_more_desc' => 'Scopri altre funzionalità in arrivo nei prossimi aggiornamenti.',
     ];

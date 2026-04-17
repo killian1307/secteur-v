@@ -520,8 +520,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Official weekly tournaments and custom community-organized brackets.',
     'idx_rdm_clans' => 'Clan System',
     'idx_rdm_clans_desc' => 'Form guilds, enjoy private chat, and climb the global clan leaderboard.',
-    'idx_rdm_mobile' => 'Mobile App',
-    'idx_rdm_mobile_desc' => 'An iOS and Android companion app to replace the overlay when you are not on PC.',
     'idx_rdm_achievements' => 'Achievements & Ranks',
     'idx_rdm_achievements_desc' => 'Unlock exclusive achievements, advanced strategy guides, and new badges.',
+    'idx_rdm_more' => 'And much more to come...',
+    'idx_rdm_more_desc' => 'Discover other features coming in future updates.',
     ];

@@ -135,14 +135,14 @@ $dashboard->render();
                 <p><?php echo __('idx_rdm_clans_desc'); ?></p>
             </div>
             <div class="roadmap-card">
-                <i class="fas fa-mobile-alt roadmap-icon"></i>
-                <h4><?php echo __('idx_rdm_mobile'); ?></h4>
-                <p><?php echo __('idx_rdm_mobile_desc'); ?></p>
-            </div>
-            <div class="roadmap-card">
                 <i class="fas fa-star roadmap-icon"></i>
                 <h4><?php echo __('idx_rdm_achievements'); ?></h4>
                 <p><?php echo __('idx_rdm_achievements_desc'); ?></p>
+            </div>
+            <div class="roadmap-card">
+                <i class="fas fa-plus roadmap-icon"></i>
+                <h4><?php echo __('idx_rdm_more'); ?></h4>
+                <p><?php echo __('idx_rdm_more_desc'); ?></p>
             </div>
         </div>
     </section>

@@ -530,8 +530,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Torneos semanales oficiales y creación de torneos personalizados por la comunidad.',
     'idx_rdm_clans' => 'Sistema de Clanes',
     'idx_rdm_clans_desc' => 'Forma gremios, disfruta de un chat privado y sube en la clasificación mundial de clanes.',
-    'idx_rdm_mobile' => 'Aplicación Móvil',
-    'idx_rdm_mobile_desc' => 'Una app de iOS y Android para reemplazar el overlay cuando no juegues en PC.',
     'idx_rdm_achievements' => 'Logros y Rangos',
     'idx_rdm_achievements_desc' => 'Desbloquea logros exclusivos, consulta guías estratégicas y muestra nuevas insignias.',
+    'idx_rdm_more' => 'Y mucho más por venir...',
+    'idx_rdm_more_desc' => 'Descubre otras funcionalidades que llegarán en las próximas actualizaciones.',
     ];

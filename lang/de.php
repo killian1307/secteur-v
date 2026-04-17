@@ -530,8 +530,8 @@ return [
     'idx_rdm_tournaments_desc' => 'Offizielle wöchentliche Turniere und von der Community organisierte Events.',
     'idx_rdm_clans' => 'Clan-System',
     'idx_rdm_clans_desc' => 'Gründen Sie Gilden, nutzen Sie private Chats und klettern Sie in der weltweiten Clan-Rangliste.',
-    'idx_rdm_mobile' => 'Mobile App',
-    'idx_rdm_mobile_desc' => 'Eine iOS- und Android-App als Overlay-Ersatz, wenn Sie nicht am PC sind.',
     'idx_rdm_achievements' => 'Erfolge & Ränge',
     'idx_rdm_achievements_desc' => 'Schalten Sie exklusive Erfolge, Strategie-Guides und neue Abzeichen frei.',
+    'idx_rdm_more' => 'Und vieles mehr...',
+    'idx_rdm_more_desc' => 'Entdecken Sie weitere Funktionen, die in den nächsten Updates folgen werden.',
     ];
