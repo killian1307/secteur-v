@@ -119,6 +119,11 @@ class Header {
             echo '<link rel="stylesheet" href="' . htmlspecialchars($this->customCss) . '">';
         }
 
+        // Pass PHP translations to external JS files
+        echo '<script>
+            window.IOS_REDIRECT_ALERT = "' . addslashes(__('ios_redirect_alert')) . '";
+        </script>';
+
         echo '</head>
 <body>
 
@@ -444,7 +449,7 @@ class Header {
         if ($isDesktopApp) {
             echo '<a href="app_settings.php" class="dropdown-item"><i class="fas fa-desktop"></i> ' . __('nav_app_settings') . '</a>';
         } elseif ($isMobile) {
-            echo '';
+            echo '<a href="#" onclick="handlePwaInstall(); return false;" class="dropdown-item"><i class="fas fa-mobile-alt"></i> ' . __('nav_install_app') . '</a>';
         } else {
             echo '<a href="download_client.php" class="dropdown-item"><i class="fas fa-download"></i> ' . __('nav_download_client') . '</a>';
         }
@@ -474,6 +479,12 @@ if ($isLoggedIn) {
         echo '<a href="https://discord.gg/85AT6gGNGD" class="mobile-link" target="_blank"><i class="fab fa-discord"></i> Discord</a>
         </div>
     </div>';
+
+    // FLOATING MOBILE OVERLAY BUTTON
+        // Only shows if on Mobile + Logged In + NOT currently on the overlay page
+        if ($isMobile && $isLoggedIn && basename($_SERVER['PHP_SELF']) !== 'overlay.php') {
+            echo '<a href="overlay.php" style="position:fixed; bottom:20px; left:20px; width:55px; height:55px; background-color:#FFD700; color:#000; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 4px 15px rgba(0,0,0,0.6); z-index:999; text-decoration:none; transition:transform 0.2s;"><i class="fas fa-mobile-alt"></i></a>';
+        }
     }
 }
 ?>

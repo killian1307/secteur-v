@@ -424,3 +424,26 @@ async function changeFormation(selectElement) {
         }
     }
 }
+
+/* ==========================================
+   PWA INSTALLATION LOGIC
+   ========================================== */
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+});
+
+window.handlePwaInstall = function() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+        });
+    } else {
+        // Fallback for iOS using the global variable from header.php
+        alert(window.IOS_REDIRECT_ALERT || "Vous allez être redirigé vers l'application.\n\nUne fois sur la page, appuyez sur les 3 petits points, puis 'Partager' et 'Sur l'écran d'accueil'.");
+        window.location.href = '/overlay.php';
+    }
+};
