@@ -504,9 +504,10 @@ return [
     'idx_mm_li3' => 'Matches amicaux pour s\'entraîner',
     
     // Client
-    'idx_client_title' => 'L\'Application Windows',
-    'idx_client_desc1' => 'Passez au niveau supérieur avec notre client de bureau exclusif. Profitez d\'un overlay complet directement par-dessus votre jeu.',
-    'idx_client_desc2' => 'Rejoignez le matchmaking, discutez avec vos amis et mettez à jour votre statut Discord (RPC) sans jamais faire un retour bureau.',
+    'nav_install_app' => 'Installer l\'App',
+    'idx_client_title' => 'Application multiplateforme',
+    'idx_client_desc1' => 'Passez au niveau supérieur avec notre application PC/mobile. Profitez d\'un overlay complet directement par-dessus votre jeu (ou d\'une interface simplifée sur mobile).',
+    'idx_client_desc2' => 'Rejoignez le matchmaking et discutez avec vos amis sans jamais faire un retour bureau.',
     
     // Roadmap / Futur
     'idx_roadmap_title1' => 'Mises à jour',

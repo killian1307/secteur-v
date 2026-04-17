@@ -517,9 +517,11 @@ return [
     'idx_mm_li2' => 'Manejo seguro de disputas',
     'idx_mm_li3' => 'Partidos amistosos para practicar',
     
-    'idx_client_title' => 'La Aplicación Windows',
-    'idx_client_desc1' => 'Pasa al siguiente nivel con nuestro cliente de escritorio exclusivo. Disfruta de un overlay completo sobre tu juego.',
-    'idx_client_desc2' => 'Únete al matchmaking, chatea con amigos y actualiza tu estado de Discord (RPC) sin tener que minimizar el juego.',
+    // Client
+    'nav_install_app' => 'Instalar la App',
+    'idx_client_title' => 'Aplicación multiplataforma',
+    'idx_client_desc1' => 'Pasa al siguiente nivel con nuestra aplicación para PC/móvil. Disfruta de una superposición completa directamente sobre tu juego (o una interfaz simplificada en el móvil).',
+    'idx_client_desc2' => 'Únete al matchmaking y chatea con tus amigos sin tener que salir del juego.',
     
     'idx_roadmap_title1' => 'Próximas',
     'idx_roadmap_title2' => 'Actualizaciones',

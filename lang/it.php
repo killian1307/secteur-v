@@ -517,9 +517,11 @@ return [
     'idx_mm_li2' => 'Gestione sicura delle controversie',
     'idx_mm_li3' => 'Partite amichevoli per allenarsi',
     
-    'idx_client_title' => 'L\'App Windows',
-    'idx_client_desc1' => 'Passa al livello successivo con il nostro esclusivo client desktop. Goditi un overlay completo direttamente sul tuo gioco.',
-    'idx_client_desc2' => 'Unisciti al matchmaking, chatta con gli amici e aggiorna il tuo stato Discord (RPC) senza mai uscire dal gioco.',
+    // Client
+    'nav_install_app' => 'Installa l\'App',
+    'idx_client_title' => 'Applicazione multipiattaforma',
+    'idx_client_desc1' => 'Passa al livello successivo con la nostra app per PC/mobile. Goditi un overlay completo direttamente sopra il tuo gioco (o un\'interfaccia semplificata su mobile).',
+    'idx_client_desc2' => 'Partecipa al matchmaking e chatta con i tuoi amici senza mai dover tornare al desktop.',
     
     'idx_roadmap_title1' => 'Prossimi',
     'idx_roadmap_title2' => 'Aggiornamenti',

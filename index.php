@@ -6,6 +6,8 @@ require 'assets/footer.php';
 require 'assets/dashboard.php';
 require 'assets/privacy_popup.php';
 
+$isMobile = preg_match("/(android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini)/i", $_SERVER['HTTP_USER_AGENT']);
+
 // Titre
 $header = new Header(__('idx_title'));
 
@@ -26,9 +28,15 @@ $dashboard->render();
         <p class="subtitle"><?php echo __('idx_subtitle'); ?></p>
         
         <div class="hero-actions" id="web-btns">
-            <a href="download_client.php" class="cta-button" style="text-decoration: none;">
-                <i class="fas fa-desktop"></i> <?php echo __('nav_download_client'); ?>
-            </a>
+            <?php if ($isMobile): ?>
+                <button class="cta-button" onclick="handlePwaInstall()">
+                    <i class="fas fa-mobile-alt"></i> <?php echo __('nav_install_app'); ?>
+                </button>
+            <?php else: ?>
+                <a href="download_client.php" class="cta-button" style="text-decoration: none;">
+                    <i class="fas fa-desktop"></i> <?php echo __('nav_download_client'); ?>
+                </a>
+            <?php endif; ?>
 
             <button class="secondary-outline-btn" onclick="openPrivacyModal()">
                 <i class="fab fa-discord"></i> <?php echo __('idx_cta'); ?>
@@ -87,12 +95,22 @@ $dashboard->render();
 
             <div class="info-block reverse client-highlight-block">
                 <div class="info-text">
-                    <h3><i class="fas fa-desktop" style="color: var(--primary-purple);"></i> <?php echo __('idx_client_title'); ?></h3>
+                    <?php if ($isMobile): ?>
+                        <h3><i class="fas fa-mobile-alt" style="color: var(--primary-purple);"></i> <?php echo __('idx_client_title'); ?></h3>
+                    <?php else: ?>
+                        <h3><i class="fas fa-desktop" style="color: var(--primary-purple);"></i> <?php echo __('idx_client_title'); ?></h3>
+                    <?php endif; ?>
                     <p><?php echo __('idx_client_desc1'); ?></p>
                     <p><?php echo __('idx_client_desc2'); ?></p>
-                    <a href="download_client.php" class="cta-button" style="width: fit-content; margin-top: 1.5rem; text-decoration: none; font-size: 1rem; padding: 1rem 2rem;">
-                        <?php echo __('nav_download_client'); ?> <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <?php if ($isMobile): ?>
+                        <button class="cta-button cta-section-button" onclick="handlePwaInstall()" style="width: fit-content; margin-top: 1.5rem; text-decoration: none; font-size: 1rem; padding: 1rem 2rem;">
+                            <?php echo __('nav_install_app'); ?>
+                        </button>
+                    <?php else: ?>
+                        <a href="download_client.php" class="cta-button cta-section-button" style="width: fit-content; margin-top: 1.5rem; text-decoration: none; font-size: 1rem; padding: 1rem 2rem;">
+                            <?php echo __('nav_download_client'); ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <div class="info-visual">
                     <img src="assets/img/img_2.webp" alt="Windows Client Overlay" class="feature-img client-glowing-img">
@@ -145,6 +163,25 @@ $footer->render();
         const appBtns = document.getElementById('app-btns');
         if (webBtns) webBtns.style.display = 'none';
         if (appBtns) appBtns.style.display = 'inline-block';
+    }
+
+    // PWA Install Logic
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    function handlePwaInstall() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                deferredPrompt = null;
+            });
+        } else {
+            alert("Pour installer l'application sur iPhone / iPad :\n1. Appuyez sur l'icône Partager (le carré avec une flèche) en bas de l'écran.\n2. Sélectionnez 'Sur l'écran d'accueil'.");
+        }
     }
 </script>
 

@@ -2686,5 +2686,9 @@ input:valid {
         letter-spacing: 2px;
     }
 
+    .cta-section-button {
+    margin: auto !important;
+    }
+
 
 }

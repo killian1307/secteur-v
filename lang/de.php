@@ -517,9 +517,11 @@ return [
     'idx_mm_li2' => 'Sichere Streitbeilegung',
     'idx_mm_li3' => 'Freundschaftsspiele zum Üben',
     
-    'idx_client_title' => 'Die Windows-App',
-    'idx_client_desc1' => 'Bringen Sie Ihr Spiel auf das nächste Level mit unserem Desktop-Client. Genießen Sie ein Overlay direkt im Spiel.',
-    'idx_client_desc2' => 'Starten Sie die Spielersuche, chatten Sie und aktualisieren Sie Ihren Discord-Status (RPC), ohne das Spiel zu minimieren.',
+    // Client
+    'nav_install_app' => 'App installieren',
+    'idx_client_title' => 'Plattformübergreifende Anwendung',
+    'idx_client_desc1' => 'Bringen Sie Ihr Spiel mit unserer PC/Mobile-App auf das nächste Level. Genießen Sie ein vollständiges Overlay direkt über Ihrem Spiel (oder eine vereinfachte Oberfläche auf dem Mobilgerät).',
+    'idx_client_desc2' => 'Treten Sie dem Matchmaking bei und chatten Sie mit Ihren Freunden, ohne jemals zum Desktop zurückkehren zu müssen.',
     
     'idx_roadmap_title1' => 'Zukünftige',
     'idx_roadmap_title2' => 'Updates',
