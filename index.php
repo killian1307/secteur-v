@@ -164,26 +164,6 @@ $footer->render();
         if (webBtns) webBtns.style.display = 'none';
         if (appBtns) appBtns.style.display = 'inline-block';
     }
-
-    // PWA Install Logic
-    let deferredPrompt;
-    
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-    });
-
-    function handlePwaInstall() {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                deferredPrompt = null;
-            });
-        } else {
-            alert("<?php echo __('ios_redirect_alert'); ?>");
-                window.location.href = '/overlay.php';
-        }
-    }
 </script>
 
 </body>

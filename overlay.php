@@ -42,6 +42,12 @@ if ($isLoggedIn) {
 
 <div id="overlay-wrapper" class="<?php echo $isMobile ? 'interactive' : ''; ?>">
     
+    <?php if ($isMobile): ?>
+        <a href="index.php" style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #000; background: #FFD700; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 8px; width: 100%; box-sizing: border-box; flex-shrink: 0; font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+            <i class="fas fa-home"></i> <?php echo __('nav_home'); ?>
+        </a>
+    <?php endif; ?>
+
     <div class="overlay-logo">
         <span>Secteur</span>
         <img src="assets/img/v.webp" alt="V">

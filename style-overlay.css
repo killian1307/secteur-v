@@ -518,6 +518,30 @@ body.mobile-mode .social-list {
     width: 100% !important;
 }
 
+body.mobile-mode #panel-idle .idle-expandable > div {
+    display: flex !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 20px !important;
+}
+
+/* Enlarge the Dropdown */
+body.mobile-mode #queue-mode-select {
+    flex: 1 !important;
+    padding: 14px !important;
+    font-size: 1.1rem !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+}
+
+/* Enlarge the Join Queue Button */
+body.mobile-mode button[onclick="sendJoinQueue()"] {
+    flex: 1 !important;
+    padding: 14px !important;
+    font-size: 1.1rem !important;
+    border-radius: 8px !important;
+}
+
 /* =======================================================
    IN A MATCH
    ======================================================= */
